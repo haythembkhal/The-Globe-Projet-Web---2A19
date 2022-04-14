@@ -1,0 +1,312 @@
+
+*{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+
+
+#commentButton
+{  background-color: yellow; /* red*/
+  /* border: none; */
+  color: #808080;
+  padding: 10px 30px; /* button size */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 12px;
+
+}
+#respond {
+    margin-top: 40px;
+  }
+  
+
+#emailName
+{
+  position:absolute;
+  width:20%;
+  right:55%;
+   bottom:10.9%;
+}
+#email{
+  position:absolute;
+    width:20%;
+    right:55%;
+     bottom:9.1%;
+
+}
+
+#comment_author{
+    width:20%;
+}
+#comment{
+    height: 100px;
+    width:50%;
+  }
+  #respond input[type='text'],
+  #respond input[type='email'],
+  #respond textarea {
+    margin-bottom: 10px;
+    display: block;
+    
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px;
+    border-color:#8B8000;
+  
+    line-height: 1.4em;
+  }
+  
+  #rightAllignement 
+  {
+    position: absolute;
+    left:7%;
+    top: 30%; 
+  }
+
+  #spectacleImage
+  {          
+    
+  width:300px;
+  height:375px;
+  /* border-style: outset; */
+  }
+
+  .spectacleInfo
+  {
+    position: absolute;
+    left: 35%;
+    /* font-family: "Times New Roman", Times, serif; */
+    font-size: 15px;
+  
+}
+
+.spectacleHeader
+{
+  color: #8B8000;
+}
+
+#spectacleTitle
+{
+  /* position: absolute; */
+  top: 2%;
+  font-size: 50px;
+  
+  /* color: yellow; */
+}
+
+#paragraphStructure
+{
+width:520px;
+/* height:00px; */
+}
+
+#paragraphStructure2
+{
+width:700px;
+/* height:00px; */
+}
+
+#spectacleTheatre
+{
+  top: 10.5%;
+  text-decoration: underline;
+  color: #808080;
+}
+#spectacleDate
+{
+  /* position: absolute; */
+  top: 7.5%;
+  
+}
+
+#spectacleTime
+{
+  /* position: absolute; */
+ top: 6%; 
+}
+#spectacleLocation
+{
+  /* position: absolute; */
+  top: 9%;
+  color: #808080;
+  text-decoration: underline;}
+#spectacleVideo
+{
+  /* position: absolute; */
+  top: 12%;
+  color: #808080;
+  text-decoration: underline;
+}
+#spectacleComment
+{
+  /* position: absolute; */
+  top: 13.5%;
+  color: #808080;
+  text-decoration: underline;}
+#spectacleReservation
+{
+  top: 16%;
+  background-color: yellow; /* red*/
+  /* border: none; */
+  color: #808080;
+  padding: 10px 30px; /* button size */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 12px;
+}
+#foot
+{
+  top: 350%;
+ width:1200;
+ height:200;
+ position: absolute;
+  background-color: black;
+}
+
+.paragraph
+{
+
+  left:20%;
+  height:700;
+}
+
+
+  #commentaireImage
+  {
+    border-radius: 50%;
+    right: 8%;
+    top: 86%;    
+    width:20%;
+      
+      position: absolute;
+
+  }
+
+   #textImageComment{
+    
+    font-size: 80;
+    top: 84%;    
+        position: absolute;
+      right:7%;
+      /* font-family: cursive; */
+    }
+
+    #thumbsUp
+    {
+        top: 98%;
+        position: absolute;
+        right:20%;
+        /* background: transparent url(
+          '../images/pnl.jpg'); */
+              /* background-size: cover; */
+              /* width: 300px; */
+              /* height: 200px; */
+              /* font-size: 2rem; */
+    color:green;
+            }
+    
+    #thumbsDown
+    {
+      background-image: url(
+        '../images/pnl.jpg');
+                    background-size: cover;
+  color:red;
+              
+        top:98%;
+        position: absolute;
+      right:1%;
+    }
+    
+#videoPopup
+{
+  position: absolute;
+  top:20.6%;
+  right:1%;
+  /* border-style: double; */
+}
+.locationDetails
+{
+font-size: 16px;
+}
+
+/* POPUP FOR COMMENTS */
+  /* #videoPopup
+    {
+position:absolute;
+height:100vh;
+width:100vw;
+/* background-color: pink; 
+background-color: rgba(0, 0, 0, 0.3);
+    } */
+
+ 
+
+ .footer-basic {
+  padding:40px 0;
+  background-color:#ffffff;
+  color:#4b4c4d;
+  position: absolute;
+  bottom:-1980px;
+  right:450px;
+}
+
+.footer-basic ul {
+  padding:0;
+  list-style:none;
+  text-align:center;
+  font-size:18px;
+  line-height:1.6;
+  margin-bottom:0;
+}
+
+.footer-basic li {
+  padding:0 10px;
+}
+
+.footer-basic ul a {
+  color:inherit;
+  text-decoration:none;
+  opacity:0.8;
+}
+
+.footer-basic ul a:hover {
+  opacity:1;
+}
+
+.footer-basic .social {
+  text-align:center;
+  padding-bottom:25px;
+}
+
+.footer-basic .social > a {
+  font-size:24px;
+  width:40px;
+  height:40px;
+  line-height:40px;
+  display:inline-block;
+  text-align:center;
+  border-radius:50%;
+  border:1px solid #ccc;
+  margin:0 8px;
+  color:inherit;
+  opacity:0.75;
+}
+
+.footer-basic .social > a:hover {
+  opacity:0.9;
+}
+
+.footer-basic .copyright {
+  margin-top:15px;
+  text-align:center;
+  font-size:13px;
+  color:#aaa;
+  margin-bottom:0;
+}
