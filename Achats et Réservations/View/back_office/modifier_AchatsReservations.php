@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Edmin</title>
 	<link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -10,9 +10,9 @@
 	<link type="text/css" href="images/icons/css/font-awesome.css" rel="stylesheet">
 	<link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
 </head>
-<body>
 
-	<div class="navbar navbar-fixed-top">
+<body>
+<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
@@ -212,215 +212,190 @@
 					<div class="content">
 						
 						<div class="module">
-							<form class="form-horizontal row-fluid">
-								<br>
+                        <form name="formModifier" class="form-horizontal row-fluid" onsubmit="return validateForm()" action="updateAchat.php" method="POST">
+                            <br>
 								<div class="module-head">
 									<h3>Achat :</h3>
 								</div>
 								<br>
-								<div class="control-group">
-									<label class="control-label" for="basicinput">ID Achat</label>
+                                <div class="control-group">
+									<label class="control-label" for="idAchat">ID Achat</label>
 									<div class="controls">
-										<input type="text" id="basicinput" placeholder="Veuillez saisir l'ID Achat" class="span8">
+										<input type="text" id="idAchat" placeholder="Veuillez saisir l'ID Achat" class="span8">
+                                        <p> <span class="error" id="erroridA" style="color:red"></span></p>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="idClient">ID Client</label>
+									<div class="controls">
+										<input type="text" id="idClient" placeholder="Veuillez saisir l'ID Client" class="span8">
 									</div>
 								</div>
 
 								<div class="control-group">
-									<label class="control-label" for="basicinput">ID Client</label>
+									<label class="control-label" for="idSpectacle">ID Spectacle</label>
 									<div class="controls">
-										<input type="text" id="basicinput" placeholder="Veuillez saisir l'ID Client" class="span8">
+										<input type="text" id="idSpectacle" placeholder="Veuillez saisir l'ID Spectacle" class="span8">
 									</div>
 								</div>
 
 								<div class="control-group">
-									<label class="control-label" for="basicinput">ID Spectacle</label>
-									<div class="controls">
-										<input type="text" id="basicinput" placeholder="Veuillez saisir l'ID Spectacle" class="span8">
-									</div>
-								</div>
-
-								<div class="control-group">
-									<label class="control-label" for="basicinput">Prix Total</label>
+									<label class="control-label" for="prixTotal">Prix Total</label>
 									<div class="controls">
 										<div class="input-append">
-											<input type="text" placeholder="0.000" class="span8"><span class="add-on">DT</span>
+											<input type="text" id="prixTotal" placeholder="0.000" class="span8"><span class="add-on">DT</span>
 										</div>
 									</div>
 								</div>
 
 								<div class="control-group">
-									<label class="control-label" for="basicinput">Date Achat</label>
+									<label class="control-label" for="dateAchat">Date Achat</label>
 									<div class="controls">
-										<input type="date" id="basicinput" placeholder="Veuillez saisir l'ID Spectacle" class="span8">
+										<input type="date" id="dateAchat" placeholder="Veuillez saisir l'ID Spectacle" class="span8">
 									</div>
 								</div>
 
 								<div class="control-group">
-									<label class="control-label" for="basicinput">Adresse Email</label>
+									<label class="control-label" for="adresseEmail">Adresse Email</label>
 									<div class="controls">
-										<input type="email" id="basicinput" placeholder="Veuillez saisir l'adresse email" class="span8">
+										<input type="email" id="adresseEmail" placeholder="Veuillez saisir l'adresse email" class="span8">
 									</div>
 								</div>
 
 								<div class="control-group">
-									<label class="control-label" for="basicinput">Nombre Places</label>
+									<label class="control-label" for="nbrPlaces">Nombre Places</label>
 									<div class="controls">
-										<input type="number" step="1" min="1" max="20" class="span8">
+										<input type="number" id="nbrePlaces" step="1" min="1" max="20" class="span8">
 									</div>
 								</div>
 
 								<br>
 								<div class="control-group">
 									<div class="controls">
-										<button type="submit" class="btn">Ajouter Achat</button>
-										<button type="submit" class="btn">Modifier Achat</button>
-										<button type="submit" class="btn">Supprimer Achat</button>
+                                    <br>
+								<div class="control-group">
+									<div class="controls">
+										<input type="submit" name="Modifier" value="Modifier" class="btn">
+										<!--<input type="reset" value="Annuler" class="btn">-->
+                                        <button><a href="afficher_AchatsReservations.php">Annuler</a></button>
 									</div>
 								</div>
+									</div>
+								</div>
+								<br>
 							</form>
 
 							<form class="form-horizontal row-fluid">
-								<br>
-								<div class="module-head">
-									<h3>Réservation : </h3>
-								</div>
-								<br>
-								<div class="control-group">
-									<label class="control-label" for="basicinput">ID Réservation</label>
-									<div class="controls">
-										<input type="text" id="basicinput" placeholder="Veuillez saisir l'ID Réservation" class="span8">
-									</div>
-								</div>
+			
 
-								<div class="control-group">
-									<label class="control-label" for="basicinput">ID Achat</label>
-									<div class="controls">
-										<input type="text" id="basicinput" placeholder="Veuillez saisir l'ID Achat" class="span8">
-									</div>
-								</div>
-
-								<div class="control-group">
-									<label class="control-label" for="basicinput">Num Siège</label>
-									<div class="controls">
-										<input type="text" id="basicinput" placeholder="Veuillez saisir le numéro de la place" class="span8">
-									</div>
-								</div>
-
-								<br>
-								<div class="control-group">
-									<div class="controls">
-										<button type="submit" class="btn">Ajouter Réservation</button>
-										<button type="submit" class="btn">Modifier Réservation</button>
-										<button type="submit" class="btn">Supprimer Réservation</button>
-									</div>
-								</div>
+								
 							</form>
 
-							<br>
+                            <script>
+                                function validateForm()
+                                {
+									var idAchaat= document.forms["formModifier"]["idAchat"].value;
+                                    var idClient= document.forms["formModifier"]["idClient"].value;
+                                    var idSpectacle= document.forms["formModifier"]["idSpectacle"].value;
+                                    var prixTotal= document.forms["formModifier"]["prixTotal"].value;
+                                    var dateAchat= document.forms["formModifier"]["dateAchat"].value;
+                                    var adresseEmail= document.forms["formModifier"]["adresseEmail"].value;
+                                    var nbrePlaces= document.forms["formModifier"]["nbrePlaces"].value;
 
-							<div class="module-head">
-								<h3>Données Achats et Réservations</h3>
-							</div>
-							<div class="module-body">
+									var today = new Date();
+									var dd = String(today.getDate()).padStart(2, '0');
+									var mm = String(today.getMonth() + 1).padStart(2, '0'); //January = 0
+									var yyyy = today.getFullYear();
+                                    
 
-							<div class="module">
-							<div class="module-head">
-								<h3>Table Achats</h3>
-							</div>
-							<div class="module-body table">
-								<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
-									<thead>
-										<tr class="center">
-											<th class="center">ID Achat</th>
-											<th class="center">ID Client</th>
-											<th class="center">ID Spectacle</th>
-											<th class="center">Prix Total</th>
-											<th class="center">Date Achat</th>
-											<th class="center">Adresse Email</th>
-											<th class="center">Nombre Places</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="center">
-											<td class="center">1</td>
-											<td class="center">1</td>
-											<td class="center">1</td>
-											<td class="center"> 120</td>
-											<td class="center">07/04/2022</td>
-											<td class="center">sarra.gharsllah@esprit.tn</td>
-											<td class="center">1</td>
-										</tr>
-										<tr class="center">
-											<td>2</td>
-											<td>2</td>
-											<td>2</td>
-											<td class="center"> 130</td>
-											<td class="center">08/04/2022</td>
-											<td class="center">sarra.gharsllah@esprit.tn</td>
-											<td class="center">2</td>
-										</tr>
+									if(idAchat == "")
+									{
+										document.getElementById('erroridA').innerHTML="le champ ID Achat ne peut pas être vide";  
+    									return false;
+									}
 
-									</tbody>
-									<tfoot>
-										<tr class="center">
-											<th class="center">ID Achat</th>
-											<th class="center">ID Client</th>
-											<th class="center">ID Spectacle</th>
-											<th class="center">Prix Total</th>
-											<th class="center">Date Achat</th>
-											<th class="center">Adresse Email</th>
-											<th class="center">Nombre Places</th>
-										</tr>
-									</tfoot>
-								</table>
-							</div>
+									if(idClient == 0)
+									{
+										document.getElementById('erroridA').innerHTML="Veuillez choisir une valeur > 0";  
+    									return false;
+									}
 
+                                    if(idClient == "")
+									{
+										document.getElementById('erroridC').innerHTML="le champ ID Client ne peut pas être vide";  
+    									return false;
+									}
 
-							<br>
-							<br>
-							<div class="module">
-							<div class="module-head">
-								<h3>Table Réservations</h3>
-							</div>
-							<div class="module-body table">
-								<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
-									<thead>
-										<tr class="center">
-											<th  class="center">ID Réservation</th>
-											<th class="center">ID Achat</th>
-											<th class="center">Numéro Siège</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="center">
-											<td class="center">1</td>
-											<td class="center">1</td>
-											<td class="center">1</td>
-										</tr>
-										<tr class="center">
-											<td class="center">2</td>
-											<td class="center">2</td>
-											<td class="center">2</td>
-										</tr>
-	
-									</tbody>
-									<tfoot>
-										<tr class="center">
-											<th  class="center">ID Réservation</th>
-											<th class="center">ID Achat</th>
-											<th class="center">Numéro Siège</th>
-										</tr>
-									</tfoot>
-								</table>
-							</div>
-						</div><!--/.module-->
+									if(idClient == 0)
+									{
+										document.getElementById('erroridC').innerHTML="Veuillez choisir une valeur > 0";  
+    									return false;
+									}
+
+									if(idSpectacle == "")
+									{
+										document.getElementById('erroridS').innerHTML="le champ ID Spectacle ne peut pas être vide";  
+    									return false;
+									}
+
+									if(idSpectacle == 0)
+									{
+										document.getElementById('erroridS').innerHTML="Veuillez choisir une valeur > 0";  
+    									return false;
+									}
+
+									if(prixTotal == 0)
+									{
+										document.getElementById('errorP').innerHTML="Le champ Prix Total ne peut pas être vide";  
+    									return false;
+									}
+
+									if(dateAchat == "")
+									{
+										document.getElementById('errorDA').innerHTML="Veuillez choisir une date";  
+    									return false;
+									}
+
+									if(dateAchat>today)
+									{
+										document.getElementById('errorDA').innerHTML="La date d'achat doit être < à la date d'aujourd'hui";  
+    									return false;
+									}
+
+									if(adresseEmail == "")
+									{
+										document.getElementById('errorAE').innerHTML="Veuillez saisir votre Adresse Email";  
+    									return false;
+									}
+
+									function checkEmail(email) 
+									{
+            						 	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            							 return re.test(email);
+        							}
+
+									if(!checkEmail(adresseEmail))
+									{
+										document.getElementById('errorAE').innerHTML="l'adresse mail doit correspondre au format : abc123@exemple.com";  
+    									return false;
+									}
+
+									if(nbrePlaces == "")
+									{
+										document.getElementById('errorNP').innerHTML="Veuillez choisir un Nombre de Places";  
+    									return false;
+									}
+
+									if(nbrePlaces == 0)
+									{
+										document.getElementById('errorNP').innerHTML="Le nombre de places doit être > 0";  
+    									return false;
+									}
+
+                                }
+                            </script>
 
 						
-
-					<br />
-					<div class="module">
-						
-					</div><!--/.module-->
 						
 					</div><!--/.content-->
 				</div><!--/.span9-->

@@ -1,13 +1,4 @@
 <?php
-    //session_start();
-    include '../../Controller/AchatsC.php';
-    //include '../../Controller/ReservationC.php';
-
-    $AchatC = new AchatC();
-    $listeAchats=$AchatC->afficherAchat();
-
-    /*$ReservationC = new ReservationC();
-    $listeReservation=$ReservationC->afficherReservation();*/
 ?>
 
 <!DOCTYPE html>
@@ -224,7 +215,7 @@
 					<div class="content">
 						
 						<div class="module">
-							<!--<form class="form-horizontal row-fluid">
+							<form class="form-horizontal row-fluid">
 								<br>
 								<div class="module-head">
 									<h3>Achat :</h3>
@@ -311,7 +302,7 @@
 										<button type="submit" class="btn">Modifier Réservation</button>
 									</div>
 								</div>
-							</form> -->
+							</form>
 
 							<br>
 
@@ -339,30 +330,30 @@
 												</tr>
 											</thead>
 											<tbody>
-                                                <?php
-                                                    foreach($listeAchats as $Achat){
-                                                ?>
 												<tr class="center">
-													<td class="center"><?php echo $Achat['idAchat']; ?></td>
-													<td class="center"><?php echo $Achat['idClient']; ?></td>
-													<td class="center"><?php echo $Achat['idSpectacle']; ?></td>
-													<td class="center"><?php echo $Achat['prixTotal']; ?></td>
-													<td class="center"><?php echo $Achat['dateAchat']; ?></td>
-													<td class="center"><?php echo $Achat['adresseEmail']; ?></td>
-													<td class="center"><?php echo $Achat['nbrePlaces']; ?></td>
-                                                    <td class="center">
-														<a href="supprimer_AchatsReservations.php?idAchat=<?php echo $Achat['idAchat']; ?>">Supprimer</a>
+													<td class="center">1</td>
+													<td class="center">1</td>
+													<td class="center">1</td>
+													<td class="center"> 120</td>
+													<td class="center">07/04/2022</td>
+													<td class="center">sarra.gharsllah@esprit.tn</td>
+													<td class="center">1</td>
+													<td class="center">
+														<button type="submit" class="btn">Supprimer</button>
 													</td>
-													<!--<<td class="center">
-                                                        <form method="POST" action="supprimer_AchatsReservations.php">
-                                                            <input type="submit" name="supprimer" value="supprimer" class="btn">
-                                                            <input type="hidden" value=<?php //echo $Achat['idAchat'];?> name="idAchat">
-                                                        </form>	
-													</td>-->
 												</tr>
-                                                <?php
-                                                    }
-                                                ?>
+												<tr class="center">
+													<td>2</td>
+													<td>2</td>
+													<td>2</td>
+													<td class="center"> 130</td>
+													<td class="center">08/04/2022</td>
+													<td class="center">sarra.gharsllah@esprit.tn</td>
+													<td class="center">2</td>
+													<td class="center">
+														<button type="submit" class="btn">Supprimer</button>
+													</td>
+												</tr>
 
 											</tbody>
 											<tfoot>
@@ -398,20 +389,22 @@
 												</tr>
 											</thead>
 											<tbody>
-                                                <!--<?php
-                                                    //foreach($listeReservation as $Reservation){
-                                                ?>
 												<tr class="center">
-													<td class="center"><?php //echo $Reservation['idReservation']; ?></td>
-													<td class="center"><?php //echo $Reservation['idAchat']; ?></td>
-													<td class="center"><?php //echo $Reservation['numSiege']; ?></td>
+													<td class="center">1</td>
+													<td class="center">1</td>
+													<td class="center">1</td>
 													<td class="center">
-														<a href="supprimer_Reservation.php?idReservation=<?php //echo $adherent['idReservation']; ?>">Supprimer</a>
+														<button type="submit" class="btn">Supprimer</button>
 													</td>
 												</tr>
-                                                <?php 
-                                                    //}
-                                                ?>-->
+												<tr class="center">
+													<td class="center">2</td>
+													<td class="center">2</td>
+													<td class="center">2</td>
+													<td class="center">
+														<button type="submit" class="btn">Supprimer</button>
+													</td>
+												</tr>
 											</tbody>
 											<tfoot>
 												<tr class="center">
