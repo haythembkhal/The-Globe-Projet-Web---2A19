@@ -1,7 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
-<head>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +7,6 @@
 	<link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link type="text/css" href="css/theme.css" rel="stylesheet">
-	 
 	<link type="text/css" href="images/icons/css/font-awesome.css" rel="stylesheet">
 	<link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
 </head>
@@ -153,9 +150,9 @@
 										</a>
 									</li>
 									<li>
-										<a href="table_Achats_Reservations.html">
+										<a href="table_billets.html">
 											<i class="menu-icon icon-table"></i>
-											Achats et Réservations
+											Achats
 										</a>
 									</li>
 									<li>
@@ -165,6 +162,8 @@
 										</a>
 									</li>
 								</ul></li>
+								
+
                                 <li><a href="charts.html"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
                             </ul><!--/.widget-nav-->
 
@@ -211,145 +210,58 @@
 
 				<div class="span9">
 					<div class="content">
-
-						<div class="btn-controls">
-							<div class="btn-box-row row-fluid">
-								<a href="#" class="btn-box span3">
-									<i class="icon-arrow-up"></i>
-									<b>Big</b>
-								</a>
-								<a href="#" class="btn-box span3">
-									<i class="icon-bell"></i>
-									<b>Big</b>
-								</a>
-								<a href="#" class="btn-box span3">
-									<i class="icon-screenshot"></i>
-									<b>Big</b>
-								</a>
-								<a href="#" class="btn-box span3">
-									<i class="icon-beaker"></i>
-									<b>Big</b>
-								</a>
-							</div>
-
-							<div class="btn-box-row row-fluid">
-								<a href="#" class="btn-box big span4">
-									<i class="icon-adjust"></i>
-									<b>Bigger</b>
-								</a>
-								<a href="#" class="btn-box big span4">
-									<i class="icon-briefcase"></i>
-									<b>Bigger</b>
-								</a>
-								<a href="#" class="btn-box big span4">
-									<i class="icon-gift"></i>
-									<b>Bigger</b>
-								</a>
-							</div>
-
-							<div class="btn-box-row row-fluid">
-								<a href="#" class="btn-box small span2">
-									<i class="icon-facebook"></i>
-									<b>Small</b>
-								</a>
-								<a href="#" class="btn-box small span2">
-									<i class="icon-ambulance"></i>
-									<b>Small</b>
-								</a>
-								<a href="#" class="btn-box small span2">
-									<i class="icon-search"></i>
-									<b>Small</b>
-								</a>
-								<a href="#" class="btn-box small span2">
-									<i class="icon-key"></i>
-									<b>Small</b>
-								</a>
-								<a href="#" class="btn-box small span2">
-									<i class="icon-zoom-in"></i>
-									<b>Small</b>
-								</a>
-								<a href="#" class="btn-box small span2">
-									<i class="icon-edit"></i>
-									<b>Small</b>
-								</a>
-							</div>
-						</div><!--/.btn-controls-->
-
-
 						<div class="module">
-							<div class="module-head">
-								<h3>Buttons</h3>
-							</div>
-							<div class="module-body">
-								<p>
-									Button styles can be applied to anything with the <code>.btn</code> class applied. However, typically you'll want to apply these to only <code>&lt;a&gt;</code> and <code>&lt;button&gt;</code> elements for the best rendering.
-								</p>
-								<br />
-								<table class="table table-bordered">
-									<thead>
-										<th>Button</th>
-										<th>Standard</th>
-										<th>Mini</th>
-										<th>Small</th>
-										<th>Large</th>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Standard Button <br /> <code>.btn</code></td>
-											<td><a class="btn">Button</a></td>
-											<td><a class="btn btn-mini">Button</a></td>
-											<td><a class="btn btn-small">Button</a></td>
-											<td><a class="btn btn-large">Button Large</a></td>
-										</tr>
-										<tr>
-											<td>Primary Button <br /> <code>.btn-primary</code></td>
-											<td><a class="btn btn-primary">Button</a></td>
-											<td><a class="btn btn-mini btn-primary">Button</a></td>
-											<td><a class="btn btn-small btn-primary">Button</a></td>
-											<td><a class="btn btn-large btn-primary">Button Large</a></td>
-										</tr>
-										<tr>
-											<td>Info Button <br /> <code>.btn-info</code></td>
-											<td><a class="btn btn-info">Button</a></td>
-											<td><a class="btn btn-mini btn-info">Button</a></td>
-											<td><a class="btn btn-small btn-info">Button</a></td>
-											<td><a class="btn btn-large btn-info">Button Large</a></td>
-										</tr>
-										<tr>
-											<td>Success Button <br /> <code>.btn-success</code></td>
-											<td><a class="btn btn-success">Button</a></td>
-											<td><a class="btn btn-mini btn-success">Button</a></td>
-											<td><a class="btn btn-small btn-success">Button</a></td>
-											<td><a class="btn btn-large btn-success">Button Large</a></td>
-										</tr>
-										<tr>
-											<td>Warning Button <br /> <code>.btn-warning</code></td>
-											<td><a class="btn btn-warning">Button</a></td>
-											<td><a class="btn btn-mini btn-warning">Button</a></td>
-											<td><a class="btn btn-small btn-warning">Button</a></td>
-											<td><a class="btn btn-large btn-warning">Button Large</a></td>
-										</tr>
-										<tr>
-											<td>Danger Button <br /> <code>.btn-danger</code></td>
-											<td><a class="btn btn-danger">Button</a></td>
-											<td><a class="btn btn-mini btn-danger">Button</a></td>
-											<td><a class="btn btn-small btn-danger">Button</a></td>
-											<td><a class="btn btn-large btn-danger">Button Large</a></td>
-										</tr>
-										<tr>
-											<td>Inverse Button <br /> <code>.btn-inverse</code></td>
-											<td><a class="btn btn-inverse">Button</a></td>
-											<td><a class="btn btn-mini btn-inverse">Button</a></td>
-											<td><a class="btn btn-small btn-inverse">Button</a></td>
-											<td><a class="btn btn-large btn-inverse">Button Large</a></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
+							<div>
+								<div class="module-head">
+									<h3>Tables Achats et Réservations</h3>
+								</div>
+								<div class="module-body">
+									<p>
+										<strong>Listes des Achats</strong>
+									</p>
+									<table class="table table-bordered"  width='100%'>
+										<thread>
+											<tr>
+												<th width='5%' style="text-align: center;">idClient</th>
+												<th width='5%' style="text-align: center;">idSpectacle</th>
+												<th width='5%' style="text-align: center;">prixTotal</th>
+												<th width='30%' style="text-align: center;">dateAchat</th>
+												<th width='30%' style="text-align: center;">adresseEmail</th>
+												<th width='5%' style="text-align: center;">nbrePlaces</th>
+												<th width='30%' style="text-align: center;">Opérations</th>
+											</tr>
+										</thread>
+										<tbody>
+											<!--ici je vais mettre l'affichage -->
+											<tr>
+											<th width='5%' style="text-align: center;"></th>
+												<th width='5%' style="text-align: center;"></th>
+												<th width='5%' style="text-align: center;"></th>
+												<th width='30%' style="text-align: center;"></th>
+												<th width='30%' style="text-align: center;"></th>
+												<th width='5%' style="text-align: center;"></th>
+												<th width='30%' style="text-align: center;"></th>
+											</tr>	
+										</tbody>
+										<footer>
+											<tr>
+												<th width='5%' style="text-align: center;">idClient</th>
+												<th width='5%' style="text-align: center;">idSpectacle</th>
+												<th width='5%' style="text-align: center;">prixTotal</th>
+												<th width='30%' style="text-align: center;">dateAchat</th>
+												<th width='30%' style="text-align: center;">adresseEmail</th>
+												<th width='5%' style="text-align: center;">nbrePlaces</th>
+												<th width='30%' style="text-align: center;">Opérations</th>
+											</tr>
+										</footer>
+									</table>
+								</div>
 
-						
-						
+							</div>
+							
+						</div><!--/.module-->
+
+					<br />
 						
 					</div><!--/.content-->
 				</div><!--/.span9-->
@@ -357,17 +269,10 @@
 		</div><!--/.container-->
 	</div><!--/.wrapper-->
 
-	<div class="footer">
-		<div class="container">
-			 
 
-			<b class="copyright">&copy; 2014 Edmin - EGrappler.com </b> All rights reserved.
-		</div>
-	</div>
-
-	<script src="scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
-	<script src="scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
-	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-
-
+	<script src="scripts/jquery-1.9.1.min.js"></script>
+	<script src="scripts/jquery-ui-1.10.1.custom.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	
+	
 </body>

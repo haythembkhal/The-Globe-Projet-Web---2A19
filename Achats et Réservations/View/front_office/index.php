@@ -1,8 +1,43 @@
 
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
--->
+<?php
+    include_once '../../Controller/AchatC.php';
+    $AchatC = new AchatC();
+    $listeAchats = $AchatC->afficherAchat();
+
+    $error = "";
+    $Achat = NULL;
+    $AchatA = new AchatC();
+    if(
+        isset($_POST["idClient"])&&
+        isset($_POST["idSpectacle"])&&
+        isset($_POST["prixTotal"])&&
+        isset($_POST["dateAchat"])&&
+        isset($_POST["adresseEmail"])&&
+        isset($_POST["nbrePlaces"])
+    ){
+        if (
+            !empty($_POST["idClient"])&&
+            !empty($_POST["idSpectacle"])&&
+            !empty($_POST["prixTotal"])&&
+            !empty($_POST["dateAchat"])&&
+            !empty($_POST["adresseEmail"])&&
+            !empty($_POST["nbrePlaces"])
+        ){
+            $Achat = new Achat(
+                NULL,
+                $_POST['idClient'],
+                $_POST['idSpectacle'],
+                $_POST['prixTotal'],
+                $_POST['dateAchat'],
+                $_POST['adresseEmail'],
+                $_POST['nbrePlaces']
+            );
+            $AchatA->ajouterAchat($Achat);
+        }
+        else
+            $error = "Missing information";
+    }
+?>
 <!doctype html>
 <html lang="zxx">
 
@@ -54,101 +89,183 @@ Author URL: http://w3layouts.com
 	</header>
 	<!-- //header -->
 	<!-- main-slider -->
-	<section id="infoPerso">
-	<form name="formAchat" class="form-horizontal row-fluid" onsubmit="return validateForm()" action="" method="POST">
-								<br>
-								<div class="module-head">
-									<h3>Achat :</h3>
-								</div>
-								<br>
-								<div class="control-group">
-									<label class="control-label" for="idAchat">ID Achat</label>
-									<div class="controls">
-										<input type="text" id="idAchat" placeholder="Veuillez saisir l'ID Achat" class="span8">
-                                        <p> <span class="error" id="erroridA" style="color:red"></span></p>
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label" for="idClient">ID Client</label>
-									<div class="controls">
-										<input type="text" id="idClient" placeholder="Veuillez saisir l'ID Client" class="span8">
-                                        <p> <span class="error" id="erroridC" style="color:red"></span></p>
-									</div>
-								</div>
+	<section id="Achter">
+		<div class="module-head">
+            <h3>Ajouter Achat</h3>
+        </div> 
+        <div>
+            <form name="formAchat" class="form-horizontal row-fluid" onsubmit="return validateForm()" action="" method="POST">
+            <br>
+            <div class="module-head">
+                <h3>Achat :</h3>
+            </div>
+            <br>
+            <div class="control-group">
+                <label class="control-label" for="basicinput">ID Client</label>
+            	<div class="controls">
+                    <input type="text" id="idClient" placeholder="Veuillez saisir l'ID Client" class="span8" name="idClient">
+                        <p> <span class="error" id="erroridC" style="color:red"></span></p>
+                </div>
+            </div>
 
-								<div class="control-group">
-									<label class="control-label" for="idSpectacle">ID Spectacle</label>
-									<div class="controls">
-										<input type="text" id="idSpectacle" placeholder="Veuillez saisir l'ID Spectacle" class="span8">
-                                        <p> <span class="error" id="erroridS" style="color:red"></span></p>
-									</div>
-								</div>
+            <div class="control-group">
+                <label class="control-label" for="basicinput">ID Spectacle</label>
+                <div class="controls">
+                	<input type="text" id="idSpectacle" placeholder="Veuillez saisir l'ID Spectacle" class="span8" name="idSpectacle">
+                    <p> <span class="error" id="erroridS" style="color:red"></span></p>
+                </div>
+            </div>
 
-								<div class="control-group">
-									<label class="control-label" for="prixTotal">Prix Total</label>
-									<div class="controls">
-										<div class="input-append">
-											<input type="number" id="prixTotal" placeholder="0.000" class="span8"><span class="add-on">DT</span>
-                                            <p> <span class="error" id="errorP" style="color:red"></span></p>
-										</div>
-									</div>
-								</div>
+			<div class="control-group">
+                <label class="control-label" for="basicinput">Prix Total</label>
+                <div class="controls">
+                    <div class="input-append">
+                    	<input type="number" id="prixTotal" placeholder="0.000" class="span8" min="0" name="prixTotal"><span class="add-on">DT</span>
+                    	<p> <span class="error" id="errorP" style="color:red"></span></p>
+                    </div>
+                 </div>
+            </div>
 
-								<div class="control-group">
-									<label class="control-label" for="dateAchat">Date Achat</label>
-									<div class="controls">
-										<input type="date" id="dateAchat" placeholder="Veuillez saisir l'ID Spectacle" class="span8">
-                                        <p> <span class="error" id="errorDA" style="color:red"></span></p>
-                                    </div>
-								</div>
+            <div class="control-group">
+                <label class="control-label" for="basicinput">Date Achat</label>
+                <div class="controls">
+                    <input type="date" id="dateAchat" class="span8" name="dateAchat">
+                    <p> <span class="error" id="errorDA" style="color:red"></span></p>
+                </div>
+            </div>
+			
+			<div class="control-group">
+                <label class="control-label" for="basicinput">Adresse Email</label>
+                <div class="controls">
+                    <input type="email" id="adresseEmail" placeholder="abc123@exemple.com" class="span8" name="adresseEmail">
+                    <p> <span class="error" id="errorAE" style="color:red"></span></p>
+                </div>
+            </div>
 
-								<div class="control-group">
-									<label class="control-label" for="adresseEmail">Adresse Email</label>
-									<div class="controls">
-										<input type="email" id="adresseEmail" placeholder="abc123@exemple.com" class="span8">
-                                        <p> <span class="error" id="errorAE" style="color:red"></span></p>
-                                    </div>
-								</div>
+            <div class="control-group">
+                <label class="control-label" for="basicinput">Nombre Places</label>
+                <div class="controls">
+                    <input type="number" id="nbrePlaces" step="1"  placeholder="0" class="span8" name="nbrePlaces">
+                    <p> <span class="error" id="errorNP" style="color:red"></span></p>
+                </div>
+            </div>
 
-								<div class="control-group">
-									<label class="control-label" for="nbrePlaces">Nombre Places</label>
-									<div class="controls">
-										<input type="number" id="nbrePlaces" step="1"  placeholder="0" class="span8">
-                                        <p> <span class="error" id="errorNP" style="color:red"></span></p>
-                                    </div>
-								</div>
+            <br>
+            <div class="control-group">
+                <div class="controls">
+                    <input type="submit" class="btn-success" id="btnAcheter" value="Acheter">
+                    <input type="reset" class="btn-warning" id="btnAnnuler" value="Annuler">
+                    <!--<form method="POST" action="Modifier_AchatsReservations.php">
+                           <input type="submit" class="btn" id="btnM" value="Modifier"></button>
+                        </form>-->
+                </div>
+            </div>
+        </form>
+        <script>
+           	function validateForm()
+            {
+            var idAchaat= document.forms["formAchat"]["idAchat"].value;
+            var idClient= document.forms["formAchat"]["idClient"].value;
+            var idSpectacle= document.forms["formAchat"]["idSpectacle"].value;
+            var prixTotal= document.forms["formAchat"]["prixTotal"].value;
+            var dateAchat= document.forms["formAchat"]["dateAchat"].value;
+            var adresseEmail= document.forms["formAchat"]["adresseEmail"].value;
+            var nbrePlaces= document.forms["formAchat"]["nbrePlaces"].value;
 
-								<br>
-								<div class="control-group">
-									<div class="controls">
-										<input type="submit" class="btn" id="btnA" value="Ajouter">
-										<button><a href="afficher_AchatsReservations.php">Annuler</a></button>
-										<!--<form method="POST" action="Modifier_AchatsReservations.php">
-											<input type="submit" class="btn" id="btnM" value="Modifier"></button>
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January = 0
+            var yyyy = today.getFullYear();
+                                            
 
-										</form>-->
-									</div>
+            if(idAchat == "")
+            {
+            	document.getElementById('erroridA').innerHTML="le champ ID Achat ne peut pas être vide";  
+                return false;
+            }
 
-								
-								</div>
-							</form>
+            if(idClient == 0)
+            {
+                document.getElementById('erroridA').innerHTML="Veuillez choisir une valeur > 0";  
+                return false;
+        	}
+
+            if(idClient == "")
+            {
+                document.getElementById('erroridC').innerHTML="le champ ID Client ne peut pas être vide";  
+                return false;
+        	}
+
+            if(idClient == 0)
+            {
+                document.getElementById('erroridC').innerHTML="Veuillez choisir une valeur > 0";  
+                return false;
+            }
+
+            if(idSpectacle == "")
+            {
+                document.getElementById('erroridS').innerHTML="le champ ID Spectacle ne peut pas être vide";  
+           	    return false;
+            }
+
+            if(idSpectacle == 0)
+            {
+                document.getElementById('erroridS').innerHTML="Veuillez choisir une valeur > 0";  
+                return false;
+            }
+
+            if(prixTotal == 0)
+            {
+                document.getElementById('errorP').innerHTML="Le champ Prix Total ne peut pas être vide";  
+                return false;
+            }
+
+            if(dateAchat == "")
+            {
+                document.getElementById('errorDA').innerHTML="Veuillez choisir une date";  
+                return false;
+            }
+
+            if(dateAchat>today)
+            {
+                document.getElementById('errorDA').innerHTML="La date d'achat doit être < à la date d'aujourd'hui";  
+                return false;
+            }
+
+            if(adresseEmail == "")
+            {
+                document.getElementById('errorAE').innerHTML="Veuillez saisir votre Adresse Email";  
+                return false;
+            }
+
+            function checkEmail(email) 
+            {
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+           	}
+
+            if(!checkEmail(adresseEmail))
+            {
+                document.getElementById('errorAE').innerHTML="l'adresse mail doit correspondre au format : abc123@exemple.com";  
+                return false;
+            }
+
+            if(nbrePlaces == "")
+            {
+                document.getElementById('errorNP').innerHTML="Veuillez choisir un Nombre de Places";  
+           	    return false;
+           	}
+
+            if(nbrePlaces == 0)
+           	{
+                document.getElementById('errorNP').innerHTML="Le nombre de places doit être > 0";  
+                return false;
+            }
+
+        }
+    	</script>
 	</section>
 
-	<section id="ResPlace">
-
-	</section>
-
-	<section id="Acheter">
-		<div >
-			<div>
-				<input type="submit" class="btn" id="btnA" value="Ajouter">
-				<!--<form method="POST" action="Modifier_AchatsReservations.php">
-					<input type="submit" class="btn" id="btnM" value="Modifier"></button>
-
-				</form>-->
-			</div>
-		</div>
-	</section>
 
 	<!-- footer-66 -->
 	
