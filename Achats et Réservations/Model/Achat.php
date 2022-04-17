@@ -1,93 +1,42 @@
 <?php
-class Achat{
-    private int $idAchat;
-    private int $idClient;
-    private int $idSpectacle;
-    private float $prixTotal;
-    private string $dateVente;
-    private string $adresseEmail;
-    private int $nbrePlaces;
+class Achat {
+    private $idAchat;
+    private $idClient;
+    private $idSpectacle;
+    private $prixTotal;
+    private $dateAchat;
+    private $adresseEmail;
+    private $nbrePlaces;
 
     //constructeur
-    public function __construct($idAchat, $idClient, $idSpectacle, $prixTotal, $dateVente, $adresseEmail, $nbrePlaces)
+    public function __construct($idAchat, $idClient, $idSpectacle, $prixTotal, $dateAchat, $adresseEmail, $nbrePlaces)
     {
-        $this->idAchat=$idAchat;
-        $this->idClient=$idClient;
-        $this->idSpectacle=$idSpectacle;
-        $this->prixTotal=$prixTotal;
-        $this->dateVente=$dateVente;
-        $this->adresseEmail=$adresseEmail;
-        $this->nbrePlaces=$nbrePlaces;
+        $this->idAchat = $idAchat;
+        $this->idClient = $idClient;
+        $this->idSpectacle = $idSpectacle;
+        $this->prixTotal = $prixTotal;
+        $this->dateAchat = $dateAchat;
+        $this->adresseEmail = $adresseEmail;
+        $this->nbrePlaces = $nbrePlaces;
     }
 
 
     //getters
-    public function get_idAchat()
-    {
-        return $this->idAchat;
-    }
-
-    public function get_idClient()
-    {
-        return $this->idClient;
-    }
-
-    public function get_idSpectacle()
-    {
-        return $this->idSpectacle;
-    }
-
-    public function get_prixTotal()
-    {
-        return $this->prixTotal;
-    }
-    
-    public function get_dateVente()
-    {
-        return $this->dateVente;
-    }
-
-    public function get_adresseEmail()
-    {
-        return $this->adresseEmail;
-    }
-
-    public function get_nbrePlaces()
-    {
-        return $this->nbrePlaces;
-    }
+    function get_idAchat(){ return $this->idAchat; }
+    function get_idClient(){ return $this->idClient; }
+    function get_idSpectacle(){ return $this->idSpectacle; }
+    function get_prixTotal(){ return $this->prixTotal; }
+    function get_dateAchat(){ return $this->dateAchat; }
+    function get_adresseEmail(){ return $this->adresseEmail; }
+    function get_nbrePlaces(){ return $this->nbrePlaces; }
 
 
     //setters
-    public function set_idClient($idClient)
-    {
-        $this->idClient = $idClient;
-    }
-
-    public function set_idSpectacle($idSpectacle)
-    {
-        $this->idSpectacle = $idSpectacle;
-    }
-
-    public function set_prixTotal($prixTotal)
-    {
-        $this->prixTotal = $prixTotal;
-    }
-
-    public function set_dateVente($dateVente)
-    {
-        $this->dateVente = $dateVente;
-    }
-
-    public function set_adresseEmail($adresseEmail)
-    {
-        $this->adresseEmail = $adresseEmail;
-    }
-
-    public function set_nbrePlaces($nbrePlaces)
-    {
-        $this->nbrePlaces = $nbrePlaces;
-    }
-
+    function set_idClient(int $idClient){ $this->idClient = $idClient; }
+    function set_idSpectacle(int $idSpectacle){ $this->idSpectacle = $idSpectacle; }
+    function set_prixTotal(float $prixTotal){ $this->prixTotal = $prixTotal; }
+    public function set_dateAchat(string $dateAchat){ $this->dateAchat = $dateAchat; }
+    public function set_adresseEmail(string $adresseEmail){ $this->adresseEmail = $adresseEmail; }
+    public function set_nbrePlaces(int $nbrePlaces){ $this->nbrePlaces = $nbrePlaces; }
 }
 ?>

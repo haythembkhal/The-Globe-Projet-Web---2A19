@@ -2,22 +2,20 @@
 <?php
     include_once '../../Controller/AchatC.php';
     $AchatC = new AchatC();
-    $listeAchats = $AchatC->afficherAchat();
 
     $error = "";
     $Achat = NULL;
     $AchatA = new AchatC();
     if(
-        isset($_POST["idClient"])&&
-        isset($_POST["idSpectacle"])&&
+        
+        
         isset($_POST["prixTotal"])&&
         isset($_POST["dateAchat"])&&
         isset($_POST["adresseEmail"])&&
         isset($_POST["nbrePlaces"])
     ){
         if (
-            !empty($_POST["idClient"])&&
-            !empty($_POST["idSpectacle"])&&
+           
             !empty($_POST["prixTotal"])&&
             !empty($_POST["dateAchat"])&&
             !empty($_POST["adresseEmail"])&&
@@ -25,8 +23,8 @@
         ){
             $Achat = new Achat(
                 NULL,
-                $_POST['idClient'],
-                $_POST['idSpectacle'],
+                2,
+                3,
                 $_POST['prixTotal'],
                 $_POST['dateAchat'],
                 $_POST['adresseEmail'],
@@ -38,9 +36,86 @@
             $error = "Missing information";
     }
 ?>
-<!doctype html>
-<html lang="zxx">
 
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<style>
+	html{
+    scroll-behavior: smooth;
+}
+	h1{
+		color:black;
+
+	}
+
+#infoPerso{
+	justify-content: center;
+    align-items: center;
+}
+input{
+  width: 100%;
+  padding: 12px 20px;
+  color:black;
+  border: none;
+  border-bottom: 2px solid #ffc107;
+  border-radius: 4px;
+  
+}
+
+input[type=submit] {
+  	padding: 10px 35px;
+    background-color: #4CAF50;
+    border: 1px solid white;
+    color: white;
+    outline: none;
+    transition: .6s ease;
+
+}
+
+input[type=submit]:hover {
+	background-color: #45a049;
+	color: black;
+	cursor: pointer;
+}
+
+input[type=reset] {
+  	padding: 10px 35px;
+    background-color: #EF0107;
+    border: 1px solid white;
+    color: white;
+    outline: none;
+    transition: .6s ease;
+
+}
+
+
+input[type=reset]:hover {
+  background-color: #E62020;
+  color: black;
+  cursor: pointer;
+}
+
+
+
+div {
+  border-radius: 5px;
+  margin: 8px 200px;
+  background-color: white;
+  padding: 8px;
+}
+
+section {
+	background-color: #ffc107;
+}
+
+label {
+	color: black;
+
+}
+
+</style>
 <head>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
@@ -57,104 +132,85 @@
 <body>
 
 	<!-- header -->
-	<header id="site-header" class="w3l-header fixed-top">
-		<!--/nav-->
-		<nav class="navbar navbar-expand-lg navbar-light fill px-lg-0 py-0 px-3">
-			<div class="container">
-				<h1>
-						<a class="navbar-brand" href="#index.html">
-							<img src="assets/images/petit logo.png" alt="Your logo" title="Your logo" style="height: 50px;;" />
-						</a> </h1>
-
-				<button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-					data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<!-- <span class="navbar-toggler-icon"></span> -->
-					<span class="fa icon-expand fa-bars"></span>
-					<span class="fa icon-close fa-times"></span>
-				</button>
-
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item active">
-							<a class="nav-link" href="#infoPerso">Informations Personnelles</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#ResPlace">Réservation Places</a>
-						</li>
-						<li class="nav-item">
-								<a class="nav-link" href="#Acheter">Conclure Achat</a>
-						</li>
-					</ul>
-	</header>
+	
 	<!-- //header -->
 	<!-- main-slider -->
-	<section id="Achter">
+	<section id="infoPerso">
 		<div class="module-head">
-            <h3>Ajouter Achat</h3>
+            <center><h1>ACHTEZ VOS PLACES ! </h1></center>
         </div> 
+		<!--<div>
+		<table>
+			<tr>
+				<th><label for="basicinput">ID Client</label></th>
+				<th>ID Spectacle</th>
+				<th>Nombres de Places</th>
+				<th>Prix Total</th>
+				<th>Date Achat</th>
+			</tr>
+
+			<tr>
+				<td>
+			</tr>
+		</table>
+		</div>-->
         <div>
             <form name="formAchat" class="form-horizontal row-fluid" onsubmit="return validateForm()" action="" method="POST">
             <br>
-            <div class="module-head">
-                <h3>Achat :</h3>
-            </div>
             <br>
             <div class="control-group">
-                <label class="control-label" for="basicinput">ID Client</label>
-            	<div class="controls">
-                    <input type="text" id="idClient" placeholder="Veuillez saisir l'ID Client" class="span8" name="idClient">
-                        <p> <span class="error" id="erroridC" style="color:red"></span></p>
-                </div>
+				<label class="control-label" for="basicinput">ID Client</label>
+                <input class="controls" type="text" id="idClient" placeholder="2" class="span8" name="idClient" disabled>
             </div>
 
             <div class="control-group">
                 <label class="control-label" for="basicinput">ID Spectacle</label>
-                <div class="controls">
-                	<input type="text" id="idSpectacle" placeholder="Veuillez saisir l'ID Spectacle" class="span8" name="idSpectacle">
-                    <p> <span class="error" id="erroridS" style="color:red"></span></p>
-                </div>
+                <input type="text" id="idSpectacle" placeholder="3" class="span8" name="idSpectacle" disabled>
+            </div>
+
+			<div class="control-group">
+                <label class="control-label" for="basicinput">Date Achat</label>
+                <input class="controls" type="date" id="dateAchat" class="span8" name="dateAchat" readonly>
+                <p> <span class="error" id="errorDA" style="color:red"></span></p>
+            </div>
+
+			<script>
+				document.getElementById("dateAchat").valueAsDate = new Date();
+			</script>
+
+			<div class="control-group">
+                <label for="basicinput">Nombre Places</label>
+                    <input type="number" id="nbrePlaces" step="1"  placeholder="0" class="span8" name="nbrePlaces">
+                    <p> <span class="error" id="errorNP" style="color:red"></span></p>
             </div>
 
 			<div class="control-group">
                 <label class="control-label" for="basicinput">Prix Total</label>
-                <div class="controls">
-                    <div class="input-append">
-                    	<input type="number" id="prixTotal" placeholder="0.000" class="span8" min="0" name="prixTotal"><span class="add-on">DT</span>
-                    	<p> <span class="error" id="errorP" style="color:red"></span></p>
-                    </div>
-                 </div>
+                <input class="controls" type="number" id="prixTotal" onblur="calculPrixTotal() class="span8" step="0.100" name="prixTotal"><span class="add-on">DT</span>
             </div>
+			<script>
+				function calculPrixTotal()
+				{
+					var nbrePlaces= document.getElementById("nbrePlaces").value;
+					document.getElementById('prixTotal').innerHTML= parseInt(nbrePlaces);
+				}
+				
+			</script>
 
-            <div class="control-group">
-                <label class="control-label" for="basicinput">Date Achat</label>
-                <div class="controls">
-                    <input type="date" id="dateAchat" class="span8" name="dateAchat">
-                    <p> <span class="error" id="errorDA" style="color:red"></span></p>
-                </div>
-            </div>
 			
 			<div class="control-group">
                 <label class="control-label" for="basicinput">Adresse Email</label>
-                <div class="controls">
-                    <input type="email" id="adresseEmail" placeholder="abc123@exemple.com" class="span8" name="adresseEmail">
-                    <p> <span class="error" id="errorAE" style="color:red"></span></p>
-                </div>
+                <input class="controls" type="email" id="adresseEmail" placeholder="abc123@exemple.com" class="span8" name="adresseEmail">
+                <p> <span class="error" id="errorAE" style="color:red"></span></p>
             </div>
 
-            <div class="control-group">
-                <label class="control-label" for="basicinput">Nombre Places</label>
-                <div class="controls">
-                    <input type="number" id="nbrePlaces" step="1"  placeholder="0" class="span8" name="nbrePlaces">
-                    <p> <span class="error" id="errorNP" style="color:red"></span></p>
-                </div>
-            </div>
+            
 
             <br>
             <div class="control-group">
                 <div class="controls">
-                    <input type="submit" class="btn-success" id="btnAcheter" value="Acheter">
-                    <input type="reset" class="btn-warning" id="btnAnnuler" value="Annuler">
+                    <input type="submit" class="btn" id="btnAcheter" value="Acheter">
+                    <input type="reset" class="btn" id="btnAnnuler" value="Annuler">
                     <!--<form method="POST" action="Modifier_AchatsReservations.php">
                            <input type="submit" class="btn" id="btnM" value="Modifier"></button>
                         </form>-->
@@ -164,107 +220,48 @@
         <script>
            	function validateForm()
             {
-            var idAchaat= document.forms["formAchat"]["idAchat"].value;
-            var idClient= document.forms["formAchat"]["idClient"].value;
-            var idSpectacle= document.forms["formAchat"]["idSpectacle"].value;
-            var prixTotal= document.forms["formAchat"]["prixTotal"].value;
-            var dateAchat= document.forms["formAchat"]["dateAchat"].value;
             var adresseEmail= document.forms["formAchat"]["adresseEmail"].value;
             var nbrePlaces= document.forms["formAchat"]["nbrePlaces"].value;
 
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January = 0
-            var yyyy = today.getFullYear();
-                                            
-
-            if(idAchat == "")
+			if(nbrePlaces == "")
             {
-            	document.getElementById('erroridA').innerHTML="le champ ID Achat ne peut pas être vide";  
+                document.getElementById('errorNP').innerHTML="Veuillez choisir un Nombre de Places";  
+                return false;
+            }else if(nbrePlaces == 0)
+            {
+                document.getElementById('errorNP').innerHTML="Le nombre de places doit être > 0";  
                 return false;
             }
-
-            if(idClient == 0)
-            {
-                document.getElementById('erroridA').innerHTML="Veuillez choisir une valeur > 0";  
-                return false;
-        	}
-
-            if(idClient == "")
-            {
-                document.getElementById('erroridC').innerHTML="le champ ID Client ne peut pas être vide";  
-                return false;
-        	}
-
-            if(idClient == 0)
-            {
-                document.getElementById('erroridC').innerHTML="Veuillez choisir une valeur > 0";  
-                return false;
-            }
-
-            if(idSpectacle == "")
-            {
-                document.getElementById('erroridS').innerHTML="le champ ID Spectacle ne peut pas être vide";  
-           	    return false;
-            }
-
-            if(idSpectacle == 0)
-            {
-                document.getElementById('erroridS').innerHTML="Veuillez choisir une valeur > 0";  
-                return false;
-            }
-
-            if(prixTotal == 0)
-            {
-                document.getElementById('errorP').innerHTML="Le champ Prix Total ne peut pas être vide";  
-                return false;
-            }
-
-            if(dateAchat == "")
-            {
-                document.getElementById('errorDA').innerHTML="Veuillez choisir une date";  
-                return false;
-            }
-
-            if(dateAchat>today)
-            {
-                document.getElementById('errorDA').innerHTML="La date d'achat doit être < à la date d'aujourd'hui";  
-                return false;
+			else
+			{
+                document.getElementById('errorNP').innerHTML="";  
             }
 
             if(adresseEmail == "")
             {
                 document.getElementById('errorAE').innerHTML="Veuillez saisir votre Adresse Email";  
                 return false;
+            }else if(!checkEmail(adresseEmail))
+            {
+                document.getElementById('errorAE').innerHTML="l'adresse mail doit correspondre au format : abc123@exemple.com";  
+                return false;
+            }
+			else 
+			{
+                document.getElementById('errorAE').innerHTML="";  
             }
 
             function checkEmail(email) 
             {
                 var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(email);
-           	}
-
-            if(!checkEmail(adresseEmail))
-            {
-                document.getElementById('errorAE').innerHTML="l'adresse mail doit correspondre au format : abc123@exemple.com";  
-                return false;
-            }
-
-            if(nbrePlaces == "")
-            {
-                document.getElementById('errorNP').innerHTML="Veuillez choisir un Nombre de Places";  
-           	    return false;
-           	}
-
-            if(nbrePlaces == 0)
-           	{
-                document.getElementById('errorNP').innerHTML="Le nombre de places doit être > 0";  
-                return false;
             }
 
         }
     	</script>
 	</section>
+
+	
 
 
 	<!-- footer-66 -->

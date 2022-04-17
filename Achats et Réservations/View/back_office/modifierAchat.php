@@ -324,6 +324,7 @@
                                         <div class="control-group">
                                             <div class="controls">
                                                 <input type="submit" class="btn-success" id="btnModifier" value="Modifier">
+                                                <input type="hidden" value=<?PHP echo $Achat['idAchat']; ?> name="idAchat">
                                                 <input type="reset" class="btn-warning" id="btnAnnuler" value="Annuler">
                                                 <!--<form method="POST" action="Modifier_AchatsReservations.php">
                                                     <input type="submit" class="btn" id="btnM" value="Modifier"></button>
@@ -331,81 +332,91 @@
                                             </div>
                                         </div>
                                     </form>
-                                        <script>
+                                    <script>
                                         function validateForm()
                                         {
-                                            var idAchaat= document.forms["formModifier"]["idAchat"].value;
-                                            var idClient= document.forms["formModifier"]["idClient"].value;
-                                            var idSpectacle= document.forms["formModifier"]["idSpectacle"].value;
-                                            var prixTotal= document.forms["formModifier"]["prixTotal"].value;
-                                            var dateAchat= document.forms["formModifier"]["dateAchat"].value;
-                                            var adresseEmail= document.forms["formModifier"]["adresseEmail"].value;
-                                            var nbrePlaces= document.forms["formModifier"]["nbrePlaces"].value;
+                                            var idClient= document.forms["formAchat"]["idClient"].value;
+                                            var idSpectacle= document.forms["formAchat"]["idSpectacle"].value;
+                                            var prixTotal= document.forms["formAchat"]["prixTotal"].value;
+                                            var dateAchat= document.forms["formAchat"]["dateAchat"].value;
+                                            var adresseEmail= document.forms["formAchat"]["adresseEmail"].value;
+                                            var nbrePlaces= document.forms["formAchat"]["nbrePlaces"].value;
 
                                             var today = new Date();
                                             var dd = String(today.getDate()).padStart(2, '0');
                                             var mm = String(today.getMonth() + 1).padStart(2, '0'); //January = 0
                                             var yyyy = today.getFullYear();
+                                            today = yyyy + '-' + mm + '-' + dd;
+
+                                            try{
+												if(idClient == ""){
+													throw "le champ ID Client ne peut pas être vide";
+												}
+												else if(idClient == 0){
+													throw "Veuillez choisir une valeur > 0";
+												}
+												throw "";
+											}
+											catch(err){
+												document.getElementById('erroridC').innerHTML=err;
+											}
+											
+											try{
+												if(idSpectacle == ""){
+													throw "le champ ID Spectacle ne peut pas être vide";
+												}
+												else if(idSpectacle == 0){
+													throw "Veuillez choisir une valeur > 0";
+												}
+												throw "";
+											}
+											catch(err){
+												document.getElementById('erroridS').innerHTML=err;
+											}
+
                                             
-
-                                            if(idAchat == "")
-                                            {
-                                                document.getElementById('erroridA').innerHTML="le champ ID Achat ne peut pas être vide";  
-                                                return false;
-                                            }
-
-                                            if(idClient == 0)
-                                            {
-                                                document.getElementById('erroridA').innerHTML="Veuillez choisir une valeur > 0";  
-                                                return false;
-                                            }
-
-                                            if(idClient == "")
-                                            {
-                                                document.getElementById('erroridC').innerHTML="le champ ID Client ne peut pas être vide";  
-                                                return false;
-                                            }
-
-                                            if(idClient == 0)
-                                            {
-                                                document.getElementById('erroridC').innerHTML="Veuillez choisir une valeur > 0";  
-                                                return false;
-                                            }
-
-                                            if(idSpectacle == "")
-                                            {
-                                                document.getElementById('erroridS').innerHTML="le champ ID Spectacle ne peut pas être vide";  
-                                                return false;
-                                            }
-
-                                            if(idSpectacle == 0)
-                                            {
-                                                document.getElementById('erroridS').innerHTML="Veuillez choisir une valeur > 0";  
-                                                return false;
-                                            }
-
-                                            if(prixTotal == 0)
+											
+											if(prixTotal == "")
                                             {
                                                 document.getElementById('errorP').innerHTML="Le champ Prix Total ne peut pas être vide";  
                                                 return false;
+                                            }
+											else if(prixTotal == 0)
+                                            {
+                                                document.getElementById('errorP').innerHTML="Veuillez choisir une valeur > 0";  
+                                                return false;
+                                            }
+											else
+											{
+                                                document.getElementById('errorP').innerHTML="";  
                                             }
 
                                             if(dateAchat == "")
                                             {
                                                 document.getElementById('errorDA').innerHTML="Veuillez choisir une date";  
                                                 return false;
-                                            }
-
-                                            if(dateAchat>today)
+                                            }else if(dateAchat>today)
                                             {
                                                 document.getElementById('errorDA').innerHTML="La date d'achat doit être < à la date d'aujourd'hui";  
                                                 return false;
                                             }
+											else
+											{
+												document.getElementById('errorDA').innerHTML="";
+											}
 
                                             if(adresseEmail == "")
                                             {
                                                 document.getElementById('errorAE').innerHTML="Veuillez saisir votre Adresse Email";  
                                                 return false;
+                                            }else if(!checkEmail(adresseEmail))
+                                            {
+                                                document.getElementById('errorAE').innerHTML="l'adresse mail doit correspondre au format : abc123@exemple.com";  
+                                                return false;
+                                            }
+											else 
+											{
+                                                document.getElementById('errorAE').innerHTML="";  
                                             }
 
                                             function checkEmail(email) 
@@ -414,22 +425,19 @@
                                                 return re.test(email);
                                             }
 
-                                            if(!checkEmail(adresseEmail))
-                                            {
-                                                document.getElementById('errorAE').innerHTML="l'adresse mail doit correspondre au format : abc123@exemple.com";  
-                                                return false;
-                                            }
-
+                                        
                                             if(nbrePlaces == "")
                                             {
                                                 document.getElementById('errorNP').innerHTML="Veuillez choisir un Nombre de Places";  
                                                 return false;
-                                            }
-
-                                            if(nbrePlaces == 0)
+                                            }else if(nbrePlaces == 0)
                                             {
                                                 document.getElementById('errorNP').innerHTML="Le nombre de places doit être > 0";  
                                                 return false;
+                                            }
+											else
+											{
+                                                document.getElementById('errorNP').innerHTML="";  
                                             }
 
                                         }
