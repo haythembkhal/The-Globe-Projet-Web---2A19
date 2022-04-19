@@ -3,11 +3,11 @@
     class Categorie
     {
 
-        private int $id_cat;
-        private string $nom_cat;
+        private $id_cat;
+        private $nom_cat;
 
         //Constructor
-        public function __construct( $id_cat, $nom_cat)
+        public function __construct($id_cat, $nom_cat)
         {
             $this->id_cat=$id_cat;
             $this->nom_cat=$nom_cat;

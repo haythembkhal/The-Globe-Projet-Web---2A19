@@ -12,28 +12,26 @@
     $Produits = new ProduitCRUD();
 
     if (
-        isset($_POST['id_produit']) &&
 		isset($_POST['nom_produit']) &&		
         isset($_POST['type_produit']) &&
 		isset($_POST['quantite_produit']) && 
         isset($_POST['prix_produit']) 
     ) {
         if (
-            !empty($_POST['id_produit']) && 
 			!empty($_POST['nom_produit']) &&
             !empty($_POST['type_produit']) && 
 			!empty($_POST['quantite_produit']) && 
             !empty($_POST['prix_produit'])
         ) {
             $Produit = new Produit(
-                $_POST['id_produit'],
+                null,
 				$_POST['nom_produit'],
                 $_POST['type_produit'], 
 				$_POST['quantite_produit'],
                 $_POST['prix_produit']
             );
             $Produits->AjouterProduit($Produit);
-            header('Location:AfficherProduit.php');
+            header('Location:AjouterProduit.php');
         }
         else
             $error = "Missing information";
@@ -250,37 +248,8 @@
                                 <div class="module-head">
                                     <h3>Ajouter un produit</h3>
                                 </div>
-                                <form action="" method="POST" onsubmit="return ctrl()">
+                                <form action="" method="POST">
                                     <table class="table">
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                <label>                                  </label>
-                                                <label for="id_produit"> ID : </label>
-                                            </td>
-                                            <td>
-                                                <input type="text" name="id_produit" id="id_produit">
-                                            </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
                                         <tr>
                                             <td></td>
                                             <td></td>
@@ -425,7 +394,7 @@
                                             <td></td>
                                             <td></td>
                                             <td>
-                                                <input type="hidden" value="<?PHP echo $_POST['id_produit'];?>" name="id_produit">
+                                                <!--<input type="hidden" value="<?PHP// echo $_POST['id_produit'];?>" name="id_produit">-->
                                             </td>
                                             <td>
                                             <label>                                  </label>
@@ -474,7 +443,6 @@
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Id</th>
                                                     <th>Nom</th>
                                                     <th>Type</th>
                                                     <th>Quantité</th>
@@ -488,14 +456,13 @@
                                                     foreach($listeproduit as $produit){
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $produit['id_produit']; ?></td>
                                                     <td><?php echo $produit['nom_produit']; ?></td>
                                                     <td><?php echo $produit['type_produit']; ?></td>
                                                     <td><?php echo $produit['quantite_produit']; ?></td>
                                                     <td><?php echo $produit['prix_produit']; ?></td>
                                                     <td>
-                                                        <form method="POST" action="">
-                                                            <input type="submit" name="Ajouter" value="Ajouter">
+                                                        <form method="POST" action="ModifierProduit.php">
+                                                            <input type="submit" name="Modifier" value="Modifier">
                                                             <input type="hidden" value=<?PHP echo $produit['id_produit']; ?> name="id_produit">
                                                         </form>
                                                     </td>

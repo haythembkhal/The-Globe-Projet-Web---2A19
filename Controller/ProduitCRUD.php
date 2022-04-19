@@ -22,14 +22,13 @@
 
 		function AjouterProduit($produit)
 		{
-			$sql="INSERT INTO produits (id_produit, nom_produit, type_produit, quantite_produit, prix_produit) 
-			VALUES (:id_produit, :nom_produit, :type_produit, :quantite_produit, :prix_produit)";
+			$sql="INSERT INTO produits (nom_produit, type_produit, quantite_produit, prix_produit) 
+			VALUES (:nom_produit, :type_produit, :quantite_produit, :prix_produit)";
 			$db=config::getConnexion();
 			try
 			{
 				$query=$db->prepare($sql);
 				$query->execute([
-					'id_produit'=>$produit->get_id_produit(),
 					'nom_produit'=>$produit->get_nom_produit(),
 					'type_produit'=>$produit->get_type_produit(),
 					'quantite_produit'=>$produit->get_quantite_produit(),
@@ -67,7 +66,6 @@
 				$db=config::getConnexion();
 				$query=$db->prepare(
 					'UPDATE produits SET 
-						id_produit= :id_produit,
 						nom_produit= :nom_produit, 
 						type_produit= :type_produit, 
 						quantite_produit= :quantite_produit, 
@@ -75,7 +73,6 @@
 					WHERE id_produit= :id_produit'
 				);
 				$query->execute([
-					'id_produit'=>$produit->get_id_produit(),
 					'nom_produit'=>$produit->get_nom_produit(),
 					'type_produit'=>$produit->get_type_produit(),
 					'quantite_produit'=>$produit->get_quantite_produit(),

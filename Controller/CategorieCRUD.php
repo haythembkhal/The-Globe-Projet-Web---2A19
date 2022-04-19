@@ -22,14 +22,13 @@
 
 		function AjouterCategorie($categorie)
 		{
-			$sql="INSERT INTO categories (id_cat, nom_cat) 
-			VALUES (:id_cat, :nom_cat)";
+			$sql="INSERT INTO categories (nom_cat) 
+			VALUES (:nom_cat)";
 			$db=config::getConnexion();
 			try
 			{
 				$query=$db->prepare($sql);
 				$query->execute([
-					'id_cat'=>$categorie->get_id_cat(),
 					'nom_cat'=>$categorie->get_nom_cat()
 				]);			
 			}
@@ -64,12 +63,10 @@
 				$db=config::getConnexion();
 				$query=$db->prepare(
 					'UPDATE categories SET 
-						id_cat= :id_cat,
 						nom_cat= :nom_cat,
 					WHERE id_cat= :id_cat'
 				);
 				$query->execute([
-					'id_cat'=>$categorie->get_id_cat(),
 					'nom_cat'=>$categorie->get_nom_cat(),
 					'id_cat'=>$id_cat
 				]);

@@ -11,28 +11,26 @@
     $Produit = null;
 
     if (
-        isset($_POST['id_produit']) &&
 		isset($_POST['nom_produit']) &&		
         isset($_POST['type_produit']) &&
 		isset($_POST['quantite_produit']) && 
         isset($_POST['prix_produit']) 
     ) {
         if (
-            !empty($_POST['id_produit']) && 
 			!empty($_POST['nom_produit']) &&
             !empty($_POST['type_produit']) && 
 			!empty($_POST['quantite_produit']) && 
             !empty($_POST['prix_produit'])
         ) {
             $Produit = new Produit(
-                $_POST['id_produit'],
+                null,
 				$_POST['nom_produit'],
                 $_POST['type_produit'], 
 				$_POST['quantite_produit'],
                 $_POST['prix_produit']
             );
             $ProduitCRUD->ModifierProduit($Produit,$_POST['id_produit']);
-            header('Location:AfficherProduit.php');
+            header('Location:AjouterProduit.php');
         }
         else
             $error = "Missing information";
@@ -258,37 +256,8 @@
                                 <div class="module-head">
                                     <h3>Modifier un produit</h3>
                                 </div>
-                                <form action="" method="POST" onsubmit="return ctrl()">
+                                <form action="" method="POST">
                                     <table class="table">
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                <label>                                  </label>
-                                                <label for="id_produit"> ID : </label>
-                                            </td>
-                                            <td>
-                                                <input type="text" name="id_produit" id="id_produit">
-                                            </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
                                         <tr>
                                             <td></td>
                                             <td></td>
@@ -298,7 +267,7 @@
                                                 <label for="nom_produit"> Nom : </label>
                                             </td>
                                             <td>
-                                                <input type="text" name="nom_produit" id="nom_produit" placeholder="nom du produit" minlength="1" maxlength="50">
+                                                <input type="text" name="nom_produit" id="nom_produit" placeholder="nom du produit" minlength="1" maxlength="50" value="<?php echo $Produit['nom_produit']; ?>">
                                                 <p>
                                                     <div class="error" id="error" style="color:red"></div>
                                                 </p>
@@ -330,7 +299,7 @@
                                                 <label for="type_produit"> Type : </label>
                                             </td>
                                             <td>
-                                                <select type="range" name="type_produit" id="type_produit">
+                                                <select type="range" name="type_produit" id="type_produit" value="<?php echo $Produit['type_produit']; ?>">
                                                     <option selected disabled>Type de produit</option>
                                                     <option value="Pull">Pull</option>
                                                     <option value="Sac">Sac</option>
@@ -364,7 +333,7 @@
                                                 <label for="quantite_produit"> Quantité  : </label>
                                             </td>
                                             <td>
-                                                <input type="number" name="quantite_produit" id="quantite_produit">
+                                                <input type="number" name="quantite_produit" id="quantite_produit" value="<?php echo $Produit['quantite_produit']; ?>">
                                             </td>
                                             <td>
                                             <td></td>
@@ -394,7 +363,7 @@
                                                 <label for="prix_produit"> Prix : </label>
                                             </td>
                                             <td>
-                                                <select name="prix_produit" id="prix_produit">
+                                                <select name="prix_produit" id="prix_produit" value="<?php echo $Produit['prix_produit']; ?>">
                                                     <option selected disabled>prix du produit</option>
                                                     <option value="28">28</option>
                                                     <option value="35">35</option>
@@ -438,7 +407,7 @@
                                                 <label>                                  </label>
                                             </td>
                                             <td>
-                                                <input type="hidden" value="<?PHP echo $_POST['id_produit'];?>" name="id_produit">
+                                                <input type="hidden" value="<?PHP echo $Produit['id_produit'];?>" name="id_produit">
                                             </td>
                                             <td>
                                                 <label>                                  </label>
@@ -482,7 +451,6 @@
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Id</th>
                                                     <th>Nom</th>
                                                     <th>Type</th>
                                                     <th>Quantité</th>
@@ -496,7 +464,6 @@
                                                     foreach($listeproduit as $produit){
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $produit['id_produit']; ?></td>
                                                     <td><?php echo $produit['nom_produit']; ?></td>
                                                     <td><?php echo $produit['type_produit']; ?></td>
                                                     <td><?php echo $produit['quantite_produit']; ?></td>

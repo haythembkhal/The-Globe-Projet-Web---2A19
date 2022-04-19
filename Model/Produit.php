@@ -3,11 +3,11 @@
 	class Produit
 	{
 		
-		private string $id_produit;
-		private string $nom_produit;
-		private string $type_produit;
-		private int $quantite_produit;
-		private int $prix_produit;
+		private $id_produit;
+		private $nom_produit;
+		private $type_produit;
+		private $quantite_produit;
+		private $prix_produit;
 		
 		//Constructor
 		public function __construct($id_produit, $nom_produit, $type_produit, $quantite_produit, $prix_produit)
