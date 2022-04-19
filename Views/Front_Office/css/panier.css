@@ -1,0 +1,16 @@
+#panier img {
+  width: 100px;
+  height: 100px;
+  margin: 0 15px;
+}
+
+#panier h4 {
+  display: inline-block;
+  margin: 0;
+  vertical-align: top;
+  text-transform: capitalize;
+}
+
+table {
+  margin-top: 4em;
+}

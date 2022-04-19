@@ -1,0 +1,20 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+a{
+    color: #4cae4c;
+}
+.espace{
+  height: 7em;
+}
+ul li{
+  list-style: none;
+}
+.article{
+  border: 1px solid #B0EC99;
+  border-radius: 5px;
+  margin-bottom: 1em;
+  padding: 10px;
+}

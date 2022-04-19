@@ -1,0 +1,69 @@
+body{
+    padding-top: 10px;
+}
+#imagehomepage {
+  margin-bottom: 2em;
+}
+
+#imagehomepage img {
+  width: 100%;
+}
+
+#apropos {
+  margin: auto;
+  text-align: center;
+}
+
+#apropos div {
+  width: 90%;
+  margin: 1em auto;
+  padding: 2em;
+  border: solid 2px #B0EC99;
+  border-radius: 1em;
+}
+
+#contact {
+  width: 90%;
+  margin: 1em auto;
+  background-color: #F7F7F7;
+  padding-bottom: 2em;
+  border-radius: 1em;
+}
+
+#contact * {
+  display: block;
+}
+
+#contact label {
+  padding: 20px 0;
+  background-color: #B0EC99;
+  color: #FFF;
+  font-size: 2.5em;
+  text-align: center;
+  border-radius: 0.4em 0.4em 0 0;
+}
+
+#contact input {
+  width: 90%;
+  margin: 1em auto;
+  height: 2.5em;
+  padding: 0.5em;
+  border: solid 1px #CCC;
+}
+
+#contact textarea {
+  width: 90%;
+  margin: auto;
+  margin: 1em auto;
+  padding: 0.5em;
+  border: solid 1px #CCC;
+}
+#contact button {
+  width: 90%;
+  margin: 0.5em auto;
+  background-color: #B0EC99;
+  color: #FFF;
+  font-size: 1.5em;
+  padding: 1em;
+  border: none;
+}

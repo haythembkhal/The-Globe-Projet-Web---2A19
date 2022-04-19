@@ -1,0 +1,42 @@
+
+.no-padding{
+  margin: 0;
+  padding:0;
+}
+
+div .row .marge{
+
+}
+.form-control{
+  width: 70%;
+  margin-bottom: 2em;
+
+}
+
+div> .row.taille{
+  padding-top: 2em;
+  height:4em;
+}
+#retourbutton .btn-success{
+    margin-top: 2em;
+    margin-left: 4em;
+    color: white;
+    border-color:#4cae4c;
+}
+#borderspecial{
+border: 2px solid #B0EC99;
+border-radius: 5px;
+
+}
+.espace{
+  margin: 5em 0;
+}
+.centrage{
+    text-align: center;
+}
+.commentaires{
+    margin-top: 2em;
+}
+.divmilieupadding{
+    padding: 2em;
+}
