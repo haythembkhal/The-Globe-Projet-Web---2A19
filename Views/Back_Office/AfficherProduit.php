@@ -258,7 +258,7 @@
                                             <td></td>
                                             <td>
                                                 <label>                                  </label>
-                                                <label for="id_produit"> ID : </label>
+                                                <label for="id_produit"> Id : </label>
                                             </td>
                                             <td>
                                                 <input type="text" name="id_produit" id="id_produit">

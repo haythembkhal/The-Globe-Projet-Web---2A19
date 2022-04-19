@@ -433,12 +433,12 @@
                                             <td></td>
                                             <td></td>
                                             <td>
-                                                <input type="hidden" value="<?PHP echo $_POST['id_produit'];?>" name="id_produit">
+                                            <label>                                  </label>
+                                                <input type="submit" class="btn" id="Modifier" value="Modifier"> 
+                                                <label>                                  </label>
                                             </td>
                                             <td>
-                                            <label>                                  </label>
-                                                <input class="btn" type="submit" value="Modifier"> 
-                                                <label>                                  </label>
+                                                <input type="hidden" value="<?PHP echo $_POST['id_produit'];?>" name="id_produit">
                                             </td>
                                             <td>
                                                 <label>                                  </label>
