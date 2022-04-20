@@ -249,7 +249,7 @@
                                 <div class="module-head">
                                     <center><h3>Modifier un categorie</h3><center>
                                 </div>
-                                <form action="" method="POST">
+                                <form action="" method="POST" onsubmit="return CTRL()">
                                     <table class="table">
                                         <tr>
                                             <td></td>
@@ -262,7 +262,7 @@
                                             <td>
                                                 <input type="text" name="nom_cat" id="nom_cat" placeholder="nom du categorie" minlength="1" maxlength="20" value="<?php echo $Categorie['nom_cat']; ?>" >
                                                 <p>
-                                                    <div class="error" id="error" style="color:red"></div>
+                                                    <div class="error" id="error_nom_cat" style="color:red"></div>
                                                 </p>
                                             </td>
                                             <td></td>
@@ -333,6 +333,33 @@
                                         </tr>
                                     </table>
                                 </form>
+
+                                <script>
+
+                                function CTRL()
+                                {
+                                    var nom_cat=document.getElementById("nom_cat").value;
+                                    var error_nom_cat = document.getElementById("error_nom_cat");
+
+                                    if(nom_cat=="")
+                                    {
+                                        document.getElementById('error_nom_cat').innerHTML="Il faut saisie un nom pour le categorie !";  
+                                        return false;
+                                    }
+                                    else 
+                                        if(nom_cat.charAt(0)>="a" && nom_cat.charAt(0)<="z")
+                                        {
+                                            error_nom_cat.innerHTML="Il faut que le nom du categorie commencé par une lettre majuscule !";  
+                                            return false;
+                                        }
+                                        else
+                                        {
+                                            error_nom_cat.innerHTML="";  
+                                        }
+                                }
+
+                                </script>
+
                             </div>
                         </div>
                         <div class="content">

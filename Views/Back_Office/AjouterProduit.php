@@ -32,7 +32,7 @@
                 $_POST['prix_produit']
             );
             $Produits->AjouterProduit($Produit);
-            header('Location:AjouterProduit.php');
+            header('Loproduition:AjouterProduit.php');
         }
         else
             $error = "Missing information";
@@ -249,7 +249,7 @@
                                 <div class="module-head">
                                     <center><h3>Ajouter un produit</h3><center>
                                 </div>
-                                <form action="" method="POST">
+                                <form action="" method="POST" onsubmit="return CTRL()">
                                     <table class="table">
                                         <tr>
                                             <td></td>
@@ -262,7 +262,7 @@
                                             <td>
                                                 <input type="text" name="nom_produit" id="nom_produit" placeholder="nom du produit" minlength="1" maxlength="50">
                                                 <p>
-                                                    <div class="error" id="error" style="color:red"></div>
+                                                    <div class="error" id="error_nom_produit" style="color:red"></div>
                                                 </p>
                                             </td>
                                             <td></td>
@@ -327,6 +327,9 @@
                                             </td>
                                             <td>
                                                 <input type="number" name="quantite_produit" id="quantite_produit">
+                                                <p>
+                                                    <div class="error" id="error_quantite_produit" style="color:red"></div>
+                                                </p>
                                             </td>
                                             <td>
                                             <td></td>
@@ -395,9 +398,6 @@
                                             <td></td>
                                             <td></td>
                                             <td>
-                                                <!--<input type="hidden" value="<?PHP// echo $_POST['id_produit'];?>" name="id_produit">-->
-                                            </td>
-                                            <td>
                                             <label>                                  </label>
                                                 <input class="btn" type="submit" value="Ajouter"> 
                                                 <label>                                  </label>
@@ -432,6 +432,52 @@
                                         </tr>
                                     </table>
                                 </form>
+                                <script>
+
+                                function CTRL()
+                                {
+                                    var nom_produit=document.getElementById("nom_produit").value;
+                                    var error_nom_produit = document.getElementById("error_nom_produit");
+
+                                    var quantite_produit=document.getElementById("quantite_produit").value;
+                                    var error_quantite_produit = document.getElementById("error_quantite_produit");
+
+                                    if(nom_produit=="")
+                                    {
+                                        document.getElementById('error_nom_produit').innerHTML="Il faut saisie un nom pour le produit !";  
+                                        return false;
+                                    }
+                                    else 
+                                        if(nom_produit.charAt(0)>="a" && nom_produit.charAt(0)<="z")
+                                        {
+                                            error_nom_produit.innerHTML="Il faut que le nom du produit commencé par une lettre majuscule !";  
+                                            return false;
+                                        }
+                                        else
+                                        {
+                                            error_nom_produit.innerHTML="";  
+                                        }
+
+                                    if(quantite_produit=="")
+                                    {
+                                        document.getElementById('error_quantite_produit').innerHTML="Il faut mettre le quantite de ce produit !";  
+                                        return false;
+                                    }
+                                    else 
+                                        if(quantite_produit<= 0)
+                                        {
+                                            error_quantite_produit.innerHTML="Il faut que la quantite du produit doit superieure a 0 !";  
+                                            return false;
+                                        }
+                                        else
+                                        {
+                                            error_quantite_produit.innerHTML="";  
+                                        }
+
+                                }
+
+                                </script>
+
                             </div>
                         </div>
                         <div class="content">
