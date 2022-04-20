@@ -32,7 +32,7 @@
                 $_POST['prix_produit']
             );
             $Produits->AjouterProduit($Produit);
-            header('Loproduition:AjouterProduit.php');
+            header('Location:AjouterProduit.php');
         }
         else
             $error = "Missing information";
