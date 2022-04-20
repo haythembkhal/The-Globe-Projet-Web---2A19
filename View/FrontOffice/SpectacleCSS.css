@@ -203,27 +203,19 @@ width:700px;
         top: 98%;
         position: absolute;
         right:20%;
-        /* background: transparent url(
-          '../images/pnl.jpg'); */
-              /* background-size: cover; */
-              /* width: 300px; */
-              /* height: 200px; */
-              /* font-size: 2rem; */
     color:green;
             }
     
-    #thumbsDown
+
+
+  #thumbsDown
     {
-      background-image: url(
-        '../images/pnl.jpg');
-                    background-size: cover;
-  color:red;
-              
-        top:98%;
+        top: 98%;
         position: absolute;
-      right:1%;
-    }
-    
+        right: 20%;
+        color:red;
+    }            
+
 #videoPopup
 {
   position: absolute;
@@ -310,3 +302,7 @@ background-color: rgba(0, 0, 0, 0.3);
   color:#aaa;
   margin-bottom:0;
 }
+
+
+
+

@@ -19,8 +19,15 @@ public function afficher()
 			 ?>
 	<div class="item vhny-grid">
 						<div class="box16">
-						<a href="http://localhost/Module%20Spectacle/View/FrontOffice/spectacleChoix.php?description=<?php echo $spectacle['description'];?>&hotel=<?php echo $spectacle['hotel'];?>&resto=<?php echo $spectacle['resto'];?>&gare=<?php echo $spectacle['gare'] ?>&imgportrait=<?php echo $spectacle['imgportrait'];?>&realisateurs=<?php echo $spectacle['realisateurs'];?>&video=<?php echo $spectacle['video'];?>&carte=<?php echo $spectacle['carte'];?>&imglandscape=<?php echo $spectacle['imglandscape'];?>&plan=<?php echo $spectacle['plan'];?>&titre=<?php echo $spectacle['titre']; ?>
-&dateSpec=<?php echo $spectacle['dateSpec'];?>&duration=<?php echo $spectacle['duration'];?>&adresse=<?php echo $spectacle ['adresse'];?>&gare=<?php echo $spectacle['gare'];?>">
+						<a href="http://localhost/Module%20Spectacle/View/FrontOffice/spectacleChoix.php?specId=<?php
+						 echo $spectacle['spectacleId'];?>&description=<?php echo $spectacle['description'];?>
+						 &hotel=<?php echo $spectacle['hotel'];?>&resto=<?php echo $spectacle['resto'];?>&gare=
+						 <?php echo $spectacle['gare'] ?>&imgportrait=<?php echo $spectacle['imgportrait'];?>
+						 &realisateurs=<?php echo $spectacle['realisateurs'];?>&video=<?php echo $spectacle['video'];?>
+						 &carte=<?php echo $spectacle['carte'];?>&imglandscape=<?php echo $spectacle['imglandscape'];?>
+						 &plan=<?php echo $spectacle['plan'];?>&titre=<?php echo $spectacle['titre']; ?>
+						 &dateSpec=<?php echo $spectacle['dateSpec'];?>&duration=<?php echo $spectacle['duration'];?>
+						 &adresse=<?php echo $spectacle ['adresse'];?>">
 
 
 								<figure>
@@ -40,9 +47,15 @@ public function afficher()
 					if($var==1)
 					{?>
 						<div class="box16 mt-4">
-						<a href="http://localhost/Module%20Spectacle/View/FrontOffice/spectacleChoix.php?description=<?php echo $spectacle['description'];?>&hotel=<?php echo $spectacle['hotel'];?>&resto=<?php echo $spectacle['resto'];?>&gare=<?php echo $spectacle['gare'] ?>&imgportrait=<?php echo $spectacle['imgportrait'];?>&realisateurs=<?php echo $spectacle['realisateurs'];?>&video=<?php echo $spectacle['video'];?>&carte=<?php echo $spectacle['carte'];?>&imglandscape=<?php echo $spectacle['imglandscape'];?>&plan=<?php echo $spectacle['plan'];?>&titre=<?php echo $spectacle['titre']; ?>
-&dateSpec=<?php echo $spectacle['dateSpec'];?>&duration=<?php echo $spectacle['duration'];?>&adresse=<?php echo $spectacle ['adresse'];?>&gare=<?php echo $spectacle['gare'];?>">
-
+						<a href="http://localhost/Module%20Spectacle/View/FrontOffice/spectacleChoix.php?specId=<?php
+						 echo $spectacle['spectacleId'];?>&description=<?php echo $spectacle['description'];?>
+						 &hotel=<?php echo $spectacle['hotel'];?>&resto=<?php echo $spectacle['resto'];?>&gare=
+						 <?php echo $spectacle['gare'] ?>&imgportrait=<?php echo $spectacle['imgportrait'];?>
+						 &realisateurs=<?php echo $spectacle['realisateurs'];?>&video=<?php echo $spectacle['video'];?>
+						 &carte=<?php echo $spectacle['carte'];?>&imglandscape=<?php echo $spectacle['imglandscape'];?>
+						 &plan=<?php echo $spectacle['plan'];?>&titre=<?php echo $spectacle['titre']; ?>
+						 &dateSpec=<?php echo $spectacle['dateSpec'];?>&duration=<?php echo $spectacle['duration'];?>
+						 &adresse=<?php echo $spectacle ['adresse'];?>">
 
 								<figure>
 									<img class="img-fluid" src=" <?php echo $spectacle['imglandscape'];?>" alt="">

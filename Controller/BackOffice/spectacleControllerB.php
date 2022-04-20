@@ -12,7 +12,7 @@ $_SESSION['resto']="";
 $_SESSION['hotel']="";
 $_SESSION['gare']="";
 
-
+$_SESSION['idSpec']="";
 $_SESSION['video']="";
 $_SESSION['carte']="";
 $_SESSION['description']="";
@@ -21,10 +21,45 @@ $_SESSION['realisateurs']="";
 // $_SESSION['imgLand']=$_POST["imgLand"];
 // $_SESSION['imgPort']=$_POST["imgPort"];
 
-function afficher (): void {
+function afficher (): void {  //Implementation de recherche a linteurieur
         try{
-            $query= config::$pdo->query('SELECT * FROM spectacles');
+          if(isset($_POST['triDate']))
+          {
+            $query= config::$pdo->query('SELECT * FROM spectacles ORDER BY dateSpec');
+            $list=$query->fetchAll();         
+          }
+          else if(isset($_POST['triAlpha']))
+          {
+            $query= config::$pdo->query('SELECT * FROM spectacles ORDER BY titre');
+            $list=$query->fetchAll(); 
+          }
+          else if(isset($_POST['rechercheId']))
+          {
+            $query= config::$pdo->prepare('SELECT COUNT(*) FROM spectacles where spectacleId=:id');
+            $query->bindParam(':id',$_POST['rechercheId']);
+            $query->execute();
+            $list=$query->fetch();
+
+            $var=array_values($list)[0]; // Outputs: Apple
+            // echo $var;
+            if($var==0)
+            {
+              $query= config::$pdo->query('SELECT * FROM spectacles');
+              $list=$query->fetchAll();
+            }
+            else
+            { $query= config::$pdo->prepare('SELECT * FROM spectacles where spectacleId=:id');
+            $query->bindParam(':id',$_POST['rechercheId']);
+            $query->execute();
             $list=$query->fetchAll();
+            }
+          }
+          else
+            {
+              $query= config::$pdo->query('SELECT * FROM spectacles');
+              $list=$query->fetchAll();
+            }
+         
         }
         catch(PDOException $e){
         echo $e->getMessage();
@@ -35,17 +70,11 @@ function afficher (): void {
                 <td><?= $spectacle['dateSpec']?></td>
                 <td><?= $spectacle['duration']?></td>
                 <td><?= $spectacle['adresse']?></td>
-                <td><?= $spectacle["hotel"]?></td>
-                <td><?= $spectacle["resto"]?></td>
-                <td><?= $spectacle["gare"]?></td>
+                <!-- <td><$spectacle["hotel"]</td> -->
+                <!-- <td>< $spectacle["resto"]</td> -->
+                <!-- <td> $spectacle["gare"]</td> -->
                 <td><?= $spectacle['description'] ?></td>  
                 <td><?= $spectacle['realisateurs']?></td>
-                <td><?= $spectacle["carte"]?></td>
-                <td> <?= $spectacle['video']?></td>
-                <td> <?= $spectacle['plan']?></td>
-                <td> <?= $spectacle["imgportrait"]?></td>
-                <td> <?= $spectacle["imglandscape"]?></td>
-                
                 <td>  <form method="POST">
                 <input type="hidden" id="delete" name="delete" value="<?php 
                 echo $spectacle['spectacleId'];?>"> 
@@ -125,6 +154,7 @@ function ajouterSpec($titre,$date,$duration,$adresse,$hotel,$resto,$gare,$descri
             $query->bindParam(':imgportrait', $imgportrait);
 
             $query->execute();
+
             $_SESSION['message']="Ajout Avec Succes !";
     }
         catch(PDOException $e){
@@ -218,25 +248,35 @@ if (isset($_POST["delete"]))
 }
 
 
+
 if(isset($_POST["button"]) && isset($_POST["titre"]) && isset($_POST["date"]) 
 && isset($_POST["adresse"]) && isset($_POST["duration"]) && isset($_POST["hotel"]) 
 && isset($_POST["resto"]) && isset($_POST["gare"]) && isset($_POST["desc"]) 
-&& isset($_POST["realisateurs"]) && isset($_POST["plan"])  && isset($_POST["carte"]) 
-&& isset($_POST["video"])  && isset($_POST["imgLand"]) && isset($_POST["imgPort"])) 
+&& isset($_POST["realisateurs"])  && isset($_POST["carte"]) 
+&& isset($_POST["video"])) 
 {
     
   
 $status=$_POST["button"];
 
-$plan="assets/images/".$_POST["plan"];
-$imgportrait="assets/images/".$_POST["imgPort"];
-$imglandscape="assets/images/".$_POST["imgLand"];
+$tempLand=$_FILES['imgLand']['tmp_name'];
+$tempPort=$_FILES['imgPort']['tmp_name'];
+// $tempPlan=$_FILES['plan']['tmp_name'];
+
+// $plan="assets/images/".$_FILES['plan']['name'];  va etre utiliser dans un futur proche
+$plan=$_POST["plan"];
+
+$imgportrait="assets/images/".$_FILES['imgPort']['name'];
+$imglandscape="assets/images/".$_FILES['imgLand']['name'];
 
 $spectacle=new SpectaclesC($_POST["idS"],$_POST["titre"],$_POST["date"],$_POST["duration"],$_POST["adresse"],$_POST["hotel"],$_POST["resto"],$_POST["gare"],$_POST["desc"],$_POST["realisateurs"],$plan,$_POST["video"],$_POST["carte"],$imglandscape,$imgportrait);    
 
-
+// move_uploaded_file($tempPlan,"../../View/FrontOffice/".$plan); va etre utiliser dans un futur proche
+move_uploaded_file($tempPort,"../../View/FrontOffice/".$imgportrait);
+move_uploaded_file($tempLand,"../../View/FrontOffice/".$imglandscape);
 if($status=="Ajouter") //faut la laisser sinon je vais faire une mise a jour et un ajout en meme tmeps, jaurais pu la mettre dans le 'if' statement
- {
+ {            
+
         ajouterSpec($spectacle->getTitre(),$spectacle->getDate(),$spectacle->getDuration(),$spectacle->getAdresse(),$spectacle->getHotel(),$spectacle->getResto(),$spectacle->getGare(),$spectacle->getDesc(),$spectacle->getReal(),$spectacle->getPlan(),$spectacle->getVideo(),$spectacle->getCarte(),$spectacle->getLand(),$spectacle->getPort());
  }
  

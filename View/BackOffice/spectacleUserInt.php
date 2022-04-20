@@ -1,6 +1,8 @@
 <?php 
 //class definition
 include_once '..\..\Controller\BackOffice\spectacleControllerB.php';
+include_once '..\..\Controller\BackOffice\commentaireControllerB.php';
+
 ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,9 +21,6 @@ include_once '..\..\Controller\BackOffice\spectacleControllerB.php';
 	<link rel="stylesheet" href="backendCSS.css">
 
 
-	
-
-	
 <script>
 
 function ctrlSaisie(event)
@@ -35,26 +34,31 @@ var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
 
+
+var cmon=document.getElementById("input1")
+var cprenom=document.getElementById("input2")
+var cemail=document.getElementById("input3")
+
 if(!(titre.charAt(0)>="A" && titre.charAt(0)<="Z"))
 {
-    alert("Titre doit commence par majuscule!!");
-	event.preventDefault();
-}
-
-if(duration.includes('m')==false){
-alert('Il faut saisir en mintues de la facon suivante XXX m');
-
+	// event.preventDefault();
+	input1.innerHTML="Titre doit commencer par une majuscule!!";
+	return false;
 }
 
 //date condition 
 today = yyyy + '-' + mm + '-' + dd;
 if (date<today){
-	alert("Date doit etre superieur a la date d'aujourd'hui !!");
+	input2.innerHTML="Date doit etre superieur a la date d'aujourd'hui !!";
+	return false;
+}
+if(duration.includes('m')==false){
+	input3.innerHTML="Il faut saisir en mintues de la facon suivante XXX m"
+return false;
+}
 }
 
-}
-
-</script>
+</script> 
 </head>
 <body style="background-color:white;">
 
@@ -82,9 +86,9 @@ if (date<today){
 						</a></li>
 					</ul>
 
-					<form class="navbar-search pull-left input-append" action="#">
+					<form class="navbar-search pull-left input-append" >
 						<input type="text" class="span3">
-						<button class="btn" type="button">
+						<button class="btn" type="submit">
 							<i class="icon-search"></i>
 						</button>
 					</form>
@@ -266,18 +270,19 @@ if (date<today){
 							
 			<div class="module-body table">	
 				<h3>Table Spectacles</h3>
-				<form method="POST" onsubmit="ctrlSaisie(event);">
+				<form method="POST" enctype="multipart/form-data" onsubmit="return ctrlSaisie();">
 					  <div style="position: absolute;">	
 					
 						<label for="titre"> Titre:</label>	
-						<input type="text" id="titre" name="titre" value="<?php echo $_SESSION['titre'];?>"required>
-					
+						<input type="text" id="titre" name="titre" value="<?php echo $_SESSION['titre'];?>" required>
+					<p id="input1"></p>
 					<label for="date">Date:</label>
-					<input type="datetime" id="date" name="date"required>
-					
+					<input type="datetime-local" id="date" name="date" value="<?php echo $_SESSION['date'];?>"required>
+					<p id="input2"></p>
 					<label for="duration">Durée:</label>
 					<input type="text" id="duration" name="duration" value="<?php echo $_SESSION['duration'];?>"required>
-					
+					<p id="input3"></p>
+
 					<label for="adresse">Adresse:</label>
 					<input type="text" id="adresse" name="adresse"value="<?php echo $_SESSION['adresse'];?>"required>
 
@@ -293,11 +298,14 @@ if (date<today){
 
                   <div  style="float:right;" style="position: relative;">				
 
-					<label for="plan">Plan de la salle:</label>
-					<input type="file" id="plan" name="plan" accept="image/*" required>
+					<!-- <label for="plan">Plan de la salle:</label> -->
+					<!-- <input type="file" id="plan" name="plan" accept="image/*" > -->
+					<input type="hidden" id="plan" name="plan" value="champ non utilisé">
+
 
 					<label for="imgLand">Img Landscape:</label>
 					<input type="file" id="imgLand" name="imgLand" accept="image/*"required>
+
 					
 					<label for="imgPort">Img Portait:</label>
 					<input type="file" id="imgPort" name="imgPort" accept="image/*"required>
@@ -309,13 +317,13 @@ if (date<today){
 					<input type="text" id="carte" name="carte" value="<?php echo $_SESSION['carte'];?>"required>
 
 					<label for="desc" >Description:</label>
-					<input type="text" id="desc" name="desc" value="<?php echo $_SESSION['description'];?>"required>
+					<textarea type="text" id="desc" name="desc" required> <?php echo $_SESSION['description'];?></textarea>
 
 					<label for="realisateurs">Realisateurs:</label>
-					<input type="text" id="realisateurs" name="realisateurs" value="<?php echo $_SESSION['realisateurs'];?>"required> 
+					<textarea type="text" id="realisateurs" name="realisateurs" required><?php echo $_SESSION['realisateurs'];?> </textarea>
 				
 					<label style="color:red;"for="id"> Tu es entrain de modifier l'identifiant:</label>	
-						<input type="text" id="idS" name="idS" value=" <?php echo $_SESSION['idSpec']; $_SESSION['idSpec']=""; ?>"readonly>
+						<input type="text" id="idS" name="idS" value=" <?php echo $_SESSION['idSpec'];?>" readonly>
 			
 <br>
 <br>
@@ -324,7 +332,7 @@ if (date<today){
 					<input name="button" type="submit"value="Modifier" style="position:relative;"  style="right: 7%;" class="regButton">
 			<input name="button" type="submit"value="Ajouter" style="position:relative;"  style="right: 7%;" class="regButton">
 				</form>	
-</div>
+		</div>
 			<br><br><br>
 			<br><br><br><br>
 			<br><br><br><br><br>
@@ -332,17 +340,18 @@ if (date<today){
 			<br><br><br>
 			<br><br><br>
 			<br><br><br>
-		
 			<div class="dropdown" style="float:left;">
 					<button class="dropbtn" >Trier</button>
+					<form method='POST'>
 					<div class="dropdown-content" style="left:0;">
-					  <a href="#">Identifiant</a>
-					  <a href="#">Durée</a>
-					  <a href="#">Alphabétique</a>
+					  <button type="submit" name="triDate" value="date" class="regButton">Date</button>
+					  <br><br><br>
+					  <button type="submit" name="triAlpha" value="alpha" class="regButton">Alphabétique</button>
 					</div>
 				  </div>	
-		</div>
-		
+				  </form>
+				</div>
+
 		  
 
 		<br><br><br><br>
@@ -361,19 +370,14 @@ if (date<today){
 							<th>Date</th>
 							<th>Durée</th>
 							<th>Adresse</th>
-							<th>Hotels Proche</th>
+							<!-- <th>Hotels Proche</th>
 							<th>Restaurant Proche</th>
-							<th>Gare Proche</th>
+							<th>Gare Proche</th> -->
 							<th>Description</th>
 						<th>Liste des Realisateurs</th>
-						<th>Carte</th>
-						<th>Video</th>
-						<th>Plan de la Salle</th>
-						<th>Img Portrait</th>
-						<th>Img Landscape</th>
-							<th colspan="2">	<form class="example" action="/action_page.php" style="margin:auto;max-width:300px">
-								<input style="height: 42px;" type="text" placeholder="Search.." name="search">
-								<button  type="submit"><i class="fa fa-search"></i></button>
+							<th colspan="2">	<form class="example" method="POST" style="margin:auto;max-width:300px">
+								<input   name="rechercheId" style="height: 42px;" type="text" placeholder="Search.." name="search">
+								<button   name="btnRecherche" type="submit"><i class="fa fa-search"></i></button>
 							  </form></th>
 						</tr>
 					</thead>
@@ -387,16 +391,11 @@ if (date<today){
 							<th>Date</th>
 							<th>Durée</th>
 							<th>Adresse</th>
-							<th>Hotels Proche</th>
+							<!-- <th>Hotels Proche</th>
 							<th>Restaurant Proche</th>
-							<th>Gare Proche</th>
+							<th>Gare Proche</th> -->
 							<th>Description</th>
 						<th>Liste des Realisateurs</th>
-						<th>Carte</th>
-						<th>Video</th>
-						<th>Plan de la Salle</th>
-						<th>Img Portrait</th>
-						<th>Img Landscape</th>
 							<th colspan="2">	<form class="example" action="/action_page.php" style="margin:auto;max-width:300px">
 								<input style="height: 42px;" type="text" placeholder="Search.." name="search">
 								<button  type="submit"><i class="fa fa-search"></i></button>
@@ -408,53 +407,66 @@ if (date<today){
 			<br>
 		<br>
 <hr>
-			<h3>Table Evaluation</h3>
-		<div class="dropdown" style="float:left;">
-			<button class="dropbtn" >Trier</button>
-			<div class="dropdown-content" style="left:0;">
-			  <a href="#">Identifiant</a>
-			  <a href="#">Date</a>
-			  
-			</div>
+			<h3>Table Commentaires</h3>
+			<form method="POST">
+					  <div style="position: relative;">	
+					
+						<label for="titre"> Nom Du Spectacle:</label>	
+						<input type="text" id="spec" name="spec" value="<?php echo $_SESSION['titreSpec']?>" readonly>
+						
+						<label for="titre"> Nom De L'Utilisateur:</label>	
+						<input type="text" id="user" name="user" value="<?php echo $_SESSION['idUser']?>" readonly>
+
+						<label for="titre"> Date Postée:</label>	
+						<input type="date" id="dateCommentaire" name="dateCommentaire" value="<?php echo $_SESSION['dateComment']?>" readonly>
+
+						<label for="comment"> Commentaire:</label>	
+						<textarea type="textbox" id="comment" name="comment" required> <?php echo $_SESSION['commentaire']?> </textarea>
+						
+						<br>
+						<!-- <input type="radio" id="liked" name="avis" value="liked" required><ion-icon name="thumbs-up-outline"></ion-icon> -->
+  					  <!-- <input type="radio" id="disliked" name="avis" value="disliked" required> <ion-icon name="thumbs-down-outline"></ion-icon> -->
+						<!-- au lieu de radio je vais utiliser un hidden pour le moment, va falloir lenlever apres -->
+  					  <input type="hidden" id="temp" name="avis" value="disliked" required> 
+<!-- ill need to get rid ofthis -->
+
+
+						<input type="hidden" id="idEval" name="idEval" value="<?php echo $_SESSION['idEval'];?>"> 
+						
+						<br> <br> 
+						<input name="button" type="submit"value="Modifier" style="position:absolute;"  style="right: 970%;" class="regButton">
+					</div>
+					</form>
+	<br> <br> 	<br> <br> 
+	
+			<p style="color:red;" > 
+		<?php 
+			echo $_SESSION['messageComment'];
+				?></p>
 		  </div>
-	<br><br><br>
+
 		<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
 			<thead>
 				<tr>
-					<th>Evaluation ID</th>
-			
+				<th>Nom De L'Utilisateur</th>
+					<th>Nom Du Spectacle</th>
 					<th>Date</th>
 					<th>Commentaire</th>
 					<th>Liked ou Disliked</th>
-					<th colspan="2">	<form class="example" action="/action_page.php" style="margin:auto;max-width:300px">
-						<input style="height: 42px;" type="text" placeholder="Search.." name="search2">
-						<button  type="submit"><i class="fa fa-search"></i></button>
-					  </form></th>
+					<th colspan="2"> Suppression et Modification</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="odd gradeX">
-					<td>1</td>
-					<td>Inteeeeernet
-						 </td>
-					
-					<td> ddd4 dd d  4 d  dd4dd d4d d d4d dd4 ddd 4dd d 4ddd4 ddd4d dd4ddd4</td>
-					<td >XzeeeXzee eXzeeeXzee eXzeeeXzeeeXzeee XzeeeXzeee Xzeee</td>
-					<td><button >Supprimer</button></td>
-					<td><button >Modifier</button></td>
-				</tr>
+			<?php afficherComment();?>
 </tbody>
 			<tfoot>
 				<tr>
-					<th>Evaluation ID</th>
-			
+				<th>Nom De L'Utilisateur</th>
+					<th>Nom Du Spectacle</th>
 					<th>Date</th>
 					<th>Commentaire</th>
 					<th>Liked ou Disliked</th>
-					<th colspan="2">	<form class="example" action="/action_page.php" style="margin:auto;max-width:300px">
-						<input style="height: 42px;" type="text" placeholder="Search.." name="search2">
-						<button  type="submit"><i class="fa fa-search"></i></button>
-					  </form></th>
+					<th colspan="2"> Suppression et Modification</th>
 				</tr>
 			</tfoot>
 		</table>
@@ -468,7 +480,7 @@ if (date<today){
 	<div class="footer">
 		<div class="container">
 			 
-
+		<br> <br> <br> <br><br> <br> <br> <br><br> <br> <br> <br><br> <br> <br> <br><br> <br> <br> <br>
 			<b class="copyright">&copy; 2014 Edmin - EGrappler.com </b> All rights reserved.
 		</div>
 	</div>
