@@ -185,7 +185,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="table_partenaires.html">
+                                            <a href="table_categories.html">
                                                 <i class="menu-icon icon-table"></i>
                                                 Categories
                                             </a>
@@ -245,6 +245,8 @@
                                 $Categorie = $CategorieCRUD->RecupererCategorie($_POST['id_cat']);
                             }
                             ?>
+                            <a href="AjouterCategorie.php"><button class="btn">Retour</button></a>
+                            <hr>
                             <div class="module">
                                 <div class="module-head">
                                     <center><h3>Modifier un categorie</h3><center>
@@ -262,7 +264,7 @@
                                             <td>
                                                 <input type="text" name="nom_cat" id="nom_cat" placeholder="nom du categorie" minlength="1" maxlength="20" value="<?php echo $Categorie['nom_cat']; ?>" >
                                                 <p>
-                                                    <div class="error" id="error_nom_cat" style="color:red"></div>
+                                                    <div id="error_nom_cat" style="color:red"></div>
                                                 </p>
                                             </td>
                                             <td></td>
@@ -372,6 +374,7 @@
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
+                                                    <th>   </th>
                                                     <th>Nom</th>
                                                 </tr>
                                             </thead>
@@ -380,6 +383,7 @@
                                                     foreach($listecategorie as $categorie){
                                                 ?>
                                                 <tr>
+                                                    <td>  </td>
                                                     <td><?php echo $categorie['nom_cat']; ?></td>
                                                     <td>
                                                         <form method="POST" action="" align="center">
@@ -436,35 +440,26 @@
                 </div>
             </div>
         </div>
-        <div class="footer">
-		<div class="container">
-			<b class="copyright">&copy; 2022 The globe </b> All rights reserved.
-		</div>
-	    </div>
 
+        <div class="footer">
+            <div class="container">
+                <b class="copyright">&copy; 2022 The globe </b> All rights reserved.
+            </div>
+	    </div>
+        
+        <script src="scripts/jquery-1.9.1.min.js"></script>
+        <script src="scripts/jquery-ui-1.10.1.custom.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="scripts/datatables/jquery.dataTables.js"></script>
         <script>
-            function ctrl()
-            {
-                var nom_cat=document.getElementById("nom_cat").value;
-                
-                if(nom_cat.charAt(0)>="A" && nom_cat.charAt(0)<="Z")
-                {
-                    document.getElementById('error').innerHTML="Il faut que le nom du cat commencé par une lettre majuscule !";  
-                    return false;
-                }
-                else
-                {
-                    if(nom_cat=="")
-                    {
-                        document.getElementById('error').innerHTML="Il faut saisie un nom pour le cat !";  
-                        return false;
-                    }
-                }
-                else
-                {
-                    document.getElementById('error').innerHTML="";  
-                }
-            }
-        </script>
+            $(document).ready(function() {
+                $('.datatable-1').dataTable();
+                $('.dataTables_paginate').addClass("btn-group datatable-pagination");
+                $('.dataTables_paginate > a').wrapInner('<span />');
+                $('.dataTables_paginate > a:first-child').append('<i class="icon-chevron-left shaded"></i>');
+                $('.dataTables_paginate > a:last-child').append('<i class="icon-chevron-right shaded"></i>');
+            } );
+	    </script>
+
     </body>
 </html>

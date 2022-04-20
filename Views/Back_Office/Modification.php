@@ -1,41 +1,64 @@
 <?php
 
     include_once '../../Model/Produit.php';
-	include_once '../../Controller/ProduitCRUD.php';
-	
-	$ProduitCRUD = new ProduitCRUD();
-	$listeproduit=$ProduitCRUD->AfficherProduit(); 
+    include_once '../../Model/Categorie.php';
+    include_once '../../Controller/CRUD.php';
+
+    $ProduitCRUD = new ProduitCRUD();
+    $CategorieCRUD = new CategorieCRUD();
+
+    $listeproduit=$ProduitCRUD->AfficherProduit(); 
+    $listecategorie=$CategorieCRUD->AfficherCategorie(); 
 
     $error = "";
 
     $Produit = null;
+    $Categorie = null;
 
     $Produits = new ProduitCRUD();
+    $Categories = new CategorieCRUD();
 
     if (
-		isset($_POST['nom_produit']) &&		
+        isset($_POST['nom_produit']) &&		
         isset($_POST['type_produit']) &&
-		isset($_POST['quantite_produit']) && 
+        isset($_POST['quantite_produit']) && 
         isset($_POST['prix_produit']) &&
         isset($_POST['image_produit'])
     ) {
         if (
-			!empty($_POST['nom_produit']) &&
+            !empty($_POST['nom_produit']) &&
             !empty($_POST['type_produit']) && 
-			!empty($_POST['quantite_produit']) && 
+            !empty($_POST['quantite_produit']) && 
             !empty($_POST['prix_produit']) &&
             !empty($_POST['image_produit']) 
         ) {
             $Produit = new Produit(
                 null,
-				$_POST['nom_produit'],
+                $_POST['nom_produit'],
                 $_POST['type_produit'], 
-				$_POST['quantite_produit'],
+                $_POST['quantite_produit'],
                 $_POST['prix_produit'],
                 $_POST['image_produit']
             );
-            $Produits->AjouterProduit($Produit);
-            header('Location:AjouterProduit.php');
+            $Produits->ModifierProduit($Produit,$_POST['id_produit']);
+            header('Location:Ajout.php');
+        }
+        else
+            $error = "Missing information";
+    }   
+
+    if (
+        isset($_POST['nom_cat'])
+    ) {
+        if (
+            !empty($_POST['nom_cat'])
+        ) {
+            $Categorie = new Categorie(
+                null,
+                $_POST['nom_cat']
+            );
+            $Categories->ModifierCategorie($Categorie,$_POST['id_cat']);
+            header('Location:Ajout.php');
         }
         else
             $error = "Missing information";
@@ -196,9 +219,9 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="table_produits.html">
+                                            <a href="table_produits_categories.html">
                                                 <i class="menu-icon icon-table"></i>
-                                                Produits
+                                                Produits_Categories
                                             </a>
                                         </li>
                                     </ul></li>
@@ -248,11 +271,21 @@
 
                     <div class="span9">
                         <div class="content">    
+                            <div id="error">
+                                <?php echo $error; ?>
+                             </div>
+                            <?php
+                            if (isset($_POST['id_produit'])){
+                                $produit = $ProduitCRUD->RecupererProduit($_POST['id_produit']);
+                            }
+                            ?>
+                            <a href="Ajout.php"><button class="btn">Retour</button></a>
+                            <hr>
                             <div class="module">
                                 <div class="module-head">
-                                    <center><h3>Ajouter un produit</h3><center>
+                                    <center><h3>Modifier un produit</h3><center>
                                 </div>
-                                <form action="" method="POST" onsubmit="return CTRL()">
+                                <form action="" method="POST" onsubmit="return CTRL_P()">
                                     <table class="table">
                                         <tr>
                                             <td></td>
@@ -263,7 +296,7 @@
                                                 <label for="nom_produit"> Nom : </label>
                                             </td>
                                             <td>
-                                                <input type="text" name="nom_produit" id="nom_produit" placeholder="nom du produit" minlength="1" maxlength="50">
+                                                <input type="text" name="nom_produit" id="nom_produit" placeholder="nom du produit" minlength="1" maxlength="50" value="<?php echo $produit['nom_produit']; ?>" >
                                                 <p>
                                                     <div id="error_nom_produit" style="color:red"></div>
                                                 </p>
@@ -295,7 +328,7 @@
                                                 <label for="type_produit"> Type : </label>
                                             </td>
                                             <td>
-                                                <select type="range" name="type_produit" id="type_produit">
+                                                <select type="range" name="type_produit" id="type_produit" value="<?php echo $produit['type_produit']; ?>">
                                                     <option selected disabled>Type de produit</option>
                                                     <option value="Pull">Pull</option>
                                                     <option value="Sac">Sac</option>
@@ -329,11 +362,12 @@
                                                 <label for="quantite_produit"> Quantité  : </label>
                                             </td>
                                             <td>
-                                                <input type="number" name="quantite_produit" id="quantite_produit">
+                                                <input type="number" name="quantite_produit" id="quantite_produit" value="<?php echo $produit['quantite_produit']; ?>">
                                                 <p>
                                                     <div id="error_quantite_produit" style="color:red"></div>
                                                 </p>
                                             </td>
+
                                             <td>
                                             <td></td>
                                             <td></td>
@@ -362,7 +396,7 @@
                                                 <label for="prix_produit"> Prix : </label>
                                             </td>
                                             <td>
-                                                <input type="number" name="prix_produit" id="prix_produit" > DT
+                                                <input type="number" name="prix_produit" id="prix_produit" value="<?php echo $produit['prix_produit']; ?>"> DT
                                                 <p>
                                                     <div id="error_prix_produit" style="color:red"></div>
                                                 </p>
@@ -394,7 +428,7 @@
                                                 <label for="image_produit"> Image : </label>
                                             </td>
                                             <td>
-                                                <input type="file" name="image_produit" id="image_produit">
+                                                <input type="file" name="image_produit" id="image_produit" value="<?php echo $produit['image_produit']; ?>" >
                                                 <p>
                                                     <div id="error_image_produit" style="color:red"></div>
                                                 </p>
@@ -432,12 +466,15 @@
                                             <td></td>
                                             <td>
                                             <label>                                  </label>
-                                                <input class="btn" type="submit" value="Ajouter"> 
+                                                <input type="submit" class="btn" id="Modifier" value="Modifier"> 
                                                 <label>                                  </label>
                                             </td>
                                             <td>
+                                                <input type="hidden" name="id_produit" value="<?php echo $produit['id_produit']; ?>" >
+                                            </td>                
+                                            <td>
                                                 <label>                                  </label>
-                                                <input class="btn" type="reset" value="Annuler" >
+                                                <input type="reset" class="btn" value="Annuler" >
                                                 <label>                                  </label>
                                             </td>
                                             <td></td>
@@ -467,7 +504,7 @@
                                 </form>
                                 <script>
 
-                                function CTRL()
+                                function CTRL_P()
                                 {
                                     var nom_produit=document.getElementById("nom_produit").value;
                                     var error_nom_produit = document.getElementById("error_nom_produit");
@@ -541,7 +578,6 @@
                                 }
 
                                 </script>
-
                             </div>
                         </div>
                         <div class="content">
@@ -572,11 +608,175 @@
                                                     <td><?php echo $produit['prix_produit']; ?></td>
                                                     <td><?php echo $produit['image_produit']; ?></td>
                                                     <td>
-                                                        <form method="POST" action="ModifierProduit.php" align="center">
+                                                        <form method="POST" action="" align="center">
                                                             <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
                                                             <input type="hidden" value=<?php echo $produit['id_produit']; ?> name="id_produit">
                                                         </form>
-                                                        <center><a href="SupprimerProduit.php?id_produit=<?php echo $produit['id_produit']; ?>"><button class="btn">Supprimer</button></a><center>
+                                                        <center><a href="Suppression.php?id_produit=<?php echo $produit['id_produit']; ?>"><button class="btn">Supprimer</button></a><center>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                                    }
+                                                ?>
+                                            </tbody>
+                                        </table> 
+                                    </table> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">    
+                            <div id="error">
+                                <?php echo $error; ?>
+                             </div>
+                            <?php
+                            if (isset($_POST['id_cat'])){
+                                $Categorie = $CategorieCRUD->RecupererCategorie($_POST['id_cat']);
+                            }
+                            ?>
+                            <div class="module">
+                                <div class="module-head">
+                                    <center><h3>Modifier un categorie</h3><center>
+                                </div>
+                                <form action="" method="POST" onsubmit="return CTRL_C()">
+                                    <table class="table">
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <label>                                  </label>
+                                                <label for="nom_cat"> Nom : </label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="nom_cat" id="nom_cat" placeholder="nom du categorie" minlength="1" maxlength="20" value="<?php echo $Categorie['nom_cat']; ?>" >
+                                                <p>
+                                                    <div id="error_nom_cat" style="color:red"></div>
+                                                </p>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <br>
+                                    </table>
+                                    <div class="module-head"></div>
+                                    <table class="table">
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                            <label>                                  </label>
+                                                <input type="submit" class="btn" id="Modifier" value="Modifier"> 
+                                                <label>                                  </label>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="id_cat" value="<?php echo $Categorie['id_cat']; ?>" >
+                                            </td>                
+                                            <td>
+                                                <label>                                  </label>
+                                                <input type="reset" class="btn" value="Annuler" >
+                                                <label>                                  </label>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </form>
+
+                                <script>
+
+                                function CTRL_C()
+                                {
+                                    var nom_cat=document.getElementById("nom_cat").value;
+                                    var error_nom_cat = document.getElementById("error_nom_cat");
+
+                                    if(nom_cat=="")
+                                    {
+                                        document.getElementById('error_nom_cat').innerHTML="Il faut saisie un nom pour le categorie !";  
+                                        return false;
+                                    }
+                                    else 
+                                        if(nom_cat.charAt(0)>="a" && nom_cat.charAt(0)<="z")
+                                        {
+                                            error_nom_cat.innerHTML="Il faut que le nom du categorie commencé par une lettre majuscule !";  
+                                            return false;
+                                        }
+                                        else
+                                        {
+                                            error_nom_cat.innerHTML="";  
+                                        }
+                                }
+
+                                </script>
+
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="module">
+                                <div class="module-head">
+                                    <center><h3>Liste des categories</h3><center>
+                                </div>
+                                <div class="module-body table">
+                                    <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>   </th>
+                                                    <th>Nom</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    foreach($listecategorie as $categorie){
+                                                ?>
+                                                <tr>
+                                                    <td>  </td>
+                                                    <td><?php echo $categorie['nom_cat']; ?></td>
+                                                    <td>
+                                                        <form method="POST" action="" align="center">
+                                                            <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
+                                                            <input type="hidden" value=<?php echo $Categorie['id_cat']; ?> name="id_cat">
+                                                        </form>
+                                                        <center><a href="Suppression.php?id_cat=<?php echo $Categorie['id_cat']; ?>"><button class="btn">Supprimer</button></a><center>
                                                     </td>
                                                 </tr>
                                                 <?php
@@ -591,7 +791,7 @@
                         <div class="content">
                             <div class="module">
                                 <div class="module-head">
-                                    <center><h3> Fonctionnalité avancé </h3><center>
+                                    <h3> Fonctionnalité avancé </h3>
                                 </div>
                                 <table class="table">
                                     <tr>
@@ -615,7 +815,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <a class="btn">Gerer</a>
+                                            <a class="btn">Gerers</a>
                                         </td>
                                     </tr>
                                     </tr>

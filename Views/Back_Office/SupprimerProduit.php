@@ -1,6 +1,7 @@
 <?php
 
-	include '../../Controller/ProduitCRUD.php';
+	include_once '../../Model/Produit.php';
+	include_once '../../Controller/ProduitCRUD.php';
 	
 	$ProduitCRUD=new ProduitCRUD();
 

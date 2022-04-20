@@ -13,25 +13,30 @@
 
     $Produits = new ProduitCRUD();
 
+    
     if (
 		isset($_POST['nom_produit']) &&		
         isset($_POST['type_produit']) &&
 		isset($_POST['quantite_produit']) && 
-        isset($_POST['prix_produit']) 
+        isset($_POST['prix_produit']) &&
+        isset($_POST['image_produit'])
     ) {
         if (
 			!empty($_POST['nom_produit']) &&
             !empty($_POST['type_produit']) && 
 			!empty($_POST['quantite_produit']) && 
-            !empty($_POST['prix_produit'])
+            !empty($_POST['prix_produit']) &&
+            !empty($_POST['image_produit']) 
         ) {
             $Produit = new Produit(
                 null,
 				$_POST['nom_produit'],
                 $_POST['type_produit'], 
 				$_POST['quantite_produit'],
-                $_POST['prix_produit']
+                $_POST['prix_produit'],
+                $_POST['image_produit']
             );
+        
             $Produits->ModifierProduit($Produit,$_POST['id_produit']);
             header('Location:AjouterProduit.php');
         }
@@ -194,7 +199,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="table_partenaires.html">
+                                            <a href="table_produits.html">
                                                 <i class="menu-icon icon-table"></i>
                                                 Produits
                                             </a>
@@ -254,6 +259,8 @@
                                 $produit = $ProduitCRUD->RecupererProduit($_POST['id_produit']);
                             }
                             ?>
+                            <a href="AjouterProduit.php"><button class="btn">Retour</button></a>
+                            <hr>
                             <div class="module">
                                 <div class="module-head">
                                     <center><h3>Modifier un produit</h3><center>
@@ -271,7 +278,7 @@
                                             <td>
                                                 <input type="text" name="nom_produit" id="nom_produit" placeholder="nom du produit" minlength="1" maxlength="50" value="<?php echo $produit['nom_produit']; ?>" >
                                                 <p>
-                                                    <div class="error" id="error_nom_produit" style="color:red"></div>
+                                                    <div id="error_nom_produit" style="color:red"></div>
                                                 </p>
                                             </td>
                                             <td></td>
@@ -337,7 +344,7 @@
                                             <td>
                                                 <input type="number" name="quantite_produit" id="quantite_produit" value="<?php echo $produit['quantite_produit']; ?>">
                                                 <p>
-                                                    <div class="error" id="error_quantite_produit" style="color:red"></div>
+                                                    <div id="error_quantite_produit" style="color:red"></div>
                                                 </p>
                                             </td>
 
@@ -369,12 +376,42 @@
                                                 <label for="prix_produit"> Prix : </label>
                                             </td>
                                             <td>
-                                                <select name="prix_produit" id="prix_produit" value="<?php echo $produit['prix_produit']; ?>">
-                                                    <option selected disabled>prix du produit</option>
-                                                    <option value="28">28</option>
-                                                    <option value="35">35</option>
-                                                    <option value="40">40</option>
-                                                </select>  DT
+                                                <input type="number" name="prix_produit" id="prix_produit" value="<?php echo $produit['prix_produit']; ?>"> DT
+                                                <p>
+                                                    <div id="error_prix_produit" style="color:red"></div>
+                                                </p>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <label>                                  </label>
+                                                <label for="image_produit"> Image : </label>
+                                            </td>
+                                            <td>
+                                                <input type="file" name="image_produit" id="image_produit" value="<?php echo $produit['image_produit']; ?>" >
+                                                <p>
+                                                    <div id="error_image_produit" style="color:red"></div>
+                                                </p>
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -455,6 +492,12 @@
                                     var quantite_produit=document.getElementById("quantite_produit").value;
                                     var error_quantite_produit = document.getElementById("error_quantite_produit");
 
+                                    var prix_produit=document.getElementById("prix_produit").value;
+                                    var error_prix_produit = document.getElementById("error_prix_produit");
+
+                                    var image_produit=document.getElementById("image_produit").value;
+                                    var error_image_produit = document.getElementById("error_image_produit");
+
                                     if(nom_produit=="")
                                     {
                                         document.getElementById('error_nom_produit').innerHTML="Il faut saisie un nom pour le produit !";  
@@ -486,7 +529,32 @@
                                         {
                                             error_quantite_produit.innerHTML="";  
                                         }
+                                    
+                                    if(prix_produit=="")
+                                    {
+                                        document.getElementById('error_prix_produit').innerHTML="Il faut mettre le prix de ce produit !";  
+                                        return false;
+                                    }
+                                    else 
+                                        if(prix_produit<= 0)
+                                        {
+                                            error_prix_produit.innerHTML="Il faut que le prix du produit doit superieure a 0 !";  
+                                            return false;
+                                        }
+                                        else
+                                        {
+                                            error_prix_produit.innerHTML="";  
+                                        }
 
+                                    if(image_produit=="")
+                                    {
+                                        document.getElementById('error_image_produit').innerHTML="Il faut mettre une image pour ce produit !";  
+                                        return false;
+                                    }
+                                    else 
+                                        {
+                                            error_image_produit.innerHTML="";  
+                                        }
                                 }
 
                                 </script>
@@ -506,7 +574,7 @@
                                                     <th>Type</th>
                                                     <th>Quantité</th>
                                                     <th>Prix</th>
-                                                    <th>Actions</th>
+                                                    <th>Image</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -518,6 +586,7 @@
                                                     <td><?php echo $produit['type_produit']; ?></td>
                                                     <td><?php echo $produit['quantite_produit']; ?></td>
                                                     <td><?php echo $produit['prix_produit']; ?></td>
+                                                    <td><?php echo $produit['image_produit']; ?></td>
                                                     <td>
                                                         <form method="POST" action="" align="center">
                                                             <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
@@ -573,35 +642,26 @@
                 </div>
             </div>
         </div>
+        
         <div class="footer">
-		<div class="container">
-			<b class="copyright">&copy; 2022 The globe </b> All rights reserved.
-		</div>
+            <div class="container">
+                <b class="copyright">&copy; 2022 The globe </b> All rights reserved.
+            </div>
 	    </div>
-
+        
+        <script src="scripts/jquery-1.9.1.min.js"></script>
+        <script src="scripts/jquery-ui-1.10.1.custom.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="scripts/datatables/jquery.dataTables.js"></script>
         <script>
-            function ctrl()
-            {
-                var nom_produit=document.getElementById("nom_produit").value;
-                
-                if(nom_produit.charAt(0)>="A" && nom_produit.charAt(0)<="Z")
-                {
-                    document.getElementById('error').innerHTML="Il faut que le nom du produit commencé par une lettre majuscule !";  
-                    return false;
-                }
-                else
-                {
-                    if(nom_produit=="")
-                    {
-                        document.getElementById('error').innerHTML="Il faut saisie un nom pour le produit !";  
-                        return false;
-                    }
-                }
-                else
-                {
-                    document.getElementById('error').innerHTML="";  
-                }
-            }
-        </script>
+            $(document).ready(function() {
+                $('.datatable-1').dataTable();
+                $('.dataTables_paginate').addClass("btn-group datatable-pagination");
+                $('.dataTables_paginate > a').wrapInner('<span />');
+                $('.dataTables_paginate > a:first-child').append('<i class="icon-chevron-left shaded"></i>');
+                $('.dataTables_paginate > a:last-child').append('<i class="icon-chevron-right shaded"></i>');
+            } );
+	    </script>
+
     </body>
 </html>
