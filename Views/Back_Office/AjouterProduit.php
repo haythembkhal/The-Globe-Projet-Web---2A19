@@ -1,5 +1,6 @@
 <?php
 
+    include_once '../../Model/Produit.php';
 	include_once '../../Controller/ProduitCRUD.php';
 	
 	$ProduitCRUD = new ProduitCRUD();
@@ -246,7 +247,7 @@
                         <div class="content">    
                             <div class="module">
                                 <div class="module-head">
-                                    <h3>Ajouter un produit</h3>
+                                    <center><h3>Ajouter un produit</h3><center>
                                 </div>
                                 <form action="" method="POST">
                                     <table class="table">
@@ -436,7 +437,7 @@
                         <div class="content">
                             <div class="module">
                                 <div class="module-head">
-                                    <h3>Liste des produits</h3>
+                                    <center><h3>Liste des produits</h3><center>
                                 </div>
                                 <div class="module-body table">
                                     <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
@@ -447,8 +448,6 @@
                                                     <th>Type</th>
                                                     <th>Quantité</th>
                                                     <th>Prix</th>
-                                                    <th>Modifier</th>
-                                                    <th>Supprimer</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -461,13 +460,11 @@
                                                     <td><?php echo $produit['quantite_produit']; ?></td>
                                                     <td><?php echo $produit['prix_produit']; ?></td>
                                                     <td>
-                                                        <form method="POST" action="ModifierProduit.php">
-                                                            <input type="submit" name="Modifier" value="Modifier">
+                                                        <form method="POST" action="ModifierProduit.php" align="center">
+                                                            <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
                                                             <input type="hidden" value=<?PHP echo $produit['id_produit']; ?> name="id_produit">
                                                         </form>
-                                                    </td>
-                                                    <td>
-                                                        <a href="SupprimerProduit.php?id_produit=<?php echo $produit['id_produit']; ?>"><button class="btn">Supprimer</button></a>
+                                                        <center><a href="SupprimerProduit.php?id_produit=<?php echo $produit['id_produit']; ?>"><button class="btn">Supprimer</button></a><center>
                                                     </td>
                                                 </tr>
                                                 <?php
@@ -482,7 +479,7 @@
                         <div class="content">
                             <div class="module">
                                 <div class="module-head">
-                                    <h3> Fonctionnalité avancé </h3>
+                                    <center><h3> Fonctionnalité avancé </h3><center>
                                 </div>
                                 <table class="table">
                                     <tr>
@@ -506,7 +503,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <a class="btn">Gerer panier</a>
+                                            <a class="btn">Gerer</a>
                                         </td>
                                     </tr>
                                     </tr>

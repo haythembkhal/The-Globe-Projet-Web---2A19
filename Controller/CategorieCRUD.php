@@ -62,9 +62,9 @@
 			{
 				$db=config::getConnexion();
 				$query=$db->prepare(
-					'UPDATE categories SET 
-						nom_cat= :nom_cat,
-					WHERE id_cat= :id_cat'
+					"UPDATE categories SET 
+						nom_cat= :nom_cat
+					WHERE id_cat= :id_cat"
 				);
 				$query->execute([
 					'nom_cat'=>$categorie->get_nom_cat(),

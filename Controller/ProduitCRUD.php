@@ -65,12 +65,12 @@
 			{
 				$db=config::getConnexion();
 				$query=$db->prepare(
-					'UPDATE produits SET 
+					"UPDATE produits SET 
 						nom_produit= :nom_produit, 
 						type_produit= :type_produit, 
 						quantite_produit= :quantite_produit, 
-						prix_produit= :prix_produit,
-					WHERE id_produit= :id_produit'
+						prix_produit= :prix_produit
+					WHERE id_produit= :id_produit"
 				);
 				$query->execute([
 					'nom_produit'=>$produit->get_nom_produit(),
