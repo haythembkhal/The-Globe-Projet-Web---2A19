@@ -1,22 +1,18 @@
-<?php  
+<?php 
+include_once "../../Controller/ArtisteC.php";
 
 
-include_once "../../Controller/CategorieC.php";
+$cont= new ArtisteC();
 
-
-$control = new CategorieC();
-
-if(isset($_POST['nom']) && isset($_POST['Description']))
+if(isset($_POST['nom']) && isset($_POST['nationalite']) && isset($_POST['genre']) && isset($_POST['age']) && isset($_POST['description']))
 {
-	$nouvelleCategorie = new Categorie($_POST['nom'],$_POST['Description']);
-	$control->ajoutercategorie($nouvelleCategorie);
+	$nouveauArtiste = new Artiste($_POST['nom'],$_POST['nationalite'],$_POST['genre'],$_POST['age'],$_POST['description']);
+	$cont->ajouterArtiste($nouveauArtiste);
+	header('location:AfficherCategorie.php');
 }
 
 
-
-
-?>
-
+ ?>
 
 
 <!DOCTYPE html>
@@ -237,23 +233,23 @@ if(isset($_POST['nom']) && isset($_POST['Description']))
 				</div><!--/.span3-->
 
 
+
+
 				<div class="span9">
 					<div class="content">
 
 						<div class="module">
 							<div class="module-head">
-								<h3>Ajout de Catégorie</h3>
+								<h3>Ajout d'Artiste</h3>
 							</div>
 							<div class="module-body">
 
 								
 									<br />
 
-
-<!---------------------------------------------Formulaie categorie-------------->
-									<form class="form-horizontal row-fluid" name="AddCategorie" method="post" action="" onsubmit="return Verif()">
+									<form class="form-horizontal row-fluid" name="AddArtistes" method="post" action="" onsubmit="return Verif()">
 										<div class="control-group">
-											<label class="control-label" for="basicinput">Nom de la catégorie</label>
+											<label class="control-label" for="basicinput">Nom de l'artiste</label>
 											<div class="controls">
 												<input type="text" id="basicinput" placeholder="Type something here..." class="span8" name="nom">
 												<p id="errorNR" class="error"></p>
@@ -262,37 +258,15 @@ if(isset($_POST['nom']) && isset($_POST['Description']))
 										</div>
 
 										<div class="control-group">
-											<label class="control-label" for="basicinput">Description</label>
+											<label class="control-label" for="basicinput">Nationalité</label>
 											<div class="controls">
-												<textarea type="text" id="basicinput" placeholder="Type something here..." class="span8" name="Description"></textarea>
+												<input type="text" id="basicinput" placeholder="Type something here..." class="span8" name="nationalite">
 												<p id="errorPR" class="error"></p>
 												
 											</div>
-										</div> 
-
-											<div class="control-group">
-											<div class="controls">
-												<!-- <input type="submit" class="btn">Ajouter</button> -->
-									<input type="submit" class="btn"></input>
-					<input type="reset" class="btn" value="Annuler" ></input>
-											</div>
 										</div>
-									</form>
-							</div>
-						</div>
-
-						
-						
-				
-			 
 
 
-					
-
-<!-------------------------------------Formulaire artiste---------------------------------->
-
-
-				
 
 
 
@@ -363,7 +337,25 @@ if(isset($_POST['nom']) && isset($_POST['Description']))
 											</div>
 										</div>-->
 
-										
+										<div class="control-group">
+											<label class="control-label">Genre</label>
+											<div class="controls">
+												<input type="radio" name="genre" id="genre" value="homme" checked><label for="basicinput">homme
+							</label>
+							<input type="radio" name="genre" id="genre" value="femme"><label for="basicinput">femme
+							</label>
+											</div>
+										</div>
+
+                                            <div class="control-group">
+											<label class="control-label" for="basicinput">Age</label>
+											<div class="controls">
+												<input type="number" min="1" max="100" step="1" id="basicinput"  class="span8" name="age">
+												
+												
+											</div>
+										</div>
+
                                        
 
 										<!--<div class="control-group">
@@ -384,23 +376,23 @@ if(isset($_POST['nom']) && isset($_POST['Description']))
 											</div>
 										</div>-->
 
-										<!--<div class="control-group">
+										<div class="control-group">
 											<label class="control-label" for="basicinput">Description</label>
 											<div class="controls">
-												<textarea class="span8" rows="5"></textarea>
+											<textarea class="span8" rows="5" name="description"></textarea>
 											</div>
 										</div>
 
 										<div class="control-group">
 											<div class="controls">
-												<input type="submit" class="btn">Ajouter</button> 
+												<!-- <input type="submit" class="btn">Ajouter</button> -->
 									<input type="submit" class="btn"></input>
 					<input type="reset" class="btn" value="Annuler" ></input>
 											</div>
 										</div>
 									</form>
 							</div>
-						</div>-->
+						</div>
 
 						
 						

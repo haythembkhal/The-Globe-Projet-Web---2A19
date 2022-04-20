@@ -18,15 +18,14 @@ class ArtisteC
 
         try {
             $query = $db->prepare(
-                'INSERT INTO artistes (nom, nationalite, genre, age, description) 
-            VALUES (:nom,:nationalite, :genre, :age, :description)'
+                'INSERT INTO artistes (nom, nationalite, genre, age, description) VALUES (:nom,:nationalite, :genre, :age, :description)'
             );
             $query->execute([
                 'nom' => $art->getnomArt(),
                'nationalite' => $art->getnation(),
                'genre'=> $art->getgenre(),
                'age'=> $art->getage(),
-               'description'=>getdescrip()
+               'description'=> $art->getdescrip()
             ]);
         } catch (PDOException $e) {
             $e->getMessage();
@@ -34,35 +33,25 @@ class ArtisteC
 	}
 
 
-	     /* function afficherCategorie(){
-            $sql="SELECT * FROM adherent";
-            $db = config::getConnexion();
-            try{
-                $liste = $db->query($sql);
-                return $liste;
-            }
-            catch(Exception $e){
-                die('Erreur:'. $e->getMeesage());
-            }
-        }*/
+	     
 
 
          function deleteartiste($id){
 
-        $sql="DELETE FROM artistes WHERE ID_artistes=:id";
+        $sql="DELETE FROM artistes WHERE id=:id";
             $db = config::getConnexion();
             $req=$db->prepare($sql);
-            $req->bindValue(':ID', $id);
+            $req->bindValue(':id', $id);
             try{
                 $req->execute();
             }
             catch(Exception $e){
-                die('Erreur:'. $e->getMeesage());
+                die('Erreur:'. $e->getMessage());
             }
     }
 
-    function recuperercartiste($Id){
-            $sql="SELECT * from artistes where ID_artistes=$Id";
+    function recupererartiste($id){
+            $sql="SELECT * from artistes where id=$id";
             $db = config::getConnexion();
             try{
                 $query=$db->prepare($sql);
@@ -77,7 +66,7 @@ class ArtisteC
         }
 
 
-            function updatecategorie($art,$id){
+            function updateartiste($art,$id){
 
         try {
                 $db = config::getConnexion();
@@ -90,15 +79,15 @@ class ArtisteC
                         age= :age,
                         description= :description
                         
-                    WHERE ID_artistes= :Id'
+                    WHERE id= :id'
                 );
                 $query->execute([
-                    'nom' => $cate->getnomArt(),
+                    'nom' => $art->getnomArt(),
                     'nationalite' =>$art->getnation(),
                     'genre' =>$art-> getgenre(),
                     'age' =>$art-> getage(),
-                    'description' => $art->getdescription(),
-                    'ID' => $Id 
+                    'description' => $art->getdescrip(),
+                    'id' => $id 
                     
                  
 
@@ -108,10 +97,25 @@ class ArtisteC
                 $e->getMessage();
             }
     }
+
+
+  function afficherArtistes(){
+            $sql="SELECT * FROM artistes";
+            $db = config::getConnexion();
+            try{
+                $liste = $db->query($sql);
+                return $liste;
+            }
+            catch(Exception $e){
+                die('Erreur:'. $e->getMeesage());
+            }
+        }
+
+
 }
 
 
-
+      
 
 
  ?>

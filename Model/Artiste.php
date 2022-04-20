@@ -22,7 +22,7 @@ class Artiste
 	}
 
 	 //getters
-    public function getnomCt():string{
+    public function getnomArt():string{
         return $this->nomArt;
     }
 

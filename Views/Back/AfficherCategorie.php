@@ -28,7 +28,7 @@ $LitesCategorie=getCategorie();
 
     try {
         $query = $db->query(
-            "SELECT * FROM artistes "
+            "SELECT * FROM artistes"
         );
         return $query;
 
@@ -276,13 +276,13 @@ $LitesArtistes=getArtistes();
 									</div>
 								  </div>
 								  
-							<a href="AddCategorie.php"><button style="right: 100px;" class="regButton">Ajouter</button></a>
+							<a href="AddArtistes.php"><button style="right: 100px;" class="regButton">Ajouter</button></a>
 
 							<br><br><br>
 								<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
 									<thead>
 										<tr>
-											<th> ID artiste</th>
+											<th>IDartiste</th>
 											<th>Nom</th>
 											<th>Nationalité</th>
 											<th>Genre</th>
@@ -300,25 +300,22 @@ $LitesArtistes=getArtistes();
 									</thead>
 
 									<tbody>
-<?php  
+                                         <?php  
 										foreach($LitesArtistes as $Artis){
 
 
 										?>
 										
 										<tr class="odd gradeX">
-											
-											
-<td> </td>
-
-											<td><?php echo $Artis['ID_artistes']; ?></td>
-											<td><?php echo $Artis['nom']; ?> </td>
-											<td><?php echo $Artis['nationalite']; ?></td>
-											<td ><?php echo $Artis['genre']; ?></td>
-											<td><?php echo $Artis['age']; ?></td>
-											<td><?php echo $Artis['description']; ?></td>
-											<td><button >Modifier</button></td>
-											<td><button >Supprimer</button></td>
+							
+										<td><?php echo $Artis['id']; ?></td>
+										<td><?php echo $Artis['nom']; ?></td>
+										<td><?php echo $Artis['nationalite']; ?></td>
+									    <td><?php echo $Artis['genre']; ?></td>
+										<td><?php echo $Artis['age']; ?></td>
+										<td><?php echo $Artis['description']; ?></td>
+										<td><a href="ModifierArtiste.php?id=<?php echo $Artis['id']; ?>"><button >Modifier</button></a></td>
+										<td><a href="suppArtiste.php?id=<?php echo $Artis['id']; ?>"><button >Supprimer</button></a></td>
 							                
 
 										     	
@@ -375,7 +372,7 @@ $LitesArtistes=getArtistes();
 							<td> <?php echo $Cater['description']; ?></td>
 							<td> <?php echo $Cater['nombres_artiste']; ?></td>
 							<td><a href="ModifierCategorie.php?ID=<?php echo $Cater['ID']; ?>"><button >Modifier</button></a></td> 
-							<td><a href="suppCategorie.php?ID=<?php echo $Cater['ID']; ?>"><button >Supprimer</button></a></td>
+							<td><a href="suppCategorie.php? ID=<?php echo $Cater['ID']; ?>"><button >Supprimer</button></a></td>
 							
 
 						</tr>
