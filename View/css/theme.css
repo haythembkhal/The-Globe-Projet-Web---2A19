@@ -20,6 +20,9 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
 	font-size: 11px;
 	margin: 0 0 0 5px
 }
+.accepte{
+	color : green;
+}
 h1 {
 	font-size: 28px
 }
@@ -820,6 +823,9 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='@topColor', end
 }
 .table {
 	margin-bottom: 0
+}
+form {
+    display: inline;
 }
 .table th, .table td {
 	border-color: #d5d5d5!important

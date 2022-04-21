@@ -301,7 +301,23 @@
                                     <td><?php echo $Conge['type_conge']; ?></td>
                                     <td><?php echo $Conge['date_deb']; ?></td>
                                     <td><?php echo $Conge['date_fin']; ?></td>
-                                    <td><?php echo $Conge['etat']; ?></td>
+                                    <td>
+										<?php
+											 //echo $Conge['etat'];
+											 if(strval($Conge['etat']) == '1')
+											 {
+												 echo("Refusé");
+											 }
+											 elseif(strval($Conge['etat']) == '0')
+											 {
+												 echo('Accepté');
+											 }
+											 elseif(strval($Conge['etat']) == '')
+											 {
+												 echo("Non traité");
+											 }
+									 	?>
+									</td>
                                     <td width="100px">
                                         <form method="POST" action="">
                                             <input type="submit" name="Modifier" value="Modifier">
