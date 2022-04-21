@@ -500,7 +500,7 @@
 
                                     if(nom_produit=="")
                                     {
-                                        document.getElementById('error_nom_produit').innerHTML="Il faut saisie un nom pour le produit !";  
+                                        error_nom_produit.innerHTML="Il faut saisie un nom pour le produit !";  
                                         return false;
                                     }
                                     else 
@@ -516,7 +516,7 @@
 
                                     if(quantite_produit=="")
                                     {
-                                        document.getElementById('error_quantite_produit').innerHTML="Il faut mettre le quantite de ce produit !";  
+                                        error_quantite_produit.innerHTML="Il faut mettre le quantite de ce produit !";  
                                         return false;
                                     }
                                     else 
@@ -532,7 +532,7 @@
                                     
                                     if(prix_produit=="")
                                     {
-                                        document.getElementById('error_prix_produit').innerHTML="Il faut mettre le prix de ce produit !";  
+                                        error_prix_produit.innerHTML="Il faut mettre le prix de ce produit !";  
                                         return false;
                                     }
                                     else 
@@ -548,7 +548,7 @@
 
                                     if(image_produit=="")
                                     {
-                                        document.getElementById('error_image_produit').innerHTML="Il faut mettre une image pour ce produit !";  
+                                        error_image_produit.innerHTML="Il faut mettre une image pour ce produit !";  
                                         return false;
                                     }
                                     else 

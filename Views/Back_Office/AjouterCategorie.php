@@ -331,7 +331,7 @@
 
                                     if(nom_cat=="")
                                     {
-                                        document.getElementById('error_nom_cat').innerHTML="Il faut saisie un nom pour le categorie !";  
+                                        error_nom_cat.innerHTML="Il faut saisie un nom pour le categorie !";  
                                         return false;
                                     }
                                     else 
