@@ -250,6 +250,7 @@
 
 				<div class="span9">
 					<div class="content">
+					<a href="afficherReservation.php"><button class="btn-success">Afficher la liste des Reservations</button></a>
 						<div class="module">
                             <div>
                                 <div class="module-head">
@@ -471,6 +472,10 @@
 												<td width='30%' style="text-align: center;">
                                                     <form method="POST" action="modifierAchat.php">
                                                         <input type="submit" class="btn" name="Modifier" value="Modifier">
+                                                        <input type="hidden" value=<?php echo $Achat['idAchat']; ?> name="idAchat">
+                                                    </form>
+													<form method="POST" action="ajouterReservation.php">
+                                                        <input type="submit" class="btn" name="Réserver" value="Réserver">
                                                         <input type="hidden" value=<?php echo $Achat['idAchat']; ?> name="idAchat">
                                                     </form>
                                                     <a href="supprimerAchat.php?idAchat=<?php echo $Achat['idAchat']; ?>"><button class="btn">Supprimer</button></a>
