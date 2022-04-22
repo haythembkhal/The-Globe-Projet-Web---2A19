@@ -1,10 +1,11 @@
 <?php
-class Achat{
-    private int $idReservation;
-    private int $numSiege;
+class Reservation{
+    private $idReservation;
+    private $idAchat;
+    private $numSiege;
 
     //constructeur
-    public function __construct($idReservation, $numSiege)
+    public function __construct($idReservation, $idAchat, $numSiege)
     {
         $this->idReservation=$idReservation;
         $this->idAchat=$idAchat;
@@ -20,7 +21,7 @@ class Achat{
 
     public function get_idAchat()
     {
-        return $this->idRAchat;
+        return $this->idAchat;
     }
 
     public function get_numSiege()

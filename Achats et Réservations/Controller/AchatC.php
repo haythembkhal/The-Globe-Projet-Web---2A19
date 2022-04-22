@@ -1,5 +1,5 @@
 <?php
-include '../../config.php';
+include_once '../../config.php';
 include_once '../../Model/Achat.php';
 
 class AchatC {

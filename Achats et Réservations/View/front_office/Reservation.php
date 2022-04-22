@@ -1,36 +1,33 @@
 
 <?php
-    include_once '../../Controller/AchatC.php';
-    $AchatC = new AchatC();
+    include_once '../../Controller/ReservationC.php';
+	include_once '../../Controller/AchatC.php';
+	$AchatC = new AchatC();
 
     $error = "";
     $Achat = NULL;
-    $AchatA = new AchatC();
+
+    $ReservationC = new ReservationC();
+    $listeReservations = $ReservationC->afficherReservation();
+
+    $error = "";
+    $Reservation = NULL;
+    $ReservationA = new ReservationC();
     if(
-        
-        
-        isset($_POST["prixTotal"])&&
-        isset($_POST["dateAchat"])&&
-        isset($_POST["adresseEmail"])&&
-        isset($_POST["nbrePlaces"])
+        isset($_POST["idAchat"])&&
+        isset($_POST["numSiege"])
     ){
         if (
-           
-            !empty($_POST["prixTotal"])&&
-            !empty($_POST["dateAchat"])&&
-            !empty($_POST["adresseEmail"])&&
-            !empty($_POST["nbrePlaces"])
+            !empty($_POST["idAchat"])&&
+            !empty($_POST["numSiege"])
         ){
-            $Achat = new Achat(
+            $Reservation = new Reservation(
                 NULL,
-                2,
-                3,
-                $_POST['prixTotal'],
-                $_POST['dateAchat'],
-                $_POST['adresseEmail'],
-                $_POST['nbrePlaces']
+                $_POST['idAchat'],
+                $_POST['numSiege']
             );
-            $AchatA->ajouterAchat($Achat);
+            $ReservationA->ajouterReservation($Reservation);
+            header('Location:index.php');
         }
         else
             $error = "Missing information";
@@ -136,6 +133,14 @@ label {
 		<div class="module-head">
             <center><h1>ACHTEZ VOS PLACES ! </h1></center>
         </div> 
+        <div id="error">
+                        <?php echo $error; ?>
+                    </div>
+                    <?php
+                            if (isset($_POST['idAchat'])){
+                                $Achat = $AchatC->recupererAchat($_POST['idAchat']);
+                            }
+                    ?>
 		<!--<div>
 		<table>
 			<tr>
@@ -152,111 +157,48 @@ label {
 		</table>
 		</div>-->
         <div>
-            <form name="formAchat" class="form-horizontal row-fluid" onsubmit="return validateForm()" action="" method="POST">
+            <form name="formReserver" class="form-horizontal row-fluid" onsubmit="return validateForm()" action="" method="POST">
             <br>
             <br>
             <div class="control-group">
-				<label class="control-label" for="basicinput">ID Client</label>
-                <input class="controls" type="text" id="idClient" placeholder="2" class="span8" name="idClient" disabled>
+				<label class="control-label" for="basicinput">ID Achat</label>
+                <input class="controls" type="text" id="idAchat" class="span8" name="idAchat" <!--value="<?php echo $Achat['idAchat']; ?>" readonly-->>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="basicinput">ID Spectacle</label>
-                <input type="text" id="idSpectacle" placeholder="3" class="span8" name="idSpectacle" disabled>
+                <label class="control-label" for="basicinput">Numéro Siège</label>
+                <input type="text" id="numSiege" placeholder="Veuillez choisir un numéro de siège" class="span8" name="numSiege">
+                <p> <span class="error" id="errornumSiege" style="color:red"></span></p>
             </div>
-
-			<div class="control-group">
-                <label class="control-label" for="basicinput">Date Achat</label>
-                <input class="controls" type="date" id="dateAchat" class="span8" name="dateAchat" readonly>
-                <p> <span class="error" id="errorDA" style="color:red"></span></p>
-            </div>
-
-			<script>
-				document.getElementById("dateAchat").valueAsDate = new Date();
-			</script>
-
-			<div class="control-group">
-                <label for="basicinput">Nombre Places</label>
-                    <input type="number" id="nbrePlaces" step="1"  placeholder="0" class="span8" name="nbrePlaces">
-                    <p> <span class="error" id="errorNP" style="color:red"></span></p>
-            </div>
-
-			<div class="control-group">
-                <label class="control-label" for="basicinput">Prix Total</label>
-                <input class="controls" type="number" id="prixTotal" onblur="calculPrixTotal() class="span8" step="0.100" name="prixTotal"><span class="add-on">DT</span>
-            </div>
-			<script>
-				function calculPrixTotal()
-				{
-					var nbrePlaces= document.getElementById("nbrePlaces").value;
-					document.getElementById('prixTotal').innerHTML= parseInt(nbrePlaces);
-				}
-				
-			</script>
-
-			
-			<div class="control-group">
-                <label class="control-label" for="basicinput">Adresse Email</label>
-                <input class="controls" type="email" id="adresseEmail" placeholder="abc123@exemple.com" class="span8" name="adresseEmail">
-                <p> <span class="error" id="errorAE" style="color:red"></span></p>
-            </div>
-
-            
 
             <br>
             <div class="control-group">
                 <div class="controls">
-                    <input type="submit" class="btn" id="btnAcheter" value="Acheter">
+                    <input type="submit" class="btn" id="btnReserver" value="Reserver">
                     <input type="reset" class="btn" id="btnAnnuler" value="Annuler">
                     <!--<form method="POST" action="Modifier_AchatsReservations.php">
                            <input type="submit" class="btn" id="btnM" value="Modifier"></button>
                         </form>-->
-						<a href="Reservation.php"><button class="btn">Réserver</button></a>
-						<form method="POST" action="Reservation.php">
-                                                        <input type="submit" class="btn" name="Réserver" value="Réserver">
-                                                        
-                                                    </form>
-					</div>
+                </div>
             </div>
         </form>
         <script>
            	function validateForm()
             {
-            var adresseEmail= document.forms["formAchat"]["adresseEmail"].value;
-            var nbrePlaces= document.forms["formAchat"]["nbrePlaces"].value;
+            var numSiege= document.forms["formReserver"]["numSiege"].value;
 
-			if(nbrePlaces == "")
+			if(numSiege == "")
             {
-                document.getElementById('errorNP').innerHTML="Veuillez choisir un Nombre de Places";  
+                document.getElementById('errornumSiege').innerHTML="Veuillez choisir un Numéro de Siège";  
                 return false;
-            }else if(nbrePlaces == 0)
+            }else if(numSiege == 0)
             {
-                document.getElementById('errorNP').innerHTML="Le nombre de places doit être > 0";  
+                document.getElementById('errornumSiege').innerHTML="Veuillez saisir une valeur > 0";  
                 return false;
             }
 			else
 			{
-                document.getElementById('errorNP').innerHTML="";  
-            }
-
-            if(adresseEmail == "")
-            {
-                document.getElementById('errorAE').innerHTML="Veuillez saisir votre Adresse Email";  
-                return false;
-            }else if(!checkEmail(adresseEmail))
-            {
-                document.getElementById('errorAE').innerHTML="l'adresse mail doit correspondre au format : abc123@exemple.com";  
-                return false;
-            }
-			else 
-			{
-                document.getElementById('errorAE').innerHTML="";  
-            }
-
-            function checkEmail(email) 
-            {
-                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return re.test(email);
+                document.getElementById('errornumSiege').innerHTML="";  
             }
 
         }
