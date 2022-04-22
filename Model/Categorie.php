@@ -12,9 +12,6 @@ class categorie
 	private int $nombre_artiste;
 
 
-
-
-	
 	public function __construct(string $nomCt, string $description)
 	{
 		$this->nomCt = $nomCt;

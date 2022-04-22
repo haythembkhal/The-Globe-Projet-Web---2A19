@@ -288,6 +288,7 @@ $LitesArtistes=getArtistes();
 											<th>Genre</th>
 											<th>Age</th>
 											<th>description</th>
+											<th>categories</th>
 											<th>Modifier</th>
 											<th>Supprimer</th>
 											
@@ -314,6 +315,7 @@ $LitesArtistes=getArtistes();
 									    <td><?php echo $Artis['genre']; ?></td>
 										<td><?php echo $Artis['age']; ?></td>
 										<td><?php echo $Artis['description']; ?></td>
+										<td><?php echo $Artis['categories']; ?></td>
 										<td><a href="ModifierArtiste.php?id=<?php echo $Artis['id']; ?>"><button >Modifier</button></a></td>
 										<td><a href="suppArtiste.php?id=<?php echo $Artis['id']; ?>"><button >Supprimer</button></a></td>
 							                

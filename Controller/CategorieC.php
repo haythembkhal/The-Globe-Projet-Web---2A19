@@ -117,5 +117,22 @@ class categorieC
             }
     }
 
+
+    function afficherArtistesF($ID)
+    {
+        try {
+           $db = config::getConnexion();
+            $query = $db->prepare(
+                'SELECT * FROM artiste WHERE categories = :ID');
+            $query->execute([
+                'ID' => $ID
+            ]);
+            return $query->fetchAll();
+            
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
+
 }
 ?>

@@ -11,14 +11,16 @@ class Artiste
 	private string $genre;
 	private int $age;
 	private string $descrip;
+    private int $categories;
 	
-	function __construct(string $nomArt, string $nation, string $genre, int $age, string $descrip)
+	function __construct(string $nomArt, string $nation, string $genre, int $age, string $descrip, int $categories)
 	{
 		$this->nomArt=$nomArt;
 		$this->nation=$nation;
 		$this->genre=$genre;
 		$this->age=$age;
 		$this->descrip=$descrip;
+        $this->categories=$categories;
 	}
 
 	 //getters
@@ -42,6 +44,10 @@ class Artiste
         return $this->descrip;
     }
 
+    public function getcategories():int{
+        return $this->categories;
+    }
+
 
 
     //setters
@@ -63,6 +69,10 @@ class Artiste
 
     public function setdescrip(string $descrip):void{
         $this->descrip = $descrip; 
+    }
+
+    public function setcategories(int $categories):void{
+        $this->categories = $categories;
     }
 }
 

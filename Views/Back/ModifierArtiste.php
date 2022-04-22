@@ -1,6 +1,6 @@
 <?php 
 
-
+include_once  "C:/xampp/htdocs/Artistes/Controller/CategorieC.php";
 
 
 include_once  "C:/xampp/htdocs/Artistes/Controller/ArtisteC.php";    
@@ -8,17 +8,18 @@ include_once  "C:/xampp/htdocs/Artistes/Controller/ArtisteC.php";
 $controll= new ArtisteC();
 $cate=$controll->recupererartiste($_GET['id']);
 
-if(isset($_POST['nom']) && isset($_POST['nationalite']) && isset($_POST['genre']) && isset($_POST['age']) && isset($_POST['description']))
+if(isset($_POST['nom']) && isset($_POST['nationalite']) && isset($_POST['genre']) && isset($_POST['age']) && isset($_POST['description']) && isset($_POST['categories']))
 {
 	$artisteC=new ArtisteC();
 
-	$Cate=new Artiste($_POST['nom'],$_POST['nationalite'],$_POST['genre'],$_POST['age'],$_POST['description']);
+	$Cate=new Artiste($_POST['nom'],$_POST['nationalite'],$_POST['genre'],$_POST['age'],$_POST['description'],$_POST['categories']);
 	 $artisteC->updateartiste($Cate,$_GET['id']);
 	 header('Location:AfficherCategorie.php');
 
 }
 
-
+$categ= new CategorieC();
+$class= $categ->afficherCategorie();
 
 
 
@@ -393,6 +394,20 @@ if(isset($_POST['nom']) && isset($_POST['nationalite']) && isset($_POST['genre']
 											<label class="control-label" for="basicinput">Description</label>
 											<div class="controls">
 											<textarea class="span8" rows="5" name="description"><?php echo $cate['description'] ?></textarea>
+											</div>
+										</div>
+
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">categories</label>
+											<div class="controls">
+												<select name="categories">
+													<?php foreach ($class as $Kay) { ?>
+									
+													<option><?php echo $Kay['ID'] ?></option>
+												  <?php } ?>	
+												</select>
+												
 											</div>
 										</div>
 

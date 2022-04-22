@@ -1,16 +1,42 @@
 <?php 
 include_once "../../Controller/ArtisteC.php";
+include_once "../../Controller/CategorieC.php"; 
 
 
 $cont= new ArtisteC();
 
-if(isset($_POST['nom']) && isset($_POST['nationalite']) && isset($_POST['genre']) && isset($_POST['age']) && isset($_POST['description']))
+if(isset($_POST['nom']) && isset($_POST['nationalite']) && isset($_POST['genre']) && isset($_POST['age']) && isset($_POST['description']) && isset($_POST['categories']))
 {
-	$nouveauArtiste = new Artiste($_POST['nom'],$_POST['nationalite'],$_POST['genre'],$_POST['age'],$_POST['description']);
+	$nouveauArtiste = new Artiste($_POST['nom'],$_POST['nationalite'],$_POST['genre'],$_POST['age'],$_POST['description'],$_POST['categories']);
+
+	//$nouveauArtiste = new Artiste("test","test","test",$_POST['age'],$_POST['description'],$_POST['categories']);
 	$cont->ajouterArtiste($nouveauArtiste);
 	header('location:AfficherCategorie.php');
 }
 
+
+/*$categ= new CategorieC();
+$class= $categ->afficherCategorie();
+
+
+if(isset($_POST['nom']))
+{
+	$nouvelleCategorie = new Categorie($_POST['nom']);
+	$class->ajoutercategorie($nouvelleCategorie);
+}*/
+
+
+
+$list=null;
+$categoriesC = new categorieC();
+$categori = $categoriesC->afficherCategorie();
+
+if(isset($_POST['categories']))
+{
+	$list = $categoriesC->afficherArtistesF($_POST['categories']);
+    //var_dump($list);
+//die;
+} 
 
  ?>
 
@@ -382,6 +408,27 @@ if(isset($_POST['nom']) && isset($_POST['nationalite']) && isset($_POST['genre']
 											<textarea class="span8" rows="5" name="description"></textarea>
 											</div>
 										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">categories</label>
+											<div class="controls">
+												<select name="categories">
+													<?php foreach ($categori as $key) { ?>
+  	 				<option value="<?php $key['ID'] ?>"<?php if(isset($_POST['rechercher']) && $key['ID'] ==$_POST['categories'])
+  	 				{
+  	 				?>
+  	 				 selected 
+  	 				<?php } ?>
+  	 				>
+  	 				<?=$key['nom']?>
+  	 			</option>
+  	 			<?php } ?>	
+												</select>
+
+												
+											</div>
+										</div>
+
 
 										<div class="control-group">
 											<div class="controls">

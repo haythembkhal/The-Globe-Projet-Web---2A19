@@ -1,6 +1,6 @@
 <?php
-
-
+include_once 'C:\xampp\htdocs\Artistes\Views\Front\affiche.php'
+ 
 ?>
 
 
@@ -15,8 +15,7 @@ Author URL: http://w3layouts.com
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>ProShowz a Entertainment Category Bootstrap Responsive Website Template | About
-	:: W3layouts</title>
+	<title>TheGlobe-Artistes</title>
 	<!-- Template CSS -->
 	<link rel="stylesheet" href="assets/css/style-starter.css">
 	<!-- Template CSS -->
@@ -146,9 +145,7 @@ Author URL: http://w3layouts.com
 				</div>
 				<div class="col-lg-6 ab-left pl-lg-4 mt-lg-0 mt-5">
 					<h3 class="hny-title">RETROUVER ICI LES MEILLEURS ARTITES</h3>
-					<p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam id quisquam ipsam
-						molestiae ad eius accusantium? Nulla dolorem perferendis inventore! posuere cubilia Curae;
-						Nunc non risus in justo convallis feugiat.</p>
+					<p class="mt-3">Ici vous y trouverez des sensations fortes</p>
 					<div class="ready-more mt-4">
 						<a href="#" class="btn read-button"> Dome<span class="fa fa-angle-double-right ml-2" aria-hidden="true"></span></a>
 					</div>
@@ -222,15 +219,14 @@ Author URL: http://w3layouts.com
 							</div>
 	
 						</div>
-
 						<div class="item vhny-grid">
 							<div class="box16">
 								<div class="d-grid team-info">
 									<div class="column position-relative">
-										<a href="#url"><img src="assets/images/a2.jpg" alt="" class="img-fluid rounded team-image" /></a>
+										<a href="Listes d'artistes.php"><img src="assets/images/a2.jpg" alt="" class="img-fluid rounded team-image" /></a>
 									</div>
 									<div class="column text-center">
-										<h3 class="name-pos"><a href="#url">Karen Gillan</a></h3>
+										<h3 class="name-pos"><a href="Listes d'artistes.php">Karen Gillan</a></h3>
 										
 										<div class="social">
 											<a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
@@ -240,7 +236,7 @@ Author URL: http://w3layouts.com
 									</div>
 								</div>
 							</div>
-	
+	 
 						</div>
 						<div class="item vhny-grid">
 							<div class="box16">
@@ -328,7 +324,7 @@ Author URL: http://w3layouts.com
 		<!--/testimonials-->
 
 
-	
+	<!--
 		<section class="w3l-grids">
 			<div class="grids-main py-5">
 				<div class="container py-lg-4">
@@ -495,6 +491,7 @@ Author URL: http://w3layouts.com
 		</section>
 		<!--grids-sec2-->
 	<!-- footer-66 -->
+	
 	<footer class="w3l-footer">
 		<section class="footer-inner-main">
 			<div class="footer-hny-grids py-5">

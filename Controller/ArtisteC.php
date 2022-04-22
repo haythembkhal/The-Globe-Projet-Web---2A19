@@ -18,14 +18,15 @@ class ArtisteC
 
         try {
             $query = $db->prepare(
-                'INSERT INTO artistes (nom, nationalite, genre, age, description) VALUES (:nom,:nationalite, :genre, :age, :description)'
+                'INSERT INTO artistes (nom, nationalite, genre, age, description, categories) VALUES (:nom,:nationalite, :genre, :age, :description, :categories)'
             );
             $query->execute([
                 'nom' => $art->getnomArt(),
                'nationalite' => $art->getnation(),
                'genre'=> $art->getgenre(),
                'age'=> $art->getage(),
-               'description'=> $art->getdescrip()
+               'description'=> $art->getdescrip(),
+               'categories' => $art->getcategories()
             ]);
         } catch (PDOException $e) {
             $e->getMessage();
@@ -77,7 +78,8 @@ class ArtisteC
                         nationalite= :nationalite,
                         genre= :genre,
                         age= :age,
-                        description= :description
+                        description= :description,
+                        categories= :categories
                         
                     WHERE id= :id'
                 );
@@ -87,6 +89,7 @@ class ArtisteC
                     'genre' =>$art-> getgenre(),
                     'age' =>$art-> getage(),
                     'description' => $art->getdescrip(),
+                    'categories' => $art->getcategories(),
                     'id' => $id 
                     
                  
