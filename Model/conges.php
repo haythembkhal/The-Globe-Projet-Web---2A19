@@ -7,8 +7,7 @@
         private $deb_cong;
         private $fin_cong;
         private $etat_cong = NULL; //1 Pas accepte 0 accepte NULL non traite
-
-        private $password = NULL;
+        
         function __construct($id_cong, $employe_cong, $type_cong, $deb_cong, $fin_cong, $etat_cong)
         {
             $this->idcong = $id_cong;

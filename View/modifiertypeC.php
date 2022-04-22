@@ -5,38 +5,30 @@
 	$typeC = new typeC;
 	$listetypeC = $typeC->affichertypeC();
 	$listetype = $typeC->affichertypeC();
-	$CongeM = $CongeC->recupererConge($_POST['id_conge']);
+	$typeM = $typeC->recuperertypeC($_POST['id_typeC']);
 	
 
 	
 	$error ="";
-	$Conge = NULL;
-	$CongeA = new CongesC();
+	$typecA = NULL;
+	$typecA = new typeC();
 	if (
-        isset($_POST["id_Employe"]) &&
-		isset($_POST["type_conge"]) &&		
-        isset($_POST["date_deb"]) &&
-		isset($_POST["date_fin"]) &&
-        isset($_POST["etat"])
+        isset($_POST["typeC"]) &&
+		isset($_POST["maxC"])
     ) {
         if (
-            !empty($_POST["id_Employe"]) && 
-			!empty($_POST['type_conge']) &&
-            !empty($_POST["date_deb"]) && 
-			!empty($_POST["date_fin"])) 
-         {
-            $Conge = new Conges(NULL,
-                $_POST['id_Employe'],
-				$_POST['type_conge'],
-                $_POST['date_deb'], 
-				$_POST['date_fin'],
-                $_POST["etat"]
-            );
-            $CongeA->modifierConge($Conge, $_POST['id_conge']);
+            !empty($_POST["typeC"]) && 
+			!empty($_POST['maxC'])) 
+        {
+            $typeCA = new type_cong(NULL,
+						$_POST['typeC'],
+						$_POST['maxC']
+					);
+			$typeC->modifiertypeC($typeCA, $_POST['id_typeC']);
 			header('Location:Afficher.php');
-        }
-        else
-            $error = "Missing information";
+		}
+		else
+			$error = "Missing information";
     }
 ?>
 <!DOCTYPE html>
@@ -251,46 +243,6 @@
 
 				<div class="span9">
 					<div class="content">
-						<div class="module_form">
-							<div class="module-head">
-								<h3>Modifier un Congés</h3>
-							</div>
-							<form action="" method="POST">
-								<input type="text" name="id_Employe" id="id_Employe" value="<?php echo $CongeM['employes'] ?>" placeholder="Id_Employé" maxlength="20">
-								<select type="range" name="type_conge" id="type_conge">
-									<?php
-										foreach($listetype as $typeC){
-											if($CongeM['type_conge'] == $typeC['id_typeC'])
-											{
-									?>
-											<option selected value="<?php echo $typeC['id_typeC'] ?>"><?php echo $typeC['Name'] ?></option>
-									<?php
-											}
-											else
-											{
-									?>
-											<option value="<?php echo $typeC['id_typeC'] ?>"><?php echo $typeC['Name'] ?></option>
-									<?php
-											}
-										}
-									?>
-								</select>
-								<br>
-								<input width="50px" type="date" name="date_deb" id="date_deb" value="<?php echo $CongeM['date_deb'] ?>" placeholder="Date début du congé">
-								<input type="date" name="date_fin" value="<?php echo $CongeM['date_fin'] ?>" id="date_fin" placeholder="Date fin du congé">
-								<br>
-                                <input type="radio" value="1" name="etat"> Rejeté
-                                <input type="radio" value="0" name="etat"> Accepté
-								<br>
-                                <input type="hidden" value=<?PHP echo $_POST['id_conge']; ?> name="id_conge">
-                                <br>
-								<input type="submit" value="Modifer">
-								<input type="Reset" value="Effacer">
-							</form>
-                            <a href="Afficher.php"><button>Annuler</button></a>
-						</div>
-					</div>
-					<div class="content">
 
 						
 						<div class="module">
@@ -350,6 +302,20 @@
 							  </table>
 							</div>
 						</div><!--/.module-->
+						<div class="module_form">
+							<div class="module-head">
+								<h3>Modifier un Congés</h3>
+							</div>
+							<form action="" method="POST">
+								<input type="text" name="typeC" id="typeC" placeholder="Type" maxlength="20" value="<?php echo $typeM['Name'] ?>">
+								<input width="50px" type="Number" name="maxC" id="maxC" placeholder="Durré max du congé en jours" value="<?php echo $typeM['Max'] ?>">
+								<input type="hidden" value=<?PHP echo $_POST['id_typeC']; ?> name="id_typeC">
+								<br>
+								<input type="submit" value="Envoyer">
+								<input type="Reset" value="Effacer">
+							</form>
+							<a href="Afficher.php"><button>Annuler</button></a>
+						</div>
 						<div class="module">
 							<div class="module-head">
 								<h3>Types de congés</h3>
