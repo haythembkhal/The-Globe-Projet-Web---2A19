@@ -3,6 +3,16 @@
 Author: W3layouts
 Author URL: http://w3layouts.com
 -->
+
+<?php
+include '../../Controller/temoignageC.php';
+$customer = new ClientC();
+$temoignage=new temoignageC();
+$listeTemoignage=$temoignage->afficherTemoignage();
+
+
+$count=1000;
+?>
 <!doctype html>
 <html lang="zxx">
 
@@ -152,7 +162,7 @@ Author URL: http://w3layouts.com
 				<div class="stats_left">
 					<div class="counter_grid">
 						<div class="icon_info">
-							<p class="counter">65</p>
+							<p class="counter"><?php echo $count;?></p>
 							<h4>Movies</h4>
 
 						</div>
@@ -323,119 +333,37 @@ Author URL: http://w3layouts.com
     <div class="cusrtomer-layout py-5">
         <div class="container py-lg-4">
 			<div class="headerhny-title">
-				<h3 class="hny-title">Our Testimonials</h3>
+				<h3 class="hny-title">Our Customers love what we do</h3>
 			</div>
             <!-- /grids -->
             <div class="testimonial-width">
                 <div class="owl-clients owl-carousel owl-theme mb-lg-5">
+				<?php 
+								     foreach($listeTemoignage as $temoignage) { ?>
                     <div class="item">
                         <div class="testimonial-content">
                             <div class="testimonial">
                                 <blockquote>
-                                    <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                        voluptate rem ullam dolore!.</q>
+                                    <q><?php echo $temoignage["message"];?></q>
                                 </blockquote>
                                 <div class="testi-des">
                                     <div class="test-img"><img src="assets/images/team1.jpg" class="img-fluid" alt="/">
                                     </div>
                                     <div class="peopl align-self">
-                                        <h3>Johnson smith</h3>
-                                        <p class="indentity">Washington</p>
+                                        <h3><?php $client=$customer->rechercherClient($temoignage["client"]);foreach($client as $c){echo $c["firstname"]." ".$c["lastname"];}?></h3>
+                                        <p class="indentity">TUNIS</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="item">
-                        <div class="testimonial-content">
-                            <div class="testimonial">
-                                <blockquote>
-									<q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                        voluptate rem ullam dolore!.</q>
-                                </blockquote>
-                                <div class="testi-des">
-                                    <div class="test-img"><img src="assets/images/team2.jpg" class="img-fluid" alt="/">
-                                    </div>
-                                    <div class="peopl align-self">
-                                        <h3>Alexander leo</h3>
-                                        <p class="indentity">Washington</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimonial-content">
-                            <div class="testimonial">
-                                <blockquote>
-                                    <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                        voluptate rem ullam dolore!.</q>
-                                </blockquote>
-                                <div class="testi-des">
-                                    <div class="test-img"><img src="assets/images/team3.jpg" class="img-fluid" alt="/">
-                                    </div>
-                                    <div class="peopl align-self">
-                                        <h3>Roy Linderson</h3>
-                                        <p class="indentity">Washington</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimonial-content">
-                            <div class="testimonial">
-                                <blockquote>
-                                    <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                        voluptate rem ullam dolore!.</q>
-                                </blockquote>
-                                <div class="testi-des">
-                                    <div class="test-img"><img src="assets/images/team4.jpg" class="img-fluid" alt="/">
-                                    </div>
-                                    <div class="peopl align-self">
-                                        <h3>Mike Thyson</h3>
-                                        <p class="indentity">Washington</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimonial-content">
-                            <div class="testimonial">
-                                <blockquote>
-									<q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                        voluptate rem ullam dolore!.</q>
-                                </blockquote>
-                                <div class="testi-des">
-                                    <div class="test-img"><img src="assets/images/team2.jpg" class="img-fluid" alt="/">
-                                    </div>
-                                    <div class="peopl align-self">
-                                        <h3>Laura gill</h3>
-                                        <p class="indentity">Washington</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimonial-content">
-                            <div class="testimonial">
-                                <blockquote>
-									<q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae laudantium
-                                        voluptate rem ullam dolore!.</q>
-                                </blockquote>
-                                <div class="testi-des">
-                                    <div class="test-img"><img src="assets/images/team3.jpg" class="img-fluid" alt="/">
-                                    </div>
-                                    <div class="peopl align-self">
-                                        <h3>Smith Johnson</h3>
-                                        <p class="indentity">Washington</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+									 <?php } ?>
+									 
+                    
+                    
+                    
+                   
+                   
                 </div>
             </div>
         </div>
@@ -690,7 +618,7 @@ Author URL: http://w3layouts.com
 				<div class="container">
 					<div class="copyright-footer">
 						<div class="columns text-lg-left">
-							<p>&copy; 2020 ProShowz. All rights reserved | Designed by <a
+							<p>&copy; 2022 	THE GLOBE. All rights reserved | Designed by ALLIANCE <a
 									href="https://w3layouts.com">W3layouts</a></p>
 						</div>
 

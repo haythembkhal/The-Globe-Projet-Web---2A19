@@ -56,7 +56,23 @@ function afficherClient(){
             $e->getMessage();
         }
     }
+function rechercherClient($userID){
+	 $db = config::getconnexion();
 
+        try {
+            $query = $db->prepare(
+			
+            'SELECT * FROM client where id_client= :userID'
+            );
+			$query->execute(['userID'=>$userID]);
+			$result=$query->fetchALL();
+			return $result;
+           
+
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+}
 //une fonction rechercher Email afin d'assurer l'unicité des adresse Email
 function rechercherEmail($email){
 	 $db = config::getconnexion();
@@ -115,57 +131,7 @@ function updateClient($user,$userId){
             $e->getMessage();
         }
     }
-    function updateStudentUserName($newUserName,$userId){
-
-        $db = config::getConnexion();
-        try{
-            $query = $db->prepare(
-                'UPDATE student SET userName= :userName where userId = :userId'
-            );
-            $query = $query->execute([
-                'userName' => $newUserName,
-                'userId' => $userId
-            ]);
-            $_SESSION['userName'] = $newUserName;
-        }catch(PDOException $e){
-            $e->getMessage();
-        }
-    }
-
-    function updateStudentEmail($newEmail,$userId){
-        
-        $db = config::getConnexion();
-        try{
-            $query = $db->prepare(
-                'UPDATE student SET email= :email where userId = :userId'
-            );
-            $query = $query->execute([
-                'email' => $newEmail,
-                'userId' => $userId
-            ]);
-            $_SESSION['email'] = $newEmail;
-        }catch(PDOException $e){
-            $e->getMessage();
-        }
-    }
-
-
-    function updateStudentPassword($newPassword,$userId){
-        $db = config::getConnexion();
-        try{
-            $query = $db->prepare(
-                'UPDATE student SET password= :password where userId = :userId'
-            );
-            $query = $query->execute([
-                'password' => $newPassword,
-                'userId' => $userId
-            ]);
-        }catch(PDOException $e){
-            $e->getMessage();
-        }
-    }
-
-
+    
     function supprimerClient($userId){
 
         $db = config::getConnexion();
@@ -180,6 +146,21 @@ function updateClient($user,$userId){
             $e->getMessage();
         }
     }
+	function rechercheAvancee($mot){
+		 $db = config::getConnexion();
+        try {
+            $query = $db->query(
+			
+            "SELECT * FROM client WHERE firstname like '%$mot%' || lastname like '%$mot%' || username like '%$mot%'"
+            );
+			$query->execute(['firstname'=>$mot]);
+			$result=$query->fetchALL();
+			return $result;
+           
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+	}
 
     
 }
@@ -280,73 +261,42 @@ function ajouterEmploye($newEmploye){
             $e->getMessage();
         }
     }
-
-    function updateTeacherEmail($newEmail,$userId){
-        
-        $db = config::getConnexion();
-        try{
-            $query = $db->prepare(
-                'UPDATE teacher SET email= :email where userId = :userId'
-            );
-            $query = $query->execute([
-                'email' => $newEmail,
-                'userId' => $userId
-            ]);
-            $_SESSION['email'] = $newEmail;
-        }catch(PDOException $e){
-            $e->getMessage();
-        }
-    }
-
-
-    function updateTeacherPassword($newPassword,$userId){
-        $db = config::getConnexion();
-        try{
-            $query = $db->prepare(
-                'UPDATE teacher SET password= :password where userId = :userId'
-            );
-            $query = $query->execute([
-                'password' => $newPassword,
-                'userId' => $userId
-            ]);
-        }catch(PDOException $e){
-            $e->getMessage();
-        }
-    }
-
-    function deleteTeacher($userId){
-
-        $db = config::getConnexion();
+	function rechercheAvancee($mot){
+		 $db = config::getConnexion();
         try {
-            $query = $db->prepare(
-                'DELETE FROM teacher WHERE userId = :userId'
+            $query = $db->query(
+			
+            "SELECT * FROM employe WHERE firstname like '%$mot%' || lastname like '%$mot%' || username like '%$mot%'"
             );
-            $query->execute([
-                'userId' => $userId
-            ]);
+			$query->execute(['firstname'=>$mot]);
+			$result=$query->fetchALL();
+			return $result;
+           
         } catch (PDOException $e) {
             $e->getMessage();
         }
-    }
+	}
+
+
 }
 
 
 class AdministratorC{
 
-    function addAdministrator($newAdministrator){
+    function ajouterAdministrateur($newAdministrator){
         $db = config::getConnexion();
 
         try {
             $query = $db->prepare(
-                'INSERT INTO administrator (userId,email,userName,password,registrationDate) 
-                    VALUES (:userId,:email,:userName,:password,:registrationDate) '
+                'INSERT INTO administrateur (firstname,lastname,username,email,password) 
+                    VALUES (:firstname,:lastname,:username,:email,:password) '
             );
             $query->execute([
-                'userId' => $newAdministrator->getUserId(),
+                'firstname' => $newAdministrator->getFirstname(),
+                'lastname' => $newAdministrator->getLastname(),
+                'username' => $newAdministrator->getUsername(),
                 'email' => $newAdministrator->getEmail(),
-                'userName' => $newAdministrator->getUserName(),
-                'password' => $newAdministrator->getPassword(),
-                'registrationDate' => $newAdministrator->getRegistrationDate()
+                'password' => $newAdministrator->getPassword()
             ]);
         } catch (PDOException $e) {
             $e->getMessage();

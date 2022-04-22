@@ -152,7 +152,7 @@ $email=$_SESSION["email"];*/
               </div>
               <div class="text-center">
                 <h3>
-                  <?php echo $_SESSION['lastname']." ".$_SESSION['firstname']?><span class="font-weight-light">, 21</span>
+                  <?php echo $_SESSION['lastname']." ".$_SESSION['firstname']?><span class="font-weight-light">20</span>
                 </h3>
                 <div class="h5 font-weight-300">
                   <i class="ni location_pin mr-2"></i>Ariana, Tunisia
@@ -160,7 +160,8 @@ $email=$_SESSION["email"];*/
       
                 
                 <hr class="my-4">
-                <p>Convaincu que le divertissement peut etre un moyen efficace pour booster les performances. Passione des spectacles, du cinema, et des theatres.</p>
+                <p><?php echo $_SESSION["temoignage"];?></p>
+				<a href="../../Controller/logoutController.php" class="btn btn-sm btn-info mr-4">Update</a>
      
               </div>
             </div>
@@ -187,6 +188,7 @@ $email=$_SESSION["email"];*/
                       <div class="form-group focused">
                         <label id="info" class="form-control-label" for="input-username">Username</label>
                         <input type="text" id="input-username" name="username" class="form-control form-control-alternative" placeholder="Username" value=<?php echo $_SESSION['username']?>>
+						
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -220,8 +222,10 @@ $email=$_SESSION["email"];*/
                 <div class="pl-lg-4">
                   <div class="form-group focused">
                     <label>Publier Un temoignage</label>
-                    <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">Mon experience avec the goble a ete plus que satisfaisant. Je remercie l'equipe toute entiere</textarea><br>
-					 <input type="submit" id='submit' class="btn btn-info" value='PUBLIER' >
+                    <form action="publierTemoignage.php" method ="POST">
+					<textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..." name="temoignage"></textarea><br>
+					 <input type="submit"  class="btn btn-info" value='PUBLIER' name="publier">
+					 </form>
                   </div>
                 </div>
 				

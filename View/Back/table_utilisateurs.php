@@ -1,8 +1,18 @@
 ﻿<?php
 //session_start();
-include '../../Controller/userC.php';
+//include '../../Controller/userC.php';
+include '../../Controller/temoignageC.php';
 $customer = new ClientC();
+
 $employe = new EmployeC();
+$temoignage=new temoignageC();
+$listeClient="";
+$listeEmploye="";
+$taille="";
+$taille2="";
+$message1="";
+$message2=""; //utiliser pour préciser le nombre d'elements trouver après la rechercher.
+
 
 
 //var_dump($listeClient);
@@ -10,8 +20,36 @@ $employe = new EmployeC();
  
 
  $listeEmploye = $employe->afficherEmploye();
+ $listeClient = $customer->afficherClient();
+ $listeTemoignage=$temoignage->afficherTemoignage();
+ if (isset($_POST['mot_rechercher_client']))
+{
+	$listeClient=$customer->rechercheAvancee($_POST['mot_rechercher_client']);
+	$taille=count($listeClient);
+	$message1="element(s) trouver";
+	
+	
+}
+else{
+$taille="";
+$message1="";
+}
  
-     $listeClient = $customer->afficherClient();
+ if (isset($_POST['mot_rechercher_employe']))
+{
+	$listeEmploye=$employe->rechercheAvancee($_POST['mot_rechercher_employe']);
+	$taille2=count($listeEmploye);
+	$message2="element(s) trouver";
+	//header('location:#employe');
+	
+}
+else{
+	$taille2="";
+	$message2="";
+	
+	
+}
+ 
 ?>
 
 <!DOCTYPE html>
@@ -85,7 +123,7 @@ $employe = new EmployeC();
 								<li><a href="#">Edit Profile</a></li>
 								<li><a href="#">Account Settings</a></li>
 								<li class="divider"></li>
-								<li><a href="#">Logout</a></li>
+								<li><a href="../../Controller/logoutController.php">Logout</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -352,7 +390,7 @@ if(username.value.length==0)
 							</li>
 							
 							<li>
-								<a href="#">
+								<a href="../../Controller/logoutController.php">
 									<i class="menu-icon icon-signout"></i>
 									Logout
 								</a>
@@ -373,10 +411,19 @@ if(username.value.length==0)
 							<div class="module-body">
 								<p>
 									<strong>Liste des Clients</strong>
-									
-									-
+									<span style="color: green; font-size: 1em;"><?php echo $taille." ".$message1; ?></span>
 									
 								</p>
+								<p>
+								<form class="navbar-search pull-left input-append" action="" method="POST">
+                        <input type="text" class="span3" name="mot_rechercher_client">
+                        <button class="btn" type="submit">
+                            <i class="icon-search"></i>
+                        </button>
+						
+                        </form>
+								</p>
+								
 								<form action="supprimerClient.php" method="POST">
 								<table  class="table table-bordered">
 								  <thead>
@@ -399,7 +446,8 @@ if(username.value.length==0)
 									  <td><?php Echo $client['username'];?></td>
 									  <td><?php Echo $client['email'];?></td>
 									  <td><?php Echo $client['password'];?></td>						 
-									  <td><input type=button class="btn-info" value="read" >
+									  <td>
+									  <button type="submit" name="readClient" class="" value=<?php echo $client['id_client'];?> >read</button>
 									  
 									  <button type="submit" name="clientID" class="btn-danger" value=<?php echo $client['id_client'];?>>delete</button>
 									 								  
@@ -415,12 +463,21 @@ if(username.value.length==0)
 								<br />
 
 								<p>
-									<strong>Liste des Employes</strong>
+									<strong id="employe">Liste des Employes</strong>
 									<a href="form.php"><input type="button" class="btn-success btn-lg" value="ADD"></a>
+									<span><?php echo $taille2." ".$message2; ?></span>
 									<!--<input type="submit"  value='Add' onclick="document.location.href=modifyURL(table_artistes.php)"-->
 																		
 									
 								
+								</p>
+								<p>
+								<form class="navbar-search pull-left input-append" action="" method="POST">
+                        <input type="text" class="span3" name="mot_rechercher_employe">
+                        <button class="btn" type="submit">
+                            <i class="icon-search"></i>
+                        </button>
+                        </form>
 								</p>
 								<form action="formUpdateEmploye.php" method="POST">
 								<table  class="table table-bordered">
@@ -446,7 +503,7 @@ if(username.value.length==0)
 									  <td><?php Echo $employe['email'];?></td>
 									  <td><?php Echo $employe['password'];?></td>	
 									  
-									   <td><input type=button class="btn-info" value="read" ><button type="submit" name="update" class="btn-warning" value=<?php echo $employe['id_employe'];?>>update</button> <button type="submit" name="delete" class="btn-danger" value=<?php echo $employe['id_employe'];?>>delete</button></td>
+									   <td><button type="submit" name="update" class="btn-warning" value=<?php echo $employe['id_employe'];?>>update</button> <button type="submit" name="delete" class="btn-danger" value=<?php echo $employe['id_employe'];?>>delete</button></td>
 									</tr>
 								  <?php } ?>
 									
@@ -458,57 +515,43 @@ if(username.value.length==0)
 								<!-- <hr /> -->
 								<br />
 
-								<!--<p>
-									<strong>Liste des Admins</strong>
-									
-									<a href="form.php"><input type="button" class="btn-success btn-lg" value="ADD"></a>
+								<p>
+									<strong>Liste des Temoignages</strong>
 									
 									
 									
 								</p>
+								<p>
+								<form class="navbar-search pull-left input-append" action="#">
+                        <input type="text" class="span3">
+                        <button class="btn" type="button">
+                            <i class="icon-search"></i>
+                        </button>
+                        </form>
+								</p>
+								<form action ="supprimerTemoignage.php" method="POST">
 								<table class="table table-bordered">
 								  <thead>
 									<tr>
-									  <th>ID</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									  <th>Email</th>
-									  <th>Password</th>
-									   <th>Operation</th>
+									  <th>Message</th>
+									  <th>Publier par</th>
+									  <th>Operation</th>
 									</tr>
 								  </thead>
 								  <tbody>
+									<?php 
+								     foreach($listeTemoignage as $temoignage) { ?>
 									<tr>
-									  <td>1</td>
-									  <td>Balla Moussa</td>
-									  <td>Keita</td>
-									  <td>moussa.keita</td>
-									  <td>moussa.keita@esprit.tn</td>
-									  <td>abcde</td>
-									    <td><input type=button class="btn-info" value="read" ><input type=button class="btn-warning" value="update" ><input type=button class="btn-danger" value="delete" ></td>
+									  
+									  <td><?php Echo $temoignage['message'];?></td>
+									  <td><?php $client=$customer->rechercherClient($temoignage["client"]);foreach($client as $c){echo $c["firstname"]." ".$c["lastname"];}?></td>
+									  <input type="hidden" name="id" value=<?php echo $temoignage['id_temoignage']?> >
+									<td><button type="submit" name="delete" class="btn-danger">delete</button></td>
 									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Haythem</td>
-									  <td>Benkhaled</td>
-									  <td>hayth.khaled</td>
-									  <td>haytme.benkhaled@esprit.tn</td>
-									  <td>abcde</td>
-									   <td><input type=button class="btn-info" value="read" ><input type=button class="btn-warning" value="update" ><input type=button class="btn-danger" value="delete"></td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>keita</td>
-									  <td>Ibrahim</td>
-									  <td>keita.ibrahim</td>
-									  <td>ibrahim.keita@esprit.tn</td>
-									  <td>abcde</td>
-									   <td><input type=button class="btn-info" value="read"  ><input type=button class="btn-warning" value="update" ><input type=button class="btn-danger" value="delete"></td>
-									</tr>
+								  <?php } ?>
 								  </tbody>
 								</table>
--->
+								</form>
 								
 							</div>
 						</div>

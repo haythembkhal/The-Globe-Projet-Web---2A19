@@ -2,44 +2,86 @@
 //session_start();
  //  include 'C:/xampp/htdocs/Projet/View/Back/table_utilisateurs.php';
 	include '../../Controller/userC.php';
- 
+	require_once 'autoload.php';
+
+if (isset($_POST['submit'])&& isset($_POST['g-recaptcha-response']))
+{
+$recaptcha = new \ReCaptcha\ReCaptcha("6Le8QIcfAAAAAC6DvruNqN23RQ97sUwV6Cf77RMl");
+$resp = $recaptcha->verify($_POST["g-recaptcha-response"]);
+                 
+if ($resp->isSuccess()) {
+    var_dump("valide");
+	die;
+} else {
+    $errors = $resp->getErrorCodes();
+	var_dump("Invalide");
+	die;
+}
+}
+
+
 
     $error = "";
+	$captcha=0;
     $success = 0;
     // create employe
     $customer= null;
 	$userOnline=0;
     // create an instance of the controller
     $client = new ClientC();
-    if (isset($_POST['firstname'])&& isset($_POST['lastname']) && isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
-        if (!empty($_POST['firstname'])&& !empty($_POST['lastname']) && !empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
-            $customer = new User(
+    if (isset($_POST['firstname'])&& isset($_POST['lastname']) && isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])&&isset($_POST['g-recaptcha-response'])) {
+        if (!empty($_POST['firstname'])&& !empty($_POST['lastname']) && !empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) 
+		{
+			$recaptcha = new \ReCaptcha\ReCaptcha("6Le8QIcfAAAAAC6DvruNqN23RQ97sUwV6Cf77RMl");
+            $resp = $recaptcha->verify($_POST["g-recaptcha-response"]);
+				if ($resp->isSuccess())
+				{
+					
+		    $customer = new User(
                 $_POST['firstname'],
                 $_POST['lastname'],
                 $_POST['username'],
                 $_POST['email'],
-                $_POST['password'],
+                MD5($_POST['password']),
             );
             $success = 1;
 			
-			/*$nom=$emp->afficherEmploye();
-			var_dump($nom);
-			die;*/
-			
-			
-			
-if($client->rechercherEmail($_POST['email'])==NULL)
-{
-	$error=0;
-		$client->ajouterClient($customer);
-		header('Location:sign_in.php');
-	
-}
-else
-{
-	//header('Location:login.php?erro=2');
-	$error=1;
-}
+					if($client->rechercherEmail($_POST['email'])==NULL)
+						{
+						$error=0;
+						$client->ajouterClient($customer);
+						$destinataire = $_POST["email"];
+						$sujet = "[THE GLOBE][SIGN UP]";
+						$headers = "From:theglobe.alliance2022@gmail.com\n";
+						$headers .="Content-Type: text/html; charset=iso-8859-1\n";
+						$message = "<html>Hello <strong>".$_POST["lastname"]."</strong>,<br><br>
+	 
+Thank you for joining the globe platform.<br>
+We would like to confirm that your account has been successfully created.<br> 
+To access your account, click on the link below.<br><br>
+
+If you are having trouble logging into your account, contact us at theglobe.alliance2022@gmail.com.<br><br>
+
+Cordially,<br>
+<strong>The Globe team</strong></html> ";
+							  
+
+							 mail($destinataire,$sujet,$message,$headers);
+						header('Location:sign_in.php');
+						 
+						
+					}
+					else
+					{
+					//header('Location:login.php?erro=2');
+					$error=1;
+					}
+				}
+				else
+				{
+					$captcha=1;
+				}
+
 
 		
 			
@@ -65,6 +107,7 @@ else
        <meta charset="utf-8">
         <!-- importer le fichier de style -->
         <link rel="stylesheet" href="style.css" media="screen" type="text/css" />
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
     <body>
         <div id="container">
@@ -104,6 +147,8 @@ else
 				<span id="error_password" style="color: red; font-size: 0.75em;"></span>
 				</div>
 				<br>
+				<div class="g-recaptcha" data-sitekey="6Le8QIcfAAAAABsQzy-o34pz_-3rHGASIRiIfeWD"></div>
+				<span id="error" style="color: red; font-size: 0.75em;"><?php if($captcha==1){ echo"Authentification captcha failed...";$captcha=0;}else{echo"";}?></span><br>
 				
 			
                 <input type="submit" id='submitButton' value='SUBMIT' >

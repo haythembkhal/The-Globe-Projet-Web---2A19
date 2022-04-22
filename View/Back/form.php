@@ -18,7 +18,7 @@
                 $_POST['lastname'],
                 $_POST['username'],
                 $_POST['email'],
-                $_POST['password'],
+                MD5($_POST['password']),
             );
             $success = 1;
 			
