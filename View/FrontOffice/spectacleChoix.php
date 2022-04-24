@@ -3,6 +3,7 @@
 include_once '../../Controller/FrontOffice/spectacleControllerF.php';
 include_once 'C:\xampp\htdocs\Module Spectacle\Controller\BackOffice\specStatistique.php';
 include_once '../../Controller/FrontOffice/commentaireMetier.php';
+
 $spec=$_GET['specId'];
 $titre=$_GET["titre"];
 $date=$_GET["dateSpec"];
@@ -44,9 +45,41 @@ $imglandscape=$_GET["imglandscape"];
 
     <!-- I MAY NEED THE ABOvE STYLE -->
 
+<script>	
+function afficherRes() {
+	var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+	if(document.getElementById("spectacleDate").innerText < today)
+	{
+    	document.getElementById("spectacleReservation").setAttribute("style","pointer-events: none;");
+		document.getElementById("spectacleReservation").innerHTML="Date Dépassée";
+	}
+}
+	</script>
+
+<script>
+
+
+function ctrlComment(event)
+{
+    // CONTROL DE SAISIE COMMENTAIRE
+var comment=document.getElementById("comment").value;
+// return false;
+if(comment=="")
+{
+	commmentControl.innerHTML="Il faut saisir des données";
+	return false;
+}
+
+}
+</script>
+
 </head>
 
-<body>
+<body onload=afficherRes(); style="overflow-x: hidden;">
 
 	<!-- header -->
 	<header id="site-header" class="w3l-header fixed-top">
@@ -173,13 +206,15 @@ $imglandscape=$_GET["imglandscape"];
           </div>
           <aside> 
 		  <p id="spectacleTitle" class="spectacleInfo spectacleHeader"> <b> <?php echo $titre; ?></b> </p>
+		  
 			<p id="spectacleTime" class="spectacleInfo "> <ion-icon name="time-outline"></ion-icon> <?php echo $duree; ?></p>
-              <p id="spectacleDate" style="color:black;" class="spectacleInfo "> <ion-icon name="calendar-number-outline"></ion-icon> <?php echo $date ?></p>
-				<!-- <a id="spectacleTheatre"style="color:black;" class="spectacleInfo"><ion-icon name="map-outline"></ion-icon> Voir le plan de la salle</a> -->
+              <p id="spectacleDate" style="color:black;" class="spectacleInfo "> <ion-icon name="calendar-number-outline"></ion-icon><?php echo $date ?></p>
+				<p id="spectacleTheatre"style="color:black;" class="spectacleInfo"><ion-icon name="eye-outline"></ion-icon> Nombre de Vues: </p>
               <a id="spectacleLocation" style="color:black;"class="spectacleInfo" href="#map"><ion-icon name="map-outline"></ion-icon><?php echo $adresse ?></a> 
               <a id="spectacleVideo" style="color:black;" class="spectacleInfo" href="#videoPopup"> <ion-icon name="videocam-outline"></ion-icon> Regarder Video</a>
               <a id="spectacleComment" style="color:black;" class="spectacleInfo" href="#respond"> <ion-icon name="heart-half-outline"></ion-icon> Cliquer pour evaluer et commenter</a> 
-              <a id="spectacleReservation"style="color:black;"  class="spectacleInfo" href="google.com"> <ion-icon name="ticket-outline"></ion-icon> Reserver  <ion-icon name="ticket-outline"></ion-icon> </a>
+             
+			  <a id="spectacleReservation"style="color:black;"  class="spectacleInfo" href="google.com"> <ion-icon name="ticket-outline"></ion-icon> Reserver  <ion-icon name="ticket-outline"></ion-icon> </a>
           </aside>
     </section>
 	<br><br>
@@ -236,13 +271,13 @@ $imglandscape=$_GET["imglandscape"];
     <h3 class="spectacleHeader">Laisser Un Commentaire</h3>
 	<br>
 	
-    <form method="post" id="commentform">
+    <form method="post" id="commentform" onsubmit="return ctrlComment(event);">
 	<div class="row">
         <div class="col-2"> <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2"> </div></div>
 	<h6>Username</h6>	  
 	<p style="color:red;"><?php echo $_SESSION['status']; ?></p>
-      <textarea placeholder="Ecrire ici..." name="commentaire" id="comment" rows="10" tabindex="4"  required="required"></textarea>
-  
+      <textarea placeholder="Ecrire ici..." name="commentaire" id="comment" rows="10" tabindex="4"></textarea>
+	<p id="commmentControl"></p>
 
 	  <!-- <input type="hidden" name="dateCommentaire" value="2022-04-30"/>  use javascript for date -->
 <input type="hidden" name="specId" value="<?php echo $_GET['specId']; ?>"/> <!-- 1 represents spectacle id -->
@@ -261,16 +296,21 @@ $imglandscape=$_GET["imglandscape"];
   <img src="<?php echo $imgportrait; ?>" alt="img" style="width:20%;" >
 </a>
 
+
+<script src="https://use.fontawesome.com/fe459689b4.js"></script>
 <form method="POST">
-<input type="image" name="liked" value="liked" src="assets/images/like.png" alt="Submit" style="width: 40px; float:left; height:40px; background:yellow; margin:10px">
-<?php avisLiked(); ?>
+<button class="btn" name="liked" value="liked"style="width: 40px; float:left; height:40px; color:green; margin:10px" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
+  <?php avisLiked($spec); ?>
 <input type="hidden" name="liked" value="liked">
+<input type="hidden" name="specIdent" value=<?php echo $_GET['specId'];?>>
 </form>
 
 <form method="POST">
-<input type="image" name="disliked" value="disliked" src="assets/images/dislike.png" alt="Submit" style="width: 40px; float:left; height:40px; background:gray; margin:10px">
-<?php avisDisliked(); ?>  
-<input type="hidden" name="liked" value="disliked">
+    
+  <button class="btn" name="disliked" value="disliked" style="width: 40px; float:left; height:40px; color:red; margin:10px" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
+  <?php avisDisliked($spec); ?>  
+  <input type="hidden" name="liked" value="disliked">
+<input type="hidden" name="specIdent" value=<?php echo $_GET['specId'];?>>
 </form>
   </aside>
 

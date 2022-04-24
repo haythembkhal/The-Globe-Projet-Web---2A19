@@ -4,15 +4,49 @@ config::getConnexion();
 class SpectaclesC{
 
 public function afficher() 
-{
+{			
+		$result=1;
         try{
+			if(isset($_POST['recherche'])&& $_POST['recherche']=="")
+			{
+				$query= config::$pdo->query('SELECT * FROM spectacles');
+				$list=$query->fetchAll();
+			}
+			else if(isset($_POST['recherche'])&& $_POST['recherche']!=""){
+				$query= config::$pdo->prepare('SELECT COUNT(*) FROM spectacles where LOWER(titre) like LOWER("%":id"%")OR LOWER(realisateurs) LIKE LOWER("%":id"%")');
+				$query->bindParam(':id',$_POST['recherche']);
+				$query->execute();
+				$list=$query->fetch();
+	
+				$var=array_values($list)[0]; // Outputs: Apple
+				// echo $var;
+				if($var==0)
+				{
+				//   $query= config::$pdo->query('SELECT * FROM spectacles');
+				//   $list=$query->fetchAll();
+					$result=0;
+				}
+				else
+				{ $query= config::$pdo->prepare('SELECT * FROM spectacles where LOWER(titre) like LOWER("%":id"%") OR LOWER(realisateurs) LIKE LOWER("%":id"%")');
+				$query->bindParam(':id',$_POST['recherche']);
+				$query->execute();
+				$list=$query->fetchAll();
+				}		  
+		}
+		else{
             $query= config::$pdo->query('SELECT * FROM spectacles');
             $list=$query->fetchAll();
-        }
+			}
+		}
         catch(PDOException $e){
         echo $e->getMessage();
         }
-		
+		if($result==0)
+		{
+			echo'<p>PAS DE RESULTAT</p>';
+			
+		}
+		else if($result==1){
 		$var=0;
          foreach($list as $spectacle){
 			 if($var==0){
@@ -79,6 +113,7 @@ public function afficher()
 
         }
     }
+	}
 }?>
 
 

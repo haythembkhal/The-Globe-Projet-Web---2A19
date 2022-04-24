@@ -23,6 +23,7 @@ $_SESSION['realisateurs']="";
 
 function afficher (): void {  //Implementation de recherche a linteurieur
         try{
+          $result=1;
           if(isset($_POST['triDate']))
           {
             $query= config::$pdo->query('SELECT * FROM spectacles ORDER BY dateSpec');
@@ -33,9 +34,14 @@ function afficher (): void {  //Implementation de recherche a linteurieur
             $query= config::$pdo->query('SELECT * FROM spectacles ORDER BY titre');
             $list=$query->fetchAll(); 
           }
-          else if(isset($_POST['rechercheId']))
+          else if(isset($_POST['rechercheId'])&& $_POST['rechercheId']=="")
           {
-            $query= config::$pdo->prepare('SELECT COUNT(*) FROM spectacles where spectacleId=:id');
+            $query= config::$pdo->query('SELECT * FROM spectacles');
+            $list=$query->fetchAll();
+          }
+          else if(isset($_POST['rechercheId']) && $_POST['rechercheId']!="")
+          {
+            $query= config::$pdo->prepare('SELECT COUNT(*) FROM spectacles where LOWER(titre) like LOWER("%":id"%")');
             $query->bindParam(':id',$_POST['rechercheId']);
             $query->execute();
             $list=$query->fetch();
@@ -43,12 +49,12 @@ function afficher (): void {  //Implementation de recherche a linteurieur
             $var=array_values($list)[0]; // Outputs: Apple
             // echo $var;
             if($var==0)
-            {
-              $query= config::$pdo->query('SELECT * FROM spectacles');
-              $list=$query->fetchAll();
+            { $result=0;
+            //  $query= config::$pdo->query('SELECT * FROM spectacles');
+              //$list=$query->fetchAll();
             }
             else
-            { $query= config::$pdo->prepare('SELECT * FROM spectacles where spectacleId=:id');
+            { $query= config::$pdo->prepare('SELECT * FROM spectacles where LOWER(titre) like LOWER("%":id"%")');
             $query->bindParam(':id',$_POST['rechercheId']);
             $query->execute();
             $list=$query->fetchAll();
@@ -64,6 +70,11 @@ function afficher (): void {  //Implementation de recherche a linteurieur
         catch(PDOException $e){
         echo $e->getMessage();
         }
+        if($result==0)
+        {
+          echo'<p>PAS DE RESULTAT</p>';
+        }
+        else if($result==1){
          foreach($list as $spectacle){?>
             <tr class="odd gradeX">
                 <td><?= $spectacle['titre'] ?></td>  
@@ -130,7 +141,7 @@ function afficher (): void {  //Implementation de recherche a linteurieur
             <?php 
         }
     }
-    
+}  
 function ajouterSpec($titre,$date,$duration,$adresse,$hotel,$resto,$gare,$description,$realisateurs,$plan,$video,$carte,$imglandscape,$imgportrait) 
     {//il faut rajouter la date
     

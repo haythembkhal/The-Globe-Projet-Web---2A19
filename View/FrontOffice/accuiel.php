@@ -1,6 +1,7 @@
 <?php 
 include '../../Controller/FrontOffice/spectacleControllerF.php';
 
+
 $spectacle= new SpectaclesC();
 ?>
 
@@ -18,6 +19,8 @@ $spectacle= new SpectaclesC();
 	<!-- <link href="//fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,600&display=swap"
 		rel="stylesheet"> -->
 	<!-- Template CSS -->
+	<script src="../../View/FrontOffice/affichage.js">  
+</script>
 </head>
 
 <body>
@@ -178,7 +181,7 @@ $spectacle= new SpectaclesC();
 			</div>
 		</div>
 	</section>
-	<!-- //banner-slider-->*
+	<!-- //banner-slider-->
 
 
 <!-- main slider -->
@@ -186,8 +189,34 @@ $spectacle= new SpectaclesC();
 		<div id="spectaclesSection" class="grids-main py-4">
 			<div class="container py-lg-4">
 				<div class="headerhny-title">
-					<h3 class="hny-title">Spectacles</h3>
-				</div>
+					<h3 class="hny-title">Spectacles</h3><br>
+					
+					<div class="search-right">
+						<a href="#recherche"  title="search">Search <span
+								class="fa fa-search ml-3" aria-hidden="true"></span></a>
+						<!-- search popup -->
+						<div id="recherche" class="pop-overlay">
+							<div class="popup">
+								<form method="post" class="search-box">
+									<input type="search" id="search_box"placeholder="Taper...Des Mots Cléfs..." name="recherche"
+										 autofocus="">
+									<button type="submit" class="btn"><span class="fa fa-search"
+											aria-hidden="true"></span></button>
+								<div class="browse-items">
+									<h3 class="hny-title two mt-md-5 mt-4">Realisateur Populaire:</h3>
+									<ul class="search-items">
+										<li><a onclick="first();"id="first">Will Smith</a></li>
+										<li><a onclick="second();" id="second">BTS</a></li>
+										<li><a onclick="third();" id="third">PNL</a></li>
+
+									</ul>
+								</div>
+							</div> 
+							<a class="close" href="#close">×</a>
+							</form>
+						</div>
+				</div><br>
+
 				<div class="owl-four owl-carousel owl-theme">
 				
 <?php $spectacle->afficher(); ?>
