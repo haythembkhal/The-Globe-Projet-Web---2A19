@@ -33,7 +33,7 @@
 						NULL
 					);
 					$CongeA->ajouterConge($Conge);
-					//header('Location:Afficher.php');
+					header('Location:Afficher.php');
 				}
 				else
 					$error = "Missing information";
@@ -58,6 +58,7 @@
 				}
 				else
 					$error = "Missing information";
+					var_dump($error);
 			}
 		}
 	}
@@ -196,7 +197,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="table_conges.html">
+										<a href="Afficher.php">
 											<i class="menu-icon icon-table"></i>
 											Congés
 										</a>
@@ -246,6 +247,12 @@
 										</a>
 									</li>
 									<li>
+										<a href="demandeCong.php">
+											<i class="icon-inbox"></i>
+											Demande de Congé
+										</a>
+									</li>
+									<li>
 										<a href="other-user-profile.html">
 											<i class="icon-inbox"></i>
 											Profile
@@ -278,7 +285,7 @@
 							<div class="module-head">
 								<h3>Ajouter un Congés</h3>
 							</div>
-							<form name="form_conge" onsubmit="return checkformcong()" action="" method="POST">
+							<form name="form_conge" onsubmit="return checkFormcong()" action="" method="POST">
 								<input type="hidden" value="1" name="subm" id="subm">
 								<input type="text" name="id_Employe" id="id_Employe" placeholder="Id_Employé" maxlength="20">
 								<select type="range" name="type_conge" id="type_conge">
@@ -293,7 +300,7 @@
 								</select>
 								<p> <span class="error" id="erroridC" style="color:red"></span></p>
 								<input width="50px" type="text" name="date_deb" id="date_deb" placeholder="Date début du congé" onfocus="this.type = 'date'">
-								<input type="text" name="date_fin" id="date_fin" placeholder="Date fin du congé" onfocus="this.type = 'date'">
+								<input type="text" name="date_fin" id="date_fin" placeholder="Date fin du congé" onfocus="this.type = 'date'" >
 								<p> <span class="error" id="errorDA" style="color:red"></span></p>
 								<input type="submit" value="Envoyer">
 								<input type="Reset" value="Effacer">
@@ -303,8 +310,9 @@
                                         {
                                             var id_Employe= document.forms["form_conge"]["id_Employe"].value;
                                             var date_deb= document.forms["form_conge"]["date_deb"].value;
-											var date_deb= document.forms["form_conge"]["date_fin"].value;
-
+											var date_fin= document.forms["form_conge"]["date_fin"].value;
+											
+											
                                             /*var today = new Date();
                                             var dd = String(today.getDate()).padStart(2, '0');
                                             var mm = String(today.getMonth() + 1).padStart(2, '0'); //January = 0
@@ -323,13 +331,13 @@
 											catch(err){
 												document.getElementById('erroridC').innerHTML=err;
 											}
-                                            if(date_deb == "")
+                                            if(date_deb == "" && date_fin == "")
                                             {
                                                 document.getElementById('errorDA').innerHTML="Veuillez choisir une date";  
                                                 return false;
                                             }else if(date_deb>date_fin)
                                             {
-                                                document.getElementById('errorDA').innerHTML="La date du début doit être < à la date de fin";  
+                                                document.getElementById('errorDA').innerHTML="La date du début doit être < à la date de fin";
                                                 return false;
                                             }
 											else
@@ -344,68 +352,187 @@
 					<div class="content">
 
 						
-						<div class="module">
+						<div class="module_form">
 							<div class="module-head">
 								<h3>Tables congés</h3>
 							</div>
-							<table class="table table-striped table-bordered table-condensed">
-								<thead>
-								  <tr>
-									  <th>Employé</th>
-									  <th>Type congés</th>
-									  <th>Date début</th>
-									  <th>Date fin</th>
-									  <th>Etat</th>
-									  <th width="160px">Action</th>
-								  </tr>
-								</thead>
-								<tbody>
-                                <?php
-                                    foreach($listeConge as $Conge){
-                                ?>
-								<tr>
-									<td><?php echo $Conge['employes']; ?></td>
-                                    <td><?php echo $Conge['Name']; ?></td>
-                                    <td><?php echo $Conge['date_deb']; ?></td>
-                                    <td><?php echo $Conge['date_fin']; ?></td>
-                                    <td>
-										<?php
-											 //echo $Conge['etat'];
-											 if(strval($Conge['etat']) == '1')
-											 {
-												 echo("Refusé");
-											 }
-											 elseif(strval($Conge['etat']) == '0')
-											 {
-												echo '<p style="green">Accepté</p>';
-											 }
-											 elseif(strval($Conge['etat']) == '')
-											 {
-												 echo("Non traité");
-											 }
-									 	?>
-									 </td>
-                                    <td width="100px">
-                                        <form method="POST" action="modifierConge.php">
-                                            <input type="submit" name="Modifier" value="Modifier">
-                                            <input type="hidden" value=<?PHP echo $Conge['id_conge']; ?> name="id_conge">
-                                        </form>
-										<a href="supprimerConge.php?id_conge=<?php echo $Conge['id_conge']; ?>"><button>Supprimer</button></a>
-                                    </td>
-                                    
-                                </tr>
-                                <?php
-                                    }
-                                ?>
-								</tbody>
-							  </table>
+							<div style="text-align: left; padding: 5px;">
+								<input onkeyup="search()" id="myInput" type="text" placeholder="Recherche">
+							</div>
+							<div style="max-height:300px; overflow:auto; overflow-x: hidden; border: 1px solid #ccc;">
+								<table id="myTable" class="table table-striped table-bordered table-condensed" style="border-collapse: collapse;">
+									<thead>
+									<tr>
+										<th onclick="sortTableNum(0)">Employé</th>
+										<th onclick="sortTable(1)">Type congés</th>
+										<th onclick="sortTable(2)">Date début</th>
+										<th onclick="sortTable(3)">Date fin</th>
+										<th onclick="sortTable(4)">Etat</th>
+										<th width="160px">Action</th>
+									</tr>
+									</thead>
+									<tbody>
+									<?php
+										foreach($listeConge as $Conge){
+									?>
+									<tr>
+										<td><?php echo $Conge['employes']; ?></td>
+										<td><?php echo $Conge['Name']; ?></td>
+										<td><?php echo $Conge['date_deb']; ?></td>
+										<td><?php echo $Conge['date_fin']; ?></td>
+										<td>
+											<?php
+												//echo $Conge['etat'];
+												if(strval($Conge['etat']) == '1')
+												{
+													echo("Refusé");
+												}
+												elseif(strval($Conge['etat']) == '0')
+												{
+													echo '<p style="green">Accepté</p>';
+												}
+												elseif(strval($Conge['etat']) == '')
+												{
+													echo("Non traité");
+												}
+											?>
+										</td>
+										<td width="100px">
+											<form method="POST" action="modifierConge.php">
+												<input type="submit" name="Modifier" value="Modifier">
+												<input type="hidden" value=<?PHP echo $Conge['id_conge']; ?> name="id_conge">
+											</form>
+											<a href="supprimerConge.php?id_conge=<?php echo $Conge['id_conge']; ?>"><button>Supprimer</button></a>
+										</td>
+										
+									</tr>
+									<?php
+										}
+									?>
+									</tbody>
+								</table>
+								<script>
+									function search() {
+										// Declare variables
+										var input, filter, table, tr, td, i, txtValue;
+										input = document.getElementById("myInput");
+										filter = input.value.toUpperCase();
+										table = document.getElementById("myTable");
+										tr = table.getElementsByTagName("tr");
+										console.log('searching');
+										console.log(filter);
+										console.log(tr[1].getElementsByTagName("td")[0]);
+
+										// Loop through all table rows, and hide those who don't match the search query
+										for (i = 0; i < tr.length; i++) {
+											td = tr[i].getElementsByTagName("td")[0];
+											console.log(td);
+											if (td) {
+											txtValue = td.textContent || td.innerText;
+											if (txtValue.toUpperCase().indexOf(filter) > -1) {
+												tr[i].style.display = "";
+											} else {
+												tr[i].style.display = "none";
+											}
+											}
+										}
+									}
+									function sortTable(n) {
+									var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+									table = document.getElementById("myTable");
+									switching = true;
+									// Set the sorting direction to ascending:
+									dir = "asc";
+									/* Make a loop that will continue until
+									no switching has been done: */
+									while (switching) {
+										// Start by saying: no switching is done:
+										switching = false;
+										rows = table.rows;
+										/* Loop through all table rows (except the
+										first, which contains table headers): */
+										for (i = 1; i < (rows.length - 1); i++) {
+										// Start by saying there should be no switching:
+										shouldSwitch = false;
+										/* Get the two elements you want to compare,
+										one from current row and one from the next: */
+										x = rows[i].getElementsByTagName("TD")[n];
+										y = rows[i + 1].getElementsByTagName("TD")[n];
+										/* Check if the two rows should switch place,
+										based on the direction, asc or desc: */
+										if (dir == "asc") {
+											if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+											// If so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+											}
+										} else if (dir == "desc") {
+											if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+											// If so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+											}
+										}
+										}
+										if (shouldSwitch) {
+										/* If a switch has been marked, make the switch
+										and mark that a switch has been done: */
+										rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+										switching = true;
+										// Each time a switch is done, increase this count by 1:
+										switchcount ++;
+										} else {
+										/* If no switching has been done AND the direction is "asc",
+										set the direction to "desc" and run the while loop again. */
+										if (switchcount == 0 && dir == "asc") {
+											dir = "desc";
+											switching = true;
+										}
+										}
+									}
+									}
+									function sortTableNum(n) {
+									var table, rows, switching, i, x, y, shouldSwitch;
+									table = document.getElementById("myTable");
+									switching = true;
+									/*Make a loop that will continue until
+									no switching has been done:*/
+									while (switching) {
+										//start by saying: no switching is done:
+										switching = false;
+										rows = table.rows;
+										/*Loop through all table rows (except the
+										first, which contains table headers):*/
+										for (i = 1; i < (rows.length - 1); i++) {
+										//start by saying there should be no switching:
+										shouldSwitch = false;
+										/*Get the two elements you want to compare,
+										one from current row and one from the next:*/
+										x = rows[i].getElementsByTagName("TD")[n];
+										y = rows[i + 1].getElementsByTagName("TD")[n];
+										//check if the two rows should switch place:
+										if (Number(x.innerHTML) > Number(y.innerHTML)) {
+											//if so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+										}
+										}
+										if (shouldSwitch) {
+										/*If a switch has been marked, make the switch
+										and mark that a switch has been done:*/
+										rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+										switching = true;
+										}
+									}
+									}
+								</script>
 							</div>
 						</div><!--/.module-->
 						<div class="module_form">
 							<div class="module-head">
-								<h3>Ajouter un Congés</h3>
+								<h3>Ajouter un type de congé</h3>
 							</div>
-							<form action="" method="POST" name="form_typeC">
+							<form action="" method="POST" name="form_typeC" onsubmit=" return checkFormtypeC()">
 								<input type="hidden" value="2" name="subm">
 								<input type="text" name="typeC" id="typeC" placeholder="Type" maxlength="20">
 								<input width="50px" type="Number" name="maxC" id="maxC" placeholder="Durré max du congé en jours">
@@ -417,9 +544,9 @@
 							<script>
 							function checkFormtypeC()
                                         {
-                                            var id_Employe= document.forms["form_typeC"]["typeC"].value;
-                                            var date_deb= document.forms["form_typeC"]["maxC"].value;
-
+                                            var typeC= document.forms["form_typeC"]["typeC"].value;
+                                            var maxC= document.forms["form_typeC"]["maxC"].value;
+											
                                             try{
 												if(typeC == ""){
 													throw "le champ ID Client ne peut pas être vide";
@@ -434,7 +561,7 @@
                                             {
                                                 document.getElementById('errorNP').innerHTML="Veuillez choiir un Nombre Maximum";  
                                                 return false;
-                                            }else if(nbrePlaces == 0)
+                                            }else if(maxC < 1)
                                             {
                                                 document.getElementById('errorNP').innerHTML="Le nombre de jours doit etre > 0";  
                                                 return false;
@@ -447,15 +574,19 @@
                                         }
 								</script>
 						</div>
-						<div class="module">
+						<div class="module_form">
 							<div class="module-head">
 								<h3>Types de congés</h3>
 							</div>
-							<table class="table table-striped table-bordered table-condensed">
+							<div style="text-align: left; padding: 5px;">
+								<input onkeyup="searchT()" id="myInputT" type="text" placeholder="Recherche">
+							</div>
+							<div style="max-height:300px; overflow:auto; overflow-x: hidden; border: 1px solid #ccc;">
+							<table id="myTableT" class="table table-striped table-bordered table-condensed">
 								<thead>
 								  <tr>
-									  <th>Type</th>
-									  <th>Durée max</th>
+									  <th onclick="sortTableT(0)">Type</th>
+									  <th onclick="sortTableTNum(1)">Durée max</th>
 									  <th>Action</th>
 								  </tr>
 								</thead>
@@ -475,7 +606,7 @@
 											 else
 											 {
 												echo $typeC['Max'];
-												echo ' jours';
+												//echo ' jours';
 											 }
 									 	?>
 									 </td>
@@ -494,6 +625,121 @@
 								</tbody>
 							  </table>
 							</div>
+							<script>
+									function searchT() {
+										// Declare variables
+										var input, filter, table, tr, td, i, txtValue;
+										input = document.getElementById("myInputT");
+										filter = input.value.toUpperCase();
+										table = document.getElementById("myTableT");
+										tr = table.getElementsByTagName("tr");
+										console.log('searching');
+										console.log(filter);
+										console.log(tr[1].getElementsByTagName("td")[0]);
+
+										// Loop through all table rows, and hide those who don't match the search query
+										for (i = 0; i < tr.length; i++) {
+											td = tr[i].getElementsByTagName("td")[0];
+											console.log(td);
+											if (td) {
+											txtValue = td.textContent || td.innerText;
+											if (txtValue.toUpperCase().indexOf(filter) > -1) {
+												tr[i].style.display = "";
+											} else {
+												tr[i].style.display = "none";
+											}
+											}
+										}
+									}
+									function sortTableT(n) {
+									var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+									table = document.getElementById("myTableT");
+									switching = true;
+									// Set the sorting direction to ascending:
+									dir = "asc";
+									/* Make a loop that will continue until
+									no switching has been done: */
+									while (switching) {
+										// Start by saying: no switching is done:
+										switching = false;
+										rows = table.rows;
+										/* Loop through all table rows (except the
+										first, which contains table headers): */
+										for (i = 1; i < (rows.length - 1); i++) {
+										// Start by saying there should be no switching:
+										shouldSwitch = false;
+										/* Get the two elements you want to compare,
+										one from current row and one from the next: */
+										x = rows[i].getElementsByTagName("TD")[n];
+										y = rows[i + 1].getElementsByTagName("TD")[n];
+										/* Check if the two rows should switch place,
+										based on the direction, asc or desc: */
+										if (dir == "asc") {
+											if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+											// If so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+											}
+										} else if (dir == "desc") {
+											if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+											// If so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+											}
+										}
+										}
+										if (shouldSwitch) {
+										/* If a switch has been marked, make the switch
+										and mark that a switch has been done: */
+										rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+										switching = true;
+										// Each time a switch is done, increase this count by 1:
+										switchcount ++;
+										} else {
+										/* If no switching has been done AND the direction is "asc",
+										set the direction to "desc" and run the while loop again. */
+										if (switchcount == 0 && dir == "asc") {
+											dir = "desc";
+											switching = true;
+										}
+										}
+									}
+									}
+									function sortTableTNum(n) {
+									var table, rows, switching, i, x, y, shouldSwitch;
+									table = document.getElementById("myTableT");
+									switching = true;
+									/*Make a loop that will continue until
+									no switching has been done:*/
+									while (switching) {
+										//start by saying: no switching is done:
+										switching = false;
+										rows = table.rows;
+										/*Loop through all table rows (except the
+										first, which contains table headers):*/
+										for (i = 1; i < (rows.length - 1); i++) {
+										//start by saying there should be no switching:
+										shouldSwitch = false;
+										/*Get the two elements you want to compare,
+										one from current row and one from the next:*/
+										x = rows[i].getElementsByTagName("TD")[n];
+										y = rows[i + 1].getElementsByTagName("TD")[n];
+										//check if the two rows should switch place:
+										if (Number(x.innerHTML) > Number(y.innerHTML)) {
+											//if so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+										}
+										}
+										if (shouldSwitch) {
+										/*If a switch has been marked, make the switch
+										and mark that a switch has been done:*/
+										rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+										switching = true;
+										}
+									}
+									}
+								</script>
 						</div><!--/.module-->
 
 

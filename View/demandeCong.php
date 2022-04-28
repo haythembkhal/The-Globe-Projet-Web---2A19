@@ -5,39 +5,36 @@
 	$typeC = new typeC;
 	$listetypeC = $typeC->affichertypeC();
 	$listetype = $typeC->affichertypeC();
-	$CongeM = $CongeC->recupererConge($_POST['id_conge']);
-	
-
 	
 	$error ="";
 	$Conge = NULL;
 	$CongeA = new CongesC();
-	if (
+    if (
         isset($_POST["id_Employe"]) &&
-		isset($_POST["type_conge"]) &&		
+        isset($_POST["type_conge"]) &&		
         isset($_POST["date_deb"]) &&
-		isset($_POST["date_fin"]) &&
-        isset($_POST["etat"])
+        isset($_POST["date_fin"]) 
     ) {
         if (
             !empty($_POST["id_Employe"]) && 
-			!empty($_POST['type_conge']) &&
+            !empty($_POST['type_conge']) &&
             !empty($_POST["date_deb"]) && 
-			!empty($_POST["date_fin"])) 
-         {
+            !empty($_POST["date_fin"]) 
+        ) {
             $Conge = new Conges(NULL,
                 $_POST['id_Employe'],
-				$_POST['type_conge'],
+                $_POST['type_conge'],
                 $_POST['date_deb'], 
-				$_POST['date_fin'],
-                $_POST["etat"]
+                $_POST['date_fin'],
+                NULL
             );
-            $CongeA->modifierConge($Conge, $_POST['id_conge']);
-			header('Location:Afficher.php');
+            $CongeA->ajouterConge($Conge);
+            header('Location:Afficher.php');
         }
         else
             $error = "Missing information";
     }
+		
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -173,7 +170,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="table_conges.html">
+										<a href="Afficher.php">
 											<i class="menu-icon icon-table"></i>
 											Congés
 										</a>
@@ -223,6 +220,12 @@
 										</a>
 									</li>
 									<li>
+										<a href="demandeCong.php">
+											<i class="icon-inbox"></i>
+											Demande de Congé
+										</a>
+									</li>
+									<li>
 										<a href="other-user-profile.html">
 											<i class="icon-inbox"></i>
 											Profile
@@ -251,55 +254,75 @@
 
 				<div class="span9">
 					<div class="content">
-						<div class="module_form">
-							<div class="module-head">
-								<h3>Modifier un Congés</h3>
-							</div>
-							<form name="form_conge" onsubmit="return checkformcong()" action="" method="POST">
-								<input type="text" name="id_Employe" id="id_Employe" value="<?php echo $CongeM['employes'] ?>" placeholder="Id_Employé" maxlength="20">
-								<select type="range" name="type_conge" id="type_conge">
-									<?php
-										foreach($listetype as $typeC){
-											if($CongeM['type_conge'] == $typeC['id_typeC'])
-											{
-									?>
-											<option selected value="<?php echo $typeC['id_typeC'] ?>"><?php echo $typeC['Name'] ?></option>
-									<?php
-											}
-											else
-											{
-									?>
-											<option value="<?php echo $typeC['id_typeC'] ?>"><?php echo $typeC['Name'] ?></option>
-									<?php
-											}
-										}
-									?>
-								</select>
-								<p> <span class="error" id="erroridC" style="color:red"></span></p>
-								<input width="50px" type="date" name="date_deb" id="date_deb" value="<?php echo $CongeM['date_deb'] ?>" placeholder="Date début du congé">
-								<input type="date" name="date_fin" value="<?php echo $CongeM['date_fin'] ?>" id="date_fin" placeholder="Date fin du congé">
-								<p> <span class="error" id="errorDA" style="color:red"></span></p>
-                                <input type="radio" value="1" name="etat"> Rejeté
-                                <input type="radio" value="0" name="etat"> Accepté
-								<br>
-                                <input type="hidden" value=<?PHP echo $_POST['id_conge']; ?> name="id_conge">
-                                <br>
-								<input type="submit" value="Modifer">
-								<input type="Reset" value="Effacer">
-							</form>
-                            <a href="Afficher.php"><button>Annuler</button></a>
-							<script>
-							function checkFormcong()
+                        <div class="module_form">
+                            <div class="module-head">
+                                <h2>Demande de congé</h2>
+                            </div>
+                            <form name="form_conge" onsubmit="return checkFormcong()" action="" method="POST">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                <label>                                  </label>
+                                                <label for="id_Employe"> Votre identifiant : </label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="id_Employe" id="id_Employe" placeholder="Id_Employé" maxlength="20">
+                                                <p>
+                                                    <span class="error" id="erroridC" style="color:red"></span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label>                                  </label>
+                                                <label for="type_conge"> Type : </label>
+                                            </td>
+                                            <td>
+                                            <select type="range" name="type_conge" id="type_conge">
+                                                <option selected disabled>Type Congé</option>
+                                            <?php
+                                                foreach($listetype as $typeC){
+                                            ?>
+                                                <option value="<?php echo $typeC['id_typeC'] ?>"><?php echo $typeC['Name'] ?></option>
+                                            <?php
+                                                }
+                                            ?>
+                                        </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label>                                  </label>
+                                                <label for="date_deb"> Date : </label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="date_deb" id="date_deb" placeholder="Du"onfocus="this.type = 'date'">
+                                                <input type="text" name="date_fin" id="date_fin" placeholder="Au" onfocus="this.type = 'date'" >
+                                                <p>
+                                                 <span class="error" id="errorDA" style="color:red"></span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="module-head">
+                                    <input type="submit" value="Envoyer">
+								    <input type="Reset" value="Effacer">
+                                    <span class="success" id="success" style="color:green"></span>
+                                    </div>
+                                </form>
+                                <script>
+							        function checkFormcong()
                                         {
                                             var id_Employe= document.forms["form_conge"]["id_Employe"].value;
                                             var date_deb= document.forms["form_conge"]["date_deb"].value;
-											var date_deb= document.forms["form_conge"]["date_fin"].value;
-
-                                            /*var today = new Date();
+											var date_fin= document.forms["form_conge"]["date_fin"].value;
+											
+											
+                                            var today = new Date();
                                             var dd = String(today.getDate()).padStart(2, '0');
                                             var mm = String(today.getMonth() + 1).padStart(2, '0'); //January = 0
                                             var yyyy = today.getFullYear();
-                                            today = yyyy + '-' + mm + '-' + dd;*/
+                                            today = yyyy + '-' + mm + '-' + dd;
 
                                             try{
 												if(id_Employe == ""){
@@ -313,137 +336,29 @@
 											catch(err){
 												document.getElementById('erroridC').innerHTML=err;
 											}
-                                            if(date_deb == "")
+                                            if(date_deb == "" && date_fin == "")
                                             {
                                                 document.getElementById('errorDA').innerHTML="Veuillez choisir une date";  
                                                 return false;
                                             }else if(date_deb>date_fin)
                                             {
-                                                document.getElementById('errorDA').innerHTML="La date du début doit être < à la date de fin";  
+                                                document.getElementById('errorDA').innerHTML="La date du début doit être < à la date de fin";
+                                                return false;
+                                            }
+                                            else if(date_deb<today)
+                                            {
+                                                document.getElementById('errorDA').innerHTML="La date du début doit être > à la date d'aujourd'hui";
                                                 return false;
                                             }
 											else
 											{
 												document.getElementById('errorDA').innerHTML="";
 											}
-
+                                            alert("Votre demande a été bien reçu!");
                                         }
 								</script>
-						</div>
-					</div>
-					<div class="content">
-
-						
-						<div class="module_form">
-							<div class="module-head">
-								<h3>Tables congés</h3>
-							</div>
-							<table class="table table-striped table-bordered table-condensed">
-								<thead>
-								  <tr>
-									  <th>Employé</th>
-									  <th>Type congés</th>
-									  <th>Date début</th>
-									  <th>Date fin</th>
-									  <th>Etat</th>
-									  <th width="160px">Action</th>
-								  </tr>
-								</thead>
-								<tbody>
-                                <?php
-                                    foreach($listeConge as $Conge){
-                                ?>
-								<tr>
-									<td><?php echo $Conge['employes']; ?></td>
-                                    <td><?php echo $Conge['Name']; ?></td>
-                                    <td><?php echo $Conge['date_deb']; ?></td>
-                                    <td><?php echo $Conge['date_fin']; ?></td>
-                                    <td>
-										<?php
-											 //echo $Conge['etat'];
-											 if(strval($Conge['etat']) == '1')
-											 {
-												 echo("Refusé");
-											 }
-											 elseif(strval($Conge['etat']) == '0')
-											 {
-												 echo('Accepté');
-											 }
-											 elseif(strval($Conge['etat']) == '')
-											 {
-												 echo("Non traité");
-											 }
-									 	?>
-									</td>
-                                    <td width="100px">
-                                        <form method="POST" action="">
-                                            <input type="submit" name="Modifier" value="Modifier">
-                                            <input type="hidden" value=<?PHP echo $Conge['id_conge']; ?> name="id_conge">
-                                        </form>
-										<a href="supprimerConge.php?id_conge=<?php echo $Conge['id_conge']; ?>"><button>Supprimer</button></a>
-                                    </td>
-                                    
-                                </tr>
-                                <?php
-                                    }
-                                ?>
-								</tbody>
-							  </table>
-							</div>
-						</div><!--/.module-->
-						<div class="module">
-							<div class="module-head">
-								<h3>Types de congés</h3>
-							</div>
-							<table class="table table-striped table-bordered table-condensed">
-								<thead>
-								  <tr>
-									  <th>Type</th>
-									  <th>Durée max</th>
-									  <th>Action</th>
-								  </tr>
-								</thead>
-								<tbody>
-								<?php
-                                    foreach($listetypeC as $typeC){
-                                ?>
-								<tr>
-									<td><?php echo $typeC['Name']; ?></td>
-                                    <td>
-										<?php
-											 //echo $Conge['etat'];
-											 if(strval($typeC['Max']) == '')
-											 {
-												 echo("Non définie");
-											 }
-											 else
-											 {
-												echo $typeC['Max'];
-												echo ' jours';
-											 }
-									 	?>
-									 </td>
-                                    <td width="160px">
-                                        <form method="POST" action="modifierConge.php">
-                                            <input type="submit" name="Modifier" value="Modifier">
-                                            <input type="hidden" value=<?PHP echo $typeC['id_typeC']; ?> name="id_typeC">
-                                        </form>
-										<a href="supprimertypeC.php?id_typeC=<?php echo $typeC['id_typeC']; ?>"><button>Supprimer</button></a>
-                                    </td>
-                                    
-                                </tr>
-                                <?php
-                                    }
-                                ?>
-								</tbody>
-							  </table>
-							</div>
-						</div><!--/.module-->
-
-
-					<br />
-						
-					</div><!--/.content-->
+                        </div>
+                    </div>
 				</div><!--/.span9-->
 			</div>
 		</div><!--/.container-->

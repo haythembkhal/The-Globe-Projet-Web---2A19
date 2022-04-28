@@ -266,7 +266,7 @@
                                 ?>
 								<tr>
 									<td><?php echo $Conge['employes']; ?></td>
-                                    <td><?php echo $Conge['type_conge']; ?></td>
+                                    <td><?php echo $Conge['Name']; ?></td>
                                     <td><?php echo $Conge['date_deb']; ?></td>
                                     <td><?php echo $Conge['date_fin']; ?></td>
                                     <td>
@@ -304,7 +304,7 @@
 						</div><!--/.module-->
 						<div class="module_form">
 							<div class="module-head">
-								<h3>Modifier un Congés</h3>
+								<h3>Modifier type de congé</h3>
 							</div>
 							<form action="" method="POST">
 								<input type="text" name="typeC" id="typeC" placeholder="Type" maxlength="20" value="<?php echo $typeM['Name'] ?>">
