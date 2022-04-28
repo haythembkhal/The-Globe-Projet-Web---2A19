@@ -1,6 +1,7 @@
 
 <?php
     include_once '../../Controller/AchatC.php';
+	//include_once '../../Controller/PDF/genererPDF.php';
     $AchatC = new AchatC();
 
     $error = "";
@@ -211,12 +212,19 @@ label {
                     <!--<form method="POST" action="Modifier_AchatsReservations.php">
                            <input type="submit" class="btn" id="btnM" value="Modifier"></button>
                         </form>-->
-						<a href="Reservation.php"><button class="btn">Réserver</button></a>
+						<!--<a href="Reservation.php"><button class="btn">Réserver</button></a>-->
 						<form method="POST" action="Reservation.php">
                                                         <input type="submit" class="btn" name="Réserver" value="Réserver">
                                                         
-                                                    </form>
+                        </form>
 					</div>
+
+					<div>
+						<form method="POST" action="genererPDF.php">
+                            <input type="submit" class="btn" name="ImprimerFacture" value="Imprimer Facture">                               
+                        </form>
+					</div>
+
             </div>
         </form>
         <script>

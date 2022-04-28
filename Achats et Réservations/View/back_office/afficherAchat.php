@@ -1,7 +1,20 @@
 ﻿<?php
     include_once '../../Controller/AchatC.php';
+	include_once '../../Controller/userC.php';
+	/*
+	********pour lister les nom des Spectacles
+	include_one '../../Controller/SpectacleC.php ;
+
+	$spectacleC = new Spectacle();
+	$listeSpectacles = $spectacleC->afficherSpectacle
+	*/ 
     $AchatC = new AchatC();
     $listeAchats = $AchatC->afficherAchat();
+
+	//récuppération de la liste des Clients de la table clients
+	/*$ClientC = new ClientC();
+	$listeClients = $ClientC->afficherClient();
+	$client = new Client(NULL, NULL, NULL, NULL, NULL);*/
 
     $error = "";
     $Achat = NULL;
@@ -266,6 +279,16 @@
                                         <div class="control-group">
                                             <label class="control-label" for="basicinput">ID Client</label>
                                             <div class="controls">
+												<!--<select type="range" name="idClient" id="idClient">
+													<option selected disabled>ID Client</option>
+													<?php
+														foreach($listeClients as $Client){
+													?>
+													<option value="<?php echo $client['idClient']?>"><?php echo $client['idClient'] ?></option>
+													<?php
+														}
+													?>
+												</select>-->
                                                 <input type="text" id="idClient" placeholder="Veuillez saisir l'ID Client" class="span8" name="idClient">
                                                 <p> <span class="error" id="erroridC" style="color:red"></span></p>
                                             </div>
@@ -327,7 +350,7 @@
                                         <script>
                                         function validateForm()
                                         {
-                                            var idClient= document.forms["formAchat"]["idClient"].value;
+                                           // var idClient= document.forms["formAchat"]["idClient"].value;
                                             var idSpectacle= document.forms["formAchat"]["idSpectacle"].value;
                                             var prixTotal= document.forms["formAchat"]["prixTotal"].value;
                                             var dateAchat= document.forms["formAchat"]["dateAchat"].value;
@@ -340,7 +363,7 @@
                                             var yyyy = today.getFullYear();
                                             today = yyyy + '-' + mm + '-' + dd;
 
-                                            try{
+                                           /* try{
 												if(idClient == ""){
 													throw "le champ ID Client ne peut pas être vide";
 												}
@@ -351,7 +374,7 @@
 											}
 											catch(err){
 												document.getElementById('erroridC').innerHTML=err;
-											}
+											}*/
 											
 											try{
 												if(idSpectacle == ""){
@@ -445,6 +468,10 @@
 									<p>
 										<strong>Listes des Achats</strong>
 									</p>
+									<form action="exportEXCEL.php" method="POST">
+										<button type="submit" id="export" name="export"
+										value="Export to excel" class="btn-success">Export To Excel</button>
+									</form>
 									<table class="table table-bordered"  width='100%'>
 										<thread>
 											<tr>
