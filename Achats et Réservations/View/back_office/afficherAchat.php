@@ -50,6 +50,30 @@
         else
             $error = "Missing information";
     }
+
+	//recherche 
+	if(isset($_POST['rechercheEmail']))
+	{
+		$listeAchats = $AchatC->rechercher($_POST['rechercheEmail']);
+	}
+	else
+		$error = "Missing information";
+
+	//tri
+	if(isset($_POST['DESC']))
+	{
+		$listeAchats = $AchatC->triDESC();
+	}
+	else
+		$error = "Missing information";
+
+	if(isset($_POST['ASC']))
+	{
+		$listeAchats = $AchatC->triASC();
+	}
+	else
+		$error = "Missing information";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -469,9 +493,33 @@
 										<strong>Listes des Achats</strong>
 									</p>
 									<form action="exportEXCEL.php" method="POST">
-										<button type="submit" id="export" name="export"
-										value="Export to excel" class="btn-success">Export To Excel</button>
+										<button type="submit" id="export" name="export" value="Export to excel" class="btn-success">Export To Excel</button>
 									</form>
+									<br>
+									<br>
+									<p>
+										Trier suivant la Date d'Achat
+										<from action="" method="POST">
+											<button type="submit" name="DESC" value="DESC" class="btn">↓</button>
+										</form>
+										<from action="" method="POST">
+											<button type="submit" name="ASC" value="ASC" class="btn">↑</button>
+										</form>
+									</p>
+									<p>
+										<form class="navbar-search pull-left input-append" action="" method="POST">
+											<input type="text" class="span3" name="rechercheEmail">
+                        					<button class="btn" type="submit">
+                            					<i class="icon-search"></i>
+                       						 </button>	
+										</form>
+									</p>
+									<br>
+									<br>
+									<br>
+									<p>
+									<a href="afficherAchat.php"><button class="btn-warning">Terminer recherche</button></a>
+									</p>
 									<table class="table table-bordered"  width='100%'>
 										<thread>
 											<tr>

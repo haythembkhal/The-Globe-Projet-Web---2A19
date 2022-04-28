@@ -103,5 +103,47 @@ class AchatC {
             $e->getMessage();
         }
     }
+
+    //recherche
+    function rechercher($critere)
+    {
+        $db = config::getConnexion();
+        try {
+            $query = $db->query("SELECT * FROM Achats WHERE adresseEmail like '%$critere%'");
+			$query->execute(['adresseEmail'=>$critere]);
+			$result=$query->fetchALL();
+			return $result;
+           
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
+
+    //tri
+    function triDESC()
+    {
+        $db = config::getConnexion();
+        try {
+            $query = $db->query("SELECT * FROM Achats ORDER BY dateAchat DESC");
+			$result=$query->fetchALL();
+			return $result;
+           
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
+    
+    function triASC()
+    {
+        $db = config::getConnexion();
+        try {
+            $query = $db->query("SELECT * FROM Achats ORDER BY dateAchat ASC");
+			$result=$query->fetchALL();
+			return $result;
+           
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
 }
 ?>
