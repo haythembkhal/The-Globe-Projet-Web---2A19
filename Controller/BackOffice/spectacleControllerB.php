@@ -17,7 +17,7 @@ $_SESSION['video']="";
 $_SESSION['carte']="";
 $_SESSION['description']="";
 $_SESSION['realisateurs']="";
-// $_SESSION['plan']=$_POST["plan"];
+$_SESSION['plan']="";
 // $_SESSION['imgLand']=$_POST["imgLand"];
 // $_SESSION['imgPort']=$_POST["imgPort"];
 
@@ -84,14 +84,14 @@ function afficher (): void {  //Implementation de recherche a linteurieur
                 <!-- <td><$spectacle["hotel"]</td> -->
                 <!-- <td>< $spectacle["resto"]</td> -->
                 <!-- <td> $spectacle["gare"]</td> -->
-                <td><?= $spectacle['description'] ?></td>  
+                <!-- <td>$spectacle['description'] </td>   -->
+                <td><?= $spectacle['plan'] ?></td>
                 <td><?= $spectacle['realisateurs']?></td>
+                  
                 <td>  <form method="POST">
                 <input type="hidden" id="delete" name="delete" value="<?php 
                 echo $spectacle['spectacleId'];?>"> 
-                <button type="submit" value="Supprimer"><ion-icon name="trash-outline"></ion-icon>Supprimer</button></form></td>
-              
-                
+                <button type="submit" value="Supprimer"><ion-icon name="trash-outline"></ion-icon>Supprimer</button></form></td>  
                 <td> <form method="POST">            <input type="hidden" id="idSpec" name="idSpec" value="<?php 
                 echo $spectacle['spectacleId'];?>"> 
                 <input type="hidden" id="titre" name="titre" value="<?php 
@@ -244,7 +244,7 @@ isset($_POST["realisateurs"])&& isset($_POST["video"])
     $_SESSION['realisateurs']=$_POST["realisateurs"];
 
 
-    // $_SESSION['plan']=$_POST["plan"];
+    $_SESSION['plan']=$_POST["plan"];
     // $_SESSION['imgLand']=$_POST["imgLand"];
     // $_SESSION['imgPort']=$_POST["imgPort"];
     

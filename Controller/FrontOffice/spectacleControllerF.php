@@ -22,8 +22,6 @@ public function afficher()
 				// echo $var;
 				if($var==0)
 				{
-				//   $query= config::$pdo->query('SELECT * FROM spectacles');
-				//   $list=$query->fetchAll();
 					$result=0;
 				}
 				else
@@ -48,6 +46,8 @@ public function afficher()
 		}
 		else if($result==1){
 		$var=0;
+		$query= config::$pdo->query('SELECT idSpec from vu group by idSpec having count(*)  > 20'); 
+		$plusPop=$query->fetchAll();
          foreach($list as $spectacle){
 			 if($var==0){
 			 ?>
@@ -62,8 +62,6 @@ public function afficher()
 						 &plan=<?php echo $spectacle['plan'];?>&titre=<?php echo $spectacle['titre']; ?>
 						 &dateSpec=<?php echo $spectacle['dateSpec'];?>&duration=<?php echo $spectacle['duration'];?>
 						 &adresse=<?php echo $spectacle ['adresse'];?>">
-
-
 								<figure>
 									<img class="img-fluid" src=" <?php echo $spectacle['imglandscape'];?>" alt="">
 
@@ -73,14 +71,24 @@ public function afficher()
 									<h4> <span class="post"><span class="fa fa-clock-o"> </span> <?php echo $spectacle['duration'];?>
 
 										</span>
+										<?php
+						foreach($plusPop as $pop)
+						{ 
+							if($pop['idSpec']==$spectacle['spectacleId'])
+							{
+								echo "<img class='img-fluid' src='assets/images/buttonPop.png' alt=''>";
+							} 
+						}
+					?>
 									</h4>
 								</div>
 							</a>
 						</div>
+						
 					<?php }
 					if($var==1)
 					{?>
-						<div class="box16 mt-4">
+						<div class="box16 mt-4">	
 						<a href="http://localhost/Module%20Spectacle/View/FrontOffice/spectacleChoix.php?specId=<?php
 						 echo $spectacle['spectacleId'];?>&description=<?php echo $spectacle['description'];?>
 						 &hotel=<?php echo $spectacle['hotel'];?>&resto=<?php echo $spectacle['resto'];?>&gare=
@@ -98,12 +106,20 @@ public function afficher()
 									<h3 class="title"><?php echo $spectacle['titre'];?></h3>
 									<h4> <span class="post"><span class="fa fa-clock-o"> </span> <?php echo $spectacle['duration'];?>
 										</span>
+										<?php
+						foreach($plusPop as $pop)
+						{ 
+							if($pop['idSpec']==$spectacle['spectacleId'])
+							{ 	
+								echo "<img class='img-fluid' src='assets/images/buttonPop.png' alt=''>";							} 
+						}
+					?>	
 									</h4>
 								</div>
 							</a>
 						</div>
-					</div>
-                        
+				
+					</div>  	
             <?php 
 					}
 					if($var==0)

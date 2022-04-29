@@ -14,11 +14,30 @@ $gare=$_GET["gare"];
 $hotel=$_GET["hotel"];
 $description=$_GET["description"];
 $realisateurs=$_GET["realisateurs"];
-$plan=$_GET["plan"];
+$prix=$_GET["plan"];
 $video=$_GET["video"];
 $carte=$_GET["carte"];
 $imgportrait=$_GET["imgportrait"];
 $imglandscape=$_GET["imglandscape"];
+
+//mettre vus dans la base
+try
+{
+	$query= config::$pdo->prepare("INSERT INTO vu (idSpec,vu) VALUES (:specId,1)");
+	$query->bindParam(':specId', $_GET['specId']);
+	$query->execute();
+
+
+	$query= config::$pdo->prepare("SELECT COUNT(*) from vu where idSpec=:idSpec");
+	$query->bindParam(':idSpec', $spec);
+	$query->execute();
+   $list=$query->fetch(); 
+}
+catch(PDOException $e){
+echo $e->getMessage();
+}
+
+
 ?> -->
 
 <!doctype html>
@@ -206,12 +225,11 @@ if(comment=="")
           </div>
           <aside> 
 		  <p id="spectacleTitle" class="spectacleInfo spectacleHeader"> <b> <?php echo $titre; ?></b> </p>
-		  
 			<p id="spectacleTime" class="spectacleInfo "> <ion-icon name="time-outline"></ion-icon> <?php echo $duree; ?></p>
               <p id="spectacleDate" style="color:black;" class="spectacleInfo "> <ion-icon name="calendar-number-outline"></ion-icon><?php echo $date ?></p>
-				<p id="spectacleTheatre"style="color:black;" class="spectacleInfo"><ion-icon name="eye-outline"></ion-icon> Nombre de Vues: </p>
+				<p id="spectacleTheatre"style="color:black;" class="spectacleInfo"><ion-icon name="eye-outline"></ion-icon> Nombre de Vus: <?php $var=array_values($list)[0]; echo $var;?> </p>
               <a id="spectacleLocation" style="color:black;"class="spectacleInfo" href="#map"><ion-icon name="map-outline"></ion-icon><?php echo $adresse ?></a> 
-              <a id="spectacleVideo" style="color:black;" class="spectacleInfo" href="#videoPopup"> <ion-icon name="videocam-outline"></ion-icon> Regarder Video</a>
+              <a id="spectacleVideo" style="color:black;" class="spectacleInfo" href="#videoPopup"> <ion-icon name="videocam-outline"></ion-icon> Prix: <?php echo $prix ?> </a>
               <a id="spectacleComment" style="color:black;" class="spectacleInfo" href="#respond"> <ion-icon name="heart-half-outline"></ion-icon> Cliquer pour evaluer et commenter</a> 
              
 			  <a id="spectacleReservation"style="color:black;"  class="spectacleInfo" href="google.com"> <ion-icon name="ticket-outline"></ion-icon> Reserver  <ion-icon name="ticket-outline"></ion-icon> </a>

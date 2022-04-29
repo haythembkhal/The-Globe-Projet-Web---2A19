@@ -22,6 +22,110 @@ include_once '..\..\Controller\BackOffice\commentaireControllerB.php';
 
 
 <script src="controldesaisie.js"></script> 
+<script>
+	
+function ctrlSaisie(event)
+{
+var adresse=document.getElementById("adresse").value;
+var resto=document.getElementById("resto").value;
+var hotel=document.getElementById("hotel").value;
+var gare=document.getElementById("gare").value;
+var carte=document.getElementById("carte").value;
+var video=document.getElementById("video").value;
+var realisateurs=document.getElementById("realisateurs").value;
+var desc=document.getElementById("desc").value;
+var imgL=document.getElementById("imgLand").value;
+var imgP=document.getElementById("imgPort").value;
+var prix=document.getElementById("plan").value;
+var titre=document.getElementById("titre").value;
+var date=document.getElementById("date").value;
+var duration=document.getElementById("duration").value;
+
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+
+
+var cmon=document.getElementById("input1")
+var cprenom=document.getElementById("input2")
+var cemail=document.getElementById("input3")
+
+if(!(titre.charAt(0)>="A" && titre.charAt(0)<="Z"))
+{
+	// event.preventDefault();
+	input1.innerHTML="Titre doit commencer par une majuscule!!";
+	return false;
+}
+
+//date condition 
+today = yyyy + '-' + mm + '-' + dd;
+if (date<today){
+	input2.innerHTML="Date doit etre superieur a la date d'aujourd'hui !!";
+	return false;
+}
+if(duration.includes('m')==false){
+	input3.innerHTML="Il faut saisir en mintues de la facon suivante XXX m"
+return false;
+}
+if(adresse=="")
+{
+	input4.innerHTML="Il faut saisir des données";
+	return false;
+}
+if(resto=="")
+{
+	input5.innerHTML="Il faut saisir des données";
+	return false;
+}
+if(gare=="")
+{
+	input6.innerHTML="Il faut saisir des données";
+	return false;
+}
+if(hotel=="")
+{
+	input7.innerHTML="Il faut saisir des données";
+	return false;
+}
+if(imgL=="")
+{
+	input8.innerHTML="Il faut saisir des données";
+	return false;
+}
+if(imgP=="")
+{
+	input9.innerHTML="Il faut saisir des données";
+	return false;
+}
+if(video=="")
+{
+	input10.innerHTML="Il faut saisir des données";
+	return false;
+}
+if(carte=="")
+{
+	input11.innerHTML="Il faut saisir des données";
+	return false;
+}
+if(desc=="")
+{
+	input12.innerHTML="Il faut saisir des données";
+	return false;
+}
+if(realisateurs=="")
+{
+	input13.innerHTML="Il faut saisir des données";
+	return false;
+}
+if(prix.includes('$')==false)
+{
+	input14.innerHTML="Il faut saisir un prix $XXX";
+	return false;
+}
+
+}
+</script>
 </head>
 <body style="background-color:white;">
 
@@ -265,11 +369,7 @@ include_once '..\..\Controller\BackOffice\commentaireControllerB.php';
 
                   <div  style="float:right;" style="position: relative;">				
 
-					<!-- <label for="plan">Plan de la salle:</label> -->
-					<!-- <input type="file" id="plan" name="plan" accept="image/*" > -->
-					<input type="hidden" id="plan" name="plan" value="champ non utilisé">
-
-
+				  
 					<label for="imgLand">Img Landscape:</label>
 					<input type="file" id="imgLand" name="imgLand" accept="image/*">
 					<p id="input8"></p>
@@ -278,6 +378,10 @@ include_once '..\..\Controller\BackOffice\commentaireControllerB.php';
 					<label for="imgPort">Img Portait:</label>
 					<input type="file" id="imgPort" name="imgPort" accept="image/*">
 					<p id="input9"></p>
+					
+					<label for="plan">Prix:</label>
+					<input  type="text" id="plan" name="plan" value="<?php echo $_SESSION['plan'];?>"> 
+					<p id="input14"></p>
 
 					<label for="video" >Lien Video:</label>
 					<input type="text" id="video" name="video" value="<?php echo $_SESSION['video'];?>">
@@ -314,6 +418,7 @@ include_once '..\..\Controller\BackOffice\commentaireControllerB.php';
 			<br>
 			<br><br><br>
 			<br><br><br>
+			<br><br><br>
 			<div class="dropdown" style="float:left;">
 			<br><br>
 					<button class="dropbtn" >Trier</button>
@@ -348,7 +453,7 @@ include_once '..\..\Controller\BackOffice\commentaireControllerB.php';
 							<!-- <th>Hotels Proche</th>
 							<th>Restaurant Proche</th>
 							<th>Gare Proche</th> -->
-							<th>Description</th>
+							<th>Prix</th>
 						<th>Les Realisateurs</th>
 							<th colspan="2">	<form class="example" method="POST" style="margin:auto;max-width:300px">
 								<input   name="rechercheId" style="height: 42px;" type="text" placeholder="Search..">
@@ -369,7 +474,7 @@ include_once '..\..\Controller\BackOffice\commentaireControllerB.php';
 							<!-- <th>Hotels Proche</th>
 							<th>Restaurant Proche</th>
 							<th>Gare Proche</th> -->
-							<th>Description</th>
+							<th>Prix</th>
 						<th>Les Realisateurs</th>
 							<th colspan="2"><form class="example" method="POST" style="margin:auto;max-width:300px">
 								<input   name="rechercheId" style="height: 42px;" type="text" placeholder="Search..">

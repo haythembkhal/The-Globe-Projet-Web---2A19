@@ -11,8 +11,7 @@ var realisateurs=document.getElementById("realisateurs").value;
 var desc=document.getElementById("desc").value;
 var imgL=document.getElementById("imgLand").value;
 var imgP=document.getElementById("imgPort").value;
-
-
+var prix=document.getElementById("plan").value;
 var titre=document.getElementById("titre").value;
 var date=document.getElementById("date").value;
 var duration=document.getElementById("duration").value;
@@ -92,6 +91,11 @@ if(desc=="")
 if(realisateurs=="")
 {
 	input13.innerHTML="Il faut saisir des données";
+	return false;
+}
+if(prix.includes('£')==false)
+{
+	input14.innerHTML="Il faut saisir un prix XXX £";
 	return false;
 }
 
