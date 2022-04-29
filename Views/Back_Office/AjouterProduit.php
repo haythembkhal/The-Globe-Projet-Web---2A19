@@ -1,10 +1,15 @@
 <?php
 
     include_once '../../Model/Produit.php';
+    include_once '../../Model/Categorie.php';
 	include_once '../../Controller/ProduitCRUD.php';
+	include_once '../../Controller/CategorieCRUD.php';
 	
 	$ProduitCRUD = new ProduitCRUD();
 	$listeproduit=$ProduitCRUD->AfficherProduit(); 
+
+    $CategorieCRUD = new CategorieCRUD();
+	$listecategorietype=$CategorieCRUD->AfficherCategorie();
 
     $error = "";
 
@@ -14,14 +19,14 @@
 
     if (
 		isset($_POST['nom_produit']) &&		
-        isset($_POST['type_produit']) &&
+        isset($_POST['categorie_produit']) &&
 		isset($_POST['quantite_produit']) && 
         isset($_POST['prix_produit']) &&
         isset($_POST['image_produit'])
     ) {
         if (
 			!empty($_POST['nom_produit']) &&
-            !empty($_POST['type_produit']) && 
+            !empty($_POST['categorie_produit']) && 
 			!empty($_POST['quantite_produit']) && 
             !empty($_POST['prix_produit']) &&
             !empty($_POST['image_produit']) 
@@ -29,7 +34,7 @@
             $Produit = new Produit(
                 null,
 				$_POST['nom_produit'],
-                $_POST['type_produit'], 
+                $_POST['categorie_produit'], 
 				$_POST['quantite_produit'],
                 $_POST['prix_produit'],
                 $_POST['image_produit']
@@ -39,8 +44,7 @@
         }
         else
             $error = "Missing information";
-    }    
-
+    }
 ?>
 
 <!DOCTYPE html>
@@ -292,17 +296,25 @@
                                             <td></td>
                                             <td>
                                                 <label>                                  </label>
-                                                <label for="type_produit"> Type : </label>
+                                                <label for="categorie_produit"> Catégorie : </label>
                                             </td>
                                             <td>
-                                                <select type="range" name="type_produit" id="type_produit">
-                                                    <option selected disabled>Type de produit</option>
-                                                    <option value="Pull">Pull</option>
-                                                    <option value="Sac">Sac</option>
-                                                    <option value="Casquette">Casquette</option>
+                                                <select type="range" name="categorie_produit" id="categorie_produit">
+                                                    <option selected disabled> Catégorie du produit</option>
+                                                    <?php
+                                                        foreach($listecategorietype as $categorie){
+                                                    ?>
+                                                    <option value="<?php echo $categorie['id_cat'] ?>"><?php echo $categorie['nom_cat'] ?></option>
+                                                    <?php
+                                                        }
+                                                    ?>
                                                 </select>
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                <form method="POST" action="AjouterCategorie.php">
+                                                    <a type="submit" name="AjouterCategorie" ><button class="btn">Ajouter un nouveau catégorie</button></a>
+                                                </form>
+                                            </td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -465,6 +477,7 @@
                                         </tr>
                                     </table>
                                 </form>
+                                <!--
                                 <script>
 
                                 function CTRL()
@@ -541,6 +554,7 @@
                                 }
 
                                 </script>
+                            -->
 
                             </div>
                         </div>
@@ -555,7 +569,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Nom</th>
-                                                    <th>Type</th>
+                                                    <th>Catégorie</th>
                                                     <th>Quantité</th>
                                                     <th>Prix</th>
                                                     <th>Image</th>
@@ -567,7 +581,7 @@
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $produit['nom_produit']; ?></td>
-                                                    <td><?php echo $produit['type_produit']; ?></td>
+                                                    <td><?php echo $produit['categorie_produit']; ?></td>
                                                     <td><?php echo $produit['quantite_produit']; ?></td>
                                                     <td><?php echo $produit['prix_produit']; ?></td>
                                                     <td><?php echo $produit['image_produit']; ?></td>

@@ -1,6 +1,6 @@
 <?php
 
-	include '../../config.php';
+	include_once '../../config.php';
 	include_once '../../Model/Produit.php';
 	
 	class ProduitCRUD
@@ -22,15 +22,15 @@
 
 		function AjouterProduit($produit)
 		{
-			$sql="INSERT INTO produits (nom_produit, type_produit, quantite_produit, prix_produit, image_produit) 
-			VALUES (:nom_produit, :type_produit, :quantite_produit, :prix_produit, :image_produit)";
+			$sql="INSERT INTO produits (nom_produit, categorie_produit, quantite_produit, prix_produit, image_produit) 
+			VALUES (:nom_produit, :categorie_produit, :quantite_produit, :prix_produit, :image_produit)";
 			$db=config::getConnexion();
 			try
 			{
 				$query=$db->prepare($sql);
 				$query->execute([
 					'nom_produit'=>$produit->get_nom_produit(),
-					'type_produit'=>$produit->get_type_produit(),
+					'categorie_produit'=>$produit->get_categorie_produit(),
 					'quantite_produit'=>$produit->get_quantite_produit(),
 					'prix_produit'=>$produit->get_prix_produit(),
 					'image_produit'=>$produit->get_image_produit()
@@ -68,7 +68,7 @@
 				$query=$db->prepare(
 					"UPDATE produits SET 
 						nom_produit= :nom_produit, 
-						type_produit= :type_produit, 
+						categorie_produit= :categorie_produit, 
 						quantite_produit= :quantite_produit, 
 						prix_produit= :prix_produit,
 						image_produit= :image_produit
@@ -76,7 +76,7 @@
 				);
 				$query->execute([
 					'nom_produit'=>$produit->get_nom_produit(),
-					'type_produit'=>$produit->get_type_produit(),
+					'categorie_produit'=>$produit->get_categorie_produit(),
 					'quantite_produit'=>$produit->get_quantite_produit(),
 					'prix_produit'=>$produit->get_prix_produit(),
 					'image_produit'=>$produit->get_image_produit(),

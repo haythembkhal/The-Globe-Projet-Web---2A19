@@ -1,0 +1,125 @@
+<html>
+
+    <div class="popup-image">
+        <span>&times;</span>
+        <img src="image/......png" alt="">
+    </div>
+
+    <div class="owl-one owl-carousel owl-theme owl-loaded owl-drag">
+        <div class="owl-stage-outer">
+            <div class="owl-stage" style="transform: translate3d(-1474px, 0px, 0px); transition: all 1s ease 0s; width: 6056px; padding-left: 80px; padding-right: 80px;">
+                <div class="owl-item cloned" style="width: 717px; margin-right: 20px;">
+                    <div class="item">
+                        <div class="owl-nav">
+                            <button type="button" role="presentation" class="owl-prev">
+                                <span aria-label="Previous"> <span class="fa fa-angle-left"></span> </span>
+                            </button>
+                            <button type="button" role="presentation" class="owl-next">
+                                <span aria-label="Next"> <span class="fa fa-angle-right"></span> </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="owl-four owl-carousel owl-theme owl-loaded owl-drag">			
+        <div class="owl-stage-outer">
+            <div class="owl-stage" style="transform: translate3d(-423px, 0px, 0px); transition: all 0.25s ease 0s; width: 2964px;">
+                <div class="owl-item cloned" style="width: 403.4px; margin-right: 20px;">
+                    <div class="item vhny-grid">
+                        <div class="box16">
+                            <a href="#">
+                                <figure>
+                                    <img class="img-fluid" src="assets/images/banner3.jpg" alt="">
+                                </figure>
+                                <div class="box-content">
+                                    <h3 class="title">Doctor Sleep</h3>
+                                    <h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
+
+                                        </span>
+
+                                        <span class="post fa fa-heart text-right"></span>
+                                    </h4>
+                                </div>
+                                <span class="fa fa-play video-icon" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="owl-nav">
+                <button type="button" role="presentation" class="owl-prev">
+                    <span aria-label="Previous">
+                        <span class="fa fa-angle-left">
+
+                        </span> 
+                    </span>
+                </button>
+                <button type="button" role="presentation" class="owl-next">
+                    <span aria-label="Next"><span class="fa fa-angle-right"></span> 
+                    </span>
+                </button>
+            </div>
+            <div class="owl-dots">
+                <button role="button" class="owl-dot">
+                    <span>
+
+                    </span>
+                </button>
+                <button role="button" class="owl-dot active">
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</html>
+
+f css
+ thot l classet lkol w baad .popup-image{
+     position: fixed;
+     top:0;
+     letf:0;
+     backgroung: rgba(0,0,0,.9);
+     height: 100%;
+     width: 100%;
+     z-index: 100; 
+ }
+
+ thot l classet lkol w baad .popup-image span{
+    position: absolute;
+    top:0;
+    right:0px;
+    font-size:60px;
+    font-weight:bolder;
+    color:#fff;
+    cursor: pointer;
+    z-index: 100; 
+}
+
+thot l classet lkol w baad .popup-image img{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    border:5px solid #fff;
+    border-radius:5px;
+    width:750px;
+    object-fit:cover;
+}
+
+f js
+
+<script>
+    document.querySelectorAll('.image-container img').forEach(image =>{
+        image.onclick = () =>{
+            document.querySelector('.popup-image').styte.display = 'block';
+            document.querySelector('.popup-image img').src = image.getAttribute('src');
+        }
+    }); 
+    document.querySelector('.popup-image span').onclick = () =>{
+        document.querySelector('.popup-image').styte.display = 'none';
+    };
+</script>

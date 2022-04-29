@@ -236,7 +236,9 @@
                     </div><!--/.span3-->                                
 
                     <div class="span9">
-                        <div class="content">    
+                        <div class="content">   
+                        <a href="AjouterProduit.php"><button class="btn">Retour</button></a>
+                            <hr> 
                             <div class="module">
                                 <div class="module-head">
                                     <center><h3>Ajouter un categorie</h3><center>
@@ -359,7 +361,6 @@
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>   </th>
                                                     <th>Nom</th>
                                                 </tr>
                                             </thead>

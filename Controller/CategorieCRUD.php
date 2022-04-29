@@ -1,6 +1,6 @@
 <?php
 
-	include '../../config.php';
+	include_once '../../config.php';
 	include_once '../../Model/Categorie.php';
 	
 	class CategorieCRUD

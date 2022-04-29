@@ -5,17 +5,17 @@
 		
 		private $id_produit;
 		private $nom_produit;
-		private $type_produit;
+		private $categorie_produit;
 		private $quantite_produit;
 		private $prix_produit;
 		private $image_produit;
 		
 		//Constructor
-		public function __construct($id_produit, $nom_produit, $type_produit, $quantite_produit, $prix_produit, $image_produit)
+		public function __construct($id_produit, $nom_produit, $categorie_produit, $quantite_produit, $prix_produit, $image_produit)
 		{
 			$this->id_produit=$id_produit;
 			$this->nom_produit=$nom_produit;
-			$this->type_produit=$type_produit;
+			$this->categorie_produit=$categorie_produit;
 			$this->quantite_produit=$quantite_produit;
 			$this->prix_produit=$prix_produit;
 			$this->image_produit=$image_produit;
@@ -32,9 +32,9 @@
 			return $this->nom_produit;
 		}
 
-		public function get_type_produit()
+		public function get_categorie_produit()
 		{
-			return $this->type_produit;
+			return $this->categorie_produit;
 		}
 
 		public function get_quantite_produit()
@@ -58,9 +58,9 @@
 			$this->nom_produit=$nom_produit;
 		}
 
-		public function set_type_produit(string $type_produit)
+		public function set_categorie_produit(int $categorie_produit)
 		{
-			$this->type_produit=$type_produit;
+			$this->categorie_produit=$categorie_produit;
 		}
 
 		public function set_quantite_produit(int $quantite_produit)
