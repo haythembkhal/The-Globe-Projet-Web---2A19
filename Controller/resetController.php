@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 		$password= $user["password"];
 		$destinataire = $_POST["email"];
-						$sujet = "[THE GLOBE][SIGN UP]";
+						$sujet = "[THE GLOBE][RECUPERATION PASSWORD]";
 						$headers = "From:theglobe.alliance2022@gmail.com\n";
 						$headers .="Content-Type: text/html; charset=iso-8859-1\n";
 						$message = "<html>Hello <strong>".$_POST["lastname"]."</strong>,<br><br>

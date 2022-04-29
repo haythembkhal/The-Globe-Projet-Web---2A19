@@ -87,15 +87,15 @@
 
 class User{
 
-    private string $userName;
+    private string $ville;
     private string $email;
     private string $password;
     private string $firstname;
 	private string $lastname;
     
 
-    public function __construct(string $firstname, string $lastname, string $userName, string $email,string $password){
-        $this->userName = $userName;
+    public function __construct(string $firstname, string $lastname, string $ville, string $email,string $password){
+        $this->ville = $ville;
         $this->email = $email;
         $this->password = $password;
         $this->firstname = $firstname;
@@ -108,14 +108,14 @@ function ajouterEmploye($newEmploye){
 
         try {
             $query = $db->prepare(
-                'INSERT INTO employe (firstname,lastname,username,email,password) 
-                    VALUES (:firstname,:lastname,:username,:email,:password) '
+                'INSERT INTO employe (firstname,lastname,ville,email,password) 
+                    VALUES (:firstname,:lastname,:ville,:email,:password) '
             );
             $query->execute([
                 'firstname' => $newEmploye->getFirstname(),
 				'lastname' => $newEmploye->getLastname(),
                 'email' => $newEmploye->getEmail(),
-                'userName' => $newEmploye->getUserName(),
+                'ville' => $newEmploye->getville(),
                 'password' => $newEmploye->getPassword(),
               
             ]);
@@ -124,8 +124,8 @@ function ajouterEmploye($newEmploye){
         }
     }*/
     //getters
-    public function getUserName():string{
-        return $this->userName;
+    public function getville():string{
+        return $this->ville;
     }
 
     public function getEmail():string{
@@ -145,8 +145,8 @@ function ajouterEmploye($newEmploye){
     }
 
     //setters
-    public function setUserName(string $userName):void{
-        $this->userName = $userName;
+    public function setville(string $ville):void{
+        $this->ville = $ville;
     }
 
     public function setEmail(string $email):void{

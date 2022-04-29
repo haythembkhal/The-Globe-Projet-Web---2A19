@@ -4,7 +4,7 @@ include 'C:/xampp/htdocs/Projet/config.php';
 include 'C:/xampp/htdocs/Projet/Model/user.php';
 
 
-/*function notifyAdministrator($type,$userName,$userId,$userType){
+/*function notifyAdministrator($type,$ville,$userId,$userType){
     $db = config::getConnexion();
     $date = date('y-m-d-H-i-s');
     
@@ -13,7 +13,7 @@ include 'C:/xampp/htdocs/Projet/Model/user.php';
     else if($type=='delatedAccount')
         $message = "User Account Delated. ";
     
-    $message.=" ".$userType.", ".$userName." with User Id: ".$userId;
+    $message.=" ".$userType.", ".$ville." with User Id: ".$userId;
     if($type=='registration')
         $message .= " has registered to EduEasy.";
     else if($type=='delatedAccount')
@@ -97,12 +97,12 @@ function rechercherEmail($email){
         try {
             
             $query = $db->prepare(
-                'INSERT INTO client (firstname,lastname,username,email,password) 
-                    VALUES (:firstname,:lastname,:username,:email,:password)'
+                'INSERT INTO client (firstname,lastname,ville,email,password) 
+                    VALUES (:firstname,:lastname,:ville,:email,:password)'
             );
             $query->execute([
                 'email' => $newClient->getEmail(),
-                'username' => $newClient->getUserName(),
+                'ville' => $newClient->getville(),
                 'password' => $newClient->getPassword(),
                 'firstname' => $newClient->getFirstname(),
 				'lastname' => $newClient->getLastname()
@@ -116,17 +116,17 @@ function updateClient($user,$userId){
         $db = config::getConnexion();
         try{
             $query = $db->prepare(
-                'UPDATE client SET firstname= :firstname, lastname = :lastname,  username= :username, email = :email, password= :password where id_client = :userId'
+                'UPDATE client SET firstname= :firstname, lastname = :lastname,  ville= :ville, email = :email, password= :password where id_client = :userId'
             );
             $query = $query->execute([
 				'firstname'=> $user->getFirstname(),
 				'lastname'=> $user->getLastname(),
-                'username' => $user->getUsername(),
+                'ville' => $user->getville(),
 				'email'=> $user->getEmail(),
 				'password' => $user->getPassword(),
                 'userId' => $userId
             ]);
-           // $_SESSION['userName'] = $newUserName;
+           // $_SESSION['ville'] = $newville;
         }catch(PDOException $e){
             $e->getMessage();
         }
@@ -151,7 +151,7 @@ function updateClient($user,$userId){
         try {
             $query = $db->query(
 			
-            "SELECT * FROM client WHERE firstname like '%$mot%' || lastname like '%$mot%' || username like '%$mot%'"
+            "SELECT * FROM client WHERE firstname like '%$mot%' || lastname like '%$mot%' || ville like '%$mot%'"
             );
 			$query->execute(['firstname'=>$mot]);
 			$result=$query->fetchALL();
@@ -161,7 +161,41 @@ function updateClient($user,$userId){
             $e->getMessage();
         }
 	}
+function trierClientParNom(){
+		$db = config::getconnexion();
 
+        try {
+            $query = $db->prepare(
+			
+            'SELECT * FROM client order by firstname'
+            );
+			$query->execute();
+			$result=$query->fetchALL();
+			return $result;
+           
+
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+	}
+	
+	function trierClientParVille(){
+		$db = config::getconnexion();
+
+        try {
+            $query = $db->prepare(
+			
+            'SELECT * FROM client order by ville'
+            );
+			$query->execute();
+			$result=$query->fetchALL();
+			return $result;
+           
+
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+	}
     
 }
 
@@ -208,14 +242,14 @@ function ajouterEmploye($newEmploye){
         try {
 			
             $query = $db->prepare(
-                'INSERT INTO employe (firstname,lastname,username,email,password) 
-                    VALUES (:firstname,:lastname,:username,:email,:password) '
+                'INSERT INTO employe (firstname,lastname,ville,email,password) 
+                    VALUES (:firstname,:lastname,:ville,:email,:password) '
             );
 			
             $query->execute([
                 'firstname' => $newEmploye->getFirstname(),
 				'lastname'  => $newEmploye->getLastname(),
-                'username'  => $newEmploye->getUserName(),
+                'ville'  => $newEmploye->getville(),
 				'email'     => $newEmploye->getEmail(),
                 'password'  => $newEmploye->getPassword()             
             ]);
@@ -246,17 +280,17 @@ function ajouterEmploye($newEmploye){
         $db = config::getConnexion();
         try{
             $query = $db->prepare(
-                'UPDATE employe SET firstname= :firstname, lastname = :lastname,  username= :username, email = :email, password= :password where id_employe = :userId'
+                'UPDATE employe SET firstname= :firstname, lastname = :lastname,  ville= :ville, email = :email, password= :password where id_employe = :userId'
             );
             $query = $query->execute([
 				'firstname'=> $user->getFirstname(),
 				'lastname'=> $user->getLastname(),
-                'username' => $user->getUsername(),
+                'ville' => $user->getville(),
 				'email'=> $user->getEmail(),
 				'password' => $user->getPassword(),
                 'userId' => $userId
             ]);
-           // $_SESSION['userName'] = $newUserName;
+           // $_SESSION['ville'] = $newville;
         }catch(PDOException $e){
             $e->getMessage();
         }
@@ -266,7 +300,7 @@ function ajouterEmploye($newEmploye){
         try {
             $query = $db->query(
 			
-            "SELECT * FROM employe WHERE firstname like '%$mot%' || lastname like '%$mot%' || username like '%$mot%'"
+            "SELECT * FROM employe WHERE firstname like '%$mot%' || lastname like '%$mot%' || ville like '%$mot%'"
             );
 			$query->execute(['firstname'=>$mot]);
 			$result=$query->fetchALL();
@@ -288,13 +322,13 @@ class AdministratorC{
 
         try {
             $query = $db->prepare(
-                'INSERT INTO administrateur (firstname,lastname,username,email,password) 
-                    VALUES (:firstname,:lastname,:username,:email,:password) '
+                'INSERT INTO administrateur (firstname,lastname,ville,email,password) 
+                    VALUES (:firstname,:lastname,:ville,:email,:password) '
             );
             $query->execute([
                 'firstname' => $newAdministrator->getFirstname(),
                 'lastname' => $newAdministrator->getLastname(),
-                'username' => $newAdministrator->getUsername(),
+                'ville' => $newAdministrator->getville(),
                 'email' => $newAdministrator->getEmail(),
                 'password' => $newAdministrator->getPassword()
             ]);
@@ -318,18 +352,18 @@ class AdministratorC{
         }
     }
 
-    function updateAdministratorUserName($newUserName,$userId){
+    function updateAdministratorville($newville,$userId){
 
         $db = config::getConnexion();
         try{
             $query = $db->prepare(
-                'UPDATE administrator SET userName= :userName where userId = :userId'
+                'UPDATE administrator SET ville= :ville where userId = :userId'
             );
             $query = $query->execute([
-                'userName' => $newUserName,
+                'ville' => $newville,
                 'userId' => $userId
             ]);
-            $_SESSION['userName'] = $newUserName;
+            $_SESSION['ville'] = $newville;
         }catch(PDOException $e){
             $e->getMessage();
         }

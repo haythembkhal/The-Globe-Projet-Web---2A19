@@ -32,7 +32,7 @@
 	 {
 		 $firstname=$e['firstname'];
 		 $lastname=$e['lastname'];
-		 $username=$e['username'];
+		 $ville=$e['ville'];
 		 $email=$e['email'];
 		 $password=$e['password'];
 		 $userID=$e['id_client'];
@@ -64,7 +64,7 @@
         function verif(){
 		var firstname = document.getElementById('firstname');
 		var lastname = document.getElementById('lastname');
-        var username = document.getElementById('username');
+        var ville = document.getElementById('ville');
         var email = document.getElementById('email');
         var password = document.getElementById('password');
 		var passwordConfirm=document.getElementById('passwordConfim');
@@ -75,7 +75,7 @@
        // var errorMessageUserType = document.getElementById('error_userType');
         var errorMessageFirstname = document.getElementById('error_firstname');
 		var errorMessageLastname = document.getElementById('error_lastname');
-		var errorMessageUsername = document.getElementById('error_username');
+		var errorMessageville = document.getElementById('error_ville');
 		var errorMessageEmail = document.getElementById('error_email');
         var errorMessagePassword = document.getElementById('error_password');
 		var errorMessagePasswordConfirm=document.getElementById('error_passwordConfirm');
@@ -90,18 +90,18 @@
                 errorMessageUserType.innerHTML = "";*/
 
 
-          /*  if (userType.value.length == 'select' || userName.value.length == 0 || email.value.length == 0 || password.value.length == 0)
+          /*  if (userType.value.length == 'select' || ville.value.length == 0 || email.value.length == 0 || password.value.length == 0)
                 errorMessage.innerHTML = '<br>You have to fill ALL the required data';
             else
                 errorMessage.innerHTML = "";*/
-if(username.value.length==0)
+if(ville.value.length==0)
 			{
-				errorMessageUsername.innerHTML="Oups!This field cannot be empty!";
+				errorMessageville.innerHTML="Oups!This field cannot be empty!";
 				
 			}
 			else
 			{
-				errorMessageUsername.innerHTML="";
+				errorMessageville.innerHTML="";
 				test++;
 			}			
 
@@ -184,18 +184,18 @@ if(username.value.length==0)
             var regexError2 = /error=2/;
             var regexError3 = /error=3/;
             var errorMessage = document.getElementById('errorMessage');
-            var userName = document.getElementById('userName');
-            var error_userName = document.getElementById('error_userName');
+            var ville = document.getElementById('ville');
+            var error_ville = document.getElementById('error_ville');
 
-            error_userName.innerHTML = "";
+            error_ville.innerHTML = "";
             errorMessage.innerHTML = "";
 
             if (regexError3.test(url)) {
-                error_userName.innerHTML = "This user Name is already taken. choose another one please.";
+                error_ville.innerHTML = "This user Name is already taken. choose another one please.";
                 errorMessage.innerHTML = "An account has already being created with this email<br>Login instead or a create an account with a new email";
             }
             else if (regexError2.test(url))
-                error_userName.innerHTML = "This user Name is already taken. choose another one please.";
+                error_ville.innerHTML = "This user Name is already taken. choose another one please.";
             else if (regexError1.test(url))
                 errorMessage.innerHTML = "An account has already being created with this email<br>Login instead or a create an account with a new email";
         }
@@ -432,10 +432,10 @@ if(username.value.length==0)
 										</div>
 										
 										<div class="control-group">
-											<label class="control-label" for="basicinput">UserName</label>
+											<label class="control-label" for="basicinput">ville</label>
 											<div class="controls">
-												<input type="text" id="username" placeholder="Type username here..." class="span8" name="username" value=<?php echo $username;?>>
-												<span id="error_username" style="color: red; font-size: 0.75em;"></span>
+												<input type="text" id="ville" placeholder="Type ville here..." class="span8" name="ville" value=<?php echo $ville;?>>
+												<span id="error_ville" style="color: red; font-size: 0.75em;"></span>
 											</div>
 											
 										</div>

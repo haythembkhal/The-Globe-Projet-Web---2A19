@@ -1,4 +1,12 @@
-﻿
+﻿<?php
+
+include '../../Controller/notificationC.php';
+
+
+
+$notification=new notificationC();
+$count=$notification->nouvelleNotification();
+?>
 <html lang="en">
 <head>
     <head>
@@ -69,7 +77,7 @@
                                 <li><a href="message.php"><i class="menu-icon icon-inbox"></i>Inbox <b class="label green pull-right">
                                     11</b> </a></li>
                                 <li><a href="task.php"><i class="menu-icon icon-tasks"></i>Tasks <b class="label orange pull-right">
-                                    19</b> </a></li>
+                                    <?php echo $count;?></b> </a></li>
                             </ul>
                             <!--/.widget-nav-->
                             

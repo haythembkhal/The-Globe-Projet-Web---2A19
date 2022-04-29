@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		   
 		$_SESSION["firstname"] = $user["firstname"];
         $_SESSION["lastname"] = $user["lastname"];
-		$_SESSION["username"] = $user['username'];
+		$_SESSION["ville"] = $user['ville'];
 		$_SESSION["email"] = $user["email"];
 		$_SESSION["password"] = $password;
 		$_SESSION["id_client"] = $user["id_client"];

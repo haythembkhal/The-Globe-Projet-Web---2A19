@@ -1,5 +1,9 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<?php
+$essai=2000;
+?>
+
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,7 +76,7 @@
                             </li>
                             <li><a href="message.php"><i class="menu-icon icon-inbox"></i>Inbox <b class="label green pull-right">
                                 11</b> </a></li>
-                            <li><a href="task.php"><i class="menu-icon icon-tasks"></i>Tasks <b class="label orange pull-right">
+                            <li><a href="task.php"><i class="menu-icon icon-tasks"></i>Notifications <b class="label orange pull-right">
                                 19</b> </a></li>
                         </ul>
                         <!--/.widget-nav-->
@@ -144,76 +148,62 @@
                 <div class="span9">
                     <div class="content">
                         <div class="module">
-                            <div class="module-head">
-                                <h3>
-                                    Chart - flot</h3>
-                            </div>
-                            <div class="module-body">
-                                <div class="chart">
-                                    <div id="placeholder" class="graph">
-                                    </div>
-                                </div>
-                            </div>
+                            <div id="container" style="height: 400%" ></div>
+		
+								<input type="hidden" id="essai" value=<?php echo $essai;?>>
+
+        
+									<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+												<!-- Uncomment this line if you want to dataTool extension
+												<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/extension/dataTool.min.js"></script>
+												-->
+												<!-- Uncomment this line if you want to use gl extension
+												<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+												-->
+												<!-- Uncomment this line if you want to echarts-stat extension
+												<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+												-->
+												<!-- Uncomment this line if you want to use map
+												<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/map/js/china.js"></script>
+												<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/map/js/world.js"></script>
+												-->
+												<!-- Uncomment these two lines if you want to use bmap extension
+												<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+												<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@{{version}}/dist/extension/bmap.min.js"></script>
+												-->
+
+									<script type="text/javascript">
+								var dom = document.getElementById("container");
+								var myChart = echarts.init(dom);
+								var app = {};
+
+								var option;
+
+								var essai=document.getElementById("essai");
+
+								option = {
+								  xAxis: {
+									type: 'category',
+									data: ['Tunis', 'Ariana', 'Sfax', 'Sousse', 'Monastir', 'hammamet', 'Djerba','Autres']
+								  },
+								  yAxis: {
+									type: 'value'
+								  },
+								  series: [
+									{
+									  data: [essai.value, 230, 224, 218, 135, 147, 400],
+									  type: 'line'
+									}
+								  ]
+								};
+
+								if (option && typeof option === 'object') {
+									myChart.setOption(option);
+								}
+
+									</script>
                         </div>
-                        <!--/.module-->
-                        <br />
-                        <div class="module">
-                            <div class="module-head">
-                                <h3>
-                                    Chart - flot</h3>
-                            </div>
-                            <div class="module-body">
-                                <div class="chart inline-legend grid">
-                                    <div id="placeholder2" class="graph">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/.module-->
-                        <br />
-                        <div class="module">
-                            <div class="module-head">
-                                <h3>
-                                    Pie - Default</h3>
-                            </div>
-                            <div class="module-body">
-                                <div class="chart pie donut">
-                                    <div id="pie-default" class="graph">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/.module-->
-                        <br />
-                        <div class="module">
-                            <div class="module-head">
-                                <h3>
-                                    Pie - Donut</h3>
-                            </div>
-                            <div class="module-body">
-                                <div class="chart pie donut">
-                                    <div id="pie-donut" class="graph">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/.module-->
-                        <br />
-                        <div class="module">
-                            <div class="module-head">
-                                <h3>
-                                    Pie - Donut & Interactive</h3>
-                            </div>
-                            <div class="module-body">
-                                <div class="chart pie donut interactive">
-                                    <div id="pie-interactive" class="graph">
-                                    </div>
-                                    <div id="hover">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/.module-->
+                       
                     </div>
                     <!--/.content-->
                 </div>

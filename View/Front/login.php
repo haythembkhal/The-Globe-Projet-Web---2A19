@@ -1,8 +1,17 @@
 <?php
-//session_start();
+session_start();
  //  include 'C:/xampp/htdocs/Projet/View/Back/table_utilisateurs.php';
-	include '../../Controller/userC.php';
-	require_once 'autoload.php';
+//	include '../../Controller/userC.php';
+	include '../../Controller/notificationC.php';
+	require_once 'autoload.php';	
+	require_once "configGoogle.php";
+
+	if (isset($_SESSION['access_token'])) {
+		//header('Location: login.php');
+		//exit();
+	}
+	$loginURL = $gClient->createAuthUrl();
+
 
 if (isset($_POST['submit'])&& isset($_POST['g-recaptcha-response']))
 {
@@ -21,16 +30,22 @@ if ($resp->isSuccess()) {
 
 
 
+
     $error = "";
 	$captcha=0;
     $success = 0;
     // create employe
     $customer= null;
+	$notificationC=new notificationC();
+	
+	
+	
 	$userOnline=0;
     // create an instance of the controller
     $client = new ClientC();
-    if (isset($_POST['firstname'])&& isset($_POST['lastname']) && isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])&&isset($_POST['g-recaptcha-response'])) {
-        if (!empty($_POST['firstname'])&& !empty($_POST['lastname']) && !empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) 
+	
+    if (isset($_POST['firstname'])&& isset($_POST['lastname']) && isset($_POST['ville']) && isset($_POST['email']) && isset($_POST['password'])&&isset($_POST['g-recaptcha-response'])) {
+        if (!empty($_POST['firstname'])&& !empty($_POST['lastname']) && !empty($_POST['ville']) && !empty($_POST['email']) && !empty($_POST['password'])) 
 		{
 			$recaptcha = new \ReCaptcha\ReCaptcha("6Le8QIcfAAAAAC6DvruNqN23RQ97sUwV6Cf77RMl");
             $resp = $recaptcha->verify($_POST["g-recaptcha-response"]);
@@ -40,7 +55,7 @@ if ($resp->isSuccess()) {
 		    $customer = new User(
                 $_POST['firstname'],
                 $_POST['lastname'],
-                $_POST['username'],
+                $_POST['ville'],
                 $_POST['email'],
                 MD5($_POST['password']),
             );
@@ -54,19 +69,24 @@ if ($resp->isSuccess()) {
 						$sujet = "[THE GLOBE][SIGN UP]";
 						$headers = "From:theglobe.alliance2022@gmail.com\n";
 						$headers .="Content-Type: text/html; charset=iso-8859-1\n";
-						$message = "<html>Hello <strong>".$_POST["lastname"]."</strong>,<br><br>
+						$message = '<html>Hello <strong>'.$_POST["lastname"].'</strong>,<br><br>
 	 
 Thank you for joining the globe platform.<br>
 We would like to confirm that your account has been successfully created.<br> 
-To access your account, click on the link below.<br><br>
+To access your account, click on the <a href="https://localhost/Projet/View/Front/sign_in.php">link</a> below.<br><br>
 
 If you are having trouble logging into your account, contact us at theglobe.alliance2022@gmail.com.<br><br>
 
 Cordially,<br>
-<strong>The Globe team</strong></html> ";
+<strong>The Globe team</strong></html> ';
 							  
 
 							 mail($destinataire,$sujet,$message,$headers);
+							 //envoyer une notification
+							 $message_notification="INSCRIPTION:Une personne vient de s'inscrire sur le site."." "."Son nom est"." ".$_POST['lastname'];			
+								$etat=0;//non lu
+								$notif=new Notification($message_notification,$etat);
+						$notificationC->ajouterNotification($notif);
 						header('Location:sign_in.php');
 						 
 						
@@ -96,6 +116,7 @@ Cordially,<br>
             $error = "Missing information";
         }
     }
+	 
 	
 	
 	
@@ -107,6 +128,7 @@ Cordially,<br>
        <meta charset="utf-8">
         <!-- importer le fichier de style -->
         <link rel="stylesheet" href="style.css" media="screen" type="text/css" />
+		
 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
     <body>
@@ -130,10 +152,12 @@ Cordially,<br>
 				 </div>
 				
 				 <div>
-				 <label><b>UserName</b></label>
-                <input type="text" placeholder="username " name="username" id="username">
-				<span id="error_username" style="color: red; font-size: 0.75em;"></span>
+				 <label><b>Ville</b></label>
+                <input type="text" placeholder="ville " name="ville" id="ville">
+				<span id="error_ville" style="color: red; font-size: 0.75em;"></span>
 				 </div>
+				 
+				
 				 
 				<div>
 				<label><b>Email</b></label>
@@ -152,6 +176,7 @@ Cordially,<br>
 				
 			
                 <input type="submit" id='submitButton' value='SUBMIT' >
+				<input type="button" onclick="window.location = '<?php echo $loginURL ?>';" value="Log In With Google" class="btn btn-danger" style="width:400px; height:50px"><br>
 				<a id="sign_in" href="sign_in.php">I have an Account/Sign_In</a>
              
 			
@@ -161,7 +186,7 @@ Cordially,<br>
         function verif(){
 			var firstname = document.getElementById('firstname');
 		var lastname = document.getElementById('lastname');
-        var userName = document.getElementById('username');
+        var ville = document.getElementById('ville');
         var email = document.getElementById('email');
         var password = document.getElementById('password');
         var buttonSubmit = document.getElementById('submitButton');
@@ -171,7 +196,7 @@ Cordially,<br>
        // var errorMessageUserType = document.getElementById('error_userType');
         var errorMessageFirstname = document.getElementById('error_firstname');
 		var errorMessageLastname = document.getElementById('error_lastname');
-		var errorMessageUsername = document.getElementById('error_username');
+		var errorMessageville = document.getElementById('error_ville');
 		var errorMessageEmail = document.getElementById('error_email');
         var errorMessagePassword = document.getElementById('error_password');
 var test=0;
@@ -185,7 +210,7 @@ var test=0;
                 errorMessageUserType.innerHTML = "";*/
 
 
-          /*  if (userType.value.length == 'select' || userName.value.length == 0 || email.value.length == 0 || password.value.length == 0)
+          /*  if (userType.value.length == 'select' || ville.value.length == 0 || email.value.length == 0 || password.value.length == 0)
                 errorMessage.innerHTML = '<br>You have to fill ALL the required data';
             else
                 errorMessage.innerHTML = "";*/
@@ -199,14 +224,14 @@ var test=0;
 				errorMessageFirstname.innerHTML="";
 				test++;
 			}
-			if(username.value.length==0)
+			if(ville.value.length==0)
 			{
-				errorMessageUsername.innerHTML="Oups!This field cannot be empty!";
+				errorMessageville.innerHTML="Oups!This field cannot be empty!";
 				
 			}
 			else
 			{
-				errorMessageUsername.innerHTML="";
+				errorMessageville.innerHTML="";
 				test++;
 			}			
 			if(lastname.value.length==0)
@@ -270,18 +295,18 @@ var test=0;
             var regexError2 = /error=2/;
             var regexError3 = /error=3/;
             var errorMessage = document.getElementById('errorMessage');
-            var userName = document.getElementById('userName');
-            var error_userName = document.getElementById('error_userName');
+            var ville = document.getElementById('ville');
+            var error_ville = document.getElementById('error_ville');
 
-            error_userName.innerHTML = "";
+            error_ville.innerHTML = "";
             errorMessage.innerHTML = "";
 
             if (regexError3.test(url)) {
-                error_userName.innerHTML = "This user Name is already taken. choose another one please.";
+                error_ville.innerHTML = "This user Name is already taken. choose another one please.";
                 errorMessage.innerHTML = "An account has already being created with this email<br>Login instead or a create an account with a new email";
             }
             else if (regexError2.test(url))
-                error_userName.innerHTML = "This user Name is already taken. choose another one please.";
+                error_ville.innerHTML = "This user Name is already taken. choose another one please.";
             else if (regexError1.test(url))
                 errorMessage.innerHTML = "An account has already being created with this email<br>Login instead or a create an account with a new email";
         }

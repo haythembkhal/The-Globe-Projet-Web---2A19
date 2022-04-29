@@ -1,11 +1,13 @@
 ﻿<?php
 //session_start();
 //include '../../Controller/userC.php';
-include '../../Controller/temoignageC.php';
+//include '../../Controller/temoignageC.php';
+include '../../Controller/notificationC.php';
 $customer = new ClientC();
 
 $employe = new EmployeC();
 $temoignage=new temoignageC();
+$notification=new notificationC();
 $listeClient="";
 $listeEmploye="";
 $taille="";
@@ -22,6 +24,7 @@ $message2=""; //utiliser pour préciser le nombre d'elements trouver après la r
  $listeEmploye = $employe->afficherEmploye();
  $listeClient = $customer->afficherClient();
  $listeTemoignage=$temoignage->afficherTemoignage();
+ $count=$notification->nouvelleNotification();//recupérer les nouvelles notifications
  if (isset($_POST['mot_rechercher_client']))
 {
 	$listeClient=$customer->rechercheAvancee($_POST['mot_rechercher_client']);
@@ -34,7 +37,14 @@ else{
 $taille="";
 $message1="";
 }
- 
+ if(isset($_POST["name"]))
+ {
+	 $listeClient=$customer->trierClientParNom();
+ }
+  if(isset($_POST["ville"]))
+ {
+	 $listeClient=$customer->trierClientParVille();
+ }
  if (isset($_POST['mot_rechercher_employe']))
 {
 	$listeEmploye=$employe->rechercheAvancee($_POST['mot_rechercher_employe']);
@@ -136,7 +146,7 @@ else{
         function verif(){
 		var firstname = document.getElementById('firstname');
 		var lastname = document.getElementById('lastname');
-        var username = document.getElementById('username');
+        var ville = document.getElementById('ville');
         var email = document.getElementById('email');
         var password = document.getElementById('password');
 		var passwordConfirm=document.getElementById('passwordConfim');
@@ -147,7 +157,7 @@ else{
        // var errorMessageUserType = document.getElementById('error_userType');
         var errorMessageFirstname = document.getElementById('error_firstname');
 		var errorMessageLastname = document.getElementById('error_lastname');
-		var errorMessageUsername = document.getElementById('error_username');
+		var errorMessageville = document.getElementById('error_ville');
 		var errorMessageEmail = document.getElementById('error_email');
         var errorMessagePassword = document.getElementById('error_password');
 		var errorMessagePasswordConfirm=document.getElementById('error_passwordConfirm');
@@ -162,18 +172,18 @@ else{
                 errorMessageUserType.innerHTML = "";*/
 
 
-          /*  if (userType.value.length == 'select' || userName.value.length == 0 || email.value.length == 0 || password.value.length == 0)
+          /*  if (userType.value.length == 'select' || ville.value.length == 0 || email.value.length == 0 || password.value.length == 0)
                 errorMessage.innerHTML = '<br>You have to fill ALL the required data';
             else
                 errorMessage.innerHTML = "";*/
-if(username.value.length==0)
+if(ville.value.length==0)
 			{
-				errorMessageUsername.innerHTML="Oups!This field cannot be empty!";
+				errorMessageville.innerHTML="Oups!This field cannot be empty!";
 				
 			}
 			else
 			{
-				errorMessageUsername.innerHTML="";
+				errorMessageville.innerHTML="";
 				test++;
 			}			
 
@@ -256,18 +266,18 @@ if(username.value.length==0)
             var regexError2 = /error=2/;
             var regexError3 = /error=3/;
             var errorMessage = document.getElementById('errorMessage');
-            var userName = document.getElementById('userName');
-            var error_userName = document.getElementById('error_userName');
+            var ville = document.getElementById('ville');
+            var error_ville = document.getElementById('error_ville');
 
-            error_userName.innerHTML = "";
+            error_ville.innerHTML = "";
             errorMessage.innerHTML = "";
 
             if (regexError3.test(url)) {
-                error_userName.innerHTML = "This user Name is already taken. choose another one please.";
+                error_ville.innerHTML = "This user Name is already taken. choose another one please.";
                 errorMessage.innerHTML = "An account has already being created with this email<br>Login instead or a create an account with a new email";
             }
             else if (regexError2.test(url))
-                error_userName.innerHTML = "This user Name is already taken. choose another one please.";
+                error_ville.innerHTML = "This user Name is already taken. choose another one please.";
             else if (regexError1.test(url))
                 errorMessage.innerHTML = "An account has already being created with this email<br>Login instead or a create an account with a new email";
         }
@@ -307,8 +317,8 @@ if(username.value.length==0)
 							<li>
 								<a href="task.php">
 									<i class="menu-icon icon-tasks"></i>
-									Tasks
-									<b class="label orange pull-right">19</b>
+									Notifications
+									<b class="label orange pull-right"><?php echo $count;?></b>
 								</a>
 							</li>
 						</ul><!--/.widget-nav-->
@@ -411,10 +421,34 @@ if(username.value.length==0)
 							<div class="module-body">
 								<p>
 									<strong>Liste des Clients</strong>
+									<div class="pull-left">
+									Trier : &nbsp;
+									<div class="btn-group">
+										<button class="btn">all</button>
+										<button class="btn dropdown-toggle" data-toggle="dropdown">
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<form action="" method="POST">
+											
+											
+											<button  type="submit" name="name" class="btn">Name</button>
+											<button  type="submit" name="ville" class="btn">Ville</button>
+											<button  type="submit" name="date" class="btn">Date</button>
+											
+											
+											
+											
+											
+											</form>
+										</ul>
+									</div>
+								</div>
 									<span style="color: green; font-size: 1em;"><?php echo $taille." ".$message1; ?></span>
 									
 								</p>
 								<p>
+								<br>
 								<form class="navbar-search pull-left input-append" action="" method="POST">
                         <input type="text" class="span3" name="mot_rechercher_client">
                         <button class="btn" type="submit">
@@ -430,7 +464,7 @@ if(username.value.length==0)
 									<tr>								  
 									  <th>First Name</th>
 									  <th>Last Name</th>
-									  <th>Username</th>
+									  <th>ville</th>
 									  <th>Email</th>
 									  <th>Password</th>
 									  <th>Operation</th>									  								
@@ -443,7 +477,7 @@ if(username.value.length==0)
 									  
 									  <td><?php Echo $client['firstname'];?></td>
 									  <td><?php Echo $client['lastname'];?></td>
-									  <td><?php Echo $client['username'];?></td>
+									  <td><?php Echo $client['ville'];?></td>
 									  <td><?php Echo $client['email'];?></td>
 									  <td><?php Echo $client['password'];?></td>						 
 									  <td>
@@ -486,7 +520,7 @@ if(username.value.length==0)
 									 
 									  <th>First Name</th>
 									  <th>Last Name</th>
-									  <th>Username</th>
+									  <th>ville</th>
 									  <th>Email</th>
 									  <th>Password</th>
 									   <th>Operation</th>
@@ -499,7 +533,7 @@ if(username.value.length==0)
 									  
 									  <td><?php Echo $employe['firstname'];?></td>
 									  <td><?php Echo $employe['lastname'];?></td>
-									  <td><?php Echo $employe['username'];?></td>
+									  <td><?php Echo $employe['ville'];?></td>
 									  <td><?php Echo $employe['email'];?></td>
 									  <td><?php Echo $employe['password'];?></td>	
 									  

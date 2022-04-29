@@ -5,23 +5,23 @@ if(!isset($_SESSION['loggedIn']) )
     header('location:sign_in.php');
 else if($_SESSION['loggedIn'] != true)
     header('location:sign_in.php');
-/*$username=$_SESSION["username"];
+/*$ville=$_SESSION["ville"];
 $firstname=$_SESSION["firstname"];
 $lastname=$_SESSION["lastname"];
 $email=$_SESSION["email"];*/
-//var_dump($username);
+//var_dump($ville);
 //die;
 //$userID=$_SESSION["id_client"];
-//$username=$_POST['username'];
-//var_dump($username);
+//$ville=$_POST['ville'];
+//var_dump($_SESSION["picture"]);
 //die;
 	
- if (isset($_POST['firstname'])&& isset($_POST['lastname']) && isset($_POST['username']) && isset($_POST['email'])) {
-        if (!empty($_POST['firstname'])&& !empty($_POST['lastname']) && !empty($_POST['username']) && !empty($_POST['email'])) {
+ if (isset($_POST['firstname'])&& isset($_POST['lastname']) && isset($_POST['ville']) && isset($_POST['email'])) {
+        if (!empty($_POST['firstname'])&& !empty($_POST['lastname']) && !empty($_POST['ville']) && !empty($_POST['email'])) {
             $customer = new User(
                 $_POST['firstname'],
                 $_POST['lastname'],
-                $_POST['username'],
+                $_POST['ville'],
                 $_POST['email'],
                 $_SESSION['password']
             );
@@ -48,7 +48,7 @@ $email=$_SESSION["email"];*/
 			//mettre a jour la page
 			$_SESSION['firstname']=$_POST['firstname'];
 			$_SESSION['lastname']=$_POST['lastname'];
-			$_SESSION['username']=$_POST['username'];
+			$_SESSION['ville']=$_POST['ville'];
 			$_SESSION['email']=$_POST['email'];
 			
 			
@@ -68,6 +68,70 @@ $email=$_SESSION["email"];*/
 <link href="style_profile.css" rel="stylesheet">
 
 <body>
+			<script>
+        function verif(){
+		var temoignage = document.getElementById('temoignage');
+		
+        var buttonSubmit = document.getElementById('submitButton');
+		
+      
+        var errorMessageTemoignage = document.getElementById('error_temoignage');
+var test=0;
+       
+				
+			if(temoignage.value.length==0)
+			{
+				errorMessageTemoignage.innerHTML="Oups!This field cannot empty!";
+			}
+			else if(temoignage.value.length<10)
+			{
+				errorMessageTemoignage.innerHTML="This field should have AT LEAST 10 caracters'";
+			}
+			else
+			{
+				errorMessageTemoignage.innerHTML="";
+				test++;
+			}
+			
+			
+			
+		
+			if(test==1)
+				return true;
+			else
+				return false;
+
+
+
+		}
+		function validateForm()
+		{
+		return verif();
+		}
+       /* function onLoad() {
+
+            var url = window.location.href;
+            var regexError1 = /error=1/;
+            var regexError2 = /error=2/;
+            var regexError3 = /error=3/;
+            var errorMessage = document.getElementById('errorMessage');
+            var ville = document.getElementById('ville');
+            var error_ville = document.getElementById('error_ville');
+
+            error_ville.innerHTML = "";
+            errorMessage.innerHTML = "";
+
+            if (regexError3.test(url)) {
+                error_ville.innerHTML = "This user Name is already taken. choose another one please.";
+                errorMessage.innerHTML = "An account has already being created with this email<br>Login instead or a create an account with a new email";
+            }
+            else if (regexError2.test(url))
+                error_ville.innerHTML = "This user Name is already taken. choose another one please.";
+            else if (regexError1.test(url))
+                errorMessage.innerHTML = "An account has already being created with this email<br>Login instead or a create an account with a new email";
+        }
+*/
+    </script>
   <div class="main-content">
     <!-- Top navbar -->
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
@@ -120,7 +184,8 @@ $email=$_SESSION["email"];*/
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                    <img src="profil.jpg" class="rounded-circle">
+                   <img src="profil.jpg" class="rounded-circle">
+					
                   </a>
                 </div>
               </div>
@@ -161,7 +226,7 @@ $email=$_SESSION["email"];*/
                 
                 <hr class="my-4">
                 <p><?php echo $_SESSION["temoignage"];?></p>
-				<a href="../../Controller/logoutController.php" class="btn btn-sm btn-info mr-4">Update</a>
+				<!--<a href="../../Controller/logoutController.php" class="btn btn-sm btn-info mr-4">Update</a>-->
      
               </div>
             </div>
@@ -186,8 +251,8 @@ $email=$_SESSION["email"];*/
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group focused">
-                        <label id="info" class="form-control-label" for="input-username">Username</label>
-                        <input type="text" id="input-username" name="username" class="form-control form-control-alternative" placeholder="Username" value=<?php echo $_SESSION['username']?>>
+                        <label id="info" class="form-control-label" for="input-ville">Ville</label>
+                        <input type="text" id="input-ville" name="ville" class="form-control form-control-alternative" placeholder="ville" value=<?php echo $_SESSION['ville']?>>
 						
                       </div>
                     </div>
@@ -222,9 +287,10 @@ $email=$_SESSION["email"];*/
                 <div class="pl-lg-4">
                   <div class="form-group focused">
                     <label>Publier Un temoignage</label>
-                    <form action="publierTemoignage.php" method ="POST">
-					<textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..." name="temoignage"></textarea><br>
-					 <input type="submit"  class="btn btn-info" value='PUBLIER' name="publier">
+                    <form action="publierTemoignage.php" method ="POST" onsubmit="return verif()">
+					<textarea rows="4" class="form-control form-control-alternative" placeholder="A few words ..." name="temoignage" id="temoignage"></textarea><br>
+					<span id="error_temoignage" style="color: red; font-size: 0.75em;"></span>
+					 <input type="submit"  class="btn btn-info" value='PUBLIER' name="submit">
 					 </form>
                   </div>
                 </div>

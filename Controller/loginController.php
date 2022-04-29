@@ -25,12 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		{
 		$_SESSION["firstname"] = $user["firstname"];
         $_SESSION["lastname"] = $user["lastname"];
-		$_SESSION["username"] = $user['username'];
+		$_SESSION["ville"] = $user['ville'];
 		$_SESSION["email"] = $user["email"];
 		$_SESSION["password"] = $user["password"];
 		$_SESSION["id_client"] = $user["id_client"];
 		$_SESSION["loggedIn"] =true;
 		$_SESSION["type"]="CUSTOMER PROFILE";
+		$_SESSION['temoignage']="";
 		echo '<script type="javascript">window.alert("Welcome")</script>';
 		
 	
@@ -39,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		else
 		{
 			$_SESSION["loggedIn"] =false;
-			//$error = ' <div class="alert alert-danger" role="alert">Wrong Username or Password ! :)</div> ';
+			//$error = ' <div class="alert alert-danger" role="alert">Wrong ville or Password ! :)</div> ';
 			
 			$sql = "SELECT * from employe WHERE email = :email AND password = :password";
 	try {
@@ -55,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		{
 		$_SESSION["firstname"] = $user["firstname"];
         $_SESSION["lastname"] = $user["lastname"];
-		$_SESSION["username"] = $user['username'];
+		$_SESSION["ville"] = $user['ville'];
 		$_SESSION["email"] = $user["email"];
 		$_SESSION["password"] = $user["password"];
 		$_SESSION["id_employe"] = $user["id_employe"];
@@ -68,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		else
 		{
 						$_SESSION["loggedIn"] =false;
-			//$error = ' <div class="alert alert-danger" role="alert">Wrong Username or Password ! :)</div> ';
+			//$error = ' <div class="alert alert-danger" role="alert">Wrong ville or Password ! :)</div> ';
 			
 			$sql = "SELECT * from administrateur WHERE email = :email AND password = :password";
 	try {
@@ -84,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		{
 		$_SESSION["firstname"] = $user["firstname"];
         $_SESSION["lastname"] = $user["lastname"];
-		$_SESSION["username"] = $user['username'];
+		$_SESSION["ville"] = $user['ville'];
 		$_SESSION["email"] = $user["email"];
 		$_SESSION["password"] = $user["password"];
 		$_SESSION["id_administrateur"] = $user["id_administrateur"];

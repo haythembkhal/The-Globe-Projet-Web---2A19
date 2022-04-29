@@ -1,4 +1,24 @@
-﻿<!DOCTYPE html>
+﻿<?php
+include '../../Controller/notificationC.php';
+
+
+$listeNotification="";
+$notification=new notificationC();
+if (isset($_POST['read'])) {
+        if (!empty($_POST['read'])) {
+			$notification->readAll();
+		}
+		
+		
+}
+
+$listeNotification=$notification->afficherNotification();
+$count=$notification->nouvelleNotification();
+
+?>
+
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -112,8 +132,8 @@
 							<li>
 								<a href="task.php">
 									<i class="menu-icon icon-tasks"></i>
-									Tasks
-									<b class="label orange pull-right">19</b>
+									Notifications
+									<b class="label orange pull-right"><?php echo $count;?></b>
 								</a>
 							</li>
 						</ul><!--/.widget-nav-->
@@ -238,7 +258,9 @@
 									</div>
 								</div>
 								<div class="pull-right">
-									<a href="#" class="btn btn-primary">Create Task</a>
+								<form action="" method="POST">
+									<input type="submit" value="Read All" name="read" class="btn btn-primary">
+								</form>
 								</div>
 							</div>
 							<div class="module-body table">								
@@ -251,84 +273,15 @@
 											<td class="cell-status hidden-phone hidden-tablet">Status</td>
 											<td class="cell-time align-right">Due Date</td>
 										</tr>
+										 <?php 
+											foreach($listeNotification as $notification) { ?>
 										<tr class="task">
 											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"><b class="due">Missed</b></td>
+											<td class="cell-title"><div><?php echo $notification['message'];?></div></td>
+											<td class="cell-status hidden-phone hidden-tablet"><b class="due"><?php if ($notification["etat"]==0)echo"Missed";?></b></td>
 											<td class="cell-time align-right">Just Now</td>
 										</tr>
-										<tr class="task">
-											<td class="cell-icon"><i class="icon-checker"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"><b class="due">Missed</b></td>
-											<td class="cell-time align-right">Just Now</td>
-										</tr>
-										<tr class="task">
-											<td class="cell-icon"><i class="icon-checker"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"><b class="due">Missed</b></td>
-											<td class="cell-time align-right">Yesterday</td>
-										</tr>
-										<tr class="task resolved">
-											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"></td>
-											<td class="cell-time align-right">15 July 2014</td>
-										</tr>
-										<tr class="task resolved">
-											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"></td>
-											<td class="cell-time align-right">15 July 2014</td>
-										</tr>
-                                        <tr class="task resolved">
-											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"></td>
-											<td class="cell-time align-right">15 July 2014</td>
-										</tr>
-                                        <tr class="task resolved">
-											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"></td>
-											<td class="cell-time align-right">15 July 2014</td>
-										</tr>
-                                        <tr class="task resolved">
-											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"></td>
-											<td class="cell-time align-right">15 July 2014</td>
-										</tr>
-                                        <tr class="task resolved">
-											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"></td>
-											<td class="cell-time align-right">15 July 2014</td>
-										</tr>
-                                        <tr class="task resolved">
-											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"></td>
-											<td class="cell-time align-right">15 July 2014</td>
-										</tr>
-                                        <tr class="task resolved">
-											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"></td>
-											<td class="cell-time align-right">15 July 2014</td>
-										</tr>
-                                        <tr class="task resolved">
-											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"></td>
-											<td class="cell-time align-right">15 July 2014</td>
-										</tr>
-                                        <tr class="task resolved">
-											<td class="cell-icon"><i class="icon-checker high"></i></td>
-											<td class="cell-title"><div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></td>
-											<td class="cell-status hidden-phone hidden-tablet"></td>
-											<td class="cell-time align-right">15 July 2014</td>
-										</tr>
+										<?php } ?>
 									</tbody>
 								</table>
 
