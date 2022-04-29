@@ -309,12 +309,10 @@
                                                         }
                                                     ?>
                                                 </select>
+                                                <br>
+                                                <a href="AjouterCategorie.php">Nouvelle catégorie</a>
                                             </td>
-                                            <td>
-                                                <form method="POST" action="AjouterCategorie.php">
-                                                    <a type="submit" name="AjouterCategorie" ><button class="btn">Ajouter un nouveau catégorie</button></a>
-                                                </form>
-                                            </td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -477,7 +475,6 @@
                                         </tr>
                                     </table>
                                 </form>
-                                <!--
                                 <script>
 
                                 function CTRL()
@@ -553,8 +550,30 @@
                                         }
                                 }
 
+                                function SEARCH()
+                                {
+										// Declare variables
+										var input, filter, table, tr, td, i, txtValue;
+										input = document.getElementById("myInput");
+										filter = input.value.toUpperCase();
+										table = document.getElementById("myTable");
+										tr = table.getElementsByTagName("tr");
+
+										// Loop through all table rows, and hide those who don't match the search query
+										for (i = 0; i < tr.length; i++) {
+											td = tr[i].getElementsByTagName("td")[0];
+											if (td) {
+											txtValue = td.textContent || td.innerText;
+											if (txtValue.toUpperCase().indexOf(filter) > -1) {
+												tr[i].style.display = "";
+											} else {
+												tr[i].style.display = "none";
+											}
+											}
+										}
+								}
+
                                 </script>
-                            -->
 
                             </div>
                         </div>
@@ -563,9 +582,13 @@
                                 <div class="module-head">
                                     <center><h3>Liste des produits</h3><center>
                                 </div>
+                                
                                 <div class="module-body table">
+                                    <div class="module-head">
+                                        <input type="text" id="myInput" onkeyup="SEARCH()" placeholder="Rechercher....">
+                                    </div>
                                     <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
-                                        <table class="table table-striped">
+                                        <table class="table table-striped" id="myTable">
                                             <thead>
                                                 <tr>
                                                     <th>Nom</th>
@@ -614,12 +637,6 @@
                                             <select id="trie" name="trie">
                                                 <option value="a">Nom</option>
                                             </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label for="recherche"> Rechercher : </label>
-                                            <input type="text" id="recherche">
                                         </td>
                                     </tr>
                                     <tr>

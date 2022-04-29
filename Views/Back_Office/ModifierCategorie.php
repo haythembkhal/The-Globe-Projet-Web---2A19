@@ -374,7 +374,6 @@
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>   </th>
                                                     <th>Nom</th>
                                                 </tr>
                                             </thead>
