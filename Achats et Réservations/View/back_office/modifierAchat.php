@@ -248,7 +248,7 @@
 
 				<div class="span9">
 					<div class="content">
-                    <button class="btn"><a href="afficherAchat.php">Retour à la liste des Achats</a></button>
+                    <a href="afficherAchat.php"><button class="btn-success">Retour à la liste des Achats</button></a>
                     <div id="error">
                         <?php echo $error; ?>
                     </div>
@@ -273,7 +273,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="basicinput">ID Client</label>
                                             <div class="controls">
-                                                <input type="text" id="idClient" placeholder="Veuillez saisir l'ID Client" class="span8" name="idClient" value="<?php echo $Achat['idClient']; ?>">
+                                                <input type="text" id="idClient" placeholder="Veuillez saisir l'ID Client" class="span8" name="idClient" value="<?php echo $Achat['idClient']; ?>" readonly>
                                                 <p> <span class="error" id="erroridC" style="color:red"></span></p>
                                             </div>
                                         </div>
@@ -281,7 +281,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="basicinput">ID Spectacle</label>
                                             <div class="controls">
-                                                <input type="text" id="idSpectacle" placeholder="Veuillez saisir l'ID Spectacle" class="span8" name="idSpectacle" value="<?php echo $Achat['idSpectacle']; ?>">
+                                                <input type="text" id="idSpectacle" placeholder="Veuillez saisir l'ID Spectacle" class="span8" name="idSpectacle" value="<?php echo $Achat['idSpectacle']; ?>" readonly>
                                                 <p> <span class="error" id="erroridS" style="color:red"></span></p>
                                             </div>
                                         </div>

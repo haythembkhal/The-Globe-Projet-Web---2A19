@@ -1,7 +1,7 @@
 
 <?php
     include_once '../../Controller/AchatC.php';
-	//include_once '../../Controller/PDF/genererPDF.php';
+	
     $AchatC = new AchatC();
 
     $error = "";
@@ -36,6 +36,64 @@
         else
             $error = "Missing information";
     }
+
+
+
+
+	/********************************** PDF ********************************/
+	require_once('fpdf.php');
+
+	class PDF extends FPDF
+    {
+        function header()
+        {
+            //logo
+            $this->Image('../../View/front_office/assets/images/petit logo.png');
+            //font
+            $this->SetFont('Helvetica', 'B', 20);
+            //emplacement
+            $this->Cell(80);
+            //titre
+            $this->Cell(30, 10, 'FACTURE');
+            //$this>Ln(20);
+
+        }
+
+        function footer()
+        {
+            //position at 1.5cm from bottom
+            $this->SetY(-15);
+            $this->SetFont('Helvetica', 'I', 8);
+            //page number
+            $this->Cell(0, 10, 'Page '.$this->PageNo().'/{nb}', 0, 0, 'C');
+
+
+        }
+    }
+	if(isset($_POST['ImprimerFacture']))
+	{
+		$Achat = new Achat(
+			NULL,
+			2,
+			3,
+			NULL,
+			NULL,
+			NULL,
+			NULL);
+		$pdf = new PDF();
+		$pdf->AliasNbPages();
+		$pdf->AddPage();
+		$pdf->SetFont('Helvetica', '', 12);
+		$pdf->Cell(0, 10, '', 0, 1);
+		$pdf->Cell(0, 10, 'Identifiant Spectacle : '.$_POST['prixTotal'], 0, 1);
+		$pdf->Cell(0, 10, 'Identifiant Client : '.$_POST['prixTotal'], 0, 1);
+		
+		$pdf->output();
+	}
+	else
+		$error = "Missing information";
+    
+?>
 ?>
 
 
@@ -220,7 +278,7 @@ label {
 					</div>
 
 					<div>
-						<form method="POST" action="genererPDF.php">
+						<form method="POST" action="">
                             <input type="submit" class="btn" name="ImprimerFacture" value="Imprimer Facture">                               
                         </form>
 					</div>

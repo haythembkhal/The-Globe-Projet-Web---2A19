@@ -1,20 +1,22 @@
 ﻿<?php
     include_once '../../Controller/AchatC.php';
 	include_once '../../Controller/userC.php';
-	/*
-	********pour lister les nom des Spectacles
-	include_one '../../Controller/SpectacleC.php ;
+	
+	//pour lister les nom des Spectacles
+	include_once '../../Controller/SpectacleC.php' ;
 
-	$spectacleC = new Spectacle();
-	$listeSpectacles = $spectacleC->afficherSpectacle
-	*/ 
+	$spectacleC = new SpectacleC();
+	$listeSpectacles = $spectacleC->afficherSpectacle();
+	//$Spectacle = NULL;
+
+	
     $AchatC = new AchatC();
     $listeAchats = $AchatC->afficherAchat();
 
 	//récuppération de la liste des Clients de la table clients
-	/*$ClientC = new ClientC();
+	$ClientC = new ClientC();
 	$listeClients = $ClientC->afficherClient();
-	$client = new Client(NULL, NULL, NULL, NULL, NULL);*/
+	//$Client = new Client(NULL, NULL, NULL, NULL, NULL);
 
     $error = "";
     $Achat = NULL;
@@ -303,25 +305,35 @@
                                         <div class="control-group">
                                             <label class="control-label" for="basicinput">ID Client</label>
                                             <div class="controls">
-												<!--<select type="range" name="idClient" id="idClient">
-													<option selected disabled>ID Client</option>
+												<select type="range" name="idClient" id="idClient">
+													<option selected disabled>Veuillez choisir une option</option>
 													<?php
 														foreach($listeClients as $Client){
 													?>
-													<option value="<?php echo $client['idClient']?>"><?php echo $client['idClient'] ?></option>
+													<option value="<?php echo $Client['idClient']?>"><?php echo $Client['idClient'] ?></option>
 													<?php
 														}
 													?>
-												</select>-->
-                                                <input type="text" id="idClient" placeholder="Veuillez saisir l'ID Client" class="span8" name="idClient">
+												</select>
+                                                <!--<input type="text" id="username" placeholder="<?php echo $Client['username']?>" class="span8" name="username" disabled>-->
                                                 <p> <span class="error" id="erroridC" style="color:red"></span></p>
                                             </div>
                                         </div>
 
                                         <div class="control-group">
-                                            <label class="control-label" for="basicinput">ID Spectacle</label>
+                                            <label class="control-label" for="basicinput">Nom Spectacle</label>
                                             <div class="controls">
-                                                <input type="text" id="idSpectacle" placeholder="Veuillez saisir l'ID Spectacle" class="span8" name="idSpectacle">
+											<select type="range" name="idSpectacle" id="idSpectacle">
+													<option selected disabled>Veuillez choisir une option</option>
+													<?php
+														foreach($listeSpectacles as $Spectacle){
+													?>
+													<option value="<?php echo $Spectacle['spectacleId']?>"><?php echo $Spectacle['titre'] ?></option>
+													<?php
+														}
+													?>
+												</select>
+                                                <!--<input type="text" id="idSpectacle" placeholder="Veuillez saisir l'ID Spectacle" class="span8" name="idSpectacle">-->
                                                 <p> <span class="error" id="erroridS" style="color:red"></span></p>
                                             </div>
                                         </div>
@@ -387,7 +399,7 @@
                                             var yyyy = today.getFullYear();
                                             today = yyyy + '-' + mm + '-' + dd;
 
-                                           /* try{
+                                           try{
 												if(idClient == ""){
 													throw "le champ ID Client ne peut pas être vide";
 												}
@@ -398,7 +410,7 @@
 											}
 											catch(err){
 												document.getElementById('erroridC').innerHTML=err;
-											}*/
+											}
 											
 											try{
 												if(idSpectacle == ""){
@@ -495,9 +507,7 @@
 									<form action="exportEXCEL.php" method="POST">
 										<button type="submit" id="export" name="export" value="Export to excel" class="btn-success">Export To Excel</button>
 									</form>
-									<br>
-									<br>
-									<p>
+									<!--<p>
 										Trier suivant la Date d'Achat
 										<from action="" method="POST">
 											<button type="submit" name="DESC" value="DESC" class="btn">↓</button>
@@ -505,10 +515,10 @@
 										<from action="" method="POST">
 											<button type="submit" name="ASC" value="ASC" class="btn">↑</button>
 										</form>
-									</p>
+									</p>-->
 									<p>
 										<form class="navbar-search pull-left input-append" action="" method="POST">
-											<input type="text" class="span3" name="rechercheEmail">
+											<input type="text" class="span3" name="rechercheEmail" placeholder="Rechercher par Adresse Email">
                         					<button class="btn" type="submit">
                             					<i class="icon-search"></i>
                        						 </button>	
@@ -520,15 +530,15 @@
 									<p>
 									<a href="afficherAchat.php"><button class="btn-warning">Terminer recherche</button></a>
 									</p>
-									<table class="table table-bordered"  width='100%'>
+									<table class="table table-striped table-bordered table-condensed" style="border-collapse: collapse;"  width='100%' id="myTable" >
 										<thread>
 											<tr>
-												<th width='5%' style="text-align: center;">idClient</th>
-												<th width='5%' style="text-align: center;">idSpectacle</th>
-												<th width='5%' style="text-align: center;">prixTotal</th>
+												<th onclick="sortTableNum(0)" width='5%' style="text-align: center;">idClient</th>
+												<th onclick="sortTableNum(1)" width='5%' style="text-align: center;">idSpectacle</th>
+												<th onclick="sortTableNum(2)" width='5%' style="text-align: center;">prixTotal</th>
 												<th width='30%' style="text-align: center;">dateAchat</th>
 												<th width='30%' style="text-align: center;">adresseEmail</th>
-												<th width='5%' style="text-align: center;">nbrePlaces</th>
+												<th onclick="sortTableNum(5)" width='5%' style="text-align: center;">nbrePlaces</th>
 												<th width='30%' style="text-align: center;">Opérations</th>
 											</tr>
 										</thread>
@@ -562,19 +572,58 @@
 										</tbody>
 										<footer>
 											<tr>
-												<th width='5%' style="text-align: center;">idClient</th>
-												<th width='5%' style="text-align: center;">idSpectacle</th>
-												<th width='5%' style="text-align: center;">prixTotal</th>
+												<th onclick="sortTableNum(0)" width='5%' style="text-align: center;">idClient</th>
+												<th onclick="sortTableNum(1)" width='5%' style="text-align: center;">idSpectacle</th>
+												<th onclick="sortTableNum(2)" width='5%' style="text-align: center;">prixTotal</th>
 												<th width='30%' style="text-align: center;">dateAchat</th>
 												<th width='30%' style="text-align: center;">adresseEmail</th>
-												<th width='5%' style="text-align: center;">nbrePlaces</th>
+												<th onclick="sortTableNum(5)" width='5%' style="text-align: center;">nbrePlaces</th>
 												<th width='30%' style="text-align: center;">Opérations</th>
 											</tr>
 										</footer>
 									</table>
 								</div>
+								
 
 							</div>
+
+							<script>
+								function sortTableNum(n) {
+									console.log("tri");
+									var table, rows, switching, i, x, y, shouldSwitch;
+									table = document.getElementById("myTable");
+									switching = true;
+									/*Make a loop that will continue until
+									no switching has been done:*/
+									while (switching) {
+										//start by saying: no switching is done:
+										switching = false;
+										rows = table.rows;
+										/*Loop through all table rows (except the
+										first, which contains table headers):*/
+										for (i = 1; i < (rows.length - 1); i++) {
+										//start by saying there should be no switching:
+										shouldSwitch = false;
+										/*Get the two elements you want to compare,
+										one from current row and one from the next:*/
+										x = rows[i].getElementsByTagName("td")[n];
+										y = rows[i + 1].getElementsByTagName("td")[n];
+										//check if the two rows should switch place:
+										if (Number(x.innerHTML) > Number(y.innerHTML)) {
+											//if so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+										}
+										}
+										if (shouldSwitch) {
+										/*If a switch has been marked, make the switch
+										and mark that a switch has been done:*/
+										rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+										switching = true;
+										}
+									}
+									}
+							</script>
 							
 						</div><!--/.module-->
 

@@ -244,7 +244,7 @@
 
 				<div class="span9">
 					<div class="content">
-					<button class="btn"><a href="afficherAchat.php">Retour à la liste des Achats</a></button>
+					<a href="afficherAchat.php"><button class="btn-success">Retour à la liste des Achats</button></a>
                     <div id="error">
                         <?php echo $error; ?>
                     </div>
@@ -329,12 +329,6 @@
                                 </div>    
                             </div>
                             <br>
-							<div>
-								<div class="module-head">
-									<h3>Tables Achats et Réservations</h3>
-								</div>
-
-							</div>
 							
 						</div><!--/.module-->
 
