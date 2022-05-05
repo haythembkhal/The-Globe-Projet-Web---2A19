@@ -307,7 +307,7 @@
                                             </td>                
                                             <td>
                                                 <label>                                  </label>
-                                                <input type="reset" class="btn" value="Annuler" >
+                                                <input class="btn" type="reset" value="Annuler">
                                                 <label>                                  </label>
                                             </td>
                                             <td></td>

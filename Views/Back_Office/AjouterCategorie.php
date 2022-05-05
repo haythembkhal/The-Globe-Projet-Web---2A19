@@ -296,7 +296,7 @@
                                             </td>
                                             <td>
                                                 <label>                                  </label>
-                                                <input class="btn" type="reset" value="Annuler" >
+                                                <input class="btn" type="reset" value="Annuler">
                                                 <label>                                  </label>
                                             </td>
                                             <td></td>
