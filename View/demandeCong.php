@@ -120,7 +120,7 @@
 
 	<div class="wrapper">
 		<div class="container">
-			<div class="row">
+		<div class="row">
 				<div class="span3">
 					<div class="sidebar">
 
@@ -202,7 +202,7 @@
 								</ul></li>
 								
 
-                                <li><a href="charts.html"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
+                                <li><a href="charts.php"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
                             </ul><!--/.widget-nav-->
 
 						<ul class="widget widget-menu unstyled">

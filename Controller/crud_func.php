@@ -85,6 +85,17 @@
 				$e->getMessage();
 			}
         }
+		function get_TypeStats()
+		{
+			$sql = "SELECT type_conge,Name, COUNT(type_conge) FROM conges,typec WHERE conges.type_conge = typec.id_typeC GROUP BY type_conge;";
+            $db = config::getConnexion();
+            try {
+                $liste = $db->query($sql);
+                return $liste;
+            } catch (Exception $e) {
+                die('Error :'. $e->getMessage());
+            }
+		}
     }
     class typeC
     {

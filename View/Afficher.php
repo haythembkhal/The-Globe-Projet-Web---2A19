@@ -6,6 +6,7 @@
 	$listetypeC = $typeC->affichertypeC();
 	$listetype = $typeC->affichertypeC();
 	
+	
 	$error ="";
 	$Conge = NULL;
 	$CongeA = new CongesC();
@@ -229,7 +230,7 @@
 								</ul></li>
 								
 
-                                <li><a href="charts.html"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
+                                <li><a href="charts.php"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
                             </ul><!--/.widget-nav-->
 
 						<ul class="widget widget-menu unstyled">
@@ -355,9 +356,12 @@
 						<div class="module_form">
 							<div class="module-head">
 								<h3>Tables congés</h3>
+								<form action="exportEXCEL.php" method="POST">
+										<button type="submit" id="export" name="export" value="Export to excel" class="btn-success" style="float= right;">Export To Excel</button>
+								</form>
 							</div>
-							<div style="text-align: left; padding: 5px;">
-								<input onkeyup="search()" id="myInput" type="text" placeholder="Recherche">
+							<div style="text-align: left; padding: 3px;">
+								<input onkeyup="search()" id="myInput" type="text" placeholder="Recherche" style="padding: 2px;">
 							</div>
 							<div style="max-height:300px; overflow:auto; overflow-x: hidden; border: 1px solid #ccc;">
 								<table id="myTable" class="table table-striped table-bordered table-condensed" style="border-collapse: collapse;">

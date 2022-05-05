@@ -123,7 +123,7 @@
 
 	<div class="wrapper">
 		<div class="container">
-			<div class="row">
+		<div class="row">
 				<div class="span3">
 					<div class="sidebar">
 
@@ -173,7 +173,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="table_conges.html">
+										<a href="Afficher.php">
 											<i class="menu-icon icon-table"></i>
 											Congés
 										</a>
@@ -205,7 +205,7 @@
 								</ul></li>
 								
 
-                                <li><a href="charts.html"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
+                                <li><a href="charts.php"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
                             </ul><!--/.widget-nav-->
 
 						<ul class="widget widget-menu unstyled">
@@ -220,6 +220,12 @@
 										<a href="other-login.html">
 											<i class="icon-inbox"></i>
 											Login
+										</a>
+									</li>
+									<li>
+										<a href="demandeCong.php">
+											<i class="icon-inbox"></i>
+											Demande de Congé
 										</a>
 									</li>
 									<li>
