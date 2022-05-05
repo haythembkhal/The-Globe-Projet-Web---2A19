@@ -1,16 +1,3 @@
-<?php
-if (isset($_POST['id_cat'])){
-    $Categorie = $CategorieCRUD->RecupererCategorie($_POST['id_cat']);
-}
-?>
-<a href="AjouterCategorie.php"><button class="btn">Retour</button></a>
-<hr>
-
-<input type="text" name="nom_cat" id="nom_cat" placeholder="nom du categorie" minlength="1" maxlength="20" value="<?php echo $Categorie['nom_cat']; ?>" >
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 <!doctype html>
 <html lang="en">
 

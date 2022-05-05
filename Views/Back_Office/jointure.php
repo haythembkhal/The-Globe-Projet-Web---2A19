@@ -5,7 +5,7 @@ public function AfficherProduit($id_cat)
     {
         $pdo = getConnexion();
         $query = $pdo->prepare(
-            'SELECT * FROM produits where categorie_produit = :id_cat'
+           // 'SELECT * FROM produits where categorie_produit = :id_cat'
         );
         $query->execute([
             'id_cat' => $id_cat

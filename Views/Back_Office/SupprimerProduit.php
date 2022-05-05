@@ -6,7 +6,7 @@
 	$ProduitCRUD=new ProduitCRUD();
 
 	$ProduitCRUD->SupprimerProduit($_GET["id_produit"]);
-	
+
 	header('Location:AjouterProduit.php');
 	
 ?>
