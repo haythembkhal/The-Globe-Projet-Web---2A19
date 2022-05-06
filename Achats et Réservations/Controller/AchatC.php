@@ -119,6 +119,20 @@ class AchatC {
         }
     }
 
+    function rechercherPlaces($critere)
+    {
+        $db = config::getConnexion();
+        try {
+            $query = $db->query("SELECT * FROM Achats WHERE nbrePlaces like '%$critere%'");
+			$query->execute(['nbrePlaces'=>$critere]);
+			$result=$query->fetchALL();
+			return $result;
+           
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
+
     //tri
     function triDESC()
     {

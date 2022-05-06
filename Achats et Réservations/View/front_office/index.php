@@ -1,6 +1,36 @@
 
 <?php
     include_once '../../Controller/AchatC.php';
+	require_once('fpdf.php');
+
+	/********************************** PDF ********************************/
+	class PDF extends FPDF
+    {
+        function header()
+        {
+            //logo
+            $this->Image('../../View/front_office/assets/images/petit logo.png');
+            //font
+            $this->SetFont('Helvetica', 'B', 20);
+            //emplacement
+            $this->Cell(80);
+            //titre
+            $this->Cell(30, 10, 'FACTURE');
+            //$this>Ln(20);
+
+        }
+
+        function footer()
+        {
+            //position at 1.5cm from bottom
+            $this->SetY(-15);
+            $this->SetFont('Helvetica', 'I', 8);
+            //page number
+            $this->Cell(0, 10, 'Page '.$this->PageNo().'/{nb}', 0, 0, 'C');
+
+
+        }
+    }
 	
     $AchatC = new AchatC();
 
@@ -32,6 +62,21 @@
                 $_POST['nbrePlaces']
             );
             $AchatA->ajouterAchat($Achat);
+			/********************************** PDF ********************************/
+			$pdf = new PDF();
+			$pdf->AliasNbPages();
+			$pdf->AddPage();
+			$pdf->SetFont('Helvetica', '', 12);
+			$pdf->Cell(0, 10, '', 0, 1);
+			$pdf->Cell(0, 10, '', 0, 1);
+			$pdf->Cell(0, 10, '', 0, 1);
+			$pdf->Cell(0, 10, 'Identifiant Spectacle : '. $Achat->get_idSpectacle() , 0, 1);
+			$pdf->Cell(0, 10, 'Identifiant Client : '.$Achat->get_idClient(), 0, 1);
+			$pdf->Cell(0, 10, 'Prix Total : '. $Achat->get_prixTotal() , 0, 1);
+			$pdf->Cell(0, 10, 'Date Achat : '.$Achat->get_dateAchat(), 0, 1);
+			$pdf->Cell(0, 10, 'Adresse Email : '.$Achat->get_adresseEmail(), 0, 1);
+			$pdf->Cell(0, 10, 'Nombre de Places : '.$Achat->get_nbrePlaces(), 0, 1);
+			$pdf->output("./facture.pdf","D");
         }
         else
             $error = "Missing information";
@@ -40,60 +85,8 @@
 
 
 
-	/********************************** PDF ********************************/
-	require_once('fpdf.php');
-
-	class PDF extends FPDF
-    {
-        function header()
-        {
-            //logo
-            $this->Image('../../View/front_office/assets/images/petit logo.png');
-            //font
-            $this->SetFont('Helvetica', 'B', 20);
-            //emplacement
-            $this->Cell(80);
-            //titre
-            $this->Cell(30, 10, 'FACTURE');
-            //$this>Ln(20);
-
-        }
-
-        function footer()
-        {
-            //position at 1.5cm from bottom
-            $this->SetY(-15);
-            $this->SetFont('Helvetica', 'I', 8);
-            //page number
-            $this->Cell(0, 10, 'Page '.$this->PageNo().'/{nb}', 0, 0, 'C');
-
-
-        }
-    }
-	if(isset($_POST['ImprimerFacture']))
-	{
-		$Achat = new Achat(
-			NULL,
-			2,
-			3,
-			NULL,
-			NULL,
-			NULL,
-			NULL);
-		$pdf = new PDF();
-		$pdf->AliasNbPages();
-		$pdf->AddPage();
-		$pdf->SetFont('Helvetica', '', 12);
-		$pdf->Cell(0, 10, '', 0, 1);
-		$pdf->Cell(0, 10, 'Identifiant Spectacle : '.$_POST['prixTotal'], 0, 1);
-		$pdf->Cell(0, 10, 'Identifiant Client : '.$_POST['prixTotal'], 0, 1);
-		
-		$pdf->output();
-	}
-	else
-		$error = "Missing information";
-    
-?>
+	
+	
 ?>
 
 
@@ -274,12 +267,6 @@ label {
 						<form method="POST" action="Reservation.php">
                                                         <input type="submit" class="btn" name="Réserver" value="Réserver">
                                                         
-                        </form>
-					</div>
-
-					<div>
-						<form method="POST" action="">
-                            <input type="submit" class="btn" name="ImprimerFacture" value="Imprimer Facture">                               
                         </form>
 					</div>
 
