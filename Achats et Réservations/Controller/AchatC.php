@@ -119,12 +119,12 @@ class AchatC {
         }
     }
 
-    function rechercherPlaces($critere)
+    function rechercherPlaces()
     {
         $db = config::getConnexion();
         try {
-            $query = $db->query("SELECT * FROM Achats WHERE nbrePlaces like '%$critere%'");
-			$query->execute(['nbrePlaces'=>$critere]);
+            $query = $db->query("SELECT nbrePlaces,COUNT(nbrePlaces) FROM Achats GROUP BY nbrePlaces");
+			$query->execute();
 			$result=$query->fetchALL();
 			return $result;
            

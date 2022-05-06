@@ -1,14 +1,17 @@
+
 <?php
 
 include '../../Controller/AchatC.php';
 
 $Achat=new AchatC();
+$listeAchats = $Achat->rechercherPlaces();
 $tab = array();
-for ($i = 1; $i <= 20; $i++)
+foreach($listeAchats as $A => $v)
 {
-  $tab[] = $Achat->rechercherPlaces($i);
+    $tab[$A]=array('nbre'=>$v['nbrePlaces'], 'y'=>$v['COUNT(nbrePlaces)']);
 }
 
+//var_dump($tab);
 ?>
 
 <!DOCTYPE html>
@@ -156,82 +159,36 @@ for ($i = 1; $i <= 20; $i++)
                     <div class="content">
                         <div class="module">
 						
-						<div class="module">
-						 <div id="container" style="height: 400%"></div>
-					
-									<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
-									<!-- Uncomment this line if you want to dataTool extension
-									<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/extension/dataTool.min.js"></script>
-									-->
-									<!-- Uncomment this line if you want to use gl extension
-									<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
-									-->
-									<!-- Uncomment this line if you want to echarts-stat extension
-									<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
-									-->
-									<!-- Uncomment this line if you want to use map
-									<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/map/js/china.js"></script>
-									<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/map/js/world.js"></script>
-									-->
-									<!-- Uncomment these two lines if you want to use bmap extension
-									<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
-									<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@{{version}}/dist/extension/bmap.min.js"></script>
-									-->
+						
 
-												<script type="text/javascript">
-										var dom = document.getElementById("container");
-										var myChart = echarts.init(dom);
-										var app = {};
 
-										var option;
-
-										option = {
-										  tooltip: {
-											trigger: 'item'
-										  },
-										  legend: {
-											top: '5%',
-											left: 'center'
-										  },
-										  series: [
-											{
-											  name: 'Access From',
-											  type: 'pie',
-											  radius: ['40%', '70%'],
-											  avoidLabelOverlap: false,
-											  itemStyle: {
-												borderRadius: 10,
-												borderColor: '#fff',
-												borderWidth: 2
-											  },
-											  label: {
-												show: false,
-												position: 'center'
-											  },
-											  emphasis: {
-												label: {
-												  show: true,
-												  fontSize: '40',
-												  fontWeight: 'bold'
-												}
-											  },
-											  labelLine: {
-												show: false
-											  },
-											  data: [ <?php foreach($tab as $nbre) { ?>
-												{ value: <?php echo $nbre ;?>},
-												<?php}?>
-											  ]
-											}
-										  ]
-										};
-
-										if (option && typeof option === 'object') {
-											myChart.setOption(option);
-										}
-
-												</script>			
-						</div>
+                        <script>
+                                window.onload = function() {
+                                var today = new Date();
+                                var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+                                
+                                var chart = new CanvasJS.Chart("chartContainer", {
+                                    animationEnabled: true,
+                                    title: {
+                                        text: "Nombres de Places Achetés"
+                                    },
+                                    subtitles: [{
+                                        text: date
+                                    }],
+                                    data: [{
+                                        type: "pie",
+                                        yValueFormatString: "#,##0",
+                                        indexLabel: "{nbre} Places",
+                                        dataPoints: <?php echo json_encode($tab, JSON_NUMERIC_CHECK); ?>
+                                    }]
+                                });
+                                chart.render();
+                                
+                                }
+                            </script>
+                            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                            </div>
                        
                     </div>
                     <!--/.content-->

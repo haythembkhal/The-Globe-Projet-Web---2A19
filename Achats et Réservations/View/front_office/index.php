@@ -76,7 +76,40 @@
 			$pdf->Cell(0, 10, 'Date Achat : '.$Achat->get_dateAchat(), 0, 1);
 			$pdf->Cell(0, 10, 'Adresse Email : '.$Achat->get_adresseEmail(), 0, 1);
 			$pdf->Cell(0, 10, 'Nombre de Places : '.$Achat->get_nbrePlaces(), 0, 1);
-			$pdf->output("./facture.pdf","D");
+			$pdf->output("facture.pdf","D");
+
+			/********************************** MAIL ********************************/
+			$destinataire = $_POST['adresseEmail'];
+			// Pour les champs $expediteur / $copie / $destinataire, séparer par une virgule s'il y a plusieurs adresses
+			//$expediteur = 'theglobe.alliance2022@gmail.com';
+			/*$copie = 'theglobe.alliance2022@gmail.com';
+			$copie_cachee = 'theglobe.alliance2022@gmail.com';*/
+			$objet = "[THE GLOBE][ACHAT]"; // Objet du message
+			//headers  = 'MIME-Version: 1.0' . "\n"; // Version MIME
+
+			$headers = "From:theglobe.alliance2022@gmail.com\n"; // Expediteur
+			$headers .= "Content-type: text/html; charset=iso-8859-1\n"; // l'en-tete Content-type pour le format HTML
+			/*
+			$headers .= 'Reply-To: '.$expediteur."\n"; // Mail de reponse
+			$headers .= 'From: "Nom_de_expediteur"<'.$expediteur.'>'."\n"; // Expediteur
+			$headers .= 'Delivered-to: '.$destinataire."\n"; // Destinataire
+			$headers .= 'Cc: '.$copie."\n"; // Copie Cc
+			$headers .= 'Bcc: '.$copie_cachee."\n\n"; // Copie cachée Bcc      */  
+			$message = "Achat avec succès! ";
+			/*
+			$test=mail($destinataire, $objet, $message, $headers);
+
+			var_dump($test);
+			die;*/
+			if (mail($destinataire, $objet, $message, $headers)) // Envoi du message
+			{
+				echo 'Votre message a bien été envoyé ';
+			}
+			else // Non envoyé
+			{
+				echo "Votre message n'a pas pu être envoyé";
+			}
+			
         }
         else
             $error = "Missing information";

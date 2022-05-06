@@ -507,6 +507,10 @@
 									<form action="exportEXCEL.php" method="POST">
 										<button type="submit" id="export" name="export" value="Export to excel" class="btn-success">Export To Excel</button>
 									</form>
+										<br>
+									<form action="statistiques.php" method="POST">
+										<button type="submit" id="stat" name="stat" value="stat" class="btn">Statistiques</button>
+									</form>
 									<!--<p>
 										Trier suivant la Date d'Achat
 										<from action="" method="POST">
