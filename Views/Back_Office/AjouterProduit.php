@@ -45,7 +45,17 @@
         }
         else
             $error = "Missing information";
+        
     }
+
+    if(isset($_POST['RechercheNom']))
+	{
+		$listeproduit = $ProduitCRUD->RechercheNom($_POST['RechercheNom']);
+        var_dump($listeproduit);
+	}
+	else
+		$error = "Missing information";
+    
 ?>
 
 <!DOCTYPE html>
@@ -305,7 +315,7 @@
                                                     <?php
                                                         foreach($listecategorietype as $categorie){
                                                     ?>
-                                                    <option value="<?php echo $categorie['id_cat'] ?>"><?php echo $categorie['nom_cat'] ?></option>
+                                                    <option value="<?php echo $categorie['id_cat']; ?>"><?php echo $categorie['nom_cat']; ?></option>
                                                     <?php
                                                         }
                                                     ?>
@@ -405,12 +415,9 @@
                                                 <label for="image_produit"> Image : </label>
                                             </td>
                                             <td>
-
-                                            <!--
-                                                <form action="" method="POST" enctype="multipart/form-data">
+                                                <form action="" method="POST" /*enctype="multipart/form-data"*/>
                                                     <input type="file" name="image_produit" id = "image_produit" accept=".jpg, .jpeg, .png, .gif" value="">
                                                 </form>
-                                            -->    
                                                 <p>
                                                     <div id="error_image_produit" style="color:red"></div>
                                                 </p>
@@ -589,17 +596,14 @@
                                     <center><h3>Liste des produits</h3><center>
                                 </div>
                                 <div class="module-body table">
-        
-                                    <form method="POST" action="search.php">
-                                        <div class="module-head">
-                                            <!--<input type="text" id="myInput" onkeyup="SEARCH()" placeholder="Rechercher....">-->
-                                        
-                                            <!--<input type="text" name="rech" placeholder="Search...">
-                                            <button type="submit" name="save" class="btn">Search</button>-->
-                                        </div>
-                                    </form>
+                                    <form class="navbar-search pull-left input-append" action="" method="POST">
+                                        <input type="text" class="span3" name="RechercheNom" placeholder="Rechercher">
+                                        <button class="btn" type="submit">
+                                            <i class="icon-search"></i>
+                                        </button>	
+                                    </form> 
                                     <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
-                                        <table class="table table-striped" id="myTable">
+                                        <table class="table table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Nom</th>
@@ -610,11 +614,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
                                                 <?php
                                                     foreach($listeproduit as $produit){
                                                 ?>
-                                                    <td><?php echo $produit['nom_produit'];?></td>
+                                                <tr>
+                                                    <td><?php echo $produit['nom_produit']; ?></td>
                                                     <td><?php echo $produit['categorie_produit']; ?></td>
                                                     <td><?php echo $produit['quantite_produit']; ?></td>
                                                     <td><?php echo $produit['prix_produit']; ?></td>

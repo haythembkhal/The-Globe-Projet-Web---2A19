@@ -3,7 +3,7 @@ error_reporting(0);
 $conn = mysqli_connect("localhost","root","","the_globe");
 if(count($_POST)>0) {
 $rech=$_POST[rech];
-$result = mysqli_query($conn,"SELECT * FROM produits WHERE nom_produit='$rech' ");
+$result = mysqli_query($conn,"' ");
 }
 ?>
 <!DOCTYPE html>

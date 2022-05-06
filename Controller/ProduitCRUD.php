@@ -105,6 +105,22 @@
 				die('Erreur:'. $e->getMessage());
 			}
 		}
+
+		function RechercheNom($critere)
+		{
+			$db=config::getConnexion();
+			try {
+				$query = $db->query("SELECT * FROM produits WHERE nom_produit Like '%$critere%'");
+				$query->execute(['nom_produit'=>$critere]);
+				$liste=$query->fetchALL();
+				return $liste;
+			   
+			} catch (PDOException $e) {
+				$e->getMessage();
+			}
+
+		}
+
 /*
 		function TriePrixASC()
 		{
@@ -135,22 +151,11 @@
 				die('Erreur:'. $e->getMessage());
 			}
 		}
+*/
 
-		function RechercheNom()
-		{
-			$sql="SELECT * FROM produits WHERE nom_produit=?";
-			$db=config::getConnexion();
-			try
-			{
-				$liste=$db->query($sql);
-				return $liste;
-			}
-			catch(Exception $e)
-			{
-				die('Erreur:'. $e->getMessage());
-			}
-		}
 
+
+/*
 		function RechercheCat()
 		{
 			$sql="SELECT * FROM produits WHERE categorie_produit=?";
@@ -166,6 +171,7 @@
 			}
 		}
 		*/
+
 	}
 
 ?>
