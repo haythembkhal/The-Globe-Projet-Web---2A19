@@ -50,12 +50,29 @@
 
     if(isset($_POST['RechercheNom']))
 	{
-		$listeproduit = $ProduitCRUD->RechercheNom($_POST['RechercheNom']);
-        var_dump($listeproduit);
+		$listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
 	}
-	else
-		$error = "Missing information";
+	else{
+        $error = "Missing information";
+    }
     
+	/*	
+    if(isset($_POST['Trie']))
+	{
+		$listeproduit = $ProduitCRUD->TriePrixASC();
+	}
+	else{
+        $error = "Missing information";
+    }*/
+		
+    if(isset($_POST['Trie']))
+    {
+        $listeproduit = $ProduitCRUD->TriePrixDESC();
+    }
+    else{
+        $error = "Missing information";
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -415,7 +432,52 @@
                                                 <label for="image_produit"> Image : </label>
                                             </td>
                                             <td>
-                                                <form action="" method="POST" /*enctype="multipart/form-data"*/>
+                                                <?php
+/*
+                                                //$conn = mysqli_connect("localhost", "root", "", "the_globe");
+
+                                                if (isset($_POST['submit_aj'])) {
+
+                                                $image_produit = $_FILES["image_produit"]["name"];
+
+                                                $tmp_image_produit= $_FILES["image_produit"]["tmp_name"];  
+
+                                                $error = $_FILES["image_produit"]["error"];
+
+                                                $tabExtension = explode('.', $image_produit);
+                                                $extension = strtolower(end($tabExtension));
+
+                                                $extensions = ['jpg', 'png', 'jpeg', 'gif'];
+
+                                                $folder = "image/".$image_produit;
+
+                                                if(in_array($extension, $extensions) && $error == 0){
+
+                                                move_uploaded_file($tmp_image_produit, $folder);
+
+                                                //$query =("INSERT INTO produits (nom_produit, categorie_produit, quantite_produit, prix_produit, image_produit) VALUES ('$nom_produit', '$categorie_produit', '$quantite_produit', '$prix_produit', '$image_produit");
+
+                                                //mysqli_query($conn, $query);
+
+                                                echo
+                                                "
+                                                <script>
+                                                alert('Image uploaded successfully');
+                                                </script>
+                                                ";
+
+                                                }else{
+                                                    echo
+                                                    "
+                                                    <script>
+                                                        alert('Failed to upload image');
+                                                    </script>
+                                                    ";
+                                                    }
+                                                }
+                                                */
+                                                ?>
+                                                <form action="" method="POST" enctype="multipart/form-data">
                                                     <input type="file" name="image_produit" id = "image_produit" accept=".jpg, .jpeg, .png, .gif" value="">
                                                 </form>
                                                 <p>
@@ -596,12 +658,25 @@
                                     <center><h3>Liste des produits</h3><center>
                                 </div>
                                 <div class="module-body table">
+                                   <!-- -->
+                                   
                                     <form class="navbar-search pull-left input-append" action="" method="POST">
                                         <input type="text" class="span3" name="RechercheNom" placeholder="Rechercher">
                                         <button class="btn" type="submit">
                                             <i class="icon-search"></i>
                                         </button>	
                                     </form> 
+                           
+                                    <form  method="POST" action="">
+                                        <button type="submit" class="btn" for="Trie">Trier par : </button>
+                                        <select type="range" name="Trie">
+                                            <option selected disabled>choisir...</option>
+                                                <option value="Prix_ASC">Prix croissant</option>
+                                                <option value="Prix_DESC">Prix décroissant</option>
+                                        </select>
+                                    </form>
+                                     
+
                                     <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
                                         <table class="table table-striped">
                                             <thead>
@@ -646,14 +721,6 @@
                                     <center><h3> Fonctionnalité avancé </h3><center>
                                 </div>
                                 <table class="table">
-                                    <tr>
-                                        <td>
-                                            <label for="trie"> Trier par : </label>
-                                            <select id="trie" name="trie">
-                                                <option value="a">Nom</option>
-                                            </select>
-                                        </td>
-                                    </tr>
                                     <tr>
                                         <td>
                                         <form method="POST" action="export.php" align="center">

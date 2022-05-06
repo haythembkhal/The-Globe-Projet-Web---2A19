@@ -106,72 +106,45 @@
 			}
 		}
 
-		function RechercheNom($critere)
+		function TriePrixASC()
 		{
 			$db=config::getConnexion();
 			try {
-				$query = $db->query("SELECT * FROM produits WHERE nom_produit Like '%$critere%'");
-				$query->execute(['nom_produit'=>$critere]);
+				$query = $db->query("SELECT * FROM produits ORDER BY prix_produit ASC");
 				$liste=$query->fetchALL();
 				return $liste;
 			   
 			} catch (PDOException $e) {
 				$e->getMessage();
 			}
-
 		}
 
-/*
-		function TriePrixASC()
+		function TriePrixDESC()
 		{
-			$sql="SELECT * FROM produits ORDER BY prix_produit ASC";
 			$db=config::getConnexion();
-			try
-			{
-				$liste=$db->query($sql);
+			try {
+				$query = $db->query("SELECT * FROM produits ORDER BY prix_produit DESC");
+				$liste=$query->fetchALL();
 				return $liste;
-			}
-			catch(Exception $e)
-			{
-				die('Erreur:'. $e->getMessage());
+			   
+			} catch (PDOException $e) {
+				$e->getMessage();
 			}
 		}
 
-		function TriePrixASC()
+		function Rechercher($Nom_Prod)
 		{
-			$sql="SELECT * FROM produits ORDER BY prix_produit ASC";
 			$db=config::getConnexion();
-			try
-			{
-				$liste=$db->query($sql);
+			try {
+				$query = $db->query("SELECT * FROM produits WHERE nom_produit LIKE '%$Nom_Prod%' ");
+				/*$query->execute(['nom_produit'=>$Nom_Prod]);*/
+				$liste=$query->fetchALL();
 				return $liste;
-			}
-			catch(Exception $e)
-			{
-				die('Erreur:'. $e->getMessage());
+			   
+			} catch (PDOException $e) {
+				$e->getMessage();
 			}
 		}
-*/
-
-
-
-/*
-		function RechercheCat()
-		{
-			$sql="SELECT * FROM produits WHERE categorie_produit=?";
-			$db=config::getConnexion();
-			try
-			{
-				$liste=$db->query($sql);
-				return $liste;
-			}
-			catch(Exception $e)
-			{
-				die('Erreur:'. $e->getMessage());
-			}
-		}
-		*/
-
 	}
 
 ?>
