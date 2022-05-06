@@ -106,7 +106,33 @@
 			}
 		}
 
+		/*function Rechercher()
+		{
+			$sear ="SELECT * FROM produits ";
 
+			if(isset($_POST['search'])) {
+				$search_term = mysql_real_escape_string($_POST['search_box']);
+				$sear .= "WHERE nom_produit = '($search_term)' ";
+			}
+			$query_sear = mysql_query($sear) or die(mysql_error());
+		}
+*/
+
+
+		//Recherche 
+		/*function recherche($nom_produit)
+		{
+			global $pdo;
+			$req = $pdo->prepare("select * from produits where nom_produit=?");
+			$valeur = array($login);
+			$req->execute($valeur);
+			$nbr_user = $req->rowCount();
+			return $nbr_user;
+		}
+		*/
+
+		//SELECT * FROM produits ORDER BY prix_produits ASC
+		//SELECT * FROM produits ORDER BY prix_produits DESC
 	}
 
 ?>

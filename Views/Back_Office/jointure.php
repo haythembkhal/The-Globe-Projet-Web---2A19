@@ -5,7 +5,7 @@ public function AfficherProduit($id_cat)
     {
         $pdo = getConnexion();
         $query = $pdo->prepare(
-           // 'SELECT * FROM produits where categorie_produit = :id_cat'
+           'SELECT * FROM produits where categorie_produit = :id_cat'
         );
         $query->execute([
             'id_cat' => $id_cat
@@ -20,19 +20,20 @@ public function AfficherProduit($id_cat)
 ?>
 
 
-
+//controller
 searchProduits.php
 
 <?php
-require_once '../../Contorller/CategorieCRUD.php';
 
-$CategorieCRUD = new CategorieCRUD();
+require_once '../../Contorller/ProduitCRUD.php';
 
-$Categories = $CategorieCRUD->AfficherCategorie();
+$ProduitCRUD = new ProduitCRUD();
 
-if(isset($_POST['categorie']) && isset($_POST['search']))
+$Produits = $ProduitCRUD->AfficherProduit();
+
+if(isset($_POST['nom_produit']) && isset($_POST['search']))
 {
-    $list = $CategorieCRUD->AfficherProduit($_POST['categorie']);
+    $list = $ProduitCRUD->AfficherProduit($_POST['nom_produit']);
 }
 ?>
 

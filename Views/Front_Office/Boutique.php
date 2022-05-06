@@ -1,4 +1,6 @@
-<!doctype html>
+<?php
+?>
+
 <html lang="en">
 
 <head>
@@ -65,146 +67,22 @@
 					<br>
 				</div>
 				<div class="owl-three owl-carousel owl-theme">
+				<?php foreach($listeproduit as $produit): ?>	
 					<div class="item vhny-grid">
 						<div class="box16">
 							<figure>
-								<img class="img-fluid rounded team-image" src="images/michael-jackson.png" >
+								<img class="img-fluid rounded team-image" src="<?= $produit->image_produit ?>" >
 							</figure>
 							<div  class="box-content">
 								<h4>
 									<span> </span>
-									<span class="post text-right"><span class="fa"></span>35 DT</span>
+									<span class="post text-right"><span class="fa"></span><?= $produit->prix_produit ?> DT</span>
 								</h4>
 							</div>
 						</div>
-						<center><h3><a class="title-gd">Pull MICHAEL JACKSON</a></h3></center>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<figure>
-								<img class="img-fluid" src="images/bb-king.png">
-							</figure>
-							<div class="box-content">
-								<h4>
-									<span> </span>
-									<span class="post text-right"><span class="fa"></span>35 DT</span>
-								</h4>
-							</div>
-						</div>
-						<center><h3><a class="title-gd">Pull BB KING</a></h3></center>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-								<figure>
-									<img class="img-fluid" src="images/johnny-hallyday.png">
-								</figure>
-								<div class="box-content">
-									<h4>
-										<span> </span>
-										<span class="post text-right"><span class="fa"></span>35 DT</span>
-									</h4>
-								</div>
-						</div>
-						<center><h3><a class="title-gd">Pull JOHNNY HALLYDAY</a></h3></center>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<figure>
-								<img class="img-fluid" src="images/Pull-Michael-Jackson.png">
-							</figure>
-							<div class="box-content">
-								<h4>
-									<span> </span>
-									<span class="post text-right"><span class="fa"></span>35 DT</span>
-								</h4>
-							</div>
-						</div>
-						<center><h3><a class="title-gd">Pull MICHAEL JACKSON</a></h3></center>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<figure>
-								<img class="img-fluid" src="images/theatre.png">
-							</figure>
-							<div class="box-content">
-								<h4>
-									<span> </span>
-									<span class="post text-right"><span class="fa"></span>35 DT</span>
-								</h4>
-							</div>
-						</div>
-						<center><h3><a class="title-gd">Pull Theatre</a></h3></center>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<figure>
-								<img class="img-fluid" src="images/sac-mozart.png">
-							</figure>
-							<div class="box-content">
-								<h4>										
-									<span> </span>
-									<span class="post text-right"><span class="fa"></span>40 DT</span>
-								</h4>
-							</div>
-						</div>
-						<center><h3><a class="title-gd">Sac MOZART</a></h3></center>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<figure>
-								<img class="img-fluid" src="images/2-sac-mozart.png">
-							</figure>
-							<div class="box-content">
-								<h4>
-									<span> </span>
-									<span class="post text-right"><span class="fa"></span>40 DT</span>
-								</h4>
-							</div>
-						</div>
-						<center><h3><a class="title-gd">Sac MOZART</a></h3></center>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<figure>
-								<img class="img-fluid" src="images/Sac-Theatre.png">
-							</figure>
-							<div class="box-content">
-								<h4>
-									<span> </span>
-									<span class="post text-right"><span class="fa"></span>40 DT</span>
-								</h4>
-							</div>
-						</div>
-						<center><h3><a class="title-gd" >Sac Theatre</a></h3></center>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<figure>
-								<img class="img-fluid" src="images/Zayn-Malik.png">
-							</figure>
-							<div class="box-content">
-								<h4>
-									<span> </span>
-									<span class="post text-right"><span class="fa"></span>28 DT</span>
-								</h4>
-							</div>
-						</div>
-						<center><h3><a class="title-gd">Casquette ZAYN MALIK</a></h3></center>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<figure>
-								<img class="img-fluid" src="images/kendji-girac.png">
-							</figure>
-							<div class="box-content">
-								<h4>
-									<span> </span>
-									<span class="post text-right"><span class="fa"></span>28 DT</span>
-								</h4>
-							</div>
-						</div>
-						<center><h3><a class="title-gd">Casquette KENDJI GIRAC</a></h3></center>
-					</div>
+						<center><h3><a class="title-gd"><?= $produit->nom_produit ?></a></h3></center>
+					</div>	
+				<?php endforeach; ?>	
 				</div>
 
 				<div class="headerhny-title">
@@ -229,10 +107,9 @@
 				<div class="col-lg-12 mx-auto">
 					<!--Horizontal Tab-->
 					<div id="parentHorizontalTab">
+					<?php foreach($listecategorie as $categorie): ?>	
 						<ul class="resp-tabs-list hor_1">
-							<li>Pull</li>
-							<li>Sac</li>
-							<li>Casquette</li>
+							<li><?= $categorie->nom_cat ?></li>
 							<div class="clear"></div>
 						</ul>
 						<div class="resp-tabs-container hor_1">
@@ -424,9 +301,8 @@
 			</div>
 		</div>
 	</div>
-</body>
 
-</html>
+	
 <!-- responsive tabs -->
 <script src="assets/js/jquery-1.9.1.min.js"></script>
 <script src="assets/js/easyResponsiveTabs.js"></script>
@@ -634,7 +510,8 @@
 	});
 </script>
 <!--//MENU-JS-->
-
-
 <script src="assets/js/bootstrap.min.js"></script>
 
+</body>
+
+</html>
