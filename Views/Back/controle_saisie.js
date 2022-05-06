@@ -3,6 +3,11 @@ function Verif() {
   let count = 0;
   var nomCt = document.forms["AddCategorie"]["nom"].value;
   var description = document.forms["AddCategorie"]["Description"].value;
+  var nomArt = document.forms["AddArtistes"]["nom"].value;
+  var nation = document.forms["AddArtistes"]["nationalite"].value;
+  var descrip = document.forms["AddArtistes"]["description"].value;
+
+
   /*var mail = document.forms["FormAjout"]["Email"].value;
   var password = document.forms["FormAjout"]["Password"].value;
   var passwordC = document.forms["FormAjout"]["PasswordConf"].value;
@@ -11,6 +16,9 @@ function Verif() {
 
   var errorN = document.getElementById("errorNR");
   var errorP = document.getElementById("errorPR");
+  var errorT = document.getElementById("errorPT");
+  var errorV = document.getElementById("errorPV");
+  var errorD = document.getElementById("errorPD");
   /*var errorEmail = document.getElementById("errorMR");
   var errorPass = document.getElementById("errorPass");
   var errorPassC = document.getElementById("errorPassC");
@@ -23,6 +31,34 @@ function Verif() {
     errorN.innerHTML = "Veuillez entrer votre nom!";
   } else if (!(nomCt.match(letters) && nomCt.charAt(0).match(/^[A-Z]+$/))) {
     errorN.innerHTML = "Veuillez entrer un nom de categorie valide!";
+  } else {
+    errorN.innerHTML = "";
+    count++;
+  }
+
+  if (nomArt == "") {
+    errorN.innerHTML = "Veuillez entrer votre nom!";
+  } else if (!(nomArt.match(letters) && nomArt.charAt(0).match(/^[A-Z]+$/))) {
+    errorN.innerHTML = "Veuillez entrer un nom de categorie valide!";
+  } else {
+    errorN.innerHTML = "";
+    count++;
+  }
+
+  if (nation == "") {
+    errorN.innerHTML = "Veuillez entrer votre nationalite!";
+  } else if (!(nation.match(letters) && nation.charAt(0).match(/^[A-Z]+$/))) {
+    errorN.innerHTML = "Veuillez entrer un nom de nationalite valide!";
+  } else {
+    errorN.innerHTML = "";
+    count++;
+  }
+
+
+  if (descrip == "") {
+    errorN.innerHTML = "Veuillez entrer une description!";
+  } else if (!(descrip.match(letters) && descrip.charAt(0).match(/^[A-Z]+$/))) {
+    errorN.innerHTML = "Veuillez entrer un nom de description valide!";
   } else {
     errorN.innerHTML = "";
     count++;

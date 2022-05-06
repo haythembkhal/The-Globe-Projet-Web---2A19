@@ -1,7 +1,7 @@
 <?php 
 
 include_once "config.php";
-include_once 'C:\xampp\htdocs\Artistes\Model\Artiste.php'; 
+include_once '../../Model/Artiste.php'; 
 
 
 
@@ -18,20 +18,26 @@ class ArtisteC
 
         try {
             $query = $db->prepare(
-                'INSERT INTO artistes (nom, nationalite, genre, age, description, categories) VALUES (:nom,:nationalite, :genre, :age, :description, :categories)'
+                'INSERT INTO artistes (nom, nationalite, genre, age, description, categories, image) VALUES (:nom,:nationalite, :genre, :age, :description, :categories, :image)'
             );
+
+
             $query->execute([
                 'nom' => $art->getnomArt(),
                'nationalite' => $art->getnation(),
                'genre'=> $art->getgenre(),
                'age'=> $art->getage(),
                'description'=> $art->getdescrip(),
-               'categories' => $art->getcategories()
+               'categories' => $art->getcategories(),
+               'image'=> $art->getimage()
             ]);
         } catch (PDOException $e) {
             $e->getMessage();
         }
-	}
+	$tempPort=$_FILES['image']['tmp_name'];
+    $imgportrait="assets/images/".$_FILES['image']['name'];
+    move_uploaded_file($tempPort,"../../Views/Front/".$imgportrait);
+    }
 
 
 	     
@@ -79,7 +85,9 @@ class ArtisteC
                         genre= :genre,
                         age= :age,
                         description= :description,
-                        categories= :categories
+                        categories= :categories,
+                        image= :image,
+                        
                         
                     WHERE id= :id'
                 );
@@ -90,6 +98,7 @@ class ArtisteC
                     'age' =>$art-> getage(),
                     'description' => $art->getdescrip(),
                     'categories' => $art->getcategories(),
+                    'image'=> $art->getimage(),
                     'id' => $id 
                     
                  
@@ -115,9 +124,65 @@ class ArtisteC
         }
 
 
+        function rechercherartist($search)
+  {
+    $db = config::getConnexion();
+try{
+              $query= $db->prepare(
+                "SELECT * from artistes where nom like '%".$search."%' 
+                OR nationalite like '%".$search."%'
+
+                order by id DESC"
+              );
+              $query->execute();
+              $result = $query->fetchALL();
+              return $result;
+            } catch(PDOException $e) {
+              $e->getMessage();  
+            }
+          }
+
+
+
+
+ function trierArtist($tri)
+  {
+       $db = config::getConnexion();
+
+       try {
+        //$result=1;
+          //if(isset($_POST['triage']))
+          
+ $query= $db->prepare("SELECT * FROM artistes ORDER BY age ASC ");
+           // $list=$query->fetchAll();         
+          
+           $query->execute();
+              $result = $query->fetchALL();
+              return $result;  
+          
+           
+       } catch (PDOException $e) {
+        $e->getMessage();
+           
+       }
+
+  }
+
+
+
+
+
+
+
+
+
 }
 
 
+
+
+  
+    
       
 
 

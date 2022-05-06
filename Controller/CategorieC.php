@@ -10,19 +10,19 @@ include_once 'C:\xampp\htdocs\Artistes\Model\Categorie.php';
 
 class categorieC
 {
-	
-	
-	 function ajoutercategorie($cat)
+    
+    
+     function ajoutercategorie($cat)
         {
-			// $sql="INSERT INTO categories (nom, description) 
-			// VALUES (:nom,:description)";
-			// $db = config::getConnexion();
-			// try{
-			// 	$query = $db->prepare($sql);
-			// 	$query->execute([
-			// 		'nom' => $cat->getnomCt(),
-			// 		'description' => $cat->getdescription()
-   //              ]);		
+            // $sql="INSERT INTO categories (nom, description) 
+            // VALUES (:nom,:description)";
+            // $db = config::getConnexion();
+            // try{
+            //  $query = $db->prepare($sql);
+            //  $query->execute([
+            //      'nom' => $cat->getnomCt(),
+            //      'description' => $cat->getdescription()
+   //              ]);      
    //      }
    //      catch (Exception $e){
    //          echo 'Error: '.$e->getMessage();

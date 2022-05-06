@@ -11,7 +11,8 @@ $categori = $categoriesC->afficherCategorie();
 if(isset($_POST['categories']))
 {
 	$list = $categoriesC->afficherArtistesF($_POST['categories']);
-    //var_dump($list);
+var_dump($list);
+var_dump($_POST['categories']);
 //die;
 } 
 

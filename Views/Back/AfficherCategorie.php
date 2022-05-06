@@ -1,6 +1,28 @@
 <?php  
 
-include_once "C:/xampp/htdocs/Artistes/config.php";  
+//include_once "C:/xampp/htdocs/Artistes/config.php";  
+
+include_once "../../Controller/ArtisteC.php";
+
+function likeArtiste($idUser,$IdArtist)
+{
+    $db = config::getConnexion();
+        try {
+            $query = $db->prepare(
+                'INSERT INTO likes (id_user,id_art) 
+                VALUES (:id_user,:id_art) '
+            );
+            $query->execute([
+                'id_user' => $idUser,
+                'id_art' => $IdArtist
+            ]);
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+}
+
+$control= new ArtisteC();
+$cont = new ArtisteC();
 
 	//$cate=new categorieC();
 	//$listeCategorie=$adherentC->afficherCategorie(); 
@@ -13,6 +35,20 @@ include_once "C:/xampp/htdocs/Artistes/config.php";
             "SELECT * FROM categories "
         );
         return $query;
+
+    } catch (PDOException $e) {
+        $e->getMessage();
+        }
+}
+
+function getNameCategorie($num){
+    $db = config::getconnexion();
+
+    try {
+        $query = $db->query(
+            "SELECT nom FROM categories where ID=$num"
+        );
+        return $query->fetch();
 
     } catch (PDOException $e) {
         $e->getMessage();
@@ -37,7 +73,52 @@ $LitesCategorie=getCategorie();
         }
 }
 
+
+
 $LitesArtistes=getArtistes();
+
+if(isset($_GET['search'])) {
+      if(!empty($_GET['search'])){
+      //$search = htmlspecialchars($_GET['search']);
+      
+      $search = $_GET['search'];
+	  $LitesArtistes= $control->rechercherartist($search);
+      //$art=$LitesArtistes->rechercherartist($search);
+  }
+}
+
+
+if(isset($_POST['triage']))
+{
+	if (!empty($_POST['triage'])) {
+
+		//echo "la valeur est vide"; 
+		$tri = $_POST['triage'];
+          $LitesArtistes= $cont->trierArtist($tri); 
+		// code...
+	}
+
+}
+
+
+function countArtist(){
+
+    $db = config::getConnexion();
+    
+    $Query = "SELECT count(*) AS nb FROM artistes ";
+    
+    try {
+        $res = $db->query($Query);
+        $data = $res->fetch();
+        $nb = $data['nb'];
+        return $nb;
+            
+    } catch (PDOException $e) {
+            $e->getMessage();
+    }
+    
+}
+
 
 
 ?>
@@ -60,6 +141,9 @@ $LitesArtistes=getArtistes();
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link type="text/css" rel="stylesheet" href="backendCSS.css">
+
+
+	
 
 
 </head>
@@ -259,6 +343,21 @@ $LitesArtistes=getArtistes();
 
 					</div><!--/.sidebar-->
 				</div><!--/.span3-->
+				 <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3><?php $nb=countArtist(); echo $nb?></h3>
+
+                            <p>nombres d'artistes</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
 
 
 				<div class="span9">
@@ -269,14 +368,27 @@ $LitesArtistes=getArtistes();
 							</div>
 							<div class="module-body table">	
 								<h3>Table des Artistes</h3>
-								<div class="dropdown" style="float:left;">
-									<button class="dropbtn" >Trier</button>
-									<div class="dropdown-content" style="left:0;">
-									 
-									</div>
-								  </div>
+								
+					<form method='POST' action="">
+						<div class="dropdown-content" style="left:0;">
+						<input class="dropbtn" type="submit"  name="triage" value="Trier" />
+					</div>
+				  </div>	
+				  </form>
+				</div>
 								  
 							<a href="AddArtistes.php"><button style="right: 100px;" class="regButton">Ajouter</button></a>
+							<br><br><br>
+							
+
+							<div>
+								<form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search" action="" method="GET" name="FormRechercher">
+                  <input
+                    type="text" class="form-control" placeholder="Search" name="search" id="search"/>
+                  <button type="submit" class="btn btn-primary mr-2">
+                        Rechercher</button>
+                      </form>
+							</div>
 
 							<br><br><br>
 								<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
@@ -315,9 +427,9 @@ $LitesArtistes=getArtistes();
 									    <td><?php echo $Artis['genre']; ?></td>
 										<td><?php echo $Artis['age']; ?></td>
 										<td><?php echo $Artis['description']; ?></td>
-										<td><?php echo $Artis['categories']; ?></td>
+										<td><?php $test=getNameCategorie($Artis['categories']); echo $test['nom']; ?></td>
 										<td><a href="ModifierArtiste.php?id=<?php echo $Artis['id']; ?>"><button >Modifier</button></a></td>
-										<td><a href="suppArtiste.php?id=<?php echo $Artis['id']; ?>"><button >Supprimer</button></a></td>
+										<td><a href="suppArtiste.php?id=<?php echo $Artis['id']; ?>"><button onclick="confirmer()">Supprimer</button></a></td>
 							                
 
 										     	
@@ -325,8 +437,10 @@ $LitesArtistes=getArtistes();
 
 										<?php }  ?>
 
-										
-									
+										<button class="btn btn-primary" onclick="print('AfficherCategorie.php')">Imprimer le
+                                                PDF</button>
+                                                <a href="artistesPdf.php"><button> imprimer la liste</button></a>
+								</tbody>	
 								</table>
 							</div>
 							
@@ -380,7 +494,7 @@ $LitesArtistes=getArtistes();
 						</tr>
 							<?php }  ?>
 
-						
+						</tbody>
 					
 				</table>
 			</div>					
@@ -420,6 +534,73 @@ $LitesArtistes=getArtistes();
 			$('.dataTables_paginate > a:last-child').append('<i class="icon-chevron-right shaded"></i>');
 		} );
 	</script>
+
+	   <!-- /.control-sidebar -->
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables  & Plugins -->
+   <!-- <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="plugins/jszip/jszip.min.js"></script>
+    <script src="plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>-->
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js"></script>
+	<script>
+function print(pdf) {
+    // Créer un IFrame.
+    var iframe = document.createElement('iframe');
+    // Cacher le IFrame.    
+    iframe.style.visibility = "hidden";
+    // Définir la source.    
+    iframe.src = pdf;
+    // Ajouter le IFrame sur la page Web.    
+    document.body.appendChild(iframe);
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print(); // Imprimer.
+}
+</script>
+
+ <script>
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+    </script>
+
+   <script>
+   	function confirmer(){
+    var res = confirm("Êtes-vous sûr de vouloir supprimer?");
+    if(res){
+        // Mettez ici la logique de suppression
+    }
+}
+   </script> 
 </body>
 
 </html>

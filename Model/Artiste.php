@@ -12,8 +12,9 @@ class Artiste
 	private int $age;
 	private string $descrip;
     private int $categories;
+    private string $image;
 	
-	function __construct(string $nomArt, string $nation, string $genre, int $age, string $descrip, int $categories)
+	function __construct(string $nomArt, string $nation, string $genre, int $age, string $descrip, int $categories, string $image)
 	{
 		$this->nomArt=$nomArt;
 		$this->nation=$nation;
@@ -21,6 +22,7 @@ class Artiste
 		$this->age=$age;
 		$this->descrip=$descrip;
         $this->categories=$categories;
+        $this->image=$image;
 	}
 
 	 //getters
@@ -48,6 +50,11 @@ class Artiste
         return $this->categories;
     }
 
+        public function getimage():string{
+        return $this->image;
+    }
+
+
 
 
     //setters
@@ -73,6 +80,10 @@ class Artiste
 
     public function setcategories(int $categories):void{
         $this->categories = $categories;
+    }
+
+        public function setimage(string $image):void{
+        $this->image = $image;
     }
 }
 

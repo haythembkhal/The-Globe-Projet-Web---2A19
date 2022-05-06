@@ -1,18 +1,17 @@
 <?php 
 
-include_once  "C:/xampp/htdocs/Artistes/Controller/CategorieC.php";
+include_once  "../../Controller/CategorieC.php";
 
 
-include_once  "C:/xampp/htdocs/Artistes/Controller/ArtisteC.php";    
+include_once  "../../Controller/ArtisteC.php";    
 
 $controll= new ArtisteC();
 $cate=$controll->recupererartiste($_GET['id']);
 
-if(isset($_POST['nom']) && isset($_POST['nationalite']) && isset($_POST['genre']) && isset($_POST['age']) && isset($_POST['description']) && isset($_POST['categories']))
+if(isset($_POST['nom']) && isset($_POST['nationalite']) && isset($_POST['genre']) && isset($_POST['age']) && isset($_POST['description']) && isset($_POST['categories']) && isset($_POST['image']))
 {
 	$artisteC=new ArtisteC();
-
-	$Cate=new Artiste($_POST['nom'],$_POST['nationalite'],$_POST['genre'],$_POST['age'],$_POST['description'],$_POST['categories']);
+	$Cate=new Artiste($_POST['nom'],$_POST['nationalite'],$_POST['genre'],$_POST['age'],$_POST['description'],$_POST['categories'],$_POST['image']);
 	 $artisteC->updateartiste($Cate,$_GET['id']);
 	 header('Location:AfficherCategorie.php');
 
@@ -407,6 +406,16 @@ $class= $categ->afficherCategorie();
 													<option><?php echo $Kay['ID'] ?></option>
 												  <?php } ?>	
 												</select>
+												
+											</div>
+										</div>
+
+
+										<div class="control-group">
+											<label class="control-label">photo</label>
+											<div class="controls">
+												<input type="file" class="span8" name="image" accept="image/">
+												
 												
 											</div>
 										</div>
