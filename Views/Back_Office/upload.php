@@ -1,5 +1,5 @@
 <?php
-
+/*
     include_once '../../Model/Produit.php';
     include_once '../../Model/Categorie.php';
 	include_once '../../Controller/ProduitCRUD.php';
@@ -48,34 +48,6 @@
         
     }
 
-    if(isset($_POST['RechercheNom']))
-	{
-		$listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
-	}
-	else{
-        $error = "Missing information";
-    }
-    
-	/*	
-    if(isset($_POST['Trie']))
-	{
-		$listeproduit = $ProduitCRUD->TriePrixASC();
-	}
-	else{
-        $error = "Missing information";
-    }*/
-		
-    if(isset($_POST['Trie']))
-    {
-        $listeproduit = $ProduitCRUD->TriePrixDESC();
-    }
-    else{
-        $error = "Missing information";
-    }
-
-?>
-
-<?php
                                         
 //$conn = mysqli_connect("localhost", "root", "", "the_globe");
 
@@ -92,7 +64,7 @@ $extension = strtolower(end($tabExtension));
 
 $extensions = ['jpg', 'png', 'jpeg', 'gif'];
 
-$folder = "image/".$image_produit;
+$folder = "Uploads/".$image_produit;
 
 if(in_array($extension, $extensions) && $error == 0){
 
@@ -118,5 +90,10 @@ echo
     ";
     }
 }*/
+
+include_once '../../config.php';
+include_once '../../Model/Produit.php';
+include_once '../../Controller/ProduitCRUD.php';
+
 ?>
 
