@@ -105,34 +105,67 @@
 				die('Erreur:'. $e->getMessage());
 			}
 		}
-
-		/*function Rechercher()
+/*
+		function TriePrixASC()
 		{
-			$sear ="SELECT * FROM produits ";
-
-			if(isset($_POST['search'])) {
-				$search_term = mysql_real_escape_string($_POST['search_box']);
-				$sear .= "WHERE nom_produit = '($search_term)' ";
+			$sql="SELECT * FROM produits ORDER BY prix_produit ASC";
+			$db=config::getConnexion();
+			try
+			{
+				$liste=$db->query($sql);
+				return $liste;
 			}
-			$query_sear = mysql_query($sear) or die(mysql_error());
+			catch(Exception $e)
+			{
+				die('Erreur:'. $e->getMessage());
+			}
 		}
-*/
 
-
-		//Recherche 
-		/*function recherche($nom_produit)
+		function TriePrixASC()
 		{
-			global $pdo;
-			$req = $pdo->prepare("select * from produits where nom_produit=?");
-			$valeur = array($login);
-			$req->execute($valeur);
-			$nbr_user = $req->rowCount();
-			return $nbr_user;
+			$sql="SELECT * FROM produits ORDER BY prix_produit ASC";
+			$db=config::getConnexion();
+			try
+			{
+				$liste=$db->query($sql);
+				return $liste;
+			}
+			catch(Exception $e)
+			{
+				die('Erreur:'. $e->getMessage());
+			}
+		}
+
+		function RechercheNom()
+		{
+			$sql="SELECT * FROM produits WHERE nom_produit=?";
+			$db=config::getConnexion();
+			try
+			{
+				$liste=$db->query($sql);
+				return $liste;
+			}
+			catch(Exception $e)
+			{
+				die('Erreur:'. $e->getMessage());
+			}
+		}
+
+		function RechercheCat()
+		{
+			$sql="SELECT * FROM produits WHERE categorie_produit=?";
+			$db=config::getConnexion();
+			try
+			{
+				$liste=$db->query($sql);
+				return $liste;
+			}
+			catch(Exception $e)
+			{
+				die('Erreur:'. $e->getMessage());
+			}
 		}
 		*/
-
-		//SELECT * FROM produits ORDER BY prix_produits ASC
-		//SELECT * FROM produits ORDER BY prix_produits DESC
 	}
 
 ?>

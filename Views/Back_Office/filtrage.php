@@ -1,7 +1,7 @@
 <form action="" method="GET">
-<!--
+
     <input class="btn" type="submit" value="Filtrer par :"> 
-    <?php/*
+    <?php
     $con = mysqli_connect("localhost","root","","the_globe");
 
     $categorie_query = "SELECT * FROM categories";
@@ -15,26 +15,24 @@
             if(isset($_GET['categorie']))
             {
                 $checked = $_GET['categorie'];
-            }*/
+            }
     ?>
-    <input type="checkbox" name="categorie[]" value="<?/*=  $categorielist['id_cat']; */?>" 
-        <?php /* if(in_array($categorielist['id_cat'], $checked)){ echo "checked"; } */?>
+    <input type="checkbox" name="categorie[]" value="<?=  $categorielist['id_cat']; ?>" 
+        <?php  if(in_array($categorielist['id_cat'], $checked)){ echo "checked"; } ?>
     />
-    <?/*= $categorielist['nom_cat'];*/ ?>
+    <?= $categorielist['nom_cat']; ?>
     <?php
-    /*
+    
             }
         }
         else
         {
             echo "No categorie Found";
-        }*/
+        }
     ?>
--->
 
 
-<!--
-<?php/*
+<?php
 $products = "SELECT * FROM produits";
 $products_run = mysqli_query($con, $products);
 if(isset($_GET['categorie']))
@@ -47,6 +45,6 @@ if(isset($_GET['categorie']))
         $products_run = mysqli_query($con, $products);
         mysqli_num_rows($products_run) > 0;
     }
-}*/
-?>-->
+}
+?>
 </form>

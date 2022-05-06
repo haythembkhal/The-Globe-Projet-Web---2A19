@@ -1,5 +1,5 @@
 <?php
-                                                
+/*                                           
 //$conn = mysqli_connect("localhost", "root", "", "the_globe");
 
 if (isset($_POST['submit_aj'])) {
@@ -40,5 +40,6 @@ echo
     </script>
     ";
     }
-}
+}*/
 ?>
+

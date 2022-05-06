@@ -1,4 +1,52 @@
 <?php
+
+include_once '../../Model/Produit.php';
+include_once '../../Model/Categorie.php';
+include_once '../../Controller/ProduitCRUD.php';
+include_once '../../Controller/CategorieCRUD.php';
+
+$ProduitCRUD = new ProduitCRUD();
+$listeproduit=$ProduitCRUD->AfficherProduit(); 
+
+$CategorieCRUD = new CategorieCRUD();
+$listecategorietype=$CategorieCRUD->AfficherCategorie();
+
+$error = "";
+
+$Produit = null;
+
+$Produits = new ProduitCRUD();
+
+if (
+	isset($_POST['nom_produit']) &&		
+	isset($_POST['categorie_produit']) &&
+	isset($_POST['quantite_produit']) && 
+	isset($_POST['prix_produit']) &&
+	isset($_POST['image_produit'])
+) {
+	if (
+		!empty($_POST['nom_produit']) &&
+		!empty($_POST['categorie_produit']) && 
+		!empty($_POST['quantite_produit']) && 
+		!empty($_POST['prix_produit']) &&
+		!empty($_POST['image_produit']) 
+	) {
+		$Produit = new Produit(
+			null,
+			$_POST['nom_produit'],
+			$_POST['categorie_produit'], 
+			$_POST['quantite_produit'],
+			$_POST['prix_produit'],
+			$_POST['image_produit']
+		);
+
+		$Produits->AjouterProduit($Produit);
+		header('Location:AjouterProduit.php');
+	}
+	else
+		$error = "Missing information";
+}
+
 ?>
 
 <html lang="en">
@@ -71,16 +119,16 @@
 					<div class="item vhny-grid">
 						<div class="box16">
 							<figure>
-								<img class="img-fluid rounded team-image" src="<?= $produit->image_produit ?>" >
+								<img class="img-fluid rounded team-image" src="<?php echo $produit['image_produit']; ?>" >
 							</figure>
 							<div  class="box-content">
 								<h4>
 									<span> </span>
-									<span class="post text-right"><span class="fa"></span><?= $produit->prix_produit ?> DT</span>
+									<span class="post text-right"><span class="fa"></span><?php echo $produit['prix_produit']; ?> DT</span>
 								</h4>
 							</div>
 						</div>
-						<center><h3><a class="title-gd"><?= $produit->nom_produit ?></a></h3></center>
+						<center><h3><a class="title-gd"><?php echo $produit['nom_produit']; ?></a></h3></center>
 					</div>	
 				<?php endforeach; ?>	
 				</div>
@@ -107,9 +155,9 @@
 				<div class="col-lg-12 mx-auto">
 					<!--Horizontal Tab-->
 					<div id="parentHorizontalTab">
-					<?php foreach($listecategorie as $categorie): ?>	
+					<?php foreach($listecategorietype as $categorie): ?>	
 						<ul class="resp-tabs-list hor_1">
-							<li><?= $categorie->nom_cat ?></li>
+							<li><?php echo $categorie['nom_cat']; ?></li>
 							<div class="clear"></div>
 						</ul>
 						<div class="resp-tabs-container hor_1">
@@ -119,173 +167,25 @@
 									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
 										<div class="slider-info">
 											<div class="img-circle">
-												<img class="img-fluid" src="images/michael-jackson.png"
-													alt="author image">
+												<img class="img-fluid" src="<?php echo $produit['image_produit']; ?>" alt="author image">
 											</div>
 											<div class="message">
-												<p>Pull</p>
-												<a class="author-book-title" href="panier.html">MICHAEL JACKSON</a>
-												<h4> <span class="post"><span class="fa"> </span>35 DT
+												<p><?php echo $categorie['nom_cat']; ?></p>
+												<?php foreach($listeproduit as $produit): ?>
+												<a class="author-book-title"><?php echo $produit['nom_produit']; ?></a>
+												<h4> <span class="post"><span class="fa"> </span><?php echo $produit['prix_produit']; ?> DT
 													</span>
 													<span class="post fa fa-heart text-right"></span>
 												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<img class="img-fluid" src="images/bb-king.png" alt="author image">
-											</div>
-											<div class="message">
-												<p>Pull</p>
-												<a class="author-book-title" href="panier.html">BB KING</a>
-												<h4>
-													<span class="post"><span class="fa"> </span>35 DT</span>
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<img class="img-fluid" src="images/johnny-hallyday.png"
-													alt="author image">
-											</div>
-											<div class="message">
-												<p>Pull</p>
-												<a class="author-book-title" href="panier.html">JOHNNY HALLYDAY</a>
-												<h4>
-													<span class="post"><span class="fa"> </span>35 DT</span>
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<img class="img-fluid" src="images/Pull-Michael-Jackson.png"
-													alt="author image">
-											</div>
-											<div class="message">
-												<p>Pull</p>
-												<a class="author-book-title" href="panier.html">MICHAEL JACKSON</a>
-												<h4>
-													<span class="post"><span class="fa"> </span>35 DT</span>
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<img class="img-fluid" src="images/theatre.png" alt="author image"></div>
-											<div class="message">
-												<p>Pull</p>
-												<a class="author-book-title" href="panier.html">THEATRE</a>
-												<h4>
-													<span class="post"><span class="fa"> </span>35 DT</span>
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
+												<?php endforeach; ?>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="resp-tabs-container hor_1">
-							<div class="albums-content">
-								<div class="row">
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.html"><img src="images/sac-mozart.png" class="img-fluid" alt="author image"></a>
-											</div>
-											<div class="message">
-												<p>Sac</p>
-												<a class="author-book-title" href="genre.html">MOZART</a>
-												<h4> <span class="post"><span class="fa"> </span>40 DT</span>
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.html"><img src="images/2-sac-mozart.png" class="img-fluid" alt="author image"></a>
-											</div>
-											<div class="message">
-												<p>Sac</p>
-												<a class="author-book-title" href="genre.html">MOZART</a>
-												<h4> <span class="post"><span class="fa"> </span>40 DT</span>
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.html"><img src="images/Sac-Theatre.png" class="img-fluid" alt="author image"></a>
-											</div>
-											<div class="message">
-												<p>Sac</p>
-												<a class="author-book-title" href="genre.html">Theatre</a>
-												<h4> <span class="post"><span class="fa"> </span>40 DT</span>
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="resp-tabs-container hor_1">
-							<div class="albums-content">
-								<div class="row">
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.html"><img src="images/kendji-girac.png" class="img-fluid"
-														alt="author image">
-												</a>
-											</div>
-											<div class="message">
-												<p>Casquette</p>
-												<a class="author-book-title" href="genre.html">KENDJI GIRAC</a>
-												<h4>
-													<span class="post"><span class="fa"> </span>28 DT</span>
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.html"><img src="images/Zayn-Malik.png" class="img-fluid" alt="author image">
-												</a>
-											</div>
-											<div class="message">
-												<p>Casquette</p>
-												<a class="author-book-title" href="genre.html">ZAYN MALIK</a>
-												<h4>
-													<span class="post"><span class="fa"> </span>28 DT</span>
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					<?php endforeach; ?>
+				    </div>
 				</div>
 			</div>
 		</div>

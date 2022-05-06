@@ -406,9 +406,11 @@
                                             </td>
                                             <td>
 
+                                            <!--
                                                 <form action="" method="POST" enctype="multipart/form-data">
                                                     <input type="file" name="image_produit" id = "image_produit" accept=".jpg, .jpeg, .png, .gif" value="">
                                                 </form>
+                                            -->    
                                                 <p>
                                                     <div id="error_image_produit" style="color:red"></div>
                                                 </p>
@@ -587,16 +589,13 @@
                                     <center><h3>Liste des produits</h3><center>
                                 </div>
                                 <div class="module-body table">
-                                    <form name="search_form" method="POST" action="">
+        
+                                    <form method="POST" action="search.php">
                                         <div class="module-head">
                                             <!--<input type="text" id="myInput" onkeyup="SEARCH()" placeholder="Rechercher....">-->
-                                            search : 
-                                            <input type="text" name="search_box" value="" placeholder="Rechercher....">
-                                            <input type="submit" name="search" value="search">
-                                            
-                                            <?php
-                                            ?>
-
+                                        
+                                            <!--<input type="text" name="rech" placeholder="Search...">
+                                            <button type="submit" name="save" class="btn">Search</button>-->
                                         </div>
                                     </form>
                                     <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
@@ -653,7 +652,20 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <a class="btn">Generer un fichier PDF</a>
+                                        <form method="POST" action="export.php" align="center">
+                                            <a type="submit" name="Export" >
+                                                <button class="btn">Export</button>
+                                            </a>
+                                        </form>    
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        <form method="POST" action="pdf.php" align="center">
+                                            <a type="submit" name="PDF" >
+                                                <button class="btn">Generer un fichier PDF</button>
+                                            </a>
+                                        </form>    
                                         </td>
                                     </tr>
                                     <tr>
