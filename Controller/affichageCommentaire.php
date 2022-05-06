@@ -22,7 +22,7 @@ function afficherCommentaire($spec)
                 <div class="d-flex flex-row comment-row">
                     <div class="p-2"><img  style="border-radius: 50%;" src="https://i.imgur.com/J6l19aF.jpg" alt="user" width="50" class="rounded-circle"></div>
                     <div class="comment-text w-100">
-                        <h4 class="font-medium"><?php echo $comment['idEval'];?></h4> 
+                        <h4 class="font-medium"><?php echo $comment['username'];?></h4> 
                         <span class="m-b-15 d-block"><?php echo $comment['commentaire'];?></span>
                         <b><div class="comment-footer"> <span class="text-muted float-right"><?php echo $comment['dateCommentaire'];?></span></b> 
 

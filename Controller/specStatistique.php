@@ -1,7 +1,8 @@
 <?php
-include_once '..\config.php';
-
+include_once '../../config.php';
+session_start();
 config::getConnexion();
+$occurence="";
 function avisLiked($spec)
 {
         try{
@@ -110,14 +111,14 @@ if(isset($_POST['disliked']))
 {
   $avis=$_POST['disliked'];
   $spec=$_POST['specIdent'];
-  $userId="ident";//il faut remplacer ca par le vrai identifiant 
+  $userId=$_SESSION['firstname'];//il faut remplacer ca par le vrai identifiant 
   ajouterAvis($avis,$spec,$userId);
 }
 if(isset($_POST['liked']))
 {
   $avis=$_POST['liked'];
   $spec=$_POST['specIdent'];
-  $userId="ident"; //il faut remplacer ca par le vrai identifiant 
+  $userId=$_SESSION['firstname']; //il faut remplacer ca par le vrai identifiant 
   ajouterAvis($avis,$spec,$userId);
 }
 ?>

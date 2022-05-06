@@ -1,6 +1,7 @@
 <?php 
 include_once '../../Controller/affichageCommentaire.php';
-$spec=$_GET['specId'];
+session_start();
+$spec=$_SESSION["idSpectacle"];
 ?>
 <!doctype html>
 <html>
@@ -44,12 +45,12 @@ $spec=$_GET['specId'];
             table3.setAttribute("id","user"+(i + 1));
         }
  function openForm(btn) {  
-    //temp=document.getElementById("user"+btn).innerHTML; //I USE THIS TO GET USERNAME
-    
-    //if(temp=="118") //I PLACED AN ID HERE BUT I SHOULD PUT THE SESSION USERNAME INSTEAD OF 118        
+ //   temp=document.getElementById("user"+btn).innerHTML; //I USE THIS TO GET USERNAME
+ 
+    //if(temp==$_SESSION['firstname']) //I PLACED AN ID HERE BUT I SHOULD PUT THE SESSION USERNAME INSTEAD OF 118        
     //{
         document.getElementById(btn).style.display = "block";
-   // }
+//	}
     
 }
 

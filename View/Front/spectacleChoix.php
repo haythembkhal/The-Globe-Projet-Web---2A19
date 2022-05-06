@@ -1,32 +1,54 @@
-<!-- 
 <?php 
-include_once 'C:\xampp\htdocs\Alliance\Controller\spectacleControllerF.php';
+include_once 'C:/xampp/htdocs/Alliance/Controller/spectacleControllerF.php';
 include_once 'C:/xampp/htdocs/Alliance/Controller/specStatistique.php';
-include_once '‪C:\xampp\htdocs\Alliance\Controller\commentaireMetier.php';
-include_once 'C:\xampp\htdocs\Alliance\config.php';
-
+//include_once '‪C:/xampp/htdocs/Alliance/Controller/ajout_commentaire.php';
+include_once 'C:/xampp/htdocs/Alliance/config.php';
 session_start();
-$spec=$_GET['specId'];
-$titre=$_GET["titre"];
-$date=$_GET["dateSpec"];
-$duree=$_GET["duration"];
-$adresse=$_GET["adresse"];
-$resto=$_GET["resto"];
-$gare=$_GET["gare"];
-$hotel=$_GET["hotel"];
-$description=$_GET["description"];
-$realisateurs=$_GET["realisateurs"];
-$prix=$_GET["plan"];
-$video=$_GET["video"];
-$carte=$_GET["carte"];
-$imgportrait=$_GET["imgportrait"];
-$imglandscape=$_GET["imglandscape"];
+$db = config::getConnexion();
+if($_SESSION["loggedIn"]!=true)
+{
+	var_dump("essai");
+	
+	header('location:http://localhost/Alliance/View/Front/sign_in.php');
+	exit;
+}
+
+				$sql = "SELECT * from spectacles WHERE spectacleId=:id";
+	try {
+		$query = $db->prepare($sql);
+		 $query->execute([
+                'id' =>  $_SESSION["idSpectacle"]
+				
+            ]);
+		$spectacle = $query->fetch();
+		
+       
+			}
+			catch (Exception $e) {
+		die('Erreur: ' . $e->getMessage());
+	}	
+	
+$spec=$spectacle['spectacleId'];
+$titre=$spectacle["titre"];
+$date=$spectacle["dateSpec"];
+$duree=$spectacle["duration"];
+$adresse=$spectacle["adresse"];
+$resto=$spectacle["resto"];
+$gare=$spectacle["gare"];
+$hotel=$spectacle["hotel"];
+$description=$spectacle["description"];
+$realisateurs=$spectacle["realisateurs"];
+$prix=$spectacle["plan"];
+$video=$spectacle["video"];
+$carte=$spectacle["carte"];
+$imgportrait=$spectacle["imgportrait"];
+$imglandscape=$spectacle["imglandscape"];
 
 //mettre vus dans la base
 try
 {
 	$query= config::$pdo->prepare("INSERT INTO vu (idSpec,vu) VALUES (:specId,1)");
-	$query->bindParam(':specId', $_GET['specId']);
+	$query->bindParam(':specId', $spectacle['spectacleId']);
 	$query->execute();
 
 
@@ -40,9 +62,9 @@ echo $e->getMessage();
 }
 
 
-?> -->
+?> 
 
-<!doctype html>
+<!Doctype html>
 <html lang="zxx">
 
 <head>
@@ -107,12 +129,12 @@ if(comment=="")
 		<!--/nav-->
 		<nav class="navbar navbar-expand-lg navbar-light fill px-lg-0 py-0 px-3">
 			<div class="container">
-				<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index.php">
+				<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index_with_profil.php">
 					<img src="assets\images\petit logo.png " alt="Your logo" title="Your logo" style="height:50px;" style="right:10%;" />
 					<!-- <span class="fa fa-play icon-log" aria-hidden="true"></span> -->
 					The Globe</a></h1>
 				 <!-- if logo is image enable this    -->
-						<!-- <a class="navbar-brand" href="#index.html"> -->
+						<!-- <a class="navbar-brand" href="#index_with_profil.html"> -->
 							<!-- <img src="C:\Users\hayth\Desktop\Projet Web Module Spectacle\assets\images\petit logo.png " alt="Your logo" title="Your logo" style="height:45px;" /> -->
 						<!-- </a>  -->
 				<button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
@@ -126,7 +148,7 @@ if(comment=="")
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item active">
-							<a class="nav-link" href="http://localhost/Module%20Spectacle/View/FrontOffice/accuiel.php">Home</a>
+							<a class="nav-link" href="http://localhost/Alliance/View/Front/index_with_profil.php">Home</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="about.html">About</a>
@@ -137,6 +159,9 @@ if(comment=="")
 
 						<li class="nav-item">
 							<a class="nav-link" href="contact.html">Contact</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="my_profile.php">My Profile</a> <!--add by me for add login-->
 						</li>
 					</ul>
 
@@ -211,7 +236,7 @@ if(comment=="")
     <div class="w3l-breadcrumbs">
 		<nav id="breadcrumbs" class="breadcrumbs">
 			<div class="container page-wrapper">
-				<a href="http://localhost/Alliance/View/Front/index.php#popSection">Spectacles</a> » Informations</span>
+				<a href="http://localhost/Alliance/View/Front/index_with_profil.php#popSection">Spectacles</a> » Informations</span>
 			</div>
 		</nav>
 	</div>
@@ -244,7 +269,7 @@ if(comment=="")
         <h1 class="spectacleHeader">
             Description
         </h1>
-            <p  class="paragraph"> 
+            <p> 
 			<?php echo $description; ?>
             </p>
 
@@ -263,7 +288,7 @@ if(comment=="")
 	<div id="paragraphStructure2">
     <h1 class="spectacleHeader">Realisateurs</h1>
 		<br>
-        <p class="paragraph">
+        <p>
 		<?php echo $realisateurs; ?>
         </p>
     </div>
@@ -291,16 +316,16 @@ if(comment=="")
     <h3 class="spectacleHeader">Laisser Un Commentaire</h3>
 	<br>
 	
-    <form action="‪" method="POST" id="commentform" onsubmit="return ctrlComment(event);">
+    <form method="POST" action="http://localhost/Alliance/Controller/ajout_commentaire.php" id="commentform" onsubmit="return ctrlComment(event);">
 	<div class="row">
         <div class="col-2"> <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2"> </div></div>
-	<h6>Username</h6>	  
+	<h6><?php echo $_SESSION["firstname"]." ".$_SESSION["lastname"];?></h6>	  
 	<p style="color:red;"><?php echo $_SESSION['status']; ?></p>
-      <textarea placeholder="Ecrire ici..." name="commentaire" id="comment" rows="10" tabindex="4"></textarea>
+      <textarea placeholder="Ecrire ici..." name="C" id="comment" rows="10" tabindex_with_profil="4"></textarea>
 	<p id="commmentControl"></p>
 
 	  <!-- <input type="hidden" name="dateCommentaire" value="2022-04-30"/>  use javascript for date -->
-<input type="hidden" name="specId" value="<?php echo $_GET['specId']; ?>"/> <!-- 1 represents spectacle id -->
+<input type="hidden" name="S" value="<?php echo $spectacle['spectacleId']; ?>"/> <!-- 1 represents spectacle id -->
 <!-- I need to make a hiiden input for the user id -->
       <input type="hidden" name="comment_post_ID" value="1" id="comment_post_ID" />
       <input id="commentButton" name="envoi" type="submit" value="Envoyer" />
@@ -322,7 +347,7 @@ if(comment=="")
 <button class="btn" name="liked" value="liked"style="width: 40px; float:left; height:40px; color:green; margin:10px" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
   <?php avisLiked($spec); ?>
 <input type="hidden" name="liked" value="liked">
-<input type="hidden" name="specIdent" value=<?php echo $_GET['specId'];?>>
+<input type="hidden" name="specIdent" value=<?php echo $spectacle['spectacleId'];?>>
 </form>
 
 <form method="POST">
@@ -330,26 +355,12 @@ if(comment=="")
   <button class="btn" name="disliked" value="disliked" style="width: 40px; float:left; height:40px; color:red; margin:10px" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
   <?php avisDisliked($spec); ?>  
   <input type="hidden" name="liked" value="disliked">
-<input type="hidden" name="specIdent" value=<?php echo $_GET['specId'];?>>
+<input type="hidden" name="specIdent" value=<?php echo $spectacle['spectacleId'];?>>
 </form>
   </aside>
 
 </section>
 	</section>
-	<div class="footer-basic">
-        <footer>
-            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="http://localhost/Alliance/View/Front/index.php">Home</a></li>
-                <li class="list-inline-item"><a href="#">Services</a></li>
-                <li class="list-inline-item"><a href="#">About</a></li>
-                <li class="list-inline-item"><a href="#">Terms</a></li>
-                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-            </ul>
-            <p class="copyright">The Globe © 2022</p>
-        </footer>
-    </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 
@@ -365,3 +376,8 @@ if(comment=="")
 <!--/theme-change-->
 <script src="assets/js/theme-change.js"></script>
 <!-- //theme-change-->
+
+
+
+
+

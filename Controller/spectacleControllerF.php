@@ -50,6 +50,7 @@ public function afficher()
 		$plusPop=$query->fetchAll();
          foreach($list as $spectacle){
 			 if($var==0){
+				 $_SESSION["idSpectacle"]=$spectacle["spectacleId"];
 			 ?>
 	<div class="item vhny-grid">
 						<div class="box16">

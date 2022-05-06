@@ -1,8 +1,11 @@
+//
+<?php 
+include '../../Controller/spectacleControllerF.php';
 
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
--->
+
+$spectacle= new SpectaclesC();
+?>
+
 <!doctype html>
 <html lang="zxx">
 
@@ -10,13 +13,15 @@ Author URL: http://w3layouts.com
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>THE GLOBE-ALLIANCE</title>
+	<title>The Globe | Home</title>
 	<!-- Template CSS -->
 	<link rel="stylesheet" href="assets/css/style-starter.css">
 	<!-- Template CSS -->
-	<link href="//fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,600&display=swap"
-		rel="stylesheet">
+	<!-- <link href="//fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,600&display=swap"
+		rel="stylesheet"> -->
 	<!-- Template CSS -->
+	<script src="../../View/Front/affichage.js">  
+</script>
 </head>
 
 <body>
@@ -26,11 +31,15 @@ Author URL: http://w3layouts.com
 		<!--/nav-->
 		<nav class="navbar navbar-expand-lg navbar-light fill px-lg-0 py-0 px-3">
 			<div class="container">
-				<h1>
+				<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index.php">
+					<img src="assets\images\petit logo.png " alt="Your logo" title="Your logo" style="height:50px;" style="right:10%;" />
+					<!-- <span class="fa fa-play icon-log" aria-hidden="true"></span> -->
+					The Globe</a></h1>
+					<!-- <h1><a class="navbar-brand" href="index.php"><span class="fa fa-play icon-log"		aria-hidden="true"></span>						ProShowz </a></h1> -->
+				<!-- if logo is image enable this   
 						<a class="navbar-brand" href="#index.php">
-							<img src="assets/images/petit logo.png" alt="Your logo" title="Your logo" style="height: 50px;;" />
-						</a> </h1>
-
+							<img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
+						</a> -->
 				<button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
 					data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
 					aria-label="Toggle navigation">
@@ -42,21 +51,22 @@ Author URL: http://w3layouts.com
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item active">
-							<a class="nav-link" href="index.php">Home</a>
+							<a class="nav-link" href="http://localhost/Alliance/View/Front/index.php">Home</a>
 						</li>
-						
 						<li class="nav-item">
 							<a class="nav-link" href="about.php">About</a>
 						</li>
-				        <li class="nav-item">
+				<li class="nav-item">
 								<a class="nav-link" href="genre.php">Genre</a>
-						</li>
+							</li>
+
 						<li class="nav-item">
 							<a class="nav-link" href="contact.php">Contact</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="my_profile.php">My Profile</a> <!--add by me for add login-->
 						</li>
+					
 					</ul>
 
 					<!--/search-right-->
@@ -131,20 +141,10 @@ Author URL: http://w3layouts.com
 					<li>
 						<div class="slider-info banner-view bg bg2">
 							<div class="banner-info">
-								<h3>Latest Movie Trailers</h3>
+								<h3>Une Touche Koréene</h3>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
 									voluptatem tenetur consequatur.</span></p>
-								<a href="#small-dialog1" class="popup-with-zoom-anim play-view1">
-									<span class="video-play-icon">
-										<span class="fa fa-play"></span>
-									</span>
-									<h6>Watch Trailer</h6>
-								</a>
-								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
-								<div id="small-dialog1" class="zoom-anim-dialog mfp-hide">
-									<iframe src="https://player.vimeo.com/video/358205676" allow="autoplay; fullscreen"
-										allowfullscreen=""></iframe>
-								</div>
+					
 							</div>
 						</div>
 					</li>
@@ -153,20 +153,9 @@ Author URL: http://w3layouts.com
 					<li>
 						<div class="slider-info  banner-view banner-top1 bg bg2">
 							<div class="banner-info">
-								<h3>Latest Online Movies</h3>
+								<h3>La Tendance Francaise</h3>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
 									voluptatem tenetur consequatur.</span></p>
-								<a href="#small-dialog2" class="popup-with-zoom-anim play-view1">
-									<span class="video-play-icon">
-										<span class="fa fa-play"></span>
-									</span>
-									<h6>Watch Trailer</h6>
-								</a>
-								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
-								<div id="small-dialog2" class="zoom-anim-dialog mfp-hide">
-									<iframe src="https://player.vimeo.com/video/395376850" allow="autoplay; fullscreen"
-										allowfullscreen=""></iframe>
-								</div>
 							</div>
 						</div>
 					</li>
@@ -175,20 +164,9 @@ Author URL: http://w3layouts.com
 					<li>
 						<div class="slider-info banner-view banner-top2 bg bg2">
 							<div class="banner-info">
-								<h3>Latest Movie Trailers</h3>
+								<h3> Une Ambiance De Fou</h3>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
 									voluptatem tenetur consequatur.</span></p>
-								<a href="#small-dialog3" class="popup-with-zoom-anim play-view1">
-									<span class="video-play-icon">
-										<span class="fa fa-play"></span>
-									</span>
-									<h6>Watch Trailer</h6>
-								</a>
-								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
-								<div id="small-dialog3" class="zoom-anim-dialog mfp-hide">
-									<iframe src="https://player.vimeo.com/video/389969665" allow="autoplay; fullscreen"
-										allowfullscreen=""></iframe>
-								</div>
 							</div>
 						</div>
 					</li>
@@ -197,20 +175,10 @@ Author URL: http://w3layouts.com
 					<li>
 						<div class="slider-info banner-view banner-top3 bg bg2">
 							<div class="banner-info">
-								<h3>Latest Online Movies</h3>
+								<h3> Rire Comme Jamais</h3>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
 									voluptatem tenetur consequatur.</span></p>
-								<a href="#small-dialog4" class="popup-with-zoom-anim play-view1">
-									<span class="video-play-icon">
-										<span class="fa fa-play"></span>
-									</span>
-									<h6>Watch Trailer</h6>
-								</a>
-								<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
-								<div id="small-dialog4" class="zoom-anim-dialog mfp-hide">
-									<iframe src="https://player.vimeo.com/video/323491174" allow="autoplay; fullscreen"
-										allowfullscreen=""></iframe>
-								</div>
+		
 							</div>
 						</div>
 					</li>
@@ -219,271 +187,53 @@ Author URL: http://w3layouts.com
 		</div>
 	</section>
 	<!-- //banner-slider-->
-	<!-- main-slider -->
-	<!--grids-sec1-->
+
+
+<!-- main slider -->
 	<section class="w3l-grids">
-		<div class="grids-main py-5">
-			<div class="container py-lg-3">
+		<div id="spectaclesSection" class="grids-main py-4">
+			<div class="container py-lg-4">
 				<div class="headerhny-title">
-					<div class="w3l-title-grids">
-						<div class="headerhny-left">
-							<h3 class="hny-title">Popular Movies</h3>
-						</div>
-						<div class="headerhny-right text-lg-right">
-							<h4><a class="show-title" href="genre.php">Show all</a></h4>
-						</div>
-					</div>
-				</div>
-				<div class="w3l-populohny-grids">
-					<div class="item vhny-grid">
-						<div class="box16">
-							<a href="genre.php">
-								<figure>
-									<img class="img-fluid" src="assets/images/m7.jpg" alt="">
-								</figure>
-								<div class="box-content">
-									<h3 class="title">Frozen 2</h3>
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
+					<h3 class="hny-title">Spectacles</h3><br>
+					
+					<div class="search-right">
+						<a href="#recherche"  title="search">Search <span
+								class="fa fa-search ml-3" aria-hidden="true"></span></a>
+						<!-- search popup -->
+						<div id="recherche" class="pop-overlay">
+							<div class="popup">
+								<form method="post" class="search-box">
+									<input type="search" id="search_box"placeholder="Taper...Des Mots Cléfs..." name="recherche"
+										 autofocus="">
+									<button type="submit" class="btn"><span class="fa fa-search"
+											aria-hidden="true"></span></button>
+								<div class="browse-items">
+									<h3 class="hny-title two mt-md-5 mt-4">Realisateur Populaire:</h3>
+									<ul class="search-items">
+										<li><a onclick="first();"id="first">Will Smith</a></li>
+										<li><a onclick="second();" id="second">BTS</a></li>
+										<li><a onclick="third();" id="third">PNL</a></li>
 
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
+									</ul>
 								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
+							</div> 
+							<a class="close" href="#close">×</a>
+							</form>
 						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<a href="genre.php">
-								<figure>
-									<img class="img-fluid" src="assets/images/m3.jpg" alt="">
-								</figure>
-								<div class="box-content">
-									<h3 class="title">Knives Out</h3>
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
+				</div><br>
 
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<a href="genre.php">
-								<figure>
-									<img class="img-fluid" src="assets/images/m4.jpg" alt="">
-								</figure>
-								<div class="box-content">
-									<h3 class="title">Little Women</h3>
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16">
-							<a href="genre.php">
-								<figure>
-									<img class="img-fluid" src="assets/images/m5.jpg" alt="">
-								</figure>
-								<div class="box-content">
-									<h3 class="title">Jumanji</h3>
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-					</div>
+				<div class="owl-four owl-carousel owl-theme">
+				
+<?php $spectacle->afficher(); ?>
+			
 				</div>
 			</div>
 		</div>
 	</section>
-	<!--//grids-sec1-->
-	<!--grids-sec2-->
-	<section class="w3l-grids">
-		<div class="grids-main py-5">
-			<div class="container py-lg-3">
-				<div class="headerhny-title">
-					<div class="w3l-title-grids">
-						<div class="headerhny-left">
-							<h3 class="hny-title">New Releases</h3>
-						</div>
-						<div class="headerhny-right text-lg-right">
-							<h4><a class="show-title" href="genre.php">Show all</a></h4>
-						</div>
-					</div>
-				</div>
-				<div class="owl-three owl-carousel owl-theme">
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.php">
-								<figure>
-									<img class="img-fluid" src="assets/images/n1.jpg" alt="">
-								</figure>
-								<div class="box-content">
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+<!-- main slider -->
 
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-						<h3> <a class="title-gd" href="genre.php">No Time to Die</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.php" class="btn watch-button">Watch now</a>
-						</div>
-
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.php">
-								<figure>
-									<img class="img-fluid" src="assets/images/n2.jpg" alt="">
-								</figure>
-								<div class="box-content">
-
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-						<h3> <a class="title-gd" href="genre.php">Mulan</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.php" class="btn watch-button">Watch now</a>
-						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.php">
-								<figure>
-									<img class="img-fluid" src="assets/images/n3.jpg" alt="">
-								</figure>
-								<div class="box-content">
-
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-						<h3> <a class="title-gd" href="genre.php">Free Guy</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.php" class="btn watch-button">Watch now</a>
-						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.php">
-								<figure>
-									<img class="img-fluid" src="assets/images/n4.jpg" alt="">
-								</figure>
-								<div class="box-content">
-
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-						<h3> <a class="title-gd" href="genre.php">My Spy</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.php" class="btn watch-button">Watch now</a>
-						</div>
-
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.php">
-								<figure>
-									<img class="img-fluid" src="assets/images/n5.jpg" alt="">
-								</figure>
-								<div class="box-content">
-
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-						<h3> <a class="title-gd" href="genre.php">Scoob</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.php" class="btn watch-button">Watch now</a>
-						</div>
-					</div>
-					<div class="item vhny-grid">
-						<div class="box16 mb-0">
-							<a href="genre.php">
-								<figure>
-									<img class="img-fluid" src="assets/images/n6.jpg" alt="">
-								</figure>
-								<div class="box-content">
-
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-										</span>
-
-										<span class="post fa fa-heart text-right"></span>
-									</h4>
-								</div>
-								<span class="fa fa-play video-icon" aria-hidden="true"></span>
-							</a>
-						</div>
-						<h3> <a class="title-gd" href="genre.php">Downhill</a></h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-						<div class="button-center text-center mt-4">
-							<a href="genre.php" class="btn watch-button">Watch now</a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</section>
-	<!--grids-sec2-->
 	<!--mid-slider -->
-	<section class="w3l-mid-slider position-relative">
+	<section id="popSection" class="w3l-mid-slider position-relative">
 		<div class="companies20-content">
 			<div class="owl-mid owl-carousel owl-theme">
 				<div class="item">
@@ -491,12 +241,10 @@ Author URL: http://w3layouts.com
 						<div class="slider-info mid-view bg bg2">
 							<div class="container">
 								<div class="mid-info">
-									<span class="sub-text">Comedy</span>
-									<h3>Jumanji: The Next Level</h3>
-									<p>2019 ‧ Comedy/Action ‧ 2h 3m</p>
-									<a class="watch" href="genre.php"><span class="fa fa-play"
-											aria-hidden="true"></span>
-										Watch Trailer</a>
+									<span class="sub-text">Musique</span>
+									<h3>PNL Tournée Deux Frères</h3>
+									<p>2022 ‧ Musique ‧ 2h 30m</p>
+							
 								</div>
 							</div>
 						</div>
@@ -507,12 +255,10 @@ Author URL: http://w3layouts.com
 						<div class="slider-info mid-view mid-top1 bg bg2">
 							<div class="container">
 								<div class="mid-info">
-									<span class="sub-text">Adventure</span>
-									<h3>Dolittle</h3>
-									<p>2020 ‧ Family/Adventure ‧ 1h 41m</p>
-									<a class="watch" href="genre.php"><span class="fa fa-play"
-											aria-hidden="true"></span>
-										Watch Trailer</a>
+									<span class="sub-text">Comedy</span>
+									<h3>Will Smith</h3>
+									<p>2022 ‧ Comedy ‧ 1h 30m</p>
+						
 								</div>
 							</div>
 						</div>
@@ -523,12 +269,10 @@ Author URL: http://w3layouts.com
 						<div class="slider-info mid-view mid-top2 bg bg2">
 							<div class="container">
 								<div class="mid-info">
-									<span class="sub-text">Action</span>
-									<h3>Bad Boys for Life</h3>
-									<p>2020 ‧ Comedy/Action ‧ 2h 4m</p>
-									<a class="watch" href="genre.php"><span class="fa fa-play"
-											aria-hidden="true"></span>
-										Watch Trailer</a>
+									<span class="sub-text">Family</span>
+									<h3>Disney On Ice</h3>
+									<p>2022 ‧ Comedy/Family ‧ 3h </p>
+							
 								</div>
 							</div>
 						</div>
@@ -538,556 +282,7 @@ Author URL: http://w3layouts.com
 		</div>
 	</section>
 	<!-- //mid-slider-->
-	<!--/tabs-->
-	<section class="w3l-albums py-5" id="projects">
-		<div class="container py-lg-4">
-			<div class="row">
-				<div class="col-lg-12 mx-auto">
-					<!--Horizontal Tab-->
-					<div id="parentHorizontalTab">
-						<ul class="resp-tabs-list hor_1">
-							<li>Recent Movies</li>
-							<li>Popular Movies</li>
-							<li>Trend Movies</li>
-							<div class="clear"></div>
-						</ul>
-						<div class="resp-tabs-container hor_1">
-							<div class="albums-content">
-								<div class="row">
-									<!--/set1-->
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php">
-
-													<img src="assets/images/m6.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Long Shot</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m5.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Jumanji</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m4.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Little Women</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<!--//set1-->
-									<!--/set1-->
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m1.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Rocketman</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m2.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Doctor Sleep</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m3.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Knives Out</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<!--//set1-->
-									<!--/set1-->
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/n1.jpg" class="img-fluid"
-														alt="author image">
-													<span class="fa fa-play video-icon" aria-hidden="true"></span>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">No Time to Die</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/n2.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Mulan</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/n3.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Free Guy</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<!--//set1-->
-								</div>
-							</div>
-							<div class="albums-content">
-								<div class="row">
-									<!--/set1-->
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m1.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Rocketman</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m2.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Doctor Sleep</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m3.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Knives Out</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<!--//set1-->
-									<!--/set2-->
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m7.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Frozen 2</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m8.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Toy Story 4</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m9.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Joker</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<!--//set2-->
-								</div>
-							</div>
-							<div class="albums-content">
-								<div class="row">
-									<!--/set3-->
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m7.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Frozen 2</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m8.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Toy Story 4</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m9.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Joker</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<!--//set3-->
-									<!--/set3-->
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m10.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">Alita</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m11.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">The Lego</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<a href="genre.php"><img src="assets/images/m12.jpg" class="img-fluid"
-														alt="author image">
-													<div class="overlay-icon">
-
-														<span class="fa fa-play video-icon" aria-hidden="true"></span>
-													</div>
-												</a>
-											</div>
-											<div class="message">
-												<p>English</p>
-												<a class="author-book-title" href="genre.php">The Hustle</a>
-												<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-													</span>
-
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-											</div>
-										</div>
-
-									</div>
-									<!--//set3-->
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- //tabs-->
+	
 	<!-- footer-66 -->
 	<footer class="w3l-footer">
 		<section class="footer-inner-main">
@@ -1096,23 +291,7 @@ Author URL: http://w3layouts.com
 					<div class="text-txt">
 						<div class="right-side">
 							<div class="row footer-about">
-								<div class="col-md-3 col-6 footer-img mb-lg-0 mb-4">
-									<a href="genre.php"><img class="img-fluid" src="assets/images/banner1.jpg"
-											alt=""></a>
-								</div>
-								<div class="col-md-3 col-6 footer-img mb-lg-0 mb-4">
-									<a href="genre.php"><img class="img-fluid" src="assets/images/banner2.jpg"
-											alt=""></a>
-								</div>
-								<div class="col-md-3 col-6 footer-img mb-lg-0 mb-4">
-									<a href="genre.php"><img class="img-fluid" src="assets/images/banner3.jpg"
-											alt=""></a>
-								</div>
-								<div class="col-md-3 col-6 footer-img mb-lg-0 mb-4">
-									<a href="genre.php"><img class="img-fluid" src="assets/images/banner4.jpg"
-											alt=""></a>
-								</div>
-							</div>
+					
 							<div class="row footer-links">
 
 
@@ -1168,7 +347,7 @@ Author URL: http://w3layouts.com
 				<div class="container">
 					<div class="copyright-footer">
 						<div class="columns text-lg-left">
-							<p>&copy; 2020 ProShowz. All rights reserved | Designed by <a
+							<p>&copy; 2021 Alliance. All rights reserved <a
 									href="https://w3layouts.com">W3layouts</a></p>
 						</div>
 
@@ -1245,7 +424,9 @@ Author URL: http://w3layouts.com
 <script src="assets/js/theme-change.js"></script>
 <!-- //theme-change-->
 <script src="assets/js/owl.carousel.js"></script>
-<!-- script for banner slider-->
+
+
+<!-- script for first banner slider-->
 <script>
 	$(document).ready(function () {
 		$('.owl-one').owlCarousel({
@@ -1282,21 +463,26 @@ Author URL: http://w3layouts.com
 		})
 	})
 </script>
-<!-- //script -->
+
+
+
+
+<!-- script for second owlcarousel -->
+
 <script>
 	$(document).ready(function () {
-		$('.owl-three').owlCarousel({
+		$('.owl-four').owlCarousel({
 			loop: true,
 			margin: 20,
 			nav: false,
 			responsiveClass: true,
-			autoplay: true,
+			autoplay: false,
 			autoplayTimeout: 5000,
 			autoplaySpeed: 1000,
 			autoplayHoverPause: false,
 			responsive: {
 				0: {
-					items: 2,
+					items: 1,
 					nav: false
 				},
 				480: {
@@ -1304,17 +490,23 @@ Author URL: http://w3layouts.com
 					nav: true
 				},
 				667: {
-					items: 3,
+					items: 2,
 					nav: true
 				},
 				1000: {
-					items: 5,
+					items: 2,
 					nav: true
 				}
 			}
 		})
 	})
 </script>
+
+<!-- no clue what this does but it looks important  -->
+<script src="assets/js/bootstrap.min.js"></script>
+
+
+
 <!-- //script -->
 <!-- /mid-script -->
 <script>
@@ -1349,84 +541,4 @@ Author URL: http://w3layouts.com
 		})
 	})
 </script>
-<!-- //mid-script -->
 
-<!-- script for owlcarousel -->
-<!-- Template JavaScript -->
-<script src="assets/js/jquery.magnific-popup.min.js"></script>
-<script>
-	$(document).ready(function () {
-		$('.popup-with-zoom-anim').magnificPopup({
-			type: 'inline',
-
-			fixedContentPos: false,
-			fixedBgPos: true,
-
-			overflowY: 'auto',
-
-			closeBtnInside: true,
-			preloader: false,
-
-			midClick: true,
-			removalDelay: 300,
-			mainClass: 'my-mfp-zoom-in'
-		});
-
-		$('.popup-with-move-anim').magnificPopup({
-			type: 'inline',
-
-			fixedContentPos: false,
-			fixedBgPos: true,
-
-			overflowY: 'auto',
-
-			closeBtnInside: true,
-			preloader: false,
-
-			midClick: true,
-			removalDelay: 300,
-			mainClass: 'my-mfp-slide-bottom'
-		});
-	});
-</script>
-<!--//-->
-<!-- disable body scroll which navbar is in active -->
-<script>
-	$(function () {
-		$('.navbar-toggler').click(function () {
-			$('body').toggleClass('noscroll');
-		})
-	});
-</script>
-<!-- disable body scroll which navbar is in active -->
-
-<!--/MENU-JS-->
-<script>
-	$(window).on("scroll", function () {
-		var scroll = $(window).scrollTop();
-
-		if (scroll >= 80) {
-			$("#site-header").addClass("nav-fixed");
-		} else {
-			$("#site-header").removeClass("nav-fixed");
-		}
-	});
-
-	//Main navigation Active Class Add Remove
-	$(".navbar-toggler").on("click", function () {
-		$("header").toggleClass("active");
-	});
-	$(document).on("ready", function () {
-		if ($(window).width() > 991) {
-			$("header").removeClass("active");
-		}
-		$(window).on("resize", function () {
-			if ($(window).width() > 991) {
-				$("header").removeClass("active");
-			}
-		});
-	});
-</script>
-<!--//MENU-JS-->
-
-<script src="assets/js/bootstrap.min.js"></script>

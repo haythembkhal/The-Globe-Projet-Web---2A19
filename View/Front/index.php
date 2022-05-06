@@ -1,8 +1,11 @@
 <?php 
 include '../../Controller/spectacleControllerF.php';
-
+session_start();
 
 $spectacle= new SpectaclesC();
+$_SESSION["loggedIn"]=false;
+$_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
+ $_SESSION["idSpectacle"]=""
 ?>
 
 <!doctype html>
@@ -64,10 +67,10 @@ $spectacle= new SpectaclesC();
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link" href="login.php">Sign up</a> <!--add by moussa add login-->
+							<a class="nav-link" href="login.php">Sign up</a> <!--add by me for add login-->
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="sign_in.php">Sign in</a> <!--add moussa for add login-->
+							<a class="nav-link" href="sign_in.php">Sign in</a> <!--add by me for add login-->
 						</li>
 					</ul>
 
@@ -349,7 +352,7 @@ $spectacle= new SpectaclesC();
 				<div class="container">
 					<div class="copyright-footer">
 						<div class="columns text-lg-left">
-							<p>&copy; 2020 ProShowz. All rights reserved | Designed by <a
+							<p>&copy; 2021 Alliance. All rights reserved | Designed by <a
 									href="https://w3layouts.com">W3layouts</a></p>
 						</div>
 

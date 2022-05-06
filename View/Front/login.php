@@ -72,7 +72,7 @@ if ($resp->isSuccess()) {
 	 
 Thank you for joining the globe platform.<br>
 We would like to confirm that your account has been successfully created.<br> 
-To access your account, click on the <a href="https://localhost/Projet/View/Front/sign_in.php">link</a> below.<br><br>
+To access your account, click on the <a href="https://localhost/Alliance/View/Front/sign_in.php">link</a> below.<br><br>
 
 If you are having trouble logging into your account, contact us at theglobe.alliance2022@gmail.com.<br><br>
 

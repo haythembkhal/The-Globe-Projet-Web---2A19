@@ -1,6 +1,6 @@
 <?php
 
-include '../../config.php';
+include 'C:/xampp/htdocs/Alliance/config.php';
 include '../../Model/user.php';
 
 

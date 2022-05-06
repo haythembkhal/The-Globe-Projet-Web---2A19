@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$customer->userConnecter($_SESSION["id_client"]);
 		
 	
-		header('location:../View/Front/index_with_profil.php');
+		header('location:http://localhost/Alliance/View/Front/index_with_profil.php');
 		}
 		else
 		{
