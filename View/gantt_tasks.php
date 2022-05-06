@@ -27,8 +27,13 @@
     $r->text = $conge['employes'];
     $r->start = $conge['date_deb'];
     $r->end = $conge['date_fin'];
-    $r->complete = intval((dateDiff($conge['CURDATE()'], $conge['date_deb'])) / dateDiff($conge['date_fin'], $conge['date_deb'])*100);
+    if (((dateDiff($conge['CURDATE()'], $conge['date_deb'])) / dateDiff($conge['date_fin'], $conge['date_deb'])*100) > 100) {
+        $r->complete = 100;
+    }
+    else {
+        $r->complete = intval((dateDiff($conge['CURDATE()'], $conge['date_deb'])) / dateDiff($conge['date_fin'], $conge['date_deb'])*100);
     
+    }
     $result[] = $r;
     }
 

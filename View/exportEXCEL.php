@@ -13,7 +13,7 @@ $items[] = $row;
 //Check the export button is pressed or not
 if(isset($_POST["export"])) {
 //Define the filename with current date
-$fileName = "itemdata-".date('d-m-Y').".xls";
+$fileName = "TablesConges-".date('d-m-Y').".xls";
 
 //Set header information to export data in excel format
 header('Content-Type: application/vnd.ms-excel');
