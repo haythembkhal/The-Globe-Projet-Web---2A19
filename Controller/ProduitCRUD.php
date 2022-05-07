@@ -147,21 +147,6 @@
 			}
 		}
 
-		function Upload()
-		{
-			$sql="INSERT INTO produits (nom_produit, categorie_produit, quantite_produit, prix_produit, image_produit) 
-			VALUES (:nom_produit, :categorie_produit, :quantite_produit, :prix_produit, '$filename')";
-			$db=config::getConnexion();
-			try
-			{
-				$query=$db->prepare($sql);
-				$query->execute();			
-			}
-			catch (Exception $e)
-			{
-				echo 'Erreur: '.$e->getMessage();
-			}			
-		}
 	}
 
 ?>

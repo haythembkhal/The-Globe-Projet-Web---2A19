@@ -621,6 +621,98 @@
                                         </select>
                                     </form>
                                      
+                                    <form action="" method="GET">
+
+    <input class="btn" type="submit" value="Filtrer par :"> 
+    <?php
+    $con = mysqli_connect("localhost","root","","the_globe");
+
+    $categorie_query = "SELECT * FROM categories";
+    $categorie_query_run  = mysqli_query($con, $categorie_query);
+
+    if(mysqli_num_rows($categorie_query_run) > 0)
+    {
+        foreach($categorie_query_run as $categorielist)
+        {
+            $checked = [];
+            if(isset($_GET['categorie']))
+            {
+                $checked = $_GET['categorie'];
+            }
+    ?>
+    <input type="checkbox" name="categorie[]" value="<?=  $categorielist['id_cat']; ?>" 
+        <?php  if(in_array($categorielist['id_cat'], $checked)){ echo "checked"; } ?>
+    />
+    <?= $categorielist['nom_cat']; ?>
+    <?php
+    
+            }
+        }
+        else
+        {
+            echo "No categorie Found";
+        }
+    ?>
+
+
+<?php
+$products = "SELECT * FROM produits";
+$products_run = mysqli_query($con, $products);
+if(isset($_GET['categorie']))
+{
+    $categoriechecked = [];
+    $categoriechecked = $_GET['categorie'];
+    foreach($categoriechecked as $rowcategorie)
+    {
+        $products = "SELECT * FROM produits WHERE categorie_produit IN ($rowcategorie)";
+        $products_run = mysqli_query($con, $products);
+        if(mysqli_num_rows($products_run) > 0)
+            {?>
+                <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nom</th>
+                                                    <th>Catégorie</th>
+                                                    <th>Quantité</th>
+                                                    <th>Prix</th>
+                                                    <th>Image</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    foreach($products_run as $produit){
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $produit['nom_produit']; ?></td>
+                                                    <td><?php echo $produit['categorie_produit']; ?></td>
+                                                    <td><?php echo $produit['quantite_produit']; ?></td>
+                                                    <td><?php echo $produit['prix_produit']; ?></td>
+                                                    <td><?php echo $produit['image_produit']; ?></td>
+                                                    <td>
+                                                        <form method="POST" action="ModifierProduit.php" align="center">
+                                                            <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
+                                                            <input type="hidden" value=<?php echo $produit['id_produit']; ?> name="id_produit">
+                                                        </form>
+                                                        <center><a href="SupprimerProduit.php?id_produit=<?php echo $produit['id_produit']; ?>"><button class="btn">Supprimer</button></a><center>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                                    }
+                                                ?>
+                                            </tbody>
+                                        </table> 
+                                    </table> 
+           <?php }
+            else
+            {
+                echo "No Items Found";
+            }
+    }
+}
+?>
+</form>
+
 
                                     <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
                                         <table class="table table-striped">
