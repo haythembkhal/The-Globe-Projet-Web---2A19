@@ -17,37 +17,6 @@
 
     $Produits = new ProduitCRUD();
 
-    if (
-		isset($_POST['nom_produit']) &&		
-        isset($_POST['categorie_produit']) &&
-		isset($_POST['quantite_produit']) && 
-        isset($_POST['prix_produit']) &&
-        isset($_POST['image_produit'])
-    ) {
-        if (
-			!empty($_POST['nom_produit']) &&
-            !empty($_POST['categorie_produit']) && 
-			!empty($_POST['quantite_produit']) && 
-            !empty($_POST['prix_produit']) &&
-            !empty($_POST['image_produit']) 
-        ) {
-            $Produit = new Produit(
-                null,
-				$_POST['nom_produit'],
-                $_POST['categorie_produit'], 
-				$_POST['quantite_produit'],
-                $_POST['prix_produit'],
-                $_POST['image_produit']
-            );
-
-            $Produits->AjouterProduit($Produit);
-            header('Location:AjouterProduit.php');
-        }
-        else
-            $error = "Missing information";
-        
-    }
-
     if(isset($_POST['RechercheNom']))
 	{
 		$listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
@@ -56,34 +25,66 @@
         $error = "Missing information";
     }
     
-	/*	
     if(isset($_POST['Trie']))
-	{
-		$listeproduit = $ProduitCRUD->TriePrixASC();
-	}
+	{  
+        $Trier = filter_input(INPUT_POST, 'Trie', FILTER_SANITIZE_STRING);
+        if ($Trier == "Prix croissant")
+        {
+            $listeproduit = $ProduitCRUD->TriePrixASC();
+        }
+        else
+        {
+            $listeproduit = $ProduitCRUD->TriePrixDESC();
+        }
+    }
 	else{
         $error = "Missing information";
-    }*/
+    }
 		
-    if(isset($_POST['Trie']))
-    {
-        $listeproduit = $ProduitCRUD->TriePrixDESC();
-    }
-    else{
-        $error = "Missing information";
-    }
-
     if (isset($_POST['ajout'])) {
 
         $image_produit = $_FILES["image_produit"]["name"];
 
         $tmp_image_produit= $_FILES["image_produit"]["tmp_name"];  
 
-        $folder = "Uploads/".$image_produit;
+        $folder = "../Uploads/".$image_produit;
+
+        if (
+            isset($_POST['nom_produit']) &&		
+            isset($_POST['categorie_produit']) &&
+            isset($_POST['quantite_produit']) && 
+            isset($_POST['prix_produit']) 
+            //&&
+            //isset($_POST['image_produit'])
+        ) {
+            if (
+                !empty($_POST['nom_produit']) &&
+                !empty($_POST['categorie_produit']) && 
+                !empty($_POST['quantite_produit']) && 
+                !empty($_POST['prix_produit'])
+                //&&
+                //!empty($_POST['image_produit']) 
+            ) {
+    
+                
+                $Produit = new Produit(
+                    null,
+                    $_POST['nom_produit'],
+                    $_POST['categorie_produit'], 
+                    $_POST['quantite_produit'],
+                    $_POST['prix_produit'],
+                    $folder
+                   //$_POST['image_produit']
+                );
+    
+                $Produits->AjouterProduit($Produit);
+                header('Location:AjouterProduit.php');
+            }
+            else
+                $error = "Missing information";
+        }
 
         move_uploaded_file($tmp_image_produit, $folder);
-
-        echo " <script> alert('Image uploaded successfully'); </script> ";
 
     }
 
@@ -149,9 +150,9 @@
                             <li><a href="#">
                                 Support
                             </a></li>
-                            <li class="nav-user dropdown">
+                            <li class="nav-image_produit dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="images/user.png" class="nav-avatar" />
+                                    <img src="images/image_produit.png" class="nav-avatar" />
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -268,13 +269,13 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="other-user-profile.html">
+                                            <a href="other-image_produit-profile.html">
                                                 <i class="icon-inbox"></i>
                                                 Profile
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="other-user-listing.html">
+                                            <a href="other-image_produit-listing.html">
                                                 <i class="icon-inbox"></i>
                                                 All Users
                                             </a>
@@ -298,7 +299,7 @@
                                 <div class="module-head">
                                     <center><h3>Ajouter un produit</h3><center>
                                 </div>
-                                <form action="" method="POST" onsubmit="return CTRL()" autocomplete="off" enctype="multipart/form-data">
+                                <form action="" method="POST" onsubmit="return CTRL()" enctype="multipart/form-data">
                                     <table class="table">
                                         <tr>
                                             <td></td>
@@ -446,9 +447,7 @@
                                                 <label for="image_produit"> Image : </label>
                                             </td>
                                             <td>
-                                                <form action="" method="POST" enctype="multipart/form-data">
-                                                    <input type="file" name="image_produit" id="image_produit" accept=".jpg, .jpeg, .png, .gif" value="">
-                                                </form>
+                                                <input type="file" name="image_produit" id="image_produit" accept=".jpg, .jpeg, .png, .gif">
                                                 <p>
                                                     <div id="error_image_produit" style="color:red"></div>
                                                 </p>
@@ -585,7 +584,7 @@
 
                                     if(image_produit=="")
                                     {
-                                        error_image_produit.innerHTML="Il faut mettre une image pour ce produit !";  
+                                        error_image_produit.innerHTML="Il faut mettre une image_produit pour ce produit !";  
                                         return false;
                                     }
                                     else 
@@ -593,30 +592,7 @@
                                             error_image_produit.innerHTML="";  
                                         }
                                 }
-                                /*
-                                function SEARCH()
-                                {
-										// Declare variables
-										var input, filter, table, tr, td, i, txtValue;
-										input = document.getElementById("myInput");
-										filter = input.value.toUpperCase();
-										table = document.getElementById("myTable");
-										tr = table.getElementsByTagName("tr");
 
-										// Loop through all table rows, and hide those who don't match the search query
-										for (i = 0; i < tr.length; i++) {
-											td = tr[i].getElementsByTagName("td")[0];
-											if (td) {
-											txtValue = td.textContent || td.innerText;
-											if (txtValue.toUpperCase().indexOf(filter) > -1) {
-												tr[i].style.display = "";
-											} else {
-												tr[i].style.display = "none";
-											}
-											}
-										}
-								}
-                                */
                                 </script>
 
                             </div>
@@ -636,12 +612,12 @@
                                         </button>	
                                     </form> 
                            
-                                    <form  method="POST" action="">
+                                    <form  method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
                                         <button type="submit" class="btn" for="Trie">Trier par : </button>
-                                        <select type="range" name="Trie">
+                                        <select type="range" name="Trie" id="Trie">
                                             <option selected disabled>choisir...</option>
-                                                <option value="Prix_ASC">Prix croissant</option>
-                                                <option value="Prix_DESC">Prix décroissant</option>
+                                                <option >Prix croissant</option>
+                                                <option >Prix décroissant</option>
                                         </select>
                                     </form>
                                      
@@ -707,12 +683,6 @@
                                             </a>
                                         </form>    
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a class="btn">Gerer</a>
-                                        </td>
-                                    </tr>
                                     </tr>
                                 </table>
                             </div>
