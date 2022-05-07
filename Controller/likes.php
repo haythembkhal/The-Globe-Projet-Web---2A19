@@ -4,7 +4,7 @@
 
 include_once "config.php";
 
-include_once "C:/xampp/htdocs/Artistes/Controller/likes.php";
+include_once "likes.php";
 
 function getArtiste($Id){
     $db = config::getconnexion();

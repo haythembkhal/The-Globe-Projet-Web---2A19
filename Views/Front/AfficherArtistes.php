@@ -375,7 +375,8 @@ Author URL: http://w3layouts.com
 					<div class="counter_grid">
 						<div class="icon_info">
 							<p class="counter"><?php $nb=countArtist(); echo $nb; ?></p>
-							<h4>Artistes</h4>
+							<h4>Artistes
+							</h4>
 
 						</div>
 					</div>

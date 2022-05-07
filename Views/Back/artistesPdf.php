@@ -1,8 +1,8 @@
 <?php
 
-include_once "../../config.php";
+//include_once "../../config.php";
 
-
+$db = new PDO('mysql:host=localhost;dbname=artiste','root','');
 
 
 require("../../fpdf/fpdf.php");
@@ -18,8 +18,8 @@ require("../../fpdf/fpdf.php");
 //$data_voyageur = mysqli_fetch_array($result);
 //mysqli_free_result($result);
 
-  function afficherArtistes(){
-            $sql="SELECT * FROM artistes WHERE id='1'";
+ /* function afficherArtistes(){
+            $sql="SELECT * FROM artistes";
             $db = config::getConnexion();
             try{
                 $liste = $db->query($sql);
@@ -41,7 +41,7 @@ include_once '../../Model/Artiste.php';
   		// Header
 	function Header() {
 		// Logo : 8 >position à gauche du document (en mm), 2 >position en haut du document, 80 >largeur de l'image en mm). La hauteur est calculée automatiquement.
-		//$this->Image('logob.png',2,2);
+		$this->Image('logob.png',80,100);
 		// Saut de ligne 20 mm
 		$this->Ln(20);
 
@@ -171,6 +171,58 @@ $pdf->Output('artistesPdf.pdf','I'); // affichage à l'écran
 // $pdf->Output('F', '../test.pdf');
 ?>
 
+*/
+
+
+   class PDF extends FPDF{
+function header(){
+    //$this->Image('logob.png',80,100);
+    $this->SetFont('Arial','B',24);
+    $this->Cell(276,5,'Liste des Artistes',0,0,'C');
+    $this->Ln();
+    $this->SetFont('Times','',18);
+    $this->Cell(276,13,'Le Choix vient de Papa God',0,0,'C');
+    $this->Ln(20);
+}
+function footer(){
+    $this->SetY(-15);
+    $this->SetFont('Arial','',8);
+    $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
+}
+function headerTable(){
+    $this->SetFont('Times','B',16);
+    $this->Cell(20,10,'id',1,0,'C');
+    $this->Cell(40,10,'Nom',1,0,'C');
+    $this->Cell(30,10,'nationalite',1,0,'C');
+    $this->Cell(20,10,'genre',1,0,'C');
+    $this->Cell(20,10,'age',1,0,'C');
+    $this->Cell(60,10,'description',1,0,'C');
+    $this->Cell(20,10,'categories',1,0,'C');
+    $this->Ln();
+}
+function viewTable($db){
+    $this->SetFont('Times','',12);
+    $liste = $db->query('SELECT * FROM artistes');
+    while($data = $liste->fetch(PDO::FETCH_OBJ)){
+        $this->Cell(20,10,$data->id,1,0,'C');
+        $this->Cell(40,10,$data->nom,1,0,'C');
+        $this->Cell(30,10,$data->nationalite,1,0,'C');
+        $this->Cell(20,10,$data->genre,1,0,'C');
+        $this->Cell(20,10,$data->age,1,0,'C');
+        $this->Cell(60,10,$data->description,1,0,'C');
+        $this->Cell(20,10,$data->categories,1,0,'C');
+        $this->Ln();
+    }
+
+}
+
+   }
+   $pdf = new PDF();
+   $pdf->AliasNbPages();
+   $pdf->AddPage('L','A4',0);
+   $pdf->headerTable();
+   $pdf->viewTable($db);
+   $pdf->Output();
 
 
 ?>
