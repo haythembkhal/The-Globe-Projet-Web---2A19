@@ -6,32 +6,25 @@ include_once '../../Controller/ProduitCRUD.php';
 include_once '../../Controller/CategorieCRUD.php';
 
 $ProduitCRUD = new ProduitCRUD();
-$listeproduit=$ProduitCRUD->AfficherProduit(); 
-
-$CategorieCRUD = new CategorieCRUD();
-$listecategorietype=$CategorieCRUD->AfficherCategorie();
-
+$listeproduit=$ProduitCRUD->AfficherProduit();
+$listeproduit2=$ProduitCRUD->AfficherProduit(); 
+$listeproduit3=$ProduitCRUD->AfficherProduit(); 
+$listeproduit4=$ProduitCRUD->AfficherProduit(); 
 $error = "";
 
 $Produit = null;
 
 $Produits = new ProduitCRUD();
 
-if (isset($_POST['ajout'])) {
 
-	$image_produit = $_FILES["image_produit"]["name"];
-
-	$tmp_image_produit= $_FILES["image_produit"]["tmp_name"];  
-
-	$folder = "../Uploads/".$image_produit;
 
 	if (
 		isset($_POST['nom_produit']) &&		
 		isset($_POST['categorie_produit']) &&
 		isset($_POST['quantite_produit']) && 
 		isset($_POST['prix_produit']) 
-		//&&&
-		//&isset($_POST['image_produit']) 
+		&&
+		isset($_POST['image_produit']) 
 
 	) {
 		if (
@@ -39,8 +32,8 @@ if (isset($_POST['ajout'])) {
 			!empty($_POST['categorie_produit']) && 
 			!empty($_POST['quantite_produit']) && 
 			!empty($_POST['prix_produit'])
-			//&&
-			//&!empty($_POST['image_produit'])
+			&&
+			!empty($_POST['image_produit'])
 
 		) {
 
@@ -50,8 +43,7 @@ if (isset($_POST['ajout'])) {
 				$_POST['categorie_produit'], 
 				$_POST['quantite_produit'],
 				$_POST['prix_produit'],
-				//$_POST['image_produit']
-				$folder
+				$_POST['image_produit']
 			);
 
 			$Produits->AjouterProduit($Produit);
@@ -60,32 +52,6 @@ if (isset($_POST['ajout'])) {
 		else{
 			$error = "Missing information";
 		}
-	move_uploaded_file($tmp_image_produit, $folder);
-	}        
-}
-
-if(isset($_POST['RechercheNom']))
-{
-	$listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
-}
-else{
-	$error = "Missing information";
-}
-
-if(isset($_POST['Trie']))
-{  
-	$Trier = filter_input(INPUT_POST, 'Trie', FILTER_SANITIZE_STRING);
-	if ($Trier == "Prix croissant")
-	{
-		$listeproduit = $ProduitCRUD->TriePrixASC();
-	}
-	else
-	{
-		$listeproduit = $ProduitCRUD->TriePrixDESC();
-	}
-}
-else{
-	$error = "Missing information";
 }
 	   
 ?>
@@ -156,7 +122,8 @@ else{
 					<br>
 				</div>
 				<div class="owl-three owl-carousel owl-theme">
-				<?php foreach($listeproduit as $produit): ?>	
+				<?php foreach($listeproduit as $produit): ?>
+					<!--<?php /*foreach($listecategorietype as $categorie): */?>-->	
 					<div class="item vhny-grid">
 						<div class="box16">
 							<figure>
@@ -169,16 +136,18 @@ else{
 								</h4>
 							</div>
 						</div>
+						<!--<center><h3><a><?php /*echo $categorie['nom_cat']; */?></a></h3></center>-->
+						
 						<center><h3><a class="title-gd"><?php echo $produit['nom_produit']; ?></a></h3></center>
 					</div>	
-				<?php endforeach; ?>	
+					<!--<?php/* endforeach; */?>-->
+				<?php endforeach; ?>
 				</div>
 
 				<div class="headerhny-title">
 					<div class="w3l-title-grids">
 						<div class="button-center  text-center mt-3" style="position:relative; left:795px; top:4px;">
-							<a href="#projects" class="btn-center  view-button"> Voir tout <span class="fa fa-angle-double-right ml-2"
-								aria-hidden="true" ></span></a>
+							<a href="#projects" class="btn-center  view-button"> Voir tout <span aria-hidden="true" ></span></a>
 						</div>
 					</div>
 				</div>
@@ -196,37 +165,56 @@ else{
 				<div class="col-lg-12 mx-auto">
 					<!--Horizontal Tab-->
 					<div id="parentHorizontalTab">
-					<?php foreach($listecategorietype as $categorie): ?>	
-						<ul class="resp-tabs-list hor_1">
-							<li><?php echo $categorie['nom_cat']; ?></li>
-							<div class="clear"></div>
-						</ul>
-						<div class="resp-tabs-container hor_1">
-							<div class="albums-content">
-								<div class="row">
-									<!--/set1-->
-									<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-										<div class="slider-info">
-											<div class="img-circle">
-												<img class="img-fluid" src="<?php echo $produit['image_produit']; ?>" alt="author image">
-											</div>
-											<div class="message">
-												<p><?php echo $categorie['nom_cat']; ?></p>
-												<?php foreach($listeproduit as $produit): ?>
-												<a class="author-book-title"><?php echo $produit['nom_produit']; ?></a>
-												<h4> <span class="post"><span class="fa"> </span><?php echo $produit['prix_produit']; ?> DT
-													</span>
-													<span class="post fa fa-heart text-right"></span>
-												</h4>
-												<?php endforeach; ?>
-											</div>
-										</div>
+						<?php foreach($listeproduit2 as $produitA): ?>	
+							<ul class="resp-tabs-list hor_1">
+								<li>
+									<?php echo $produitA['nom_cat']; ?>
+								</li>
+							</ul>
+							<div class="resp-tabs-container hor_1">
+								<?php foreach($listeproduit3 as $produitB): ?>	
+									<div class="albums-content">
+										<?php foreach($listeproduit4 as $produit): ?>	
+											<div class="row">
+												<?php 
+												if(strcmp($produit['categorie_produit'],$produitB['categorie_produit']) == 0)
+												{
+													echo"hello";
+												?>
+												<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
+													<div class="slider-info">
+														<div class="img-circle">
+															<a href="genre.html">
+																<img src="<?php echo $produit['image_produit'];?>" class="img-fluid" alt="author image">
+															</a>
+														</div>
+														<div class="message">
+															<p>
+																<?php $produit['categorie_produit'];?>
+															</p>
+															<a class="author-book-title" href="genre.html">
+																<?php echo $produit['nom_produit']; ?>
+															</a>
+															<h4>
+																<span class="post">
+																	<span class="fa"> </span>
+																	<?php echo $produit['prix_produit']; ?> DT
+																</span>
+																<span class="post fa fa-heart text-right">
+																</span>
+															</h4>
+														</div>
+													</div>
+												</div>
+												<?php } ?>
+						  					</div>
+										<?php endforeach; ?>
 									</div>
-								</div>
+					    		<?php endforeach;?>
 							</div>
-						</div>
-					<?php endforeach; ?>
-				    </div>
+						<?php endforeach;?>	
+					</div>
+				<!--Horizontal Tab-->
 				</div>
 			</div>
 		</div>

@@ -3,12 +3,26 @@
 	include_once '../../config.php';
 	include_once '../../Model/Produit.php';
 	
-	
 	class ProduitCRUD
 	{
 		function AfficherProduit()
 		{
 			$sql="SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit";
+			$db=config::getConnexion();
+			try
+			{
+				$liste=$db->query($sql);
+				return $liste;
+			}
+			catch(Exception $e)
+			{
+				die('Erreur:'. $e->getMessage());
+			}
+		}
+
+		function Afficher()
+		{
+			$sql="SELECT * FROM produits";
 			$db=config::getConnexion();
 			try
 			{
