@@ -8,7 +8,7 @@
 	{
 		function AfficherProduit()
 		{
-			$sql="SELECT * FROM produits";
+			$sql="SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit";
 			$db=config::getConnexion();
 			try
 			{

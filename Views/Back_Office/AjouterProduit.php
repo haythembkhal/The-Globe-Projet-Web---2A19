@@ -661,7 +661,7 @@
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $produit['nom_produit']; ?></td>
-                                                    <td><?php echo $produit['categorie_produit']; ?></td>
+                                                    <td><?php echo $produit['nom_cat']; ?></td>
                                                     <td><?php echo $produit['quantite_produit']; ?></td>
                                                     <td><?php echo $produit['prix_produit']; ?></td>
                                                     <td><?php echo $produit['image_produit']; ?></td>

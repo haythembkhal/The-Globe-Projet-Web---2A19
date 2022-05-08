@@ -20,21 +20,28 @@ $Produits = new ProduitCRUD();
 if (isset($_POST['ajout'])) {
 
 	$image_produit = $_FILES["image_produit"]["name"];
+
 	$tmp_image_produit= $_FILES["image_produit"]["tmp_name"];  
-	
+
 	$folder = "../Uploads/".$image_produit;
-	
+
 	if (
 		isset($_POST['nom_produit']) &&		
 		isset($_POST['categorie_produit']) &&
 		isset($_POST['quantite_produit']) && 
 		isset($_POST['prix_produit']) 
+		//&&&
+		//&isset($_POST['image_produit']) 
+
 	) {
 		if (
 			!empty($_POST['nom_produit']) &&
 			!empty($_POST['categorie_produit']) && 
 			!empty($_POST['quantite_produit']) && 
 			!empty($_POST['prix_produit'])
+			//&&
+			//&!empty($_POST['image_produit'])
+
 		) {
 
 			$Produit = new Produit(
@@ -43,17 +50,18 @@ if (isset($_POST['ajout'])) {
 				$_POST['categorie_produit'], 
 				$_POST['quantite_produit'],
 				$_POST['prix_produit'],
+				//$_POST['image_produit']
 				$folder
 			);
 
 			$Produits->AjouterProduit($Produit);
 			header('Location:AjouterProduit.php');
 		}
-		else
+		else{
 			$error = "Missing information";
-	}
+		}
 	move_uploaded_file($tmp_image_produit, $folder);
-	//echo " <script> alert('Image uploaded successfully'); </script> ";
+	}        
 }
 
 if(isset($_POST['RechercheNom']))
