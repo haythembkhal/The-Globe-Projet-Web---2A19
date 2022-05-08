@@ -1,7 +1,7 @@
 <?php  
 
-include_once "config.php";
-include_once 'C:\xampp\htdocs\Artistes\Model\Categorie.php'; 
+include_once "../../config.php";
+include_once '../../Model/Categorie.php'; 
 //include_once '..\Model\Categorie.php'; 
 
 /**
