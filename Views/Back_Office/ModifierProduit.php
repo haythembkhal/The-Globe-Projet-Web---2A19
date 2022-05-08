@@ -1,51 +1,87 @@
 <?php
 
-    include_once '../../Model/Produit.php';
-    include_once '../../Model/Categorie.php';
-	include_once '../../Controller/ProduitCRUD.php';
-	include_once '../../Controller/CategorieCRUD.php';
-	
-	$ProduitCRUD = new ProduitCRUD();
-	$listeproduit=$ProduitCRUD->AfficherProduit(); 
+include_once '../../Model/Produit.php';
+include_once '../../Model/Categorie.php';
+include_once '../../Controller/ProduitCRUD.php';
+include_once '../../Controller/CategorieCRUD.php';
 
-    $CategorieCRUD = new CategorieCRUD();
-	$listecategorietype=$CategorieCRUD->AfficherCategorie();
+$ProduitCRUD = new ProduitCRUD();
+$listeproduit=$ProduitCRUD->AfficherProduit(); 
 
-    $error = "";
+$CategorieCRUD = new CategorieCRUD();
+$listecategorietype=$CategorieCRUD->AfficherCategorie();
 
-    $Produit = null;
+$error = "";
 
-    $Produits = new ProduitCRUD();
+$Produit = null;
+
+$Produits = new ProduitCRUD();
+
+if(isset($_POST['RechercheNom']))
+{
+    $listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
+}
+else{
+    $error = "Missing information";
+}
+
+if(isset($_POST['Trie']))
+{  
+    $Trier = filter_input(INPUT_POST, 'Trie', FILTER_SANITIZE_STRING);
+    if ($Trier == "Prix croissant")
+    {
+        $listeproduit = $ProduitCRUD->TriePrixASC();
+    }
+    else
+    {
+        $listeproduit = $ProduitCRUD->TriePrixDESC();
+    }
+}
+else{
+    $error = "Missing information";
+}
     
+if (isset($_POST['Modifier'])) {
+
+    $image_produit = $_FILES["image_produit"]["name"];
+
+    $tmp_image_produit= $_FILES["image_produit"]["tmp_name"];  
+
+    $folder = "../Uploads/".$image_produit;
+
     if (
-		isset($_POST['nom_produit']) &&		
+        isset($_POST['nom_produit']) &&		
         isset($_POST['categorie_produit']) &&
-		isset($_POST['quantite_produit']) && 
-        isset($_POST['prix_produit']) &&
-        isset($_POST['image_produit'])
+        isset($_POST['quantite_produit']) && 
+        isset($_POST['prix_produit']) 
     ) {
         if (
-			!empty($_POST['nom_produit']) &&
+            !empty($_POST['nom_produit']) &&
             !empty($_POST['categorie_produit']) && 
-			!empty($_POST['quantite_produit']) && 
-            !empty($_POST['prix_produit']) &&
-            !empty($_POST['image_produit']) 
+            !empty($_POST['quantite_produit']) && 
+            !empty($_POST['prix_produit'])
         ) {
+
+            
             $Produit = new Produit(
                 null,
-				$_POST['nom_produit'],
+                $_POST['nom_produit'],
                 $_POST['categorie_produit'], 
-				$_POST['quantite_produit'],
+                $_POST['quantite_produit'],
                 $_POST['prix_produit'],
-                $_POST['image_produit']
+                $folder
             );
-        
-            $Produits->ModifierProduit($Produit,$_POST['id_produit']);
+
+            $Produits->ModifierProduit($Produit);
             header('Location:AjouterProduit.php');
         }
         else
             $error = "Missing information";
-    }    
+    }
+
+    move_uploaded_file($tmp_image_produit, $folder);
+
+}
 
 ?>
 
@@ -268,7 +304,7 @@
                                 <div class="module-head">
                                     <center><h3>Modifier un produit</h3><center>
                                 </div>
-                                <form action="" method="POST" onsubmit="return CTRL()">
+                                <form action="" method="POST" onsubmit="return CTRL()" enctype="multipart/form-data">
                                     <table class="table">
                                         <tr>
                                             <td></td>
@@ -426,7 +462,7 @@
                                                 <label for="image_produit"> Image : </label>
                                             </td>
                                             <td>
-                                                <input type="file" name="image_produit" id="image_produit" value="<?php echo $produit['image_produit']; ?>" >
+                                            <input type="file" name="image_produit" id="image_produit" value="<?php echo $produit['image_produit']; ?>" accept=".jpg, .jpeg, .png, .gif">
                                                 <p>
                                                     <div id="error_image_produit" style="color:red"></div>
                                                 </p>
@@ -574,44 +610,60 @@
                                             error_image_produit.innerHTML="";  
                                         }
                                 }
-
-                                function SEARCH()
-                                {
-										// Declare variables
-										var input, filter, table, tr, td, i, txtValue;
-										input = document.getElementById("myInput");
-										filter = input.value.toUpperCase();
-										table = document.getElementById("myTable");
-										tr = table.getElementsByTagName("tr");
-
-										// Loop through all table rows, and hide those who don't match the search query
-										for (i = 0; i < tr.length; i++) {
-											td = tr[i].getElementsByTagName("td")[0];
-											if (td) {
-											txtValue = td.textContent || td.innerText;
-											if (txtValue.toUpperCase().indexOf(filter) > -1) {
-												tr[i].style.display = "";
-											} else {
-												tr[i].style.display = "none";
-											}
-											}
-										}
-								}
-
                                 </script>
                             </div>
                         </div>
-                        <div class="content">
+                        <div class="content" id="Aff_Fil">
                             <div class="module">
                                 <div class="module-head">
                                     <center><h3>Liste des produits</h3><center>
                                 </div>
                                 <div class="module-body table">
-                                    <div class="module-head">
-                                        <input type="text" id="myInput" onkeyup="SEARCH()" placeholder="Rechercher....">
-                                    </div>
+                                   <!-- -->
+                                   
+                                    <form class="navbar-search pull-left input-append" action="" method="POST">
+                                        <input type="text" class="span3" name="RechercheNom" placeholder="Rechercher">
+                                        <button class="btn" type="submit">
+                                            <i class="icon-search"></i>
+                                        </button>	
+                                    </form> 
+                           
+                                    <form  method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+                                        <button type="submit" class="btn" for="Trie">Trier par : </button>
+                                        <select type="range" name="Trie" id="Trie">
+                                            <option selected disabled>choisir...</option>
+                                                <option>Prix croissant</option>
+                                                <option>Prix décroissant</option>
+                                        </select>
+                                    </form>
+                                     
+                                    <form action="Filtrerproduit.php" method="GET">
+                                        <input class="btn" type="submit" value="Filtrer par :" >
+                                        <?php
+                                        $con = mysqli_connect("localhost","root","","the_globe");
+
+                                        $categorie = "SELECT * FROM categories";
+                                        $listecategorietype  = mysqli_query($con, $categorie);
+
+                                        if(mysqli_num_rows($listecategorietype) > 0)
+                                        {
+                                            foreach($listecategorietype as $categorielist)
+                                            {
+                                                $checked = [];
+                                                if(isset($_GET['categorie']))
+                                                {
+                                                    $checked = $_GET['categorie'];
+                                                }
+                                        ?>
+                                        <input type="checkbox" name="categorie[]" value="<?=  $categorielist['id_cat']; ?>" />
+                                        <?= $categorielist['nom_cat']; 
+                                            }
+                                        }
+                                        ?>
+                                    </form>
+
                                     <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
-                                        <table class="table table-striped" id="myTable">
+                                        <table class="table table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Nom</th>
@@ -632,7 +684,7 @@
                                                     <td><?php echo $produit['prix_produit']; ?></td>
                                                     <td><?php echo $produit['image_produit']; ?></td>
                                                     <td>
-                                                        <form method="POST" action="" align="center">
+                                                        <form method="POST" action="ModifierProduit.php" align="center">
                                                             <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
                                                             <input type="hidden" value=<?php echo $produit['id_produit']; ?> name="id_produit">
                                                         </form>
@@ -651,33 +703,26 @@
                         <div class="content">
                             <div class="module">
                                 <div class="module-head">
-                                    <h3> Fonctionnalité avancé </h3>
+                                    <center><h3> Fonctionnalité avancé </h3><center>
                                 </div>
                                 <table class="table">
                                     <tr>
                                         <td>
-                                            <label for="trie"> Trier par : </label>
-                                            <select id="trie" name="trie">
-                                                <option value="a">Nom</option>
-                                            </select>
+                                        <form method="POST" action="export.php" align="center">
+                                            <a type="submit" name="Export" >
+                                                <button class="btn">Export</button>
+                                            </a>
+                                        </form>    
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label for="recherche"> Rechercher : </label>
-                                            <input type="text" id="recherche">
+                                        <form method="POST" action="pdf.php" align="center">
+                                            <a type="submit" name="PDF" >
+                                                <button class="btn">Generer un fichier PDF</button>
+                                            </a>
+                                        </form>    
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a class="btn">Generer un fichier PDF</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a class="btn">Gerers</a>
-                                        </td>
-                                    </tr>
                                     </tr>
                                 </table>
                             </div>

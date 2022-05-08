@@ -138,7 +138,7 @@
 			$db=config::getConnexion();
 			try {
 				$query = $db->query("SELECT * FROM produits WHERE nom_produit LIKE '%$Nom_Prod%' ");
-				/*$query->execute(['nom_produit'=>$Nom_Prod]);*/
+				$query->execute(/*['nom_produit'=>$Nom_Prod]*/);
 				$liste=$query->fetchALL();
 				return $liste;
 			   
@@ -146,7 +146,7 @@
 				$e->getMessage();
 			}
 		}
-
+		
 	}
 
 ?>

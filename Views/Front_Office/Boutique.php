@@ -1,95 +1,85 @@
 <?php
-   include_once '../../Model/Produit.php';
-   include_once '../../Model/Categorie.php';
-   include_once '../../Controller/ProduitCRUD.php';
-   include_once '../../Controller/CategorieCRUD.php';
-   
-   $ProduitCRUD = new ProduitCRUD();
-   $listeproduit=$ProduitCRUD->AfficherProduit(); 
 
-   $CategorieCRUD = new CategorieCRUD();
-   $listecategorietype=$CategorieCRUD->AfficherCategorie();
+include_once '../../Model/Produit.php';
+include_once '../../Model/Categorie.php';
+include_once '../../Controller/ProduitCRUD.php';
+include_once '../../Controller/CategorieCRUD.php';
 
-   $error = "";
+$ProduitCRUD = new ProduitCRUD();
+$listeproduit=$ProduitCRUD->AfficherProduit(); 
 
-   $Produit = null;
+$CategorieCRUD = new CategorieCRUD();
+$listecategorietype=$CategorieCRUD->AfficherCategorie();
 
-   $Produits = new ProduitCRUD();
+$error = "";
 
-   if(isset($_POST['RechercheNom']))
-   {
-	   $listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
-   }
-   else{
-	   $error = "Missing information";
-   }
-   
-   /*	
-   if(isset($_POST['Trie']))
-   {
-	   $listeproduit = $ProduitCRUD->TriePrixASC();
-   }
-   else{
-	   $error = "Missing information";
-   }*/
+$Produit = null;
+
+$Produits = new ProduitCRUD();
+
+if (isset($_POST['ajout'])) {
+
+	$image_produit = $_FILES["image_produit"]["name"];
+	$tmp_image_produit= $_FILES["image_produit"]["tmp_name"];  
+	
+	$folder = "../Uploads/".$image_produit;
+	
+	if (
+		isset($_POST['nom_produit']) &&		
+		isset($_POST['categorie_produit']) &&
+		isset($_POST['quantite_produit']) && 
+		isset($_POST['prix_produit']) 
+	) {
+		if (
+			!empty($_POST['nom_produit']) &&
+			!empty($_POST['categorie_produit']) && 
+			!empty($_POST['quantite_produit']) && 
+			!empty($_POST['prix_produit'])
+		) {
+
+			$Produit = new Produit(
+				null,
+				$_POST['nom_produit'],
+				$_POST['categorie_produit'], 
+				$_POST['quantite_produit'],
+				$_POST['prix_produit'],
+				$folder
+			);
+
+			$Produits->AjouterProduit($Produit);
+			header('Location:AjouterProduit.php');
+		}
+		else
+			$error = "Missing information";
+	}
+	move_uploaded_file($tmp_image_produit, $folder);
+	//echo " <script> alert('Image uploaded successfully'); </script> ";
+}
+
+if(isset($_POST['RechercheNom']))
+{
+	$listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
+}
+else{
+	$error = "Missing information";
+}
+
+if(isset($_POST['Trie']))
+{  
+	$Trier = filter_input(INPUT_POST, 'Trie', FILTER_SANITIZE_STRING);
+	if ($Trier == "Prix croissant")
+	{
+		$listeproduit = $ProduitCRUD->TriePrixASC();
+	}
+	else
+	{
+		$listeproduit = $ProduitCRUD->TriePrixDESC();
+	}
+}
+else{
+	$error = "Missing information";
+}
 	   
-   if(isset($_POST['Trie']))
-   {
-	   $listeproduit = $ProduitCRUD->TriePrixDESC();
-   }
-   else{
-	   $error = "Missing information";
-   }
-
-   if (isset($_POST['ajout'])) {
-
-	   $image_produit = $_FILES["image_produit"]["name"];
-
-	   $tmp_image_produit= $_FILES["image_produit"]["tmp_name"];  
-
-	   $folder = "uploads/".$image_produit;
-
-	   if (
-		   isset($_POST['nom_produit']) &&		
-		   isset($_POST['categorie_produit']) &&
-		   isset($_POST['quantite_produit']) && 
-		   isset($_POST['prix_produit']) 
-		   //&&
-		   //isset($_POST['image_produit'])
-	   ) {
-		   if (
-			   !empty($_POST['nom_produit']) &&
-			   !empty($_POST['categorie_produit']) && 
-			   !empty($_POST['quantite_produit']) && 
-			   !empty($_POST['prix_produit'])
-			   //&&
-			   //!empty($_POST['image_produit']) 
-		   ) {
-   
-			   
-			   $Produit = new Produit(
-				   null,
-				   $_POST['nom_produit'],
-				   $_POST['categorie_produit'], 
-				   $_POST['quantite_produit'],
-				   $_POST['prix_produit'],
-				   $folder
-				  //$_POST['image_produit']
-			   );
-   
-			   $Produits->AjouterProduit($Produit);
-			   header('Location:AjouterProduit.php');
-		   }
-		   else
-			   $error = "Missing information";
-	   }
-
-	   move_uploaded_file($tmp_image_produit, $folder);
-
-	   echo " <script> alert('Image uploaded successfully'); </script> ";
-
-   }
-
 ?>
 
 <html lang="en">
@@ -178,7 +168,7 @@
 
 				<div class="headerhny-title">
 					<div class="w3l-title-grids">
-						<div class="button-center  text-center mt-3">
+						<div class="button-center  text-center mt-3" style="position:relative; left:795px; top:4px;">
 							<a href="#projects" class="btn-center  view-button"> Voir tout <span class="fa fa-angle-double-right ml-2"
 								aria-hidden="true" ></span></a>
 						</div>
