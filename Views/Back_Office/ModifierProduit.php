@@ -16,13 +16,57 @@ $error = "";
 $Produit = null;
 
 $Produits = new ProduitCRUD();
+    
+if (isset($_POST['modif'])) {
+
+    $image_produit = $_FILES["image_produit"]["name"];
+
+    $tmp_image_produit= $_FILES["image_produit"]["tmp_name"];  
+
+    $folder = "../Uploads/".$image_produit;
+
+    if (
+        isset($_POST['nom_produit']) &&		
+        isset($_POST['categorie_produit']) &&
+        isset($_POST['quantite_produit']) && 
+        isset($_POST['prix_produit']) 
+        //&&&
+        //&isset($_POST['image_produit']) 
+
+    ) {
+        if (
+            !empty($_POST['nom_produit']) &&
+            !empty($_POST['categorie_produit']) && 
+            !empty($_POST['quantite_produit']) && 
+            !empty($_POST['prix_produit'])
+            //&&
+            //&!empty($_POST['image_produit'])
+
+        ) {
+
+            $Produit = new Produit(
+                null,
+                $_POST['nom_produit'],
+                $_POST['categorie_produit'], 
+                $_POST['quantite_produit'],
+                $_POST['prix_produit'],
+                //$_POST['image_produit']
+                $folder
+            );
+
+            $Produits->ModifierProduit($Produit,$_POST['id_produit']);
+            header('Location:ModifierProduit.php');
+        }
+        else{
+            $error = "Missing information";
+        }
+    move_uploaded_file($tmp_image_produit, $folder);
+    }        
+}
 
 if(isset($_POST['RechercheNom']))
 {
     $listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
-}
-else{
-    $error = "Missing information";
 }
 
 if(isset($_POST['Trie']))
@@ -36,52 +80,7 @@ if(isset($_POST['Trie']))
     {
         $listeproduit = $ProduitCRUD->TriePrixDESC();
     }
-}
-else{
-    $error = "Missing information";
-}
-    
-if (isset($_POST['Modifier'])) {
-
-    $image_produit = $_FILES["image_produit"]["name"];
-
-    $tmp_image_produit= $_FILES["image_produit"]["tmp_name"];  
-
-    $folder = "../Uploads/".$image_produit;
-
-    if (
-        isset($_POST['nom_produit']) &&		
-        isset($_POST['categorie_produit']) &&
-        isset($_POST['quantite_produit']) && 
-        isset($_POST['prix_produit']) 
-    ) {
-        if (
-            !empty($_POST['nom_produit']) &&
-            !empty($_POST['categorie_produit']) && 
-            !empty($_POST['quantite_produit']) && 
-            !empty($_POST['prix_produit'])
-        ) {
-
-            
-            $Produit = new Produit(
-                null,
-                $_POST['nom_produit'],
-                $_POST['categorie_produit'], 
-                $_POST['quantite_produit'],
-                $_POST['prix_produit'],
-                $folder
-            );
-
-            $Produits->ModifierProduit($Produit);
-            header('Location:AjouterProduit.php');
-        }
-        else
-            $error = "Missing information";
-    }
-
-    move_uploaded_file($tmp_image_produit, $folder);
-
-}
+}    
 
 ?>
 
@@ -306,6 +305,7 @@ if (isset($_POST['Modifier'])) {
                                 </div>
                                 <form action="" method="POST" onsubmit="return CTRL()" enctype="multipart/form-data">
                                     <table class="table">
+
                                         <tr>
                                             <td></td>
                                             <td></td>
@@ -500,7 +500,7 @@ if (isset($_POST['Modifier'])) {
                                             <td></td>
                                             <td>
                                             <label>                                  </label>
-                                                <input type="submit" class="btn" id="Modifier" value="Modifier"> 
+                                                <input type="submit" class="btn" id="Modifier" name="modif" value="Modifier"> 
                                                 <label>                                  </label>
                                             </td>
                                             <td>
@@ -684,7 +684,7 @@ if (isset($_POST['Modifier'])) {
                                                     <td><?php echo $produit['prix_produit']; ?></td>
                                                     <td><?php echo $produit['image_produit']; ?></td>
                                                     <td>
-                                                        <form method="POST" action="ModifierProduit.php" align="center">
+                                                        <form method="POST" action="" align="center">
                                                             <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
                                                             <input type="hidden" value=<?php echo $produit['id_produit']; ?> name="id_produit">
                                                         </form>
