@@ -7,6 +7,7 @@ include_once '../../Controller/CategorieCRUD.php';
 
 $ProduitCRUD = new ProduitCRUD();
 $listeproduit=$ProduitCRUD->AfficherProduit();
+$listeproduit1 = $ProduitCRUD->AfficherProduit();
 $listeproduit2 = $ProduitCRUD->AfficherProduit();
 
 $CategorieCRUD = new CategorieCRUD();
@@ -59,11 +60,11 @@ if(isset($_POST['Trie']))
 	$Trier = filter_input(INPUT_POST, 'Trie', FILTER_SANITIZE_STRING);
 	if ($Trier == "Prix croissant")
 	{
-		$listeproduit2 = $ProduitCRUD->TriePrixASC();
+		$listeproduit1 = $ProduitCRUD->TriePrixASC();
 	}
 	else
 	{
-		$listeproduit2 = $ProduitCRUD->TriePrixDESC();
+		$listeproduit1 = $ProduitCRUD->TriePrixDESC();
 	}
 }
 else{
@@ -133,10 +134,6 @@ else{
 	<section class="w3l-grids">
 		<div class="grids-main py-5">
 			<div class="container py-lg-4">
-				<div class="headerhny-title">
-					<center><h1 class="hny-title">Nos Produits</h1></center>
-					<br>
-				</div>
 				<div class="owl-three owl-carousel owl-theme">
 				<?php foreach($listeproduit as $produit): ?>
 					<div class="item vhny-grid">
@@ -161,7 +158,7 @@ else{
 				<div class="headerhny-title">
 					<div class="w3l-title-grids">
 						<div class="button-center  text-center mt-3" style="position:relative; left:795px; top:4px;">
-							<a href="#projects" class="btn-center view-button"> Voir tout <span aria-hidden="true" ></span></a>
+							<a href="#projects2" class="btn-center view-button"> Voir tout <span aria-hidden="true" ></span></a>
 						</div>
 					</div>
 				</div>
@@ -169,10 +166,10 @@ else{
 		</div>
 	</section>
 
-	<section class="w3l-albums py-5" id="projects">
+	<section class="w3l-albums py-5">
 		<div class="container py-lg-4">
 			<div class="headerhny-title">
-				<center><h1 class="hny-title">Nos Catégories<h1><center>
+				<center><h1 class="hny-title">Nos Produits<h1><center>
 			</div>
 			<br>
 			<form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
@@ -185,35 +182,39 @@ else{
 				</select>
 			</form>    
 			<div id="projects2">
-				<table class="table table-bordered">
-					<tr>
-					</tr>
-					<tr>
-						<?php foreach($listeproduit2 as $produit): ?>
-						<td>
-							<div class="message">
-								<h6>
-									<?php echo $produit['nom_cat'];?>
-								</h6>
-								<a class="author-book-title">
-									<?php echo $produit['nom_produit']; ?>
-								</a>
+				<div class="resp-tabs-container hor_1">
+					<div class="albums-content">
+						<div class="row">
+							<div class="col-lg-10 new-relise-gd">
+								<div class="slider-info">
+									<?php foreach($listeproduit1 as $produit): ?>
+										<div class="message">
+											
+										<hr>
+										<img src="<?php echo $produit['image_produit'];?>" class="img-fluid" alt="author image">
+											
+										<br>
+										<br>
+										
+										<center>
+										<a class="author-book-title">
+											<?php echo $produit['nom_cat']; echo " "; echo $produit['nom_produit']; ?>
+										</a>
+										</center>	
+
+										<center>
+										<h6>
+											<?php echo $produit['prix_produit']; ?> DT
+										</h6>
+										</center>
+
+										</div>
+									<?php endforeach; ?>
+								</div>
 							</div>
-							<img  class="img-fluid rounded team-image" src="<?php echo $produit['image_produit'];?>" class="img-fluid" alt="author image">
-							<h4>
-								<span class="post">
-									<span class="fa"> </span>
-									<?php echo $produit['prix_produit']; ?> DT
-								</span>
-								<span class="post fa fa-heart text-right">
-								</span>
-							</h4>
-						</td>
-						<?php endforeach; ?>
-					</tr>
-					<tr>
-					</tr>
-				</table>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
