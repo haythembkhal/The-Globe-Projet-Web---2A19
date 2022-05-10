@@ -141,9 +141,9 @@ else{
                             <li><a href="#">
                                 Support
                             </a></li>
-                            <li class="nav-image_produit dropdown">
+                            <li class="nav-user dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="images/image_produit.png" class="nav-avatar" />
+                                    <img src="images/user.png" class="nav-avatar" />
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">

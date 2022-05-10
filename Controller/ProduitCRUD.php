@@ -20,21 +20,6 @@
 			}
 		}
 
-		function Afficher()
-		{
-			$sql="SELECT * FROM produits";
-			$db=config::getConnexion();
-			try
-			{
-				$liste=$db->query($sql);
-				return $liste;
-			}
-			catch(Exception $e)
-			{
-				die('Erreur:'. $e->getMessage());
-			}
-		}
-
 		function AjouterProduit($produit)
 		{
 			$sql="INSERT INTO produits (nom_produit, categorie_produit, quantite_produit, prix_produit, image_produit) 

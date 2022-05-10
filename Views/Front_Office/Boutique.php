@@ -8,15 +8,12 @@ include_once '../../Controller/CategorieCRUD.php';
 $ProduitCRUD = new ProduitCRUD();
 $listeproduit=$ProduitCRUD->AfficherProduit();
 $listeproduit2=$ProduitCRUD->AfficherProduit(); 
-$listeproduit3=$ProduitCRUD->AfficherProduit(); 
-$listeproduit4=$ProduitCRUD->AfficherProduit(); 
+
 $error = "";
 
 $Produit = null;
 
 $Produits = new ProduitCRUD();
-
-
 
 	if (
 		isset($_POST['nom_produit']) &&		
@@ -123,7 +120,6 @@ $Produits = new ProduitCRUD();
 				</div>
 				<div class="owl-three owl-carousel owl-theme">
 				<?php foreach($listeproduit as $produit): ?>
-					<!--<?php /*foreach($listecategorietype as $categorie): */?>-->	
 					<div class="item vhny-grid">
 						<div class="box16">
 							<figure>
@@ -136,9 +132,9 @@ $Produits = new ProduitCRUD();
 								</h4>
 							</div>
 						</div>
-						<!--<center><h3><a><?php /*echo $categorie['nom_cat']; */?></a></h3></center>-->
+						<center><h6><a><?php echo $produit['nom_cat'];?></a></h6></center>
 						
-						<center><h3><a class="title-gd"><?php echo $produit['nom_produit']; ?></a></h3></center>
+						<center><h2><a class="title-gd"><?php echo $produit['nom_produit']; ?></a></h2></center>
 					</div>	
 					<!--<?php/* endforeach; */?>-->
 				<?php endforeach; ?>
@@ -161,62 +157,43 @@ $Produits = new ProduitCRUD();
 			<div class="headerhny-title">
 				<h2 class="hny-title">Nos Catégories<h2>
 			</div>
-			<div class="row">
-				<div class="col-lg-12 mx-auto">
-					<!--Horizontal Tab-->
-					<div id="parentHorizontalTab">
-						<?php foreach($listeproduit2 as $produitA): ?>	
-							<ul class="resp-tabs-list hor_1">
-								<li>
-									<?php echo $produitA['nom_cat']; ?>
-								</li>
-							</ul>
-							<div class="resp-tabs-container hor_1">
-								<?php foreach($listeproduit3 as $produitB): ?>	
-									<div class="albums-content">
-										<?php foreach($listeproduit4 as $produit): ?>	
-											<div class="row">
-												<?php 
-												if(strcmp($produit['categorie_produit'],$produitB['categorie_produit']) == 0)
-												{
-													echo"hello";
-												?>
-												<div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
-													<div class="slider-info">
-														<div class="img-circle">
-															<a href="genre.html">
-																<img src="<?php echo $produit['image_produit'];?>" class="img-fluid" alt="author image">
-															</a>
-														</div>
-														<div class="message">
-															<p>
-																<?php $produit['categorie_produit'];?>
-															</p>
-															<a class="author-book-title" href="genre.html">
-																<?php echo $produit['nom_produit']; ?>
-															</a>
-															<h4>
-																<span class="post">
-																	<span class="fa"> </span>
-																	<?php echo $produit['prix_produit']; ?> DT
-																</span>
-																<span class="post fa fa-heart text-right">
-																</span>
-															</h4>
-														</div>
-													</div>
-												</div>
-												<?php } ?>
-						  					</div>
-										<?php endforeach; ?>
-									</div>
-					    		<?php endforeach;?>
-							</div>
-						<?php endforeach;?>	
-					</div>
-				<!--Horizontal Tab-->
-				</div>
-			</div>
+			<?php foreach($listeproduit2 as $produit): ?>	
+			<table class="table table-bordered">
+				<tr>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+					<td>
+						<div class="message">
+							<h6>
+								<?php echo $produit['nom_cat'];?>
+							</h6>
+							<a class="author-book-title">
+								<?php echo $produit['nom_produit']; ?>
+							</a>
+						</div>
+						<img src="<?php echo $produit['image_produit'];?>" class="img-fluid" alt="author image">
+						<h4>
+							<span class="post">
+								<span class="fa"> </span>
+								<?php echo $produit['prix_produit']; ?> DT
+							</span>
+							<span class="post fa fa-heart text-right">
+							</span>
+						</h4>
+					</td>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+				</tr>
+			</table>
+			<?php endforeach; ?>
 		</div>
 	</section>
 

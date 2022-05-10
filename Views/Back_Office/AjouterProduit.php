@@ -143,15 +143,15 @@
                                     <li class="divider"></li>
                                     <li class="nav-header">Example Header</li>
                                     <li><a href="#">A Separated link</a></li>
-                                                                </ul>
+                                </ul>
                             </li>
                             
                             <li><a href="#">
                                 Support
                             </a></li>
-                            <li class="nav-image_produit dropdown">
+                            <li class="nav-user dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="images/image_produit.png" class="nav-avatar" />
+                                    <img src="images/user.png" class="nav-avatar" />
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -600,125 +600,120 @@
                                 <div class="module-head">
                                     <center><h3>Liste des produits</h3><center>
                                 </div>
+                                <form  method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+                                <br>
+                                    <button type="submit" class="btn" for="Trie">Trier par : </button>
+                                    <select type="range" name="Trie" id="Trie">
+                                        <option selected disabled>choisir...</option>
+                                            <option>Prix croissant</option>
+                                            <option>Prix décroissant</option>
+                                    </select>
+                                </form>    
+                                <form action="Filtrerproduit.php" method="GET">
+                                    <input class="btn" type="submit" value="Filtrer par :" >
+                                    <?php
+                                    $con = mysqli_connect("localhost","root","","the_globe");
 
-                                <div class="module-body table">
+                                    $categorie = "SELECT * FROM categories";
+                                    $listecategorietype  = mysqli_query($con, $categorie);
 
-                                    <form class="navbar-search pull-left input-append" action="" method="POST">
-                                        <input type="text" class="span3" name="RechercheNom" placeholder="Rechercher">
-                                        <button class="btn" type="submit">
-                                            <i class="icon-search"></i>
-                                        </button>	
-                                    </form> 
-                           
-                                    <form  method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
-                                        <button type="submit" class="btn" for="Trie">Trier par : </button>
-                                        <select type="range" name="Trie" id="Trie">
-                                            <option selected disabled>choisir...</option>
-                                                <option>Prix croissant</option>
-                                                <option>Prix décroissant</option>
-                                        </select>
-                                    </form>
-                                     
-                                    <form action="Filtrerproduit.php" method="GET">
-                                        <input class="btn" type="submit" value="Filtrer par :" >
-                                        <?php
-                                        $con = mysqli_connect("localhost","root","","the_globe");
-
-                                        $categorie = "SELECT * FROM categories";
-                                        $listecategorietype  = mysqli_query($con, $categorie);
-
-                                        if(mysqli_num_rows($listecategorietype) > 0)
+                                    if(mysqli_num_rows($listecategorietype) > 0)
+                                    {
+                                        foreach($listecategorietype as $categorielist)
                                         {
-                                            foreach($listecategorietype as $categorielist)
+                                            $checked = [];
+                                            if(isset($_GET['categorie']))
                                             {
-                                                $checked = [];
-                                                if(isset($_GET['categorie']))
-                                                {
-                                                    $checked = $_GET['categorie'];
-                                                }
-                                        ?>
-                                        <input type="checkbox" name="categorie[]" value="<?=  $categorielist['id_cat']; ?>" />
-                                        <?= $categorielist['nom_cat']; 
+                                                $checked = $_GET['categorie'];
                                             }
+                                    ?>
+                                    <input type="checkbox" name="categorie[]" value="<?=  $categorielist['id_cat']; ?>" />
+                                    <?= $categorielist['nom_cat']; 
                                         }
-                                        ?>
-                                    </form>
-
-                                    <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nom</th>
-                                                    <th>Catégorie</th>
-                                                    <th>Quantité</th>
-                                                    <th>Prix</th>
-                                                    <th>Image</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                    foreach($listeproduit as $produit){
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $produit['nom_produit']; ?></td>
-                                                    <td><?php echo $produit['nom_cat']; ?></td>
-                                                    <td><?php echo $produit['quantite_produit']; ?></td>
-                                                    <td><?php echo $produit['prix_produit']; ?></td>
-                                                    <td><?php echo $produit['image_produit']; ?></td>
-                                                    <td>
-                                                        <form method="POST" action="ModifierProduit.php" align="center">
-                                                            <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
-                                                            <input type="hidden" value=<?php echo $produit['id_produit']; ?> name="id_produit">
-                                                        </form>
-                                                        <center><a href="SupprimerProduit.php?id_produit=<?php echo $produit['id_produit']; ?>"><button class="btn">Supprimer</button></a><center>
-                                                    </td>
-                                                </tr>
-                                                <?php
-                                                    }
-                                                ?>
-                                            </tbody>
-                                        </table> 
+                                    }
+                                    ?>
+                                </form>
+                                <form class="navbar-search pull-left input-append" action="" method="POST">
+                                    <input type="text" class="span3" name="RechercheNom" placeholder="Rechercher">
+                                    <button class="btn" type="submit">
+                                        <i class="icon-search"></i>
+                                    </button>	
+                                </form>
+                                <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Catégorie</th>
+                                                <th>Quantité</th>
+                                                <th>Prix</th>
+                                                <th>Image</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                foreach($listeproduit as $produit){
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $produit['nom_produit']; ?></td>
+                                                <td><?php echo $produit['nom_cat']; ?></td>     <?php ?>
+                                                <td><?php echo $produit['quantite_produit']; ?></td>
+                                                <td><?php echo $produit['prix_produit']; ?></td>
+                                                <td><?php echo $produit['image_produit']; ?></td>
+                                                <td>
+                                                    <form method="POST" action="ModifierProduit.php" align="center">
+                                                        <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
+                                                        <input type="hidden" value=<?php echo $produit['id_produit']; ?> name="id_produit">
+                                                    </form>
+                                                    <center><a href="SupprimerProduit.php?id_produit=<?php echo $produit['id_produit']; ?>"><button class="btn">Supprimer</button></a><center>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                                }
+                                            ?>
+                                        </tbody>
                                     </table> 
-                                </div>
+                                </table> 
                             </div>
                         </div>
-                        <div class="content">
-                            <div class="module">
-                                <div class="module-head">
-                                    <center><h3> Fonctionnalité avancé </h3><center>
-                                </div>
-                                <table class="table">
-                                    <tr>
-                                        <td>
-                                        <form method="POST" action="export.php" align="center">
-                                            <a type="submit" name="Export" >
-                                                <button class="btn">Export Excel</button>
-                                            </a>
-                                        </form>    
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                        <form method="POST" action="pdf.php" align="center">
-                                            <a type="submit" name="PDF" >
-                                                <button class="btn">Generer un fichier PDF</button>
-                                            </a>
-                                        </form>    
-                                        </td>
-                                    </tr>
-                                </table>
+                    </div>
+                    <div class="content">
+                        <div class="module">
+                            <div class="module-head">
+                                <center><h3> Fonctionnalité avancé </h3><center>
                             </div>
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                    <form method="POST" action="export.php" align="center">
+                                        <a type="submit" name="Export" >
+                                            <button class="btn">Export Excel</button>
+                                        </a>
+                                    </form>    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    <form method="POST" action="pdf.php" align="center">
+                                        <a type="submit" name="PDF" >
+                                            <button class="btn">Generer un fichier PDF</button>
+                                        </a>
+                                    </form>    
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="footer">
-            <div class="container">
-                <b class="copyright">&copy; 2022 The globe </b> All rights reserved.
-            </div>
-	    </div>
+    </div>
+    
+    <div class="footer">
+        <div class="container">
+            <b class="copyright">&copy; 2022 The globe </b> All rights reserved.
+        </div>
+    </div>
         
         <script src="scripts/jquery-1.9.1.min.js"></script>
         <script src="scripts/jquery-ui-1.10.1.custom.min.js"></script>

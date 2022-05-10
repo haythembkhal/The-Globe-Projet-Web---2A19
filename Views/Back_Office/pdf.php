@@ -54,7 +54,6 @@ if (
    class PDF extends FPDF{
 
     function header(){
-
         $this->SetFont('Arial','B',24);
         $this->Cell(0,10,'Liste des produits',0,0,'C');
         $this->Ln();
