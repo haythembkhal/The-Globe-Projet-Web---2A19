@@ -506,7 +506,7 @@
 
                                     if(image_produit=="")
                                     {
-                                        error_image_produit.innerHTML="Il faut mettre une image_produit pour ce produit !";  
+                                        error_image_produit.innerHTML="Il faut mettre une image pour ce produit !";  
                                         return false;
                                     }
                                     else 

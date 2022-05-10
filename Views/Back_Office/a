@@ -300,6 +300,7 @@
                             <?php
                             if (isset($_POST['id_produit'])){
                                 $produit = $ProduitCRUD->RecupererProduit($_POST['id_produit']);
+                            }
                             ?>
                             <a href="AjouterProduit.php"><button class="btn">Retour</button></a>
                             <hr>
@@ -363,7 +364,7 @@
                                                 </center>
                                             </td>
                                             <td>
-                                                <input type="number" name="quantite_produit" id="quantite_produit" value="<?php echo $produit['quantite_produit']; ?>" >
+                                                <input type="number" name="quantite_produit" id="quantite_produit" value="<?php echo $produit['quantite_produit']; ?>">
                                                 <p>
                                                     <div id="error_quantite_produit" style="color:red"></div>
                                                 </p>
@@ -377,7 +378,7 @@
                                                 </center>
                                             </td>
                                             <td>
-                                                <input type="number" name="prix_produit" id="prix_produit" value="<?php echo $produit['prix_produit']; ?>" > DT
+                                                <input type="number" name="prix_produit" id="prix_produit" > DT
                                                 <p>
                                                     <div id="error_prix_produit" style="color:red"></div>
                                                 </p>
@@ -430,7 +431,7 @@
                                                 <label>                                  </label>
                                             </td>
                                             <td>
-                                                <input type="hidden" name="id_produit" value="<?php echo $produit['id_produit']; } ?>" >
+                                                <input type="hidden" name="id_produit" value="<?php echo $produit['id_produit']; ?>" >
                                             </td>                
                                             <td>
                                                 <label>                                  </label>
@@ -528,7 +529,7 @@
 
                                     if(image_produit=="")
                                     {
-                                        error_image_produit.innerHTML="Il faut mettre une image pour ce produit !";  
+                                        error_image_produit.innerHTML="Il faut mettre une image_produit pour ce produit !";  
                                         return false;
                                     }
                                     else 
@@ -579,7 +580,7 @@
                                                     }
                                             ?>
                                             
-                                            <input type="checkbox" name="categorie[]" value="<?=  $categorielist['id_cat']; ?>" >
+                                            <input type="checkbox" name="categorie[]" value="<?=  $categorielist['id_cat']; ?>" />
 
                                             <?= $categorielist['nom_cat']; 
                                                 }
