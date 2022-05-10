@@ -28,7 +28,15 @@
         }
         else
             $error = "Missing information";
-    }    
+    }   
+    
+    if(isset($_POST['RechercheNom']))
+    {
+        $listecategorie = $CategorieCRUD->RechercherCategorie($_POST['RechercheNom']);
+    }
+    else{
+        $error = "Missing information";
+    }
 
 ?>
 
@@ -357,6 +365,19 @@
                                     <center><h3>Liste des categories</h3><center>
                                 </div>
                                 <div class="module-body table">
+                                <br>
+                                <div>
+                                    <form action="" method="POST" align="center">
+                                        <div>
+                                            <input type="text" class="span3" name="RechercheNom" placeholder="rechercher...">
+
+                                            <button class="btn" type="submit">
+                                                <i class="icon-search"></i>
+                                            </button>	
+                                        </div>
+                                    </form>
+                                </div>
+                                <br>
                                     <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
                                         <table class="table table-striped">
                                             <thead>
@@ -396,28 +417,21 @@
                                 <table class="table">
                                     <tr>
                                         <td>
-                                            <label for="trie"> Trier par : </label>
-                                            <select id="trie" name="trie">
-                                                <option value="a">Nom</option>
-                                            </select>
+                                        <form method="POST" action="exportCat.php" align="center">
+                                            <a type="submit" name="Export" >
+                                                <button class="btn">Export Excel</button>
+                                            </a>
+                                        </form>    
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label for="recherche"> Rechercher : </label>
-                                            <input type="text" id="recherche">
+                                        <form method="POST" action="pdfCat.php" align="center">
+                                            <a type="submit" name="PDF" >
+                                                <button class="btn">Generer un fichier PDF</button>
+                                            </a>
+                                        </form>    
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a class="btn">Generer un fichier PDF</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a class="btn">Gerer</a>
-                                        </td>
-                                    </tr>
                                     </tr>
                                 </table>
                             </div>

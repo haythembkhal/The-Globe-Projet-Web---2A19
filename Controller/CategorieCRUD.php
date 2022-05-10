@@ -93,6 +93,20 @@
 				die('Erreur:'. $e->getMessage());
 			}
 		}
+
+		function RechercherCategorie($Nom_Cat)
+		{
+			$db=config::getConnexion();
+			try {
+				$query = $db->query("SELECT * FROM categories WHERE nom_cat LIKE '%$Nom_Cat%' ");
+				$query->execute(/*['nom_produit'=>$Nom_Cat]*/);
+				$liste=$query->fetchALL();
+				return $liste;
+			   
+			} catch (PDOException $e) {
+				$e->getMessage();
+			}
+		}
 	}
 	
 ?>

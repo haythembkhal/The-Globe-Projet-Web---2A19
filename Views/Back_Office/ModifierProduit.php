@@ -68,9 +68,6 @@
     {
         $listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
     }
-    else{
-        $error = "Missing information";
-    }
     
     if(isset($_POST['Trie']))
     {  
@@ -84,9 +81,7 @@
             $listeproduit = $ProduitCRUD->TriePrixDESC();
         }
     }
-    else{
-        $error = "Missing information";
-    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -300,6 +295,7 @@
                             <?php
                             if (isset($_POST['id_produit'])){
                                 $produit = $ProduitCRUD->RecupererProduit($_POST['id_produit']);
+                            }
                             ?>
                             <a href="AjouterProduit.php"><button class="btn">Retour</button></a>
                             <hr>
@@ -430,7 +426,7 @@
                                                 <label>                                  </label>
                                             </td>
                                             <td>
-                                                <input type="hidden" name="id_produit" value="<?php echo $produit['id_produit']; } ?>" >
+                                                <input type="hidden" name="id_produit" value="<?php echo $produit['id_produit']; ?>" >
                                             </td>                
                                             <td>
                                                 <label>                                  </label>

@@ -1,84 +1,92 @@
 <?php
 
-include_once '../../Model/Produit.php';
-include_once '../../Model/Categorie.php';
-include_once '../../Controller/ProduitCRUD.php';
-include_once '../../Controller/CategorieCRUD.php';
+    include_once '../../Model/Produit.php';
+    include_once '../../Model/Categorie.php';
+	include_once '../../Controller/ProduitCRUD.php';
+	include_once '../../Controller/CategorieCRUD.php';
+	
+	$ProduitCRUD = new ProduitCRUD();
+	$listeproduit=$ProduitCRUD->AfficherProduit(); 
 
-$ProduitCRUD = new ProduitCRUD();
-$listeproduit=$ProduitCRUD->AfficherProduit(); 
+    $CategorieCRUD = new CategorieCRUD();
+	$listecategorietype=$CategorieCRUD->AfficherCategorie();
 
-$CategorieCRUD = new CategorieCRUD();
-$listecategorietype=$CategorieCRUD->AfficherCategorie();
+    $error = "";
 
-$error = "";
+    $Produit = null;
 
-$Produit = null;
+    $Produits = new ProduitCRUD();
 
-$Produits = new ProduitCRUD();
+    if (isset($_POST['ajout'])) {
 
-if (isset($_POST['ajout'])) {
-
-    $image_produit = $_FILES["image_produit"]["name"];
-    $tmp_image_produit= $_FILES["image_produit"]["tmp_name"];  
+        $image_produit = $_FILES["image_produit"]["name"];
     
-    $folder = "../Uploads/".$image_produit;
+        $tmp_image_produit= $_FILES["image_produit"]["tmp_name"];  
     
-    if (
-        isset($_POST['nom_produit']) &&		
-        isset($_POST['categorie_produit']) &&
-        isset($_POST['quantite_produit']) && 
-        isset($_POST['prix_produit']) 
-    ) {
+        $folder = "../Uploads/".$image_produit;
+    
         if (
-            !empty($_POST['nom_produit']) &&
-            !empty($_POST['categorie_produit']) && 
-            !empty($_POST['quantite_produit']) && 
-            !empty($_POST['prix_produit'])
+            isset($_POST['nom_produit']) &&		
+            isset($_POST['categorie_produit']) &&
+            isset($_POST['quantite_produit']) && 
+            isset($_POST['prix_produit']) 
+            //&&&
+            //&isset($_POST['image_produit']) 
+    
         ) {
-
-            $Produit = new Produit(
-                null,
-                $_POST['nom_produit'],
-                $_POST['categorie_produit'], 
-                $_POST['quantite_produit'],
-                $_POST['prix_produit'],
-                $folder
-            );
-
-            $Produits->AjouterProduit($Produit);
-            header('Location:AjouterProduit.php');
+            if (
+                !empty($_POST['nom_produit']) &&
+                !empty($_POST['categorie_produit']) && 
+                !empty($_POST['quantite_produit']) && 
+                !empty($_POST['prix_produit'])
+                //&&
+                //&!empty($_POST['image_produit'])
+    
+            ) {
+    
+                $Produit = new Produit(
+                    null,
+                    $_POST['nom_produit'],
+                    $_POST['categorie_produit'], 
+                    $_POST['quantite_produit'],
+                    $_POST['prix_produit'],
+                    //$_POST['image_produit']
+                    $folder
+                );
+    
+                $Produits->AjouterProduit($Produit);
+                header('Location:AjouterProduit.php');
+            }
+            else{
+                $error = "Missing information";
+            }
+        move_uploaded_file($tmp_image_produit, $folder);
+        }        
+    }
+    
+    if(isset($_POST['RechercheNom']))
+    {
+        $listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
+    }
+    else{
+        $error = "Missing information";
+    }
+    
+    if(isset($_POST['Trie']))
+    {  
+        $Trier = filter_input(INPUT_POST, 'Trie', FILTER_SANITIZE_STRING);
+        if ($Trier == "Prix croissant")
+        {
+            $listeproduit = $ProduitCRUD->TriePrixASC();
         }
         else
-            $error = "Missing information";
+        {
+            $listeproduit = $ProduitCRUD->TriePrixDESC();
+        }
     }
-    move_uploaded_file($tmp_image_produit, $folder);
-}
-
-if(isset($_POST['RechercheNom']))
-{
-    $listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
-}
-else{
-    $error = "Missing information";
-}
-
-if(isset($_POST['Trie']))
-{  
-    $Trier = filter_input(INPUT_POST, 'Trie', FILTER_SANITIZE_STRING);
-    if ($Trier == "Prix croissant")
-    {
-        $listeproduit = $ProduitCRUD->TriePrixASC();
+    else{
+        $error = "Missing information";
     }
-    else
-    {
-        $listeproduit = $ProduitCRUD->TriePrixDESC();
-    }
-}
-else{
-    $error = "Missing information";
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -135,7 +143,7 @@ else{
                                     <li class="divider"></li>
                                     <li class="nav-header">Example Header</li>
                                     <li><a href="#">A Separated link</a></li>
-                                                                </ul>
+                                </ul>
                             </li>
                             
                             <li><a href="#">
@@ -293,12 +301,11 @@ else{
                                 <form action="" method="POST" onsubmit="return CTRL()" enctype="multipart/form-data">
                                     <table class="table">
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <label for="nom_produit"> Nom : </label>
+                                                </center>
                                             </td>
                                             <td>
                                                 <input type="text" name="nom_produit" id="nom_produit" placeholder="nom du produit" minlength="1" maxlength="50">
@@ -306,35 +313,17 @@ else{
                                                     <div id="error_nom_produit" style="color:red"></div>
                                                 </p>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <label for="categorie_produit"> Catégorie : </label>
+                                                </center>
                                             </td>
                                             <td>
                                                 <select type="range" name="categorie_produit" id="categorie_produit">
-                                                    <option selected disabled> Catégorie du produit</option>
+                                                    <option selected disabled>choisir...</option>
                                                     <?php
                                                         foreach($listecategorietype as $categorie){
                                                     ?>
@@ -346,31 +335,13 @@ else{
                                                 <br>
                                                 <a href="AjouterCategorie.php">Nouvelle catégorie</a>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <label for="quantite_produit"> Quantité  : </label>
+                                                </center>
                                             </td>
                                             <td>
                                                 <input type="number" name="quantite_produit" id="quantite_produit">
@@ -378,32 +349,13 @@ else{
                                                     <div id="error_quantite_produit" style="color:red"></div>
                                                 </p>
                                             </td>
-                                            <td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <label for="prix_produit"> Prix : </label>
+                                                </center>
                                             </td>
                                             <td>
                                                 <input type="number" name="prix_produit" id="prix_produit" > DT
@@ -411,31 +363,13 @@ else{
                                                     <div id="error_prix_produit" style="color:red"></div>
                                                 </p>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <label for="image_produit"> Image : </label>
+                                                </center>
                                             </td>
                                             <td>
                                                 <input type="file" name="image_produit" id="image_produit" accept=".jpg, .jpeg, .png, .gif">
@@ -443,29 +377,26 @@ else{
                                                     <div id="error_image_produit" style="color:red"></div>
                                                 </p>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         <br>
                                     </table>
                                     <div class="module-head"></div>
                                     <table class="table">
                                         <tr>
+                                        <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -509,8 +440,8 @@ else{
                                         </tr>
                                     </table>
                                 </form>
-                                <script>
 
+                                <script>
                                 function CTRL()
                                 {
                                     var nom_produit=document.getElementById("nom_produit").value;
@@ -575,7 +506,7 @@ else{
 
                                     if(image_produit=="")
                                     {
-                                        error_image_produit.innerHTML="Il faut mettre une image_produit pour ce produit !";  
+                                        error_image_produit.innerHTML="Il faut mettre une image produit pour ce produit !";  
                                         return false;
                                     }
                                     else 
@@ -583,56 +514,47 @@ else{
                                             error_image_produit.innerHTML="";  
                                         }
                                 }
-
                                 </script>
 
                             </div>
                         </div>
-                        <div class="content">
+                        <div class="content" id="Aff_Fil">
                             <div class="module">
                                 <div class="module-head">
                                     <center><h3>Liste des produits</h3><center>
                                 </div>
-                                <div style="position:relative; left:795px; top:4px;">
-                                    <a href="AjouterProduit.php#Aff_Fil"><button class="btn">Annuler</button></a>
-                                </div>
-                                <hr>
-                                <div class="module-body table">
-                
-                                    <form class="navbar-search pull-left input-append" action="" method="POST">
-                                        <input type="text" class="span3" name="RechercheNom" placeholder="Rechercher">
-                                        <button class="btn" type="submit">
-                                            <i class="icon-search"></i>
-                                        </button>	
-                                    </form> 
-                           
-                                    <form  method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+                                <div>
+                                    <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" align="center">
+                                        <br>
                                         <button type="submit" class="btn" for="Trie">Trier par : </button>
                                         <select type="range" name="Trie" id="Trie">
                                             <option selected disabled>choisir...</option>
-                                                <option >Prix croissant</option>
-                                                <option >Prix décroissant</option>
+                                                <option>Prix croissant</option>
+                                                <option>Prix décroissant</option>
                                         </select>
-                                    </form>
-                                     
-                                    <form action="" method="GET">
-                                        <input class="btn" type="submit" value="Filtrer par :" >
-                                        <?php
-                                        $cnx = mysqli_connect("localhost","root","","the_globe");
+                                    </form>  
+                                </div>  
+                                <br>
+                                <div>
+                                    <form action="" method="GET" align="center">
+                                        <div>
+                                            <input class="btn" type="submit" value="Filtrer par :" >
+                                            <?php
+                                            $cnx = mysqli_connect("localhost","root","","the_globe");
 
-                                        $categorie = "SELECT * FROM categories";
-                                        $listecategorietype  = mysqli_query($cnx, $categorie);
+                                            $categorie = "SELECT * FROM categories";
+                                            $listecategorietype  = mysqli_query($cnx, $categorie);
 
-                                        if(mysqli_num_rows($listecategorietype) > 0)
-                                        {
-                                            foreach($listecategorietype as $categorielist)
+                                            if(mysqli_num_rows($listecategorietype) > 0)
                                             {
-                                                $checked = [];
-                                                if(isset($_GET['categorie']))
+                                                foreach($listecategorietype as $categorielist)
                                                 {
-                                                    $checked = $_GET['categorie'];
-                                                }
-                                        ?>
+                                                    $checked = [];
+                                                    if(isset($_GET['categorie']))
+                                                    {
+                                                        $checked = $_GET['categorie'];
+                                                    }
+                                            ?>
                                         <input type="checkbox" name="categorie[]" value="<?=  $categorielist['id_cat']; ?>" />
                                         <?= $categorielist['nom_cat']; 
                                             }
@@ -642,50 +564,90 @@ else{
                                             echo "No categories Found";
                                         }
                                         ?>
+                                        </div>
                                     </form>
-                                    <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nom</th>
-                                                    <th>Catégorie</th>
-                                                    <th>Quantité</th>
-                                                    <th>Prix</th>
-                                                    <th>Image</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $produit = "SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit";
-                                                $listeproduit = mysqli_query($cnx, $produit);
-                                                if(isset($_GET['categorie']))
-                                                {
-                                                    $categoriechecked = [];
-                                                    $categoriechecked = $_GET['categorie'];
-                                                    foreach($categoriechecked as $rowcategorie)
-                                                    {
-                                                        $produit = "SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit WHERE categorie_produit IN ($rowcategorie)";
-                                                        $listeproduit = mysqli_query($cnx, $produit);
-                                                        if(mysqli_num_rows($listeproduit) > 0)
-                                                        {
+                                    <center><a href="AjouterProduit.php"><button class="btn">Retour</button></a></center>
+                                </div>
+                                <br>
+                                <div>
+                                    <form action="" method="POST" align="center">
+                                        <div>
+                                            <input type="text" class="span3" name="RechercheNom" placeholder="rechercher...">
 
-                                                    foreach($listeproduit as $produit){
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $produit['nom_produit']; ?></td>
-                                                    <td><?php echo $produit['nom_cat']; ?></td>
-                                                    <td><?php echo $produit['quantite_produit']; ?></td>
-                                                    <td><?php echo $produit['prix_produit']; ?></td>
-                                                    <td><?php echo $produit['image_produit']; ?></td>
-                                                    <td>
-                                                        <form method="POST" action="ModifierProduit.php" align="center">
-                                                            <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
-                                                            <input type="hidden" value=<?php echo $produit['id_produit']; ?> name="id_produit">
-                                                        </form>
-                                                        <center><a href="SupprimerProduit.php?id_produit=<?php echo $produit['id_produit']; ?>"><button class="btn">Supprimer</button></a><center>
-                                                    </td>
-                                                </tr>
-                                                <?php
+                                            <button class="btn" type="submit">
+                                                <i class="icon-search"></i>
+                                            </button>	
+                                        </div>
+                                    </form>
+                                </div>
+                                <br>
+                                <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th><center>Nom</center></th>
+                                                <th><center>Catégorie</center></th>
+                                                <th><center>Quantité</center></th>
+                                                <th><center>Prix</center></th>
+                                                <th><center>Image</center></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $produit = "SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit";
+                                            $listeproduit = mysqli_query($cnx, $produit);
+                                            if(isset($_GET['categorie']))
+                                            {
+                                                $categoriechecked = [];
+                                                $categoriechecked = $_GET['categorie'];
+                                                foreach($categoriechecked as $rowcategorie)
+                                                {
+                                                    $produit = "SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit WHERE categorie_produit IN ($rowcategorie)";
+                                                    $listeproduit = mysqli_query($cnx, $produit);
+                                                    if(mysqli_num_rows($listeproduit) > 0)
+                                                    {
+
+                                                foreach($listeproduit as $produit){
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <center>
+                                                    <label>                                  </label>
+                                                    <?php echo $produit['nom_produit']; ?>
+                                                    </center>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                    <label>                                  </label>
+                                                    <?php echo $produit['nom_cat']; ?>
+                                                    </center>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                    <label>                                  </label>
+                                                    <?php echo $produit['quantite_produit']; ?>
+                                                    </center>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                    <label>                                  </label>
+                                                    <?php echo $produit['prix_produit']; ?></td>
+                                                    </center>
+                                                <td>
+                                                    <center>
+                                                    <label>                                  </label>
+                                                    <?php echo $produit['image_produit']; ?>
+                                                    </center>
+                                                </td>
+                                                <td>
+                                                    <form method="POST" action="ModifierProduit.php" align="center">
+                                                        <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
+                                                        <input type="hidden" value=<?php echo $produit['id_produit']; ?> name="id_produit">
+                                                    </form>
+                                                    <center><a href="SupprimerProduit.php?id_produit=<?php echo $produit['id_produit']; ?>"><button class="btn">Supprimer</button></a><center>
+                                                </td>
+                                            </tr>
+                                            <?php
                                                             }
                                                         }
                                                         else
@@ -694,11 +656,10 @@ else{
                                                         }
                                                     }
                                                 }
-                                                ?>
-                                            </tbody>
-                                        </table> 
+                                            ?>
+                                        </tbody>
                                     </table> 
-                                </div>
+                                </table> 
                             </div>
                         </div>
                         <div class="content">
@@ -711,7 +672,7 @@ else{
                                         <td>
                                         <form method="POST" action="export.php" align="center">
                                             <a type="submit" name="Export" >
-                                                <button class="btn">Export</button>
+                                                <button class="btn">Export Excel</button>
                                             </a>
                                         </form>    
                                         </td>
@@ -732,12 +693,13 @@ else{
                 </div>
             </div>
         </div>
-        
-        <div class="footer">
-            <div class="container">
-                <b class="copyright">&copy; 2022 The globe </b> All rights reserved.
-            </div>
-	    </div>
+    </div>
+    
+    <div class="footer">
+        <div class="container">
+            <b class="copyright">&copy; 2022 The globe </b> All rights reserved.
+        </div>
+    </div>
         
         <script src="scripts/jquery-1.9.1.min.js"></script>
         <script src="scripts/jquery-ui-1.10.1.custom.min.js"></script>
@@ -755,3 +717,4 @@ else{
 
     </body>
 </html>
+                                    
