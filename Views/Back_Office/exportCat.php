@@ -19,7 +19,7 @@ $setData = '';
 }  
   
 header("Content-type: application/octet-stream");  
-header("Content-Disposition: attachment; filename=ListeDesProduits.xls");  
+header("Content-Disposition: attachment; filename=ListeDesCategories.xls");  
 header("Pragma: no-cache");  
 header("Expires: 0");  
 

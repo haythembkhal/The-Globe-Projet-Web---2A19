@@ -3,9 +3,7 @@
     include_once '../../Model/Categorie.php';
 	include_once '../../Controller/CategorieCRUD.php';
 	
-	$CategorieCRUD = new CategorieCRUD();
-
-	$listecategorie=$CategorieCRUD->AfficherCategorie(); 
+	$CategorieCRUD = new CategorieCRUD(); 
 
     $error = "";
 
@@ -35,11 +33,11 @@
         $Trier = filter_input(INPUT_POST, 'TrieCat', FILTER_SANITIZE_STRING);
         if ($Trier == "ordre alphabetique croissant")
         {
-            $listecategorie = $CategorieCRUD->TrierNomCatASC();
+            $listecategorieT = $CategorieCRUD->TrierNomCatASC();
         }
         else
         {
-            $listecategorie = $CategorieCRUD->TrierNomCatDESC();
+            $listecategorieT = $CategorieCRUD->TrierNomCatDESC();
         }
     }
     else{
@@ -277,7 +275,7 @@
                                             </td>
                                             <td>
                                                 <center>
-                                                <input type="text" name="nom_cat" id="nom_cat" placeholder="nom du categorie" minlength="1" maxlength="20">
+                                                <input type="text" name="nom_cat" id="nom_cat" placeholder="nom du cat" minlength="1" maxlength="20">
                                                 <p>
                                                     <div id="error_nom_cat" style="color:red"></div>
                                                 </p>
@@ -382,7 +380,7 @@
                                 </div>
                                 <div class="module-body table">
                                     <div>
-                                        <form method="POST" action ="TrierCategorie.php" align="center">
+                                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" align="center">
                                             <br>
                                             <button type="submit" class="btn" for="TrieCat">Trier par : </button>
                                             <select type="range" name="TrieCat" id="TrieCat">
@@ -405,7 +403,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    foreach($listecategorie as $categorie){
+                                                    foreach($listecategorieT as $categorie){
                                                 ?>
                                                 <tr>
                                                     <td></td>
@@ -427,7 +425,7 @@
                                                     <td>
                                                         <form method="POST" action="ModifierCategorie.php" align="center">
                                                             <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
-                                                            <input type="hidden" value=<?php echo $categorie['id_cat']; ?> name="id_cat">
+                                                            <input type="hidden" value="<?php echo $categorie['id_cat']; ?>" />
                                                         </form>
                                                     </td>
                                                     <td>

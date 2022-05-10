@@ -5,7 +5,7 @@
 
     $CategorieCRUD = new CategorieCRUD();
 
-    $listecategorie=$CategorieCRUD->AfficherCategorie(); 
+	$listecategorie=$CategorieCRUD->AfficherCategorie(); 
 
     $error = "";
 
@@ -24,12 +24,24 @@
                 $_POST['nom_cat']
             );
             $Categories->ModifierCategorie($Categorie,$_POST['id_cat']);
-            header('Location:AjouterCategorie.php');
+            header('Location:ModifierCategorie.php');
         }
         else
             $error = "Missing information";
-    }    
-
+    } 
+  
+    if(isset($_POST['TrieCat']))
+    {  
+        $Trier = filter_input(INPUT_POST, 'TrieCat', FILTER_SANITIZE_STRING);
+        if ($Trier == "ordre alphabetique croissant")
+        {
+            $listecategorie = $CategorieCRUD->TrierNomCatASC();
+        }
+        else
+        {
+            $listecategorie = $CategorieCRUD->TrierNomCatDESC();
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +98,7 @@
                                     <li class="divider"></li>
                                     <li class="nav-header">Example Header</li>
                                     <li><a href="#">A Separated link</a></li>
-                                                                </ul>
+                                </ul>
                             </li>
                             
                             <li><a href="#">
@@ -239,10 +251,11 @@
                         <div class="content">    
                             <div id="error">
                                 <?php echo $error; ?>
-                             </div>
+                            </div>
+                             
                             <?php
                             if (isset($_POST['id_cat'])){
-                                $Categorie = $CategorieCRUD->RecupererCategorie($_POST['id_cat']);
+                                $categorie = $CategorieCRUD->RecupererCategorie($_POST['id_cat']);
                             }
                             ?>
                             <a href="AjouterCategorie.php"><button class="btn">Retour</button></a>
@@ -257,23 +270,27 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <label for="nom_cat"> Nom : </label>
+                                                </center>
                                             </td>
                                             <td>
-                                                <input type="text" name="nom_cat" id="nom_cat" placeholder="nom du categorie" minlength="1" maxlength="20" value="<?php echo $Categorie['nom_cat']; ?>" >
+                                                <center>
+                                                <input type="text" name="nom_cat" id="nom_cat" placeholder="nom du categorie" minlength="1" maxlength="20" value="<?php if (isset($_POST['id_cat'])){ 
+                                                    $Cat=$CategorieCRUD->RecupererCategorie($_POST['id_cat']);
+                                                 echo $Cat['nom_cat'];
+                                                 } ?>" >
                                                 <p>
                                                     <div id="error_nom_cat" style="color:red"></div>
                                                 </p>
+                                                </center>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -297,25 +314,31 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td>
-                                            <label>                                  </label>
-                                                <input type="submit" class="btn" id="Modifier" value="Modifier"> 
+                                                <center>
                                                 <label>                                  </label>
-                                            </td>
+                                                <input type="submit" class="btn" id="modif" value="Modifier"> 
+                                                <label>                                  </label>
+                                                </center>                                
+                                                <input type="hidden" name="id_cat" value="<?php echo $categorie['id_cat']; ?>" >
+
+                                            </td>              
                                             <td>
-                                                <input type="hidden" name="id_cat" value="<?php echo $Categorie['id_cat']; ?>" >
-                                            </td>                
-                                            <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <input class="btn" type="reset" value="Annuler">
                                                 <label>                                  </label>
+                                                </center>                                
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -370,11 +393,26 @@
                                     <center><h3>Liste des categories</h3><center>
                                 </div>
                                 <div class="module-body table">
+                                    <div>
+                                        <form method="POST" action ="TrierCategorie.php" align="center">
+                                            <br>
+                                            <button type="submit" class="btn" for="TrieCat">Trier par : </button>
+                                            <select type="range" name="TrieCat" id="TrieCat">
+                                                <option selected disabled>choisir...</option>
+                                                    <option>ordre alphabetique croissant</option>
+                                                    <option>ordre alphabetique décroissant</option>
+                                            </select>
+                                        </form>  
+                                    </div>  
+                                    <br>
                                     <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Nom</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th><center>Nom</center></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -382,15 +420,39 @@
                                                     foreach($listecategorie as $categorie){
                                                 ?>
                                                 <tr>
-                                                    <td>  </td>
-                                                    <td><?php echo $categorie['nom_cat']; ?></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>
+                                                        <center>
+                                                        <label>                                  </label>
+                                                        <?php echo $categorie['nom_cat']; ?>
+                                                        <label>                                  </label>
+                                                        </center>   
+                                                    </td> 
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
                                                     <td>
                                                         <form method="POST" action="" align="center">
                                                             <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
-                                                            <input type="hidden" value=<?php echo $Categorie['id_cat']; ?> name="id_cat">
+                                                            <input type="hidden" value=<?php echo $categorie['id_cat']; ?> name="id_cat">
                                                         </form>
-                                                        <center><a href="SupprimerCategorie.php?id_cat=<?php echo $Categorie['id_cat']; ?>"><button class="btn">Supprimer</button></a><center>
                                                     </td>
+                                                    <td>
+                                                        <center><a href="SupprimerCategorie.php?id_cat=<?php echo $categorie['id_cat']; ?>"><button class="btn">Supprimer</button></a><center>
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
                                                 </tr>
                                                 <?php
                                                     }
@@ -409,28 +471,21 @@
                                 <table class="table">
                                     <tr>
                                         <td>
-                                            <label for="trie"> Trier par : </label>
-                                            <select id="trie" name="trie">
-                                                <option value="a">Nom</option>
-                                            </select>
+                                        <form method="POST" action="exportCat.php" align="center">
+                                            <a type="submit" name="Export" >
+                                                <button class="btn">Export Excel</button>
+                                            </a>
+                                        </form>    
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label for="recherche"> Rechercher : </label>
-                                            <input type="text" id="recherche">
+                                        <form method="POST" action="pdfCat.php" align="center">
+                                            <a type="submit" name="PDF" >
+                                                <button class="btn">Generer un fichier PDF</button>
+                                            </a>
+                                        </form>    
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a class="btn">Generer un fichier PDF</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a class="btn">Gerer</a>
-                                        </td>
-                                    </tr>
                                     </tr>
                                 </table>
                             </div>

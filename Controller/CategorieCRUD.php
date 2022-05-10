@@ -94,12 +94,24 @@
 			}
 		}
 
-		function RechercherCategorie($Nom_Cat)
+		function TrierNomCatASC()
 		{
 			$db=config::getConnexion();
 			try {
-				$query = $db->query("SELECT * FROM categories WHERE nom_cat LIKE '%$Nom_Cat%' ");
-				$query->execute(/*['nom_produit'=>$Nom_Cat]*/);
+				$query = $db->query("SELECT * FROM categories ORDER BY nom_cat ASC");
+				$liste=$query->fetchALL();
+				return $liste;
+			   
+			} catch (PDOException $e) {
+				$e->getMessage();
+			}
+		}
+
+		function TrierNomCatDESC()
+		{
+			$db=config::getConnexion();
+			try {
+				$query = $db->query("SELECT * FROM categories ORDER BY nom_cat DESC");
 				$liste=$query->fetchALL();
 				return $liste;
 			   
