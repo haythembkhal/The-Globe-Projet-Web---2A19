@@ -110,7 +110,7 @@
 		{
 			$db=config::getConnexion();
 			try {
-				$query = $db->query("SELECT * FROM produits ORDER BY prix_produit ASC");
+				$query = $db->query("SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit ORDER BY prix_produit ASC");
 				$liste=$query->fetchALL();
 				return $liste;
 			   
@@ -123,7 +123,7 @@
 		{
 			$db=config::getConnexion();
 			try {
-				$query = $db->query("SELECT * FROM produits ORDER BY prix_produit DESC");
+				$query = $db->query("SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit ORDER BY prix_produit DESC");
 				$liste=$query->fetchALL();
 				return $liste;
 			   
@@ -136,7 +136,7 @@
 		{
 			$db=config::getConnexion();
 			try {
-				$query = $db->query("SELECT * FROM produits WHERE nom_produit LIKE '%$Nom_Prod%' ");
+				$query = $db->query("SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit WHERE nom_produit LIKE '%$Nom_Prod%' ");
 				$query->execute(/*['nom_produit'=>$Nom_Prod]*/);
 				$liste=$query->fetchALL();
 				return $liste;

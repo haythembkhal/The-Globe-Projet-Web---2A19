@@ -63,7 +63,7 @@
         move_uploaded_file($tmp_image_produit, $folder);
         }        
     }
-
+    
     if(isset($_POST['RechercheNom']))
     {
         $listeproduit = $ProduitCRUD->Rechercher($_POST['RechercheNom']);
@@ -301,12 +301,11 @@
                                 <form action="" method="POST" onsubmit="return CTRL()" enctype="multipart/form-data">
                                     <table class="table">
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <label for="nom_produit"> Nom : </label>
+                                                </center>
                                             </td>
                                             <td>
                                                 <input type="text" name="nom_produit" id="nom_produit" placeholder="nom du produit" minlength="1" maxlength="50">
@@ -314,35 +313,17 @@
                                                     <div id="error_nom_produit" style="color:red"></div>
                                                 </p>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <label for="categorie_produit"> Catégorie : </label>
+                                                </center>
                                             </td>
                                             <td>
                                                 <select type="range" name="categorie_produit" id="categorie_produit">
-                                                    <option selected disabled> Catégorie du produit</option>
+                                                    <option selected disabled>choisir...</option>
                                                     <?php
                                                         foreach($listecategorietype as $categorie){
                                                     ?>
@@ -354,31 +335,13 @@
                                                 <br>
                                                 <a href="AjouterCategorie.php">Nouvelle catégorie</a>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <label for="quantite_produit"> Quantité  : </label>
+                                                </center>
                                             </td>
                                             <td>
                                                 <input type="number" name="quantite_produit" id="quantite_produit">
@@ -386,32 +349,13 @@
                                                     <div id="error_quantite_produit" style="color:red"></div>
                                                 </p>
                                             </td>
-                                            <td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <label for="prix_produit"> Prix : </label>
+                                                </center>
                                             </td>
                                             <td>
                                                 <input type="number" name="prix_produit" id="prix_produit" > DT
@@ -419,31 +363,13 @@
                                                     <div id="error_prix_produit" style="color:red"></div>
                                                 </p>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                             <td>
+                                                <center>
                                                 <label>                                  </label>
                                                 <label for="image_produit"> Image : </label>
+                                                </center>
                                             </td>
                                             <td>
                                                 <input type="file" name="image_produit" id="image_produit" accept=".jpg, .jpeg, .png, .gif">
@@ -451,29 +377,26 @@
                                                     <div id="error_image_produit" style="color:red"></div>
                                                 </p>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         <br>
                                     </table>
                                     <div class="module-head"></div>
                                     <table class="table">
                                         <tr>
+                                        <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -517,8 +440,8 @@
                                         </tr>
                                     </table>
                                 </form>
-                                <script>
 
+                                <script>
                                 function CTRL()
                                 {
                                     var nom_produit=document.getElementById("nom_produit").value;
@@ -600,54 +523,71 @@
                                 <div class="module-head">
                                     <center><h3>Liste des produits</h3><center>
                                 </div>
-                                <form  method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+                                <div>
+                                    <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" align="center">
+                                        <br>
+                                        <button type="submit" class="btn" for="Trie">Trier par : </button>
+                                        <select type="range" name="Trie" id="Trie">
+                                            <option selected disabled>choisir...</option>
+                                                <option>Prix croissant</option>
+                                                <option>Prix décroissant</option>
+                                        </select>
+                                    </form>  
+                                </div>  
                                 <br>
-                                    <button type="submit" class="btn" for="Trie">Trier par : </button>
-                                    <select type="range" name="Trie" id="Trie">
-                                        <option selected disabled>choisir...</option>
-                                            <option>Prix croissant</option>
-                                            <option>Prix décroissant</option>
-                                    </select>
-                                </form>    
-                                <form action="Filtrerproduit.php" method="GET">
-                                    <input class="btn" type="submit" value="Filtrer par :" >
-                                    <?php
-                                    $con = mysqli_connect("localhost","root","","the_globe");
+                                <div>
+                                    <form action="Filtrerproduit.php" method="GET" align="center">
+                                        <div>
+                                            <input class="btn" type="submit" value="Filtrer par :" >
 
-                                    $categorie = "SELECT * FROM categories";
-                                    $listecategorietype  = mysqli_query($con, $categorie);
+                                            <?php
+                                            $con = mysqli_connect("localhost","root","","the_globe");
 
-                                    if(mysqli_num_rows($listecategorietype) > 0)
-                                    {
-                                        foreach($listecategorietype as $categorielist)
-                                        {
-                                            $checked = [];
-                                            if(isset($_GET['categorie']))
+                                            $categorie = "SELECT * FROM categories ";
+                                            $listecategorietype  = mysqli_query($con, $categorie);
+
+                                            if(mysqli_num_rows($listecategorietype) > 0)
                                             {
-                                                $checked = $_GET['categorie'];
+                                                foreach($listecategorietype as $categorielist)
+                                                {
+                                                    $checked = [];
+                                                    if(isset($_GET['categorie']))
+                                                    {
+                                                        $checked = $_GET['categorie'];
+                                                    }
+                                            ?>
+                                            
+                                            <input type="checkbox" name="categorie[]" value="<?=  $categorielist['id_cat']; ?>" />
+
+                                            <?= $categorielist['nom_cat']; 
+                                                }
                                             }
-                                    ?>
-                                    <input type="checkbox" name="categorie[]" value="<?=  $categorielist['id_cat']; ?>" />
-                                    <?= $categorielist['nom_cat']; 
-                                        }
-                                    }
-                                    ?>
-                                </form>
-                                <form class="navbar-search pull-left input-append" action="" method="POST">
-                                    <input type="text" class="span3" name="RechercheNom" placeholder="Rechercher">
-                                    <button class="btn" type="submit">
-                                        <i class="icon-search"></i>
-                                    </button>	
-                                </form>
+                                            ?>
+                                        </div>
+                                    </form>
+                                </div>
+                                <br>
+                                <div>
+                                    <form action="" method="POST" align="center">
+                                        <div>
+                                            <input type="text" class="span3" name="RechercheNom" placeholder="rechercher...">
+
+                                            <button class="btn" type="submit">
+                                                <i class="icon-search"></i>
+                                            </button>	
+                                        </div>
+                                    </form>
+                                </div>
+                                <br>
                                 <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Nom</th>
-                                                <th>Catégorie</th>
-                                                <th>Quantité</th>
-                                                <th>Prix</th>
-                                                <th>Image</th>
+                                                <th><center>Nom</center></th>
+                                                <th><center>Catégorie</center></th>
+                                                <th><center>Quantité</center></th>
+                                                <th><center>Prix</center></th>
+                                                <th><center>Image</center></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -655,11 +595,35 @@
                                                 foreach($listeproduit as $produit){
                                             ?>
                                             <tr>
-                                                <td><?php echo $produit['nom_produit']; ?></td>
-                                                <td><?php echo $produit['nom_cat']; ?></td>     <?php ?>
-                                                <td><?php echo $produit['quantite_produit']; ?></td>
-                                                <td><?php echo $produit['prix_produit']; ?></td>
-                                                <td><?php echo $produit['image_produit']; ?></td>
+                                                <td>
+                                                    <center>
+                                                    <label>                                  </label>
+                                                    <?php echo $produit['nom_produit']; ?>
+                                                    </center>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                    <label>                                  </label>
+                                                    <?php echo $produit['nom_cat']; ?>
+                                                    </center>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                    <label>                                  </label>
+                                                    <?php echo $produit['quantite_produit']; ?>
+                                                    </center>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                    <label>                                  </label>
+                                                    <?php echo $produit['prix_produit']; ?></td>
+                                                    </center>
+                                                <td>
+                                                    <center>
+                                                    <label>                                  </label>
+                                                    <?php echo $produit['image_produit']; ?>
+                                                    </center>
+                                                </td>
                                                 <td>
                                                     <form method="POST" action="ModifierProduit.php" align="center">
                                                         <a type="submit" name="Modifier" ><button class="btn">Modifier</button></a>
@@ -676,32 +640,32 @@
                                 </table> 
                             </div>
                         </div>
-                    </div>
-                    <div class="content">
-                        <div class="module">
-                            <div class="module-head">
-                                <center><h3> Fonctionnalité avancé </h3><center>
+                        <div class="content">
+                            <div class="module">
+                                <div class="module-head">
+                                    <center><h3> Fonctionnalité avancé </h3><center>
+                                </div>
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                        <form method="POST" action="export.php" align="center">
+                                            <a type="submit" name="Export" >
+                                                <button class="btn">Export Excel</button>
+                                            </a>
+                                        </form>    
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        <form method="POST" action="pdf.php" align="center">
+                                            <a type="submit" name="PDF" >
+                                                <button class="btn">Generer un fichier PDF</button>
+                                            </a>
+                                        </form>    
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                    <form method="POST" action="export.php" align="center">
-                                        <a type="submit" name="Export" >
-                                            <button class="btn">Export Excel</button>
-                                        </a>
-                                    </form>    
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    <form method="POST" action="pdf.php" align="center">
-                                        <a type="submit" name="PDF" >
-                                            <button class="btn">Generer un fichier PDF</button>
-                                        </a>
-                                    </form>    
-                                    </td>
-                                </tr>
-                            </table>
                         </div>
                     </div>
                 </div>

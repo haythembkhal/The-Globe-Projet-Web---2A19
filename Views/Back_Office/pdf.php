@@ -80,10 +80,10 @@ if (
 
     function viewTable($db){
         $this->SetFont('Times','',10);
-        $liste = $db->query('SELECT * FROM produits');
+        $liste = $db->query('SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit');
         while($data = $liste->fetch(PDO::FETCH_OBJ)){
             $this->Cell(40,10,$data->nom_produit,1,0,'C');
-            $this->Cell(30,10,$data->categorie_produit,1,0,'C');
+            $this->Cell(30,10,$data->nom_cat,1,0,'C');
             $this->Cell(30,10,$data->quantite_produit,1,0,'C');
             $this->Cell(20,10,$data->prix_produit,1,0,'C');
             $this->Cell(60,10,$data->image_produit,1,0,'C');

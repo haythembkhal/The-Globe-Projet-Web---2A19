@@ -2,7 +2,7 @@
 
 $connect = new mysqli('localhost', 'root', '');  
 mysqli_select_db($connect, 'the_globe');  
-$sql = "SELECT nom_produit, categorie_produit, quantite_produit, prix_produit, image_produit FROM produits";  
+$sql = "SELECT nom_produit, nom_cat, quantite_produit, prix_produit, image_produit FROM produits INNER JOIN categories ON id_cat=categorie_produit";  
 $setRec = mysqli_query($connect, $sql);  
 
 $columnHeader = '';  

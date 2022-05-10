@@ -7,7 +7,10 @@ include_once '../../Controller/CategorieCRUD.php';
 
 $ProduitCRUD = new ProduitCRUD();
 $listeproduit=$ProduitCRUD->AfficherProduit();
-$listeproduit2=$ProduitCRUD->AfficherProduit(); 
+$listeproduit2 = $ProduitCRUD->AfficherProduit();
+
+$CategorieCRUD = new CategorieCRUD();
+$listecategorietype=$CategorieCRUD->AfficherCategorie();
 
 $error = "";
 
@@ -49,6 +52,22 @@ $Produits = new ProduitCRUD();
 		else{
 			$error = "Missing information";
 		}
+}
+
+if(isset($_POST['Trie']))
+{  
+	$Trier = filter_input(INPUT_POST, 'Trie', FILTER_SANITIZE_STRING);
+	if ($Trier == "Prix croissant")
+	{
+		$listeproduit2 = $ProduitCRUD->TriePrixASC();
+	}
+	else
+	{
+		$listeproduit2 = $ProduitCRUD->TriePrixDESC();
+	}
+}
+else{
+	$error = "Missing information";
 }
 	   
 ?>
@@ -115,7 +134,7 @@ $Produits = new ProduitCRUD();
 		<div class="grids-main py-5">
 			<div class="container py-lg-4">
 				<div class="headerhny-title">
-					<h2 class="hny-title">Nos Produits</h2>
+					<center><h1 class="hny-title">Nos Produits</h1></center>
 					<br>
 				</div>
 				<div class="owl-three owl-carousel owl-theme">
@@ -132,18 +151,17 @@ $Produits = new ProduitCRUD();
 								</h4>
 							</div>
 						</div>
+						<br>
 						<center><h6><a><?php echo $produit['nom_cat'];?></a></h6></center>
-						
 						<center><h2><a class="title-gd"><?php echo $produit['nom_produit']; ?></a></h2></center>
 					</div>	
-					<!--<?php/* endforeach; */?>-->
 				<?php endforeach; ?>
 				</div>
 
 				<div class="headerhny-title">
 					<div class="w3l-title-grids">
 						<div class="button-center  text-center mt-3" style="position:relative; left:795px; top:4px;">
-							<a href="#projects" class="btn-center  view-button"> Voir tout <span aria-hidden="true" ></span></a>
+							<a href="#projects" class="btn-center view-button"> Voir tout <span aria-hidden="true" ></span></a>
 						</div>
 					</div>
 				</div>
@@ -151,49 +169,52 @@ $Produits = new ProduitCRUD();
 		</div>
 	</section>
 
-
 	<section class="w3l-albums py-5" id="projects">
 		<div class="container py-lg-4">
 			<div class="headerhny-title">
-				<h2 class="hny-title">Nos Catégories<h2>
+				<center><h1 class="hny-title">Nos Catégories<h1><center>
 			</div>
-			<?php foreach($listeproduit2 as $produit): ?>	
-			<table class="table table-bordered">
-				<tr>
-					<td>
-					</td>
-				</tr>
-				<tr>
-					<td>
-					</td>
-					<td>
-						<div class="message">
-							<h6>
-								<?php echo $produit['nom_cat'];?>
-							</h6>
-							<a class="author-book-title">
-								<?php echo $produit['nom_produit']; ?>
-							</a>
-						</div>
-						<img src="<?php echo $produit['image_produit'];?>" class="img-fluid" alt="author image">
-						<h4>
-							<span class="post">
-								<span class="fa"> </span>
-								<?php echo $produit['prix_produit']; ?> DT
-							</span>
-							<span class="post fa fa-heart text-right">
-							</span>
-						</h4>
-					</td>
-					<td>
-					</td>
-				</tr>
-				<tr>
-					<td>
-					</td>
-				</tr>
-			</table>
-			<?php endforeach; ?>
+			<br>
+			<form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+				<br>
+				<button type="submit" class="btn-center view-button" for="Trie" >Trier par :</button>
+				<select type="range" name="Trie" id="Trie">
+					<option selected disabled>choisir...</option>
+						<option>Prix croissant</option>
+						<option>Prix décroissant</option>
+				</select>
+			</form>    
+			<div id="projects2">
+				<table class="table table-bordered">
+					<tr>
+					</tr>
+					<tr>
+						<?php foreach($listeproduit2 as $produit): ?>
+						<td>
+							<div class="message">
+								<h6>
+									<?php echo $produit['nom_cat'];?>
+								</h6>
+								<a class="author-book-title">
+									<?php echo $produit['nom_produit']; ?>
+								</a>
+							</div>
+							<img  class="img-fluid rounded team-image" src="<?php echo $produit['image_produit'];?>" class="img-fluid" alt="author image">
+							<h4>
+								<span class="post">
+									<span class="fa"> </span>
+									<?php echo $produit['prix_produit']; ?> DT
+								</span>
+								<span class="post fa fa-heart text-right">
+								</span>
+							</h4>
+						</td>
+						<?php endforeach; ?>
+					</tr>
+					<tr>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</section>
 

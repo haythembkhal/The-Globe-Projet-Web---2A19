@@ -656,7 +656,7 @@ else{
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $produit = "SELECT * FROM produits";
+                                                $produit = "SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit";
                                                 $listeproduit = mysqli_query($cnx, $produit);
                                                 if(isset($_GET['categorie']))
                                                 {
@@ -664,7 +664,7 @@ else{
                                                     $categoriechecked = $_GET['categorie'];
                                                     foreach($categoriechecked as $rowcategorie)
                                                     {
-                                                        $produit = "SELECT * FROM produits WHERE categorie_produit IN ($rowcategorie)";
+                                                        $produit = "SELECT * FROM produits INNER JOIN categories ON id_cat=categorie_produit WHERE categorie_produit IN ($rowcategorie)";
                                                         $listeproduit = mysqli_query($cnx, $produit);
                                                         if(mysqli_num_rows($listeproduit) > 0)
                                                         {
@@ -673,7 +673,7 @@ else{
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $produit['nom_produit']; ?></td>
-                                                    <td><?php echo $produit['categorie_produit']; ?></td>
+                                                    <td><?php echo $produit['nom_cat']; ?></td>
                                                     <td><?php echo $produit['quantite_produit']; ?></td>
                                                     <td><?php echo $produit['prix_produit']; ?></td>
                                                     <td><?php echo $produit['image_produit']; ?></td>
