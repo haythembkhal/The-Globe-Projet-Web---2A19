@@ -1,8 +1,6 @@
-//
+
 <?php 
 include '../../Controller/spectacleControllerF.php';
-
-
 $spectacle= new SpectaclesC();
 ?>
 
@@ -51,13 +49,17 @@ $spectacle= new SpectaclesC();
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item active">
-							<a class="nav-link" href="http://localhost/Alliance/View/Front/index.php">Home</a>
+							<a class="nav-link" href="http://localhost/Alliance/View/Front/index_with_profil.php">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="about.php">About</a>
+							<a class="nav-link" href="about_profile.php">About</a>
 						</li>
-				<li class="nav-item">
-								<a class="nav-link" href="genre.php">Genre</a>
+							<li class="nav-item">
+								<a class="nav-link" href="Artistes_profile.php">Artistes</a>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="Boutique_profil.php">Boutique</a>
 							</li>
 
 						<li class="nav-item">
@@ -85,24 +87,6 @@ $spectacle= new SpectaclesC();
 								</form>
 								<div class="browse-items">
 									<h3 class="hny-title two mt-md-5 mt-4">Browse all:</h3>
-									<ul class="search-items">
-										<li><a href="genre.php">Action</a></li>
-										<li><a href="genre.php">Drama</a></li>
-										<li><a href="genre.php">Family</a></li>
-										<li><a href="genre.php">Thriller</a></li>
-										<li><a href="genre.php">Commedy</a></li>
-										<li><a href="genre.php">Romantic</a></li>
-										<li><a href="genre.php">Tv-Series</a></li>
-										<li><a href="genre.php">Horror</a></li>
-										<li><a href="genre.php">Action</a></li>
-										<li><a href="genre.php">Drama</a></li>
-										<li><a href="genre.php">Family</a></li>
-										<li><a href="genre.php">Thriller</a></li>
-										<li><a href="genre.php">Commedy</a></li>
-										<li><a href="genre.php">Romantic</a></li>
-										<li><a href="genre.php">Tv-Series</a></li>
-										<li><a href="genre.php">Horror</a></li>
-									</ul>
 								</div>
 							</div>
 							<a class="close" href="#close">×</a>

@@ -23,13 +23,14 @@ function afficherCommentaire($spec)
                     <div class="p-2"><img  style="border-radius: 50%;" src="https://i.imgur.com/J6l19aF.jpg" alt="user" width="50" class="rounded-circle"></div>
                     <div class="comment-text w-100">
                         <h4 class="font-medium"><?php echo $comment['username'];?></h4> 
+                        <p hidden class="userid"><?php echo $comment['userid'];?></p>
                         <span class="m-b-15 d-block"><?php echo $comment['commentaire'];?></span>
                         <b><div class="comment-footer"> <span class="text-muted float-right"><?php echo $comment['dateCommentaire'];?></span></b> 
 
                         <form method="POST">                            
                         <button type="button" onclick="openForm(this.value)" class="modifier"style="background-color:blue; color:white; height:30px;" >Modifier</button> 
-                            <button  style="background-color:red; color:white; height:30px;" name='deleteP'type="submit" value="<?php 
-                echo $comment['idEval'];?>">Supprimer</button>  </div>
+
+                            <button class="del" value="<?php echo $comment['idEval'];?>" onclick="allowDelete(this.value)"style="background-color:red; color:white; height:30px;" name='deleteP'type="submit"> Supprimer</button>  </div>
                 <br>          </form>
                 <form method="POST"style="display:none;"class="comments"> <textarea style="width:250px;"name="comment" placeholder="Ecrire juste ici...."><?php echo $comment['commentaire'];?></textarea> 
     <br><button type="button"onclick="closeForm(this.value)" class="annuler">Annuler</button> <button type="submit" name="idEval" value="<?php echo $comment['idEval'];?>">

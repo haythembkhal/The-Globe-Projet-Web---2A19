@@ -1,4 +1,70 @@
-﻿<!DOCTYPE html>
+<?php
+    include '../../Controller/crud_func.php';
+    $CongeC = new CongesC;
+    $listeConge = $CongeC->afficherConges();
+	$typeC = new typeC;
+	$listetypeC = $typeC->affichertypeC();
+	$listetype = $typeC->affichertypeC();
+	
+	
+	$error ="";
+	$Conge = NULL;
+	$CongeA = new CongesC();
+	if(isset($_POST["subm"]))
+	{
+		if($_POST["subm"] == '1')
+		{
+			if (
+				isset($_POST["id_Employe"]) &&
+				isset($_POST["type_conge"]) &&		
+				isset($_POST["date_deb"]) &&
+				isset($_POST["date_fin"]) 
+			) {
+				if (
+					!empty($_POST["id_Employe"]) && 
+					!empty($_POST['type_conge']) &&
+					!empty($_POST["date_deb"]) && 
+					!empty($_POST["date_fin"]) 
+				) {
+					$Conge = new Conges(NULL,
+						$_POST['id_Employe'],
+						$_POST['type_conge'],
+						$_POST['date_deb'], 
+						$_POST['date_fin'],
+						NULL
+					);
+					$CongeA->ajouterConge($Conge);
+					header('Location:table_conges.php');
+				}
+				else
+					$error = "Missing information";
+			}
+		}
+		elseif($_POST["subm"] == '2')
+		{
+			if (
+				isset($_POST["typeC"]) &&
+				isset($_POST["maxC"])
+			) {
+				if (
+					!empty($_POST["typeC"]) && 
+					!empty($_POST['maxC'])
+				) {
+					$typeCA = new type_cong(NULL,
+						$_POST['typeC'],
+						$_POST['maxC']
+					);
+					$typeC->ajoutertypeC($typeCA);
+					header('Location:table_conges.php');
+				}
+				else
+					$error = "Missing information";
+					var_dump($error);
+			}
+		}
+	}
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -19,7 +85,7 @@
 					<i class="icon-reorder shaded"></i>
 				</a>
 
-			  	<a class="brand" href="index.php">
+			  	<a class="brand" href="index.html">
 			  		Edmin
 			  	</a>
 
@@ -150,15 +216,15 @@
 										</a>
 									</li>
 									<li>
-										<a href="table_billets.php">
+										<a href="afficherAchat.php">
 											<i class="menu-icon icon-table"></i>
 											Billets
 										</a>
 									</li>
 									<li>
-										<a href="table_partenaires.php">
+										<a href="AjouterProduit.php">
 											<i class="menu-icon icon-table"></i>
-											Partenaires
+											Produits
 										</a>
 									</li>
 								</ul></li>
@@ -179,6 +245,12 @@
 										<a href="other-login.php">
 											<i class="icon-inbox"></i>
 											Login
+										</a>
+									</li>
+									<li>
+										<a href="demandeCong.php">
+											<i class="icon-inbox"></i>
+											Demande de Congé
 										</a>
 									</li>
 									<li>
@@ -210,640 +282,470 @@
 
 				<div class="span9">
 					<div class="content">
+						<div class="module_form">
+							<div class="module-head">
+								<h3>Ajouter un Congés</h3>
+							</div>
+							<form name="form_conge" onsubmit="return checkFormcong()" action="" method="POST">
+								<input type="hidden" value="1" name="subm" id="subm">
+								<input type="text" name="id_Employe" id="id_Employe" placeholder="Id_Employé" maxlength="20">
+								<select type="range" name="type_conge" id="type_conge">
+									<option selected disabled>Type Congé</option>
+									<?php
+										foreach($listetype as $typeC){
+									?>
+									<option value="<?php echo $typeC['id_typeC'] ?>"><?php echo $typeC['Name'] ?></option>
+									<?php
+										}
+									?>
+								</select>
+								<p> <span class="error" id="erroridC" style="color:red"></span></p>
+								<input width="50px" type="text" name="date_deb" id="date_deb" placeholder="Date début du congé" onfocus="this.type = 'date'">
+								<input type="text" name="date_fin" id="date_fin" placeholder="Date fin du congé" onfocus="this.type = 'date'" >
+								<p> <span class="error" id="errorDA" style="color:red"></span></p>
+								<input type="submit" value="Envoyer">
+								<input type="Reset" value="Effacer">
+							</form>
+							<script>
+							function checkFormcong()
+                                        {
+                                            var id_Employe= document.forms["form_conge"]["id_Employe"].value;
+                                            var date_deb= document.forms["form_conge"]["date_deb"].value;
+											var date_fin= document.forms["form_conge"]["date_fin"].value;
+											
+											
+                                            /*var today = new Date();
+                                            var dd = String(today.getDate()).padStart(2, '0');
+                                            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January = 0
+                                            var yyyy = today.getFullYear();
+                                            today = yyyy + '-' + mm + '-' + dd;*/
 
-						<div class="module">
+                                            try{
+												if(id_Employe == ""){
+													throw "le champ ID Client ne peut pas être vide";
+												}
+												else if(id_Employe == 0){
+													throw "Veuillez choisir une valeur > 0";
+												}
+												throw "";
+											}
+											catch(err){
+												document.getElementById('erroridC').innerHTML=err;
+											}
+                                            if(date_deb == "" && date_fin == "")
+                                            {
+                                                document.getElementById('errorDA').innerHTML="Veuillez choisir une date";  
+                                                return false;
+                                            }else if(date_deb>date_fin)
+                                            {
+                                                document.getElementById('errorDA').innerHTML="La date du début doit être < à la date de fin";
+                                                return false;
+                                            }
+											else
+											{
+												document.getElementById('errorDA').innerHTML="";
+											}
+
+                                        }
+								</script>
+						</div>
+					</div>
+					<div class="content">
+
+						
+						<div class="module_form">
 							<div class="module-head">
 								<h3>Tables congés</h3>
+								<form action="exportEXCEL.php" method="POST">
+										<button type="submit" id="export" name="export" value="Export to excel" class="btn-success" style="float= right;">Export To Excel</button>
+								</form>
 							</div>
-							<div class="module-body">
-								<p>
-									<strong>Default</strong>
-									-
-									<small>table class="table"</small>
-								</p>
-								<table class="table">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br />
-								<!-- <hr /> -->
-								<br />
-
-								<p>
-									<strong>Striped</strong>
-									-
-									<small>table class="table table-striped"</small>
-								</p>
-								<table class="table table-striped">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br />
-								<!-- <hr /> -->
-								<br />
-
-								<p>
-									<strong>Bordered</strong>
-									-
-									<small>table class="table table-bordered"</small>
-								</p>
-								<table class="table table-bordered">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br />
-								<!-- <hr /> -->
-								<br />
-
-								<p>
-									<strong>Condensed</strong>
-									-
-									<small>table class="table table-condensed"</small>
-								</p>
-								<table class="table table-condensed">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br>
-
-								<p>
-									<strong>Combined</strong>
-									-
-									<small>table class="table table-striped table-bordered table-condensed"</small>
-								</p>
-								<table class="table table-striped table-bordered table-condensed">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
+							<div style="text-align: left; padding: 3px;">
+								<input onkeyup="search()" id="myInput" type="text" placeholder="Recherche" style="padding: 2px;">
 							</div>
-						</div>
-
-						<div class="module">
-							<div class="module-head">
-								<h3>DataTables</h3>
-							</div>
-							<div class="module-body table">
-								<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+							<div style="max-height:300px; overflow:auto; overflow-x: hidden; border: 1px solid #ccc;">
+								<table id="myTable" class="table table-striped table-bordered table-condensed" style="border-collapse: collapse;">
 									<thead>
-										<tr>
-											<th>Rendering engine</th>
-											<th>Browser</th>
-											<th>Platform(s)</th>
-											<th>Engine version</th>
-											<th>CSS grade</th>
-										</tr>
+									<tr>
+										<th onclick="sortTableNum(0)">Employé</th>
+										<th onclick="sortTable(1)">Type congés</th>
+										<th onclick="sortTable(2)">Date début</th>
+										<th onclick="sortTable(3)">Date fin</th>
+										<th onclick="sortTable(4)">Etat</th>
+										<th width="160px">Action</th>
+									</tr>
 									</thead>
 									<tbody>
-										<tr class="odd gradeX">
-											<td>Trident</td>
-											<td>Internet
-												 Explorer 4.0</td>
-											<td>Win 95+</td>
-											<td class="center"> 4</td>
-											<td class="center">X</td>
-										</tr>
-										<tr class="even gradeC">
-											<td>Trident</td>
-											<td>Internet
-												 Explorer 5.0</td>
-											<td>Win 95+</td>
-											<td class="center">5</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="odd gradeA">
-											<td>Trident</td>
-											<td>Internet
-												 Explorer 5.5</td>
-											<td>Win 95+</td>
-											<td class="center">5.5</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="even gradeA">
-											<td>Trident</td>
-											<td>Internet
-												 Explorer 6</td>
-											<td>Win 98+</td>
-											<td class="center">6</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="odd gradeA">
-											<td>Trident</td>
-											<td>Internet Explorer 7</td>
-											<td>Win XP SP2+</td>
-											<td class="center">7</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="even gradeA">
-											<td>Trident</td>
-											<td>AOL browser (AOL desktop)</td>
-											<td>Win XP</td>
-											<td class="center">6</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Firefox 1.0</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td class="center">1.7</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Firefox 1.5</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Firefox 2.0</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Firefox 3.0</td>
-											<td>Win 2k+ / OSX.3+</td>
-											<td class="center">1.9</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Camino 1.0</td>
-											<td>OSX.2+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Camino 1.5</td>
-											<td>OSX.3+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Netscape 7.2</td>
-											<td>Win 95+ / Mac OS 8.6-9.2</td>
-											<td class="center">1.7</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Netscape Browser 8</td>
-											<td>Win 98SE+</td>
-											<td class="center">1.7</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Netscape Navigator 9</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.0</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.1</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.1</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.2</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.2</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.3</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.3</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.4</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.4</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.5</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.5</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.6</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.6</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.7</td>
-											<td>Win 98+ / OSX.1+</td>
-											<td class="center">1.7</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.8</td>
-											<td>Win 98+ / OSX.1+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Seamonkey 1.1</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Epiphany 2.20</td>
-											<td>Gnome</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>Safari 1.2</td>
-											<td>OSX.3</td>
-											<td class="center">125.5</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>Safari 1.3</td>
-											<td>OSX.3</td>
-											<td class="center">312.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>Safari 2.0</td>
-											<td>OSX.4+</td>
-											<td class="center">419.3</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>Safari 3.0</td>
-											<td>OSX.4+</td>
-											<td class="center">522.1</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>OmniWeb 5.5</td>
-											<td>OSX.4+</td>
-											<td class="center">420</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>iPod Touch / iPhone</td>
-											<td>iPod</td>
-											<td class="center">420.1</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>S60</td>
-											<td>S60</td>
-											<td class="center">413</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 7.0</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 7.5</td>
-											<td>Win 95+ / OSX.2+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 8.0</td>
-											<td>Win 95+ / OSX.2+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 8.5</td>
-											<td>Win 95+ / OSX.2+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 9.0</td>
-											<td>Win 95+ / OSX.3+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 9.2</td>
-											<td>Win 88+ / OSX.3+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 9.5</td>
-											<td>Win 88+ / OSX.3+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera for Wii</td>
-											<td>Wii</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Nokia N800</td>
-											<td>N800</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Nintendo DS browser</td>
-											<td>Nintendo DS</td>
-											<td class="center">8.5</td>
-											<td class="center">C/A<sup>1</sup></td>
-										</tr>
-										<tr class="gradeC">
-											<td>KHTML</td>
-											<td>Konqureror 3.1</td>
-											<td>KDE 3.1</td>
-											<td class="center">3.1</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeA">
-											<td>KHTML</td>
-											<td>Konqureror 3.3</td>
-											<td>KDE 3.3</td>
-											<td class="center">3.3</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>KHTML</td>
-											<td>Konqureror 3.5</td>
-											<td>KDE 3.5</td>
-											<td class="center">3.5</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeX">
-											<td>Tasman</td>
-											<td>Internet Explorer 4.5</td>
-											<td>Mac OS 8-9</td>
-											<td class="center">-</td>
-											<td class="center">X</td>
-										</tr>
-										<tr class="gradeC">
-											<td>Tasman</td>
-											<td>Internet Explorer 5.1</td>
-											<td>Mac OS 7.6-9</td>
-											<td class="center">1</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeC">
-											<td>Tasman</td>
-											<td>Internet Explorer 5.2</td>
-											<td>Mac OS 8-X</td>
-											<td class="center">1</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Misc</td>
-											<td>NetFront 3.1</td>
-											<td>Embedded devices</td>
-											<td class="center">-</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Misc</td>
-											<td>NetFront 3.4</td>
-											<td>Embedded devices</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeX">
-											<td>Misc</td>
-											<td>Dillo 0.8</td>
-											<td>Embedded devices</td>
-											<td class="center">-</td>
-											<td class="center">X</td>
-										</tr>
-										<tr class="gradeX">
-											<td>Misc</td>
-											<td>Links</td>
-											<td>Text only</td>
-											<td class="center">-</td>
-											<td class="center">X</td>
-										</tr>
-										<tr class="gradeX">
-											<td>Misc</td>
-											<td>Lynx</td>
-											<td>Text only</td>
-											<td class="center">-</td>
-											<td class="center">X</td>
-										</tr>
-										<tr class="gradeC">
-											<td>Misc</td>
-											<td>IE Mobile</td>
-											<td>Windows Mobile 6</td>
-											<td class="center">-</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeC">
-											<td>Misc</td>
-											<td>PSP browser</td>
-											<td>PSP</td>
-											<td class="center">-</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeU">
-											<td>Other browsers</td>
-											<td>All others</td>
-											<td>-</td>
-											<td class="center">-</td>
-											<td class="center">U</td>
-										</tr>
+									<?php
+										foreach($listeConge as $Conge){
+									?>
+									<tr>
+										<td><?php echo $Conge['employes']; ?></td>
+										<td><?php echo $Conge['Name']; ?></td>
+										<td><?php echo $Conge['date_deb']; ?></td>
+										<td><?php echo $Conge['date_fin']; ?></td>
+										<td>
+											<?php
+												//echo $Conge['etat'];
+												if(strval($Conge['etat']) == '1')
+												{
+													echo("Refusé");
+												}
+												elseif(strval($Conge['etat']) == '0')
+												{
+													echo '<p style="green">Accepté</p>';
+												}
+												elseif(strval($Conge['etat']) == '')
+												{
+													echo("Non traité");
+												}
+											?>
+										</td>
+										<td width="100px">
+											<form method="POST" action="modifierConge.php">
+												<input type="submit" name="Modifier" value="Modifier">
+												<input type="hidden" value=<?PHP echo $Conge['id_conge']; ?> name="id_conge">
+											</form>
+											<a href="supprimerConge.php?id_conge=<?php echo $Conge['id_conge']; ?>"><button>Supprimer</button></a>
+										</td>
+										
+									</tr>
+									<?php
+										}
+									?>
 									</tbody>
-									<tfoot>
-										<tr>
-											<th>Rendering engine</th>
-											<th>Browser</th>
-											<th>Platform(s)</th>
-											<th>Engine version</th>
-											<th>CSS grade</th>
-										</tr>
-									</tfoot>
 								</table>
+								<script>
+									function search() {
+										// Declare variables
+										var input, filter, table, tr, td, i, txtValue;
+										input = document.getElementById("myInput");
+										filter = input.value.toUpperCase();
+										table = document.getElementById("myTable");
+										tr = table.getElementsByTagName("tr");
+										console.log('searching');
+										console.log(filter);
+										console.log(tr[1].getElementsByTagName("td")[0]);
+
+										// Loop through all table rows, and hide those who don't match the search query
+										for (i = 0; i < tr.length; i++) {
+											td = tr[i].getElementsByTagName("td")[0];
+											console.log(td);
+											if (td) {
+											txtValue = td.textContent || td.innerText;
+											if (txtValue.toUpperCase().indexOf(filter) > -1) {
+												tr[i].style.display = "";
+											} else {
+												tr[i].style.display = "none";
+											}
+											}
+										}
+									}
+									function sortTable(n) {
+									var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+									table = document.getElementById("myTable");
+									switching = true;
+									// Set the sorting direction to ascending:
+									dir = "asc";
+									/* Make a loop that will continue until
+									no switching has been done: */
+									while (switching) {
+										// Start by saying: no switching is done:
+										switching = false;
+										rows = table.rows;
+										/* Loop through all table rows (except the
+										first, which contains table headers): */
+										for (i = 1; i < (rows.length - 1); i++) {
+										// Start by saying there should be no switching:
+										shouldSwitch = false;
+										/* Get the two elements you want to compare,
+										one from current row and one from the next: */
+										x = rows[i].getElementsByTagName("TD")[n];
+										y = rows[i + 1].getElementsByTagName("TD")[n];
+										/* Check if the two rows should switch place,
+										based on the direction, asc or desc: */
+										if (dir == "asc") {
+											if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+											// If so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+											}
+										} else if (dir == "desc") {
+											if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+											// If so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+											}
+										}
+										}
+										if (shouldSwitch) {
+										/* If a switch has been marked, make the switch
+										and mark that a switch has been done: */
+										rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+										switching = true;
+										// Each time a switch is done, increase this count by 1:
+										switchcount ++;
+										} else {
+										/* If no switching has been done AND the direction is "asc",
+										set the direction to "desc" and run the while loop again. */
+										if (switchcount == 0 && dir == "asc") {
+											dir = "desc";
+											switching = true;
+										}
+										}
+									}
+									}
+									function sortTableNum(n) {
+									var table, rows, switching, i, x, y, shouldSwitch;
+									table = document.getElementById("myTable");
+									switching = true;
+									/*Make a loop that will continue until
+									no switching has been done:*/
+									while (switching) {
+										//start by saying: no switching is done:
+										switching = false;
+										rows = table.rows;
+										/*Loop through all table rows (except the
+										first, which contains table headers):*/
+										for (i = 1; i < (rows.length - 1); i++) {
+										//start by saying there should be no switching:
+										shouldSwitch = false;
+										/*Get the two elements you want to compare,
+										one from current row and one from the next:*/
+										x = rows[i].getElementsByTagName("TD")[n];
+										y = rows[i + 1].getElementsByTagName("TD")[n];
+										//check if the two rows should switch place:
+										if (Number(x.innerHTML) > Number(y.innerHTML)) {
+											//if so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+										}
+										}
+										if (shouldSwitch) {
+										/*If a switch has been marked, make the switch
+										and mark that a switch has been done:*/
+										rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+										switching = true;
+										}
+									}
+									}
+								</script>
 							</div>
 						</div><!--/.module-->
+						<div class="module_form">
+							<div class="module-head">
+								<h3>Ajouter un type de congé</h3>
+							</div>
+							<form action="" method="POST" name="form_typeC" onsubmit=" return checkFormtypeC()">
+								<input type="hidden" value="2" name="subm">
+								<input type="text" name="typeC" id="typeC" placeholder="Type" maxlength="20">
+								<input width="50px" type="Number" name="maxC" id="maxC" placeholder="Durré max du congé en jours">
+								<p> <span class="error" id="errortpC" style="color:red"></span></p>
+								<p> <span class="error" id="errorNP" style="color:red"></span></p>
+								<input type="submit" value="Envoyer">
+								<input type="Reset" value="Effacer">
+							</form>
+							<script>
+							function checkFormtypeC()
+                                        {
+                                            var typeC= document.forms["form_typeC"]["typeC"].value;
+                                            var maxC= document.forms["form_typeC"]["maxC"].value;
+											
+                                            try{
+												if(typeC == ""){
+													throw "le champ ID Client ne peut pas être vide";
+												}
+												else
+													throw "";
+											}
+											catch(err){
+												document.getElementById('errortpC').innerHTML=err;
+											}
+											if(maxC == "")
+                                            {
+                                                document.getElementById('errorNP').innerHTML="Veuillez choiir un Nombre Maximum";  
+                                                return false;
+                                            }else if(maxC < 1)
+                                            {
+                                                document.getElementById('errorNP').innerHTML="Le nombre de jours doit etre > 0";  
+                                                return false;
+                                            }
+											else
+											{
+                                                document.getElementById('errorNP').innerHTML="";  
+                                            }
+
+                                        }
+								</script>
+						</div>
+						<div class="module_form">
+							<div class="module-head">
+								<h3>Types de congés</h3>
+							</div>
+							<div style="text-align: left; padding: 5px;">
+								<input onkeyup="searchT()" id="myInputT" type="text" placeholder="Recherche">
+							</div>
+							<div style="max-height:300px; overflow:auto; overflow-x: hidden; border: 1px solid #ccc;">
+							<table id="myTableT" class="table table-striped table-bordered table-condensed">
+								<thead>
+								  <tr>
+									  <th onclick="sortTableT(0)">Type</th>
+									  <th onclick="sortTableTNum(1)">Durée max</th>
+									  <th>Action</th>
+								  </tr>
+								</thead>
+								<tbody>
+								<?php
+                                    foreach($listetypeC as $typeC){
+                                ?>
+								<tr>
+									<td><?php echo $typeC['Name']; ?></td>
+                                    <td>
+										<?php
+											 //echo $Conge['etat'];
+											 if(strval($typeC['Max']) == '')
+											 {
+												 echo("Non définie");
+											 }
+											 else
+											 {
+												echo $typeC['Max'];
+												//echo ' jours';
+											 }
+									 	?>
+									 </td>
+                                    <td width="160px">
+                                        <form method="POST" action="modifiertypeC.php">
+                                            <input type="submit" name="Modifier" value="Modifier">
+                                            <input type="hidden" value=<?PHP echo $typeC['id_typeC']; ?> name="id_typeC">
+                                        </form>
+										<a href="supprimertypeC.php?id_typeC=<?php echo $typeC['id_typeC']; ?>"><button>Supprimer</button></a>
+                                    </td>
+                                    
+                                </tr>
+                                <?php
+                                    }
+                                ?>
+								</tbody>
+							  </table>
+							</div>
+							<script>
+									function searchT() {
+										// Declare variables
+										var input, filter, table, tr, td, i, txtValue;
+										input = document.getElementById("myInputT");
+										filter = input.value.toUpperCase();
+										table = document.getElementById("myTableT");
+										tr = table.getElementsByTagName("tr");
+										console.log('searching');
+										console.log(filter);
+										console.log(tr[1].getElementsByTagName("td")[0]);
+
+										// Loop through all table rows, and hide those who don't match the search query
+										for (i = 0; i < tr.length; i++) {
+											td = tr[i].getElementsByTagName("td")[0];
+											console.log(td);
+											if (td) {
+											txtValue = td.textContent || td.innerText;
+											if (txtValue.toUpperCase().indexOf(filter) > -1) {
+												tr[i].style.display = "";
+											} else {
+												tr[i].style.display = "none";
+											}
+											}
+										}
+									}
+									function sortTableT(n) {
+									var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+									table = document.getElementById("myTableT");
+									switching = true;
+									// Set the sorting direction to ascending:
+									dir = "asc";
+									/* Make a loop that will continue until
+									no switching has been done: */
+									while (switching) {
+										// Start by saying: no switching is done:
+										switching = false;
+										rows = table.rows;
+										/* Loop through all table rows (except the
+										first, which contains table headers): */
+										for (i = 1; i < (rows.length - 1); i++) {
+										// Start by saying there should be no switching:
+										shouldSwitch = false;
+										/* Get the two elements you want to compare,
+										one from current row and one from the next: */
+										x = rows[i].getElementsByTagName("TD")[n];
+										y = rows[i + 1].getElementsByTagName("TD")[n];
+										/* Check if the two rows should switch place,
+										based on the direction, asc or desc: */
+										if (dir == "asc") {
+											if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+											// If so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+											}
+										} else if (dir == "desc") {
+											if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+											// If so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+											}
+										}
+										}
+										if (shouldSwitch) {
+										/* If a switch has been marked, make the switch
+										and mark that a switch has been done: */
+										rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+										switching = true;
+										// Each time a switch is done, increase this count by 1:
+										switchcount ++;
+										} else {
+										/* If no switching has been done AND the direction is "asc",
+										set the direction to "desc" and run the while loop again. */
+										if (switchcount == 0 && dir == "asc") {
+											dir = "desc";
+											switching = true;
+										}
+										}
+									}
+									}
+									function sortTableTNum(n) {
+									var table, rows, switching, i, x, y, shouldSwitch;
+									table = document.getElementById("myTableT");
+									switching = true;
+									/*Make a loop that will continue until
+									no switching has been done:*/
+									while (switching) {
+										//start by saying: no switching is done:
+										switching = false;
+										rows = table.rows;
+										/*Loop through all table rows (except the
+										first, which contains table headers):*/
+										for (i = 1; i < (rows.length - 1); i++) {
+										//start by saying there should be no switching:
+										shouldSwitch = false;
+										/*Get the two elements you want to compare,
+										one from current row and one from the next:*/
+										x = rows[i].getElementsByTagName("TD")[n];
+										y = rows[i + 1].getElementsByTagName("TD")[n];
+										//check if the two rows should switch place:
+										if (Number(x.innerHTML) > Number(y.innerHTML)) {
+											//if so, mark as a switch and break the loop:
+											shouldSwitch = true;
+											break;
+										}
+										}
+										if (shouldSwitch) {
+										/*If a switch has been marked, make the switch
+										and mark that a switch has been done:*/
+										rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+										switching = true;
+										}
+									}
+									}
+								</script>
+						</div><!--/.module-->
+
 
 					<br />
 						

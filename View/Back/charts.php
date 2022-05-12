@@ -1,6 +1,7 @@
 ﻿<?php
 
-include '../../Controller/notificationC.php';
+//include '../../Controller/notificationC.php';
+include '../../Controller/crud_func.php';
 
 $notification=new notificationC();
 $count=$notification->nouvelleNotification();//recupérer les nouvelles notifications
@@ -17,6 +18,16 @@ $djerba=$customer->rechercherVille("djerba");
 $userConnecter=$customer->nombreUserConnecter();
 $userDeconnecter=$customer->nombreUserDeconnecter();
 $autres=0;
+
+
+$CongeC = new CongesC;
+    $listeConge = $CongeC->get_TypeStats();
+    $i = 0;
+    $dataCongT = array();
+
+    foreach($listeConge as $conge => $v){
+        $dataCongT[$conge] = array("label"=>$v['Name'], "y"=>$v['COUNT(type_conge)']);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -319,6 +330,74 @@ $autres=0;
 
 												</script>			
 						</div>
+
+						<div class="module">
+                            <div class="module-body">
+                            <script>
+                                window.onload = function() {
+                                var today = new Date();
+                                var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+                                
+                                var chart = new CanvasJS.Chart("chartContainer", {
+                                    animationEnabled: true,
+                                    title: {
+                                        text: "Types de congés demandés"
+                                    },
+                                    subtitles: [{
+                                        text: date
+                                    }],
+                                    data: [{
+                                        type: "pie",
+                                        yValueFormatString: "#,##0",
+                                        indexLabel: "{label} ({y})",
+                                        dataPoints: <?php echo json_encode($dataCongT, JSON_NUMERIC_CHECK); ?>
+                                    }]
+                                });
+                                chart.render();
+                                
+                                }
+                            </script>
+                            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                            </div>
+                        </div>
+                        <!--/.module-->
+                        <br />
+                        <div class="module-form">
+                            <div class="module-head">
+                                <h2>Planing des congés</h2>
+                            </div>
+                            <div class="module-body">
+                                <script src="js/daypilot/daypilot-all.min.js" type="text/javascript"></script>
+                                <div id="dp"></div>
+                                <script type="text/javascript">
+                                    const dp = new DayPilot.Gantt("dp");
+                                    var today = new Date();
+                                    var date = today.getFullYear()+"-"+zeroPad(today.getMonth()+1)+"-01";
+                                    dp.startDate = date;
+                                    dp.days = 356;
+                                    dp.columns = [
+                                    { name: "ID Employé", display: "text", width: 80},
+                                    { name: "Durée", width: 50}
+                                    ];
+                                    dp.onBeforeRowHeaderRender = (args) => {
+                                    args.row.columns[1].html = args.task.duration().toString("d") + " Jours";
+                                    };
+                                    dp.init();
+
+                                    loadTasks();
+
+                                    function loadTasks() {
+                                        dp.tasks.load("gantt_tasks.php");
+                                    }
+                                    function zeroPad(nr,base,chr){
+                                        var  len = (String(base||10).length - String(nr).length)+1;
+                                        return len > 0? new Array(len).join(chr||'0')+nr : nr;
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <!--/.module-->
                        
                     </div>
                     <!--/.content-->

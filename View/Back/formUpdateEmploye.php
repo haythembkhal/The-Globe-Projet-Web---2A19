@@ -37,7 +37,7 @@
 	 {
 		 $firstname=$e['firstname'];
 		 $lastname=$e['lastname'];
-		 $username=$e['username'];
+		 $username=$e['ville'];
 		 $email=$e['email'];
 		 $password=$e['password'];
 		 $userID=$e['id_employe'];

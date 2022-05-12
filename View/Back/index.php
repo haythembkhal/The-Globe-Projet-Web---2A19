@@ -116,15 +116,15 @@ $count=$notification->nouvelleNotification();
 										</a>
 									</li>
 									<li>
-										<a href="table_billets.php">
+										<a href="afficherAchat.php">
 											<i class="menu-icon icon-table"></i>
 											Billets
 										</a>
 									</li>
 									<li>
-										<a href="table_partenaires.php">
+										<a href="AjouterProduit.php">
 											<i class="menu-icon icon-table"></i>
-											Partenaires
+											Produits
 										</a>
 									</li>
 								</ul></li>

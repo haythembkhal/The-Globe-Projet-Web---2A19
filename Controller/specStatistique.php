@@ -88,7 +88,7 @@ function ajouterAvis($avis,$spec,$userId)
   $query->execute();
   }
   else{
-    $query=config::$pdo->query("DELETE FROM avis  where userId like '$userId'AND spectacleId like '$spec'");
+    $query=config::$pdo->query("DELETE FROM avis where userId like '$userId'AND spectacleId like '$spec'");
 
     $query= config::$pdo->prepare("INSERT INTO avis (opinion,spectacleId,userId) VALUE (:avis,:spec,'$userId')");
     $query->bindParam(':avis', $avis);
@@ -106,19 +106,18 @@ function ajouterAvis($avis,$spec,$userId)
   // $query->execute();
 }
 
-
 if(isset($_POST['disliked']))
 {
   $avis=$_POST['disliked'];
   $spec=$_POST['specIdent'];
-  $userId=$_SESSION['firstname'];//il faut remplacer ca par le vrai identifiant 
+  $userId=$_SESSION['id_client'];//il faut remplacer ca par le vrai identifiant 
   ajouterAvis($avis,$spec,$userId);
 }
 if(isset($_POST['liked']))
 {
   $avis=$_POST['liked'];
   $spec=$_POST['specIdent'];
-  $userId=$_SESSION['firstname']; //il faut remplacer ca par le vrai identifiant 
+  $userId=$_SESSION['id_client']; //il faut remplacer ca par le vrai identifiant 
   ajouterAvis($avis,$spec,$userId);
 }
 ?>

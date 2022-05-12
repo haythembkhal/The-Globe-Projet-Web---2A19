@@ -121,9 +121,9 @@ if(realisateurs=="")
 	input13.innerHTML="Il faut saisir des données";
 	return false;
 }
-if(prix.includes('$')==false)
+if(isNaN(prix))
 {
-	input14.innerHTML="Il faut saisir un prix $XXX";
+	input14.innerHTML="Il faut saisir un nombre";
 	return false;
 }
 
@@ -270,15 +270,15 @@ if(prix.includes('$')==false)
 										</a>
 									</li>
 									<li>
-										<a href="table_billets.php">
+										<a href="afficherAchat.php">
 											<i class="menu-icon icon-table"></i>
 											Billets
 										</a>
 									</li>
 									<li>
-										<a href="table_partenaires.php">
+										<a href="AjouterProduit.php">
 											<i class="menu-icon icon-table"></i>
-											Partenaires
+											Produits
 										</a>
 									</li>
 								</ul></li>

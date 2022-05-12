@@ -11,10 +11,11 @@ function ajouterComment(/*$user,*/$commentaire,$specId)
     
         try
         {
-        $query= config::$pdo->prepare("INSERT INTO comments (commentaire,spectacleId,dateCommentaire,username) VALUES (:commentaire,:specId,now(),:username)");
+        $query= config::$pdo->prepare("INSERT INTO comments (commentaire,spectacleId,dateCommentaire,username,userid) VALUES (:commentaire,:specId,now(),:username,:userid)");
             $query->bindParam(':commentaire', $commentaire);
             $query->bindParam(':specId', $specId);
 			 $query->bindParam(':username', $_SESSION["firstname"]);
+            $query->bindParam(':userid', $_SESSION["id_client"]);
             $query->execute();
             $_SESSION['status']="Ajout Avec Succes !";
 
@@ -29,8 +30,7 @@ function ajouterComment(/*$user,*/$commentaire,$specId)
     ajouterComment($_POST["C"],$_POST["S"]);
 	
 	$_SESSION['status']="Ajout Avec Succes !";
-	
-	header("location:http://localhost/Alliance/View/Front/spectacleChoix.php");
+	header("location:http://localhost/Alliance/View/Front/spectacleChoix.php?specId=".$_SESSION["idSpectacle"]);
 					
     }
 	else

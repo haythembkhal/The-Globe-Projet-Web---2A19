@@ -66,6 +66,6 @@ session_start();
 	 catch (Exception $e) {
 		die('Erreur: ' . $e->getMessage());
 	}
-	header('Location:http://localhost/Projet/View/Front/index_with_profil.php');
+	header('Location:http://localhost/Alliance/View/Front/index_with_profil.php');
 	exit();
 ?>

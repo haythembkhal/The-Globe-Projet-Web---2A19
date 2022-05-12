@@ -1,4 +1,132 @@
-﻿<!DOCTYPE html>
+﻿<?php  
+
+//include_once "C:/xampp/htdocs/Artistes/config.php";  
+
+include_once "../../Controller/ArtisteC.php";
+
+function likeArtiste($idUser,$IdArtist)
+{
+    $db = config::getConnexion();
+        try {
+            $query = $db->prepare(
+                'INSERT INTO likes (id_user,id_art) 
+                VALUES (:id_user,:id_art) '
+            );
+            $query->execute([
+                'id_user' => $idUser,
+                'id_art' => $IdArtist
+            ]);
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+}
+
+$control= new ArtisteC();
+$cont = new ArtisteC();
+
+	//$cate=new categorieC();
+	//$listeCategorie=$adherentC->afficherCategorie(); 
+
+	function getCategorie(){
+    $db = config::getconnexion();
+
+    try {
+        $query = $db->query(
+            "SELECT * FROM categories "
+        );
+        return $query;
+
+    } catch (PDOException $e) {
+        $e->getMessage();
+        }
+}
+
+function getNameCategorie($num){
+    $db = config::getconnexion();
+
+    try {
+        $query = $db->query(
+            "SELECT nom FROM categories where ID=$num"
+        );
+        return $query->fetch();
+
+    } catch (PDOException $e) {
+        $e->getMessage();
+        }
+}
+
+$LitesCategorie=getCategorie();
+
+
+
+	function getArtistes(){
+    $db = config::getconnexion();
+
+    try {
+        $query = $db->query(
+            "SELECT * FROM artistes"
+        );
+        return $query;
+
+    } catch (PDOException $e) {
+        $e->getMessage();
+        }
+}
+
+
+
+$LitesArtistes=getArtistes();
+
+if(isset($_GET['search'])) {
+      if(!empty($_GET['search'])){
+      //$search = htmlspecialchars($_GET['search']);
+      
+      $search = $_GET['search'];
+	  $LitesArtistes= $control->rechercherartist($search);
+      //$art=$LitesArtistes->rechercherartist($search);
+  }
+}
+
+
+if(isset($_POST['triage']))
+{
+	if (!empty($_POST['triage'])) {
+
+		//echo "la valeur est vide"; 
+		$tri = $_POST['triage'];
+          $LitesArtistes= $cont->trierArtist($tri); 
+		// code...
+	}
+
+}
+
+
+function countArtist(){
+
+    $db = config::getConnexion();
+    
+    $Query = "SELECT count(*) AS nb FROM artistes ";
+    
+    try {
+        $res = $db->query($Query);
+        $data = $res->fetch();
+        $nb = $data['nb'];
+        return $nb;
+            
+    } catch (PDOException $e) {
+            $e->getMessage();
+    }
+    
+}
+
+
+
+?>
+
+
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -9,6 +137,15 @@
 	<link type="text/css" href="css/theme.css" rel="stylesheet">
 	<link type="text/css" href="images/icons/css/font-awesome.css" rel="stylesheet">
 	<link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link type="text/css" rel="stylesheet" href="backendCSS.css">
+
+
+	
+
+
 </head>
 <body>
 
@@ -19,8 +156,8 @@
 					<i class="icon-reorder shaded"></i>
 				</a>
 
-			  	<a class="brand" href="index.php">
-			  		Edmin
+			  	<a class="brand" href="index.html">
+			  		Tristan Mendes
 			  	</a>
 
 				<div class="nav-collapse collapse navbar-inverse-collapse">
@@ -88,19 +225,19 @@
 
 						<ul class="widget widget-menu unstyled">
 							<li class="active">
-								<a href="index.php">
+								<a href="index.html">
 									<i class="menu-icon icon-dashboard"></i>
 									Dashboard
 								</a>
 							</li>
 							<li>
-								<a href="activity.php">
+								<a href="activity.html">
 									<i class="menu-icon icon-bullhorn"></i>
 									News Feed
 								</a>
 							</li>
 							<li>
-								<a href="message.php">
+								<a href="message.html">
 									<i class="menu-icon icon-inbox"></i>
 									Inbox
 									<b class="label green pull-right">11</b>
@@ -108,7 +245,7 @@
 							</li>
 							
 							<li>
-								<a href="task.php">
+								<a href="task.html">
 									<i class="menu-icon icon-tasks"></i>
 									Tasks
 									<b class="label orange pull-right">19</b>
@@ -117,9 +254,9 @@
 						</ul><!--/.widget-nav-->
 
 						<ul class="widget widget-menu unstyled">
-                                <li><a href="ui-button-icon.php"><i class="menu-icon icon-bold"></i> Buttons </a></li>
-                                <li><a href="ui-typography.php"><i class="menu-icon icon-book"></i>Typography </a></li>
-                                <li><a href="form.php"><i class="menu-icon icon-paste"></i>Forms </a></li>
+                                <li><a href="ui-button-icon.html"><i class="menu-icon icon-bold"></i> Buttons </a></li>
+                                <li><a href="ui-typography.html"><i class="menu-icon icon-book"></i>Typography </a></li>
+                                <li><a href="table_artistes.php"><i class="menu-icon icon-paste"></i>Forms </a></li>
                                 <li><a class="collapsed" data-toggle="collapse" href="#toggletables">
 									<i class="menu-icon icon-table"></i>
 									<i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>
@@ -150,21 +287,21 @@
 										</a>
 									</li>
 									<li>
-										<a href="table_billets.php">
+										<a href="afficherAchat.php">
 											<i class="menu-icon icon-table"></i>
 											Billets
 										</a>
 									</li>
 									<li>
-										<a href="table_partenaires.php">
+										<a href="AjouterProduit.php">
 											<i class="menu-icon icon-table"></i>
-											Partenaires
+											Produits
 										</a>
 									</li>
 								</ul></li>
 								
 
-                                <li><a href="charts.php"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
+                                <li><a href="charts.html"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
                             </ul><!--/.widget-nav-->
 
 						<ul class="widget widget-menu unstyled">
@@ -176,19 +313,19 @@
 								</a>
 								<ul id="togglePages" class="collapse unstyled">
 									<li>
-										<a href="other-login.php">
+										<a href="other-login.html">
 											<i class="icon-inbox"></i>
 											Login
 										</a>
 									</li>
 									<li>
-										<a href="other-user-profile.php">
+										<a href="other-user-profile.html">
 											<i class="icon-inbox"></i>
 											Profile
 										</a>
 									</li>
 									<li>
-										<a href="other-user-listing.php">
+										<a href="other-user-listing.html">
 											<i class="icon-inbox"></i>
 											All Users
 										</a>
@@ -206,650 +343,162 @@
 
 					</div><!--/.sidebar-->
 				</div><!--/.span3-->
+				 <div class="dropdown">
+                    <!-- small box -->
+                
+                </div>
 
 
 				<div class="span9">
 					<div class="content">
-
-						<div class="module">
-							<div class="module-head">
-								<h3>Tables artistes</h3>
-							</div>
-							<div class="module-body">
-								<p>
-									<strong>Default</strong>
-									-
-									<small>table class="table"</small>
-								</p>
-								<table class="table">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br />
-								<!-- <hr /> -->
-								<br />
-
-								<p>
-									<strong>Striped</strong>
-									-
-									<small>table class="table table-striped"</small>
-								</p>
-								<table class="table table-striped">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br />
-								<!-- <hr /> -->
-								<br />
-
-								<p>
-									<strong>Bordered</strong>
-									-
-									<small>table class="table table-bordered"</small>
-								</p>
-								<table class="table table-bordered">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br />
-								<!-- <hr /> -->
-								<br />
-
-								<p>
-									<strong>Condensed</strong>
-									-
-									<small>table class="table table-condensed"</small>
-								</p>
-								<table class="table table-condensed">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-
-								<br>
-
-								<p>
-									<strong>Combined</strong>
-									-
-									<small>table class="table table-striped table-bordered table-condensed"</small>
-								</p>
-								<table class="table table-striped table-bordered table-condensed">
-								  <thead>
-									<tr>
-									  <th>#</th>
-									  <th>First Name</th>
-									  <th>Last Name</th>
-									  <th>Username</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<tr>
-									  <td>1</td>
-									  <td>Mark</td>
-									  <td>Otto</td>
-									  <td>@mdo</td>
-									</tr>
-									<tr>
-									  <td>2</td>
-									  <td>Jacob</td>
-									  <td>Thornton</td>
-									  <td>@fat</td>
-									</tr>
-									<tr>
-									  <td>3</td>
-									  <td>Larry</td>
-									  <td>the Bird</td>
-									  <td>@twitter</td>
-									</tr>
-								  </tbody>
-								</table>
-							</div>
-						</div>
-
 						<div class="module">
 							<div class="module-head">
 								<h3>DataTables</h3>
 							</div>
-							<div class="module-body table">
+							<div class="module-body table">	
+								<h3>Table des Artistes</h3>
+								
+					<form method='POST' action="">
+						<div class="dropdown" style="left:0;">
+						<input class="dropbtn" type="submit"  name="triage" value="Trier" />
+					</div>
+				  </div>	
+				  </form>
+				</div>
+								  
+							<a href="AddArtistes.php"><button style="right: 100px;" class="regButton">Ajouter</button></a>
+							<br><br><br>
+							
+
+							<div>
+								<form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search" action="" method="GET" name="FormRechercher">
+                  <input
+                    type="text" class="form-control" placeholder="Search" name="search" id="search"/>
+                  <button type="submit" class="btn btn-primary mr-2">
+                        Rechercher</button>
+                      </form>
+							</div>
+
+							<br><br><br>
 								<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
 									<thead>
 										<tr>
-											<th>Rendering engine</th>
-											<th>Browser</th>
-											<th>Platform(s)</th>
-											<th>Engine version</th>
-											<th>CSS grade</th>
+											<th>IDartiste</th>
+											<th>Nom</th>
+											<th>Nationalité</th>
+											<th>Genre</th>
+											<th>Age</th>
+											<th>description</th>
+											<th>categories</th>
+											<th>Modifier</th>
+											<th>Supprimer</th>
+											
+<hr>
+											<!--<th colspan="2">	<form class="example" action="/action_page.php" style="margin:auto;max-width:300px">
+												<input style="height: 42px;" type="text" placeholder="Search.." name="search2">
+												<button  type="submit"><i class="fa fa-search"></i></button>
+											  </form></th>-->
 										</tr>
 									</thead>
+
 									<tbody>
+                                         <?php  
+										foreach($LitesArtistes as $Artis){
+
+
+										?>
+										
 										<tr class="odd gradeX">
-											<td>Trident</td>
-											<td>Internet
-												 Explorer 4.0</td>
-											<td>Win 95+</td>
-											<td class="center"> 4</td>
-											<td class="center">X</td>
+							
+										<td><?php echo $Artis['id']; ?></td>
+										<td><?php echo $Artis['nom']; ?></td>
+										<td><?php echo $Artis['nationalite']; ?></td>
+									    <td><?php echo $Artis['genre']; ?></td>
+										<td><?php echo $Artis['age']; ?></td>
+										<td><?php echo $Artis['description']; ?></td>
+										<td><?php $test=getNameCategorie($Artis['categories']); echo $test['nom']; ?></td>
+										<td><a href="ModifierArtiste.php?id=<?php echo $Artis['id']; ?>"><button >Modifier</button></a></td>
+										<td><a href="suppArtiste.php?id=<?php echo $Artis['id']; ?>"><button onclick="confirmer()">Supprimer</button></a></td>
+							                
+
+										     	
 										</tr>
-										<tr class="even gradeC">
-											<td>Trident</td>
-											<td>Internet
-												 Explorer 5.0</td>
-											<td>Win 95+</td>
-											<td class="center">5</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="odd gradeA">
-											<td>Trident</td>
-											<td>Internet
-												 Explorer 5.5</td>
-											<td>Win 95+</td>
-											<td class="center">5.5</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="even gradeA">
-											<td>Trident</td>
-											<td>Internet
-												 Explorer 6</td>
-											<td>Win 98+</td>
-											<td class="center">6</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="odd gradeA">
-											<td>Trident</td>
-											<td>Internet Explorer 7</td>
-											<td>Win XP SP2+</td>
-											<td class="center">7</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="even gradeA">
-											<td>Trident</td>
-											<td>AOL browser (AOL desktop)</td>
-											<td>Win XP</td>
-											<td class="center">6</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Firefox 1.0</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td class="center">1.7</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Firefox 1.5</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Firefox 2.0</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Firefox 3.0</td>
-											<td>Win 2k+ / OSX.3+</td>
-											<td class="center">1.9</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Camino 1.0</td>
-											<td>OSX.2+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Camino 1.5</td>
-											<td>OSX.3+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Netscape 7.2</td>
-											<td>Win 95+ / Mac OS 8.6-9.2</td>
-											<td class="center">1.7</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Netscape Browser 8</td>
-											<td>Win 98SE+</td>
-											<td class="center">1.7</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Netscape Navigator 9</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.0</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.1</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.1</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.2</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.2</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.3</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.3</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.4</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.4</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.5</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.5</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.6</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">1.6</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.7</td>
-											<td>Win 98+ / OSX.1+</td>
-											<td class="center">1.7</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Mozilla 1.8</td>
-											<td>Win 98+ / OSX.1+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Seamonkey 1.1</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Gecko</td>
-											<td>Epiphany 2.20</td>
-											<td>Gnome</td>
-											<td class="center">1.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>Safari 1.2</td>
-											<td>OSX.3</td>
-											<td class="center">125.5</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>Safari 1.3</td>
-											<td>OSX.3</td>
-											<td class="center">312.8</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>Safari 2.0</td>
-											<td>OSX.4+</td>
-											<td class="center">419.3</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>Safari 3.0</td>
-											<td>OSX.4+</td>
-											<td class="center">522.1</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>OmniWeb 5.5</td>
-											<td>OSX.4+</td>
-											<td class="center">420</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>iPod Touch / iPhone</td>
-											<td>iPod</td>
-											<td class="center">420.1</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Webkit</td>
-											<td>S60</td>
-											<td>S60</td>
-											<td class="center">413</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 7.0</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 7.5</td>
-											<td>Win 95+ / OSX.2+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 8.0</td>
-											<td>Win 95+ / OSX.2+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 8.5</td>
-											<td>Win 95+ / OSX.2+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 9.0</td>
-											<td>Win 95+ / OSX.3+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 9.2</td>
-											<td>Win 88+ / OSX.3+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera 9.5</td>
-											<td>Win 88+ / OSX.3+</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Opera for Wii</td>
-											<td>Wii</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Nokia N800</td>
-											<td>N800</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Presto</td>
-											<td>Nintendo DS browser</td>
-											<td>Nintendo DS</td>
-											<td class="center">8.5</td>
-											<td class="center">C/A<sup>1</sup></td>
-										</tr>
-										<tr class="gradeC">
-											<td>KHTML</td>
-											<td>Konqureror 3.1</td>
-											<td>KDE 3.1</td>
-											<td class="center">3.1</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeA">
-											<td>KHTML</td>
-											<td>Konqureror 3.3</td>
-											<td>KDE 3.3</td>
-											<td class="center">3.3</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeA">
-											<td>KHTML</td>
-											<td>Konqureror 3.5</td>
-											<td>KDE 3.5</td>
-											<td class="center">3.5</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeX">
-											<td>Tasman</td>
-											<td>Internet Explorer 4.5</td>
-											<td>Mac OS 8-9</td>
-											<td class="center">-</td>
-											<td class="center">X</td>
-										</tr>
-										<tr class="gradeC">
-											<td>Tasman</td>
-											<td>Internet Explorer 5.1</td>
-											<td>Mac OS 7.6-9</td>
-											<td class="center">1</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeC">
-											<td>Tasman</td>
-											<td>Internet Explorer 5.2</td>
-											<td>Mac OS 8-X</td>
-											<td class="center">1</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Misc</td>
-											<td>NetFront 3.1</td>
-											<td>Embedded devices</td>
-											<td class="center">-</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeA">
-											<td>Misc</td>
-											<td>NetFront 3.4</td>
-											<td>Embedded devices</td>
-											<td class="center">-</td>
-											<td class="center">A</td>
-										</tr>
-										<tr class="gradeX">
-											<td>Misc</td>
-											<td>Dillo 0.8</td>
-											<td>Embedded devices</td>
-											<td class="center">-</td>
-											<td class="center">X</td>
-										</tr>
-										<tr class="gradeX">
-											<td>Misc</td>
-											<td>Links</td>
-											<td>Text only</td>
-											<td class="center">-</td>
-											<td class="center">X</td>
-										</tr>
-										<tr class="gradeX">
-											<td>Misc</td>
-											<td>Lynx</td>
-											<td>Text only</td>
-											<td class="center">-</td>
-											<td class="center">X</td>
-										</tr>
-										<tr class="gradeC">
-											<td>Misc</td>
-											<td>IE Mobile</td>
-											<td>Windows Mobile 6</td>
-											<td class="center">-</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeC">
-											<td>Misc</td>
-											<td>PSP browser</td>
-											<td>PSP</td>
-											<td class="center">-</td>
-											<td class="center">C</td>
-										</tr>
-										<tr class="gradeU">
-											<td>Other browsers</td>
-											<td>All others</td>
-											<td>-</td>
-											<td class="center">-</td>
-											<td class="center">U</td>
-										</tr>
-									</tbody>
-									<tfoot>
-										<tr>
-											<th>Rendering engine</th>
-											<th>Browser</th>
-											<th>Platform(s)</th>
-											<th>Engine version</th>
-											<th>CSS grade</th>
-										</tr>
-									</tfoot>
+
+										<?php }  ?>
+
+										<button class="btn btn-primary" onclick="print('tables_artistes.php')">Imprimer le
+                                                PDF</button>
+                                                <a href="artistesPdf.php"><button> imprimer la liste</button></a>
+								</tbody>	
 								</table>
 							</div>
-						</div><!--/.module-->
+							
+							
 
-					<br />
+			<div class="module-body table">	
+				<h3>Table Catégories Artistes</h3>
+				<div class="dropdown" style="float:left;">
+					<button class="dropbtn" >Trier</button>
+					<div class="dropdown-content" style="left:0;">
+					  
+					  
+					</div>
+				  </div>
+				  
+			<a href="AddCategorie.php"><button style="right: 100px;" class="regButton">Ajouter</button></a>
+
+			<br><br><br>
+				<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+					<thead>
+						<tr>
+							<th>Categories ID</th>
+							<th>Nom</th>
+							<th>Description</th>
+							<th>Nombres d'artistes</th>
+							<th>Modifier</th>
+							<th>Supprimer</th>
+							
+							<!--<th colspan="2">	<form class="example" action="/action_page.php" style="margin:auto;max-width:300px">
+								<input style="height: 42px;" type="text" placeholder="Search.." name="search">
+								<button  type="submit"><i class="fa fa-search"></i></button>
+							  </form></th>-->
+						</tr>
+					</thead>
+					<tbody>
+                                      <?php  
+										foreach($LitesCategorie as $Cater){
+
+
+										?>
+
+						<tr class="odd gradeX">
+							<td> <?php echo $Cater['ID']; ?></td>
+							<td> <?php echo $Cater['nom']; ?></td>
+							<td> <?php echo $Cater['description']; ?></td>
+							<td> <?php echo $Cater['nombres_artiste']; ?></td>
+							<td><a href="ModifierCategorie.php?ID=<?php echo $Cater['ID']; ?>"><button >Modifier</button></a></td> 
+							<td><a href="suppCategorie.php?ID=<?php echo $Cater['ID']; ?>"><button >Supprimer</button></a></td>
+							
+
+						</tr>
+							<?php }  ?>
+
+						</tbody>
+					
+				</table>
+			</div>					
+			<br><br><br>
+			
 						
+						
+					</tr>
+					
+				
+			</table>
+		</div>	
+		</div><!--/.module-->
 					</div><!--/.content-->
 				</div><!--/.span9-->
-			</div>
 		</div><!--/.container-->
 	</div><!--/.wrapper-->
 
@@ -857,14 +506,14 @@
 		<div class="container">
 			 
 
-			<b class="copyright">&copy; 2014 Edmin - EGrappler.com </b> All rights reserved.
+			<b class="copyright">&copy; 2022 TheGlobe - Alliance</b> All rights reserved.
 		</div>
 	</div>
 
 	<script src="scripts/jquery-1.9.1.min.js"></script>
 	<script src="scripts/jquery-ui-1.10.1.custom.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
-	<script src="scripts/datatables/jquery.dataTables.js"></script>
+	<!-- <script src="scripts/datatables/jquery.dataTables.js"></script> -->
 	<script>
 		$(document).ready(function() {
 			$('.datatable-1').dataTable();
@@ -874,4 +523,73 @@
 			$('.dataTables_paginate > a:last-child').append('<i class="icon-chevron-right shaded"></i>');
 		} );
 	</script>
+
+	   <!-- /.control-sidebar -->
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables  & Plugins -->
+   <!-- <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="plugins/jszip/jszip.min.js"></script>
+    <script src="plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>-->
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js"></script>
+	<script>
+function print(pdf) {
+    // Créer un IFrame.
+    var iframe = document.createElement('iframe');
+    // Cacher le IFrame.    
+    iframe.style.visibility = "hidden";
+    // Définir la source.    
+    iframe.src = pdf;
+    // Ajouter le IFrame sur la page Web.    
+    document.body.appendChild(iframe);
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print(); // Imprimer.
+}
+</script>
+
+ <script>
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+    </script>
+
+   <script>
+   	function confirmer(){
+    var res = confirm("Êtes-vous sûr de vouloir supprimer?");
+    if(res){
+        // Mettez ici la logique de suppression
+    }
+}
+   </script> 
 </body>
+
+</html>

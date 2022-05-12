@@ -9,7 +9,7 @@
         <div id="container">
             <!-- zone de connexion -->
            
-            <form action="http://localhost/Projet/Controller/resetController.php" method="POST">
+            <form action="http://localhost/Alliance/Controller/resetController.php" method="POST">
                 <h2 align="center">Recuperation Password</h2>
                 
                 <label><b>Email</b></label>

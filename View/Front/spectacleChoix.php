@@ -3,7 +3,7 @@ include_once 'C:/xampp/htdocs/Alliance/Controller/spectacleControllerF.php';
 include_once 'C:/xampp/htdocs/Alliance/Controller/specStatistique.php';
 //include_once '‪C:/xampp/htdocs/Alliance/Controller/ajout_commentaire.php';
 include_once 'C:/xampp/htdocs/Alliance/config.php';
-session_start();
+// session_start();
 $db = config::getConnexion();
 if($_SESSION["loggedIn"]!=true)
 {
@@ -17,7 +17,7 @@ if($_SESSION["loggedIn"]!=true)
 	try {
 		$query = $db->prepare($sql);
 		 $query->execute([
-                'id' =>  $_SESSION["idSpectacle"]
+                'id' =>  $_GET['specId']
 				
             ]);
 		$spectacle = $query->fetch();
@@ -27,7 +27,7 @@ if($_SESSION["loggedIn"]!=true)
 			catch (Exception $e) {
 		die('Erreur: ' . $e->getMessage());
 	}	
-	
+$_SESSION["idSpectacle"]=$_GET['specId'];
 $spec=$spectacle['spectacleId'];
 $titre=$spectacle["titre"];
 $date=$spectacle["dateSpec"];
@@ -43,6 +43,7 @@ $video=$spectacle["video"];
 $carte=$spectacle["carte"];
 $imgportrait=$spectacle["imgportrait"];
 $imglandscape=$spectacle["imglandscape"];
+
 
 //mettre vus dans la base
 try
@@ -154,7 +155,7 @@ if(comment=="")
 							<a class="nav-link" href="about.html">About</a>
 						</li>
 				<li class="nav-item">
-								<a class="nav-link" href="genre.html">Genre</a>
+								<a class="nav-link" href="Artistes.php">Artistes</a>
 							</li>
 
 						<li class="nav-item">
@@ -184,24 +185,6 @@ if(comment=="")
 								</form>
 								<div class="browse-items">
 									<h3 class="hny-title two mt-md-5 mt-4">Browse all:</h3>
-									<ul class="search-items">
-										<li><a href="genre.html">Action</a></li>
-										<li><a href="genre.html">Drama</a></li>
-										<li><a href="genre.html">Family</a></li>
-										<li><a href="genre.html">Thriller</a></li>
-										<li><a href="genre.html">Commedy</a></li>
-										<li><a href="genre.html">Romantic</a></li>
-										<li><a href="genre.html">Tv-Series</a></li>
-										<li><a href="genre.html">Horror</a></li>
-										<li><a href="genre.html">Action</a></li>
-										<li><a href="genre.html">Drama</a></li>
-										<li><a href="genre.html">Family</a></li>
-										<li><a href="genre.html">Thriller</a></li>
-										<li><a href="genre.html">Commedy</a></li>
-										<li><a href="genre.html">Romantic</a></li>
-										<li><a href="genre.html">Tv-Series</a></li>
-										<li><a href="genre.html">Horror</a></li>
-									</ul>
 								</div>
 							</div>
 							<a class="close" href="#close">×</a>
@@ -258,8 +241,9 @@ if(comment=="")
               <a id="spectacleLocation" style="color:black;"class="spectacleInfo" href="#map"><ion-icon name="map-outline"></ion-icon><?php echo $adresse ?></a> 
               <a id="spectacleVideo" style="color:black;" class="spectacleInfo" href="#videoPopup"> <ion-icon name="videocam-outline"></ion-icon> Prix: <?php echo $prix ?> </a>
               <a id="spectacleComment" style="color:black;" class="spectacleInfo" href="#respond"> <ion-icon name="heart-half-outline"></ion-icon> Cliquer pour evaluer et commenter</a> 
-             
-			  <a id="spectacleReservation"style="color:black;"  class="spectacleInfo" href="google.com"> <ion-icon name="ticket-outline"></ion-icon> Reserver  <ion-icon name="ticket-outline"></ion-icon> </a>
+             <form action="http://localhost/Alliance/View/Front/achat_billet.php" method="POST"> 
+			  <button id="spectacleReservation"style="color:black;" type="submit" class="spectacleInfo"  <ion-icon name="ticket-outline"></ion-icon> Reserver  <ion-icon name="ticket-outline"></ion-icon> </button>
+			  </form>
           </aside>
     </section>
 	<br><br>
@@ -324,7 +308,7 @@ if(comment=="")
       <textarea placeholder="Ecrire ici..." name="C" id="comment" rows="10" tabindex_with_profil="4"></textarea>
 	<p id="commmentControl"></p>
 
-	  <!-- <input type="hidden" name="dateCommentaire" value="2022-04-30"/>  use javascript for date -->
+	  <!-- <input type="hidden" name="clientId" value="$_SESSION['id_client']"/>   -->
 <input type="hidden" name="S" value="<?php echo $spectacle['spectacleId']; ?>"/> <!-- 1 represents spectacle id -->
 <!-- I need to make a hiiden input for the user id -->
       <input type="hidden" name="comment_post_ID" value="1" id="comment_post_ID" />

@@ -20,6 +20,9 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
 	font-size: 11px;
 	margin: 0 0 0 5px
 }
+.accepte{
+	color : green;
+}
 h1 {
 	font-size: 28px
 }
@@ -150,6 +153,19 @@ body [class^="icon-"], body [class*=" icon-"] {
 	-moz-box-shadow: 0 0 1px rgba(0,0,0,0.2);
 	box-shadow: 0 0 1px rgba(0,0,0,0.2);
 	margin-bottom: 30px
+}
+.module_form {
+	background: #fff;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	border-bottom-color: #bbb;
+	-webkit-box-shadow: 0 0 1px rgba(0,0,0,0.2);
+	-moz-box-shadow: 0 0 1px rgba(0,0,0,0.2);
+	box-shadow: 0 0 1px rgba(0,0,0,0.2);
+	margin-bottom: 30px;
+	text-align: center
 }
 .align-center {
 	text-align: center
@@ -820,13 +836,10 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='@topColor', end
 }
 .table {
 	margin-bottom: 0
-	background-color: #d5d5d5;
 }
-
-.table th {
-	background-color: #d5d5d5;
+form {
+    display: inline;
 }
-
 .table th, .table td {
 	border-color: #d5d5d5!important
 }

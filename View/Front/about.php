@@ -59,12 +59,22 @@ $count=1000;
 								<a class="nav-link" href="about.php">About</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="genre.php">Genre</a>
+								<a class="nav-link" href="Artistes.php">Artistes</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="Boutique.php">Boutique</a>
 							</li>
 							
 							<li class="nav-item">
 								<a class="nav-link" href="contact.php">Contact</a>
 							</li>
+							
+							<li class="nav-item">
+							<a class="nav-link" href="login.php">Sign up</a> <!--add by me for add login-->
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="sign_in.php">Sign in</a> <!--add by me for add login-->
+						</li>
 						</ul>
 	
 						<!--/search-right-->

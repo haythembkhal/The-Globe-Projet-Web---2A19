@@ -131,6 +131,10 @@ Cordially,<br>
 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
     <body>
+	<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index.php">
+					<img src="assets\images\petit logo.png " alt="Your logo" title="Your logo" style="height:50px;" style="right:10%;" />
+					<!-- <span class="fa fa-play icon-log" aria-hidden="true"></span> -->
+					</a></h1>
         <div id="container">
             <!-- zone de connexion -->
             

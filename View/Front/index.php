@@ -5,7 +5,9 @@ session_start();
 $spectacle= new SpectaclesC();
 $_SESSION["loggedIn"]=false;
 $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
- $_SESSION["idSpectacle"]=""
+ $_SESSION["idSpectacle"]="";
+ $_SESSION["temoignage"]="";
+
 ?>
 
 <!doctype html>
@@ -58,9 +60,12 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 						<li class="nav-item">
 							<a class="nav-link" href="about.php">About</a>
 						</li>
-				<li class="nav-item">
-								<a class="nav-link" href="genre.php">Genre</a>
-							</li>
+						<li class="nav-item">
+								<a class="nav-link" href="Artistes.php">Artistes</a>
+						</li>
+						<li class="nav-item">
+								<a class="nav-link" href="Boutique.php">Boutique</a>
+						</li>
 
 						<li class="nav-item">
 							<a class="nav-link" href="contact.php">Contact</a>
@@ -90,24 +95,6 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 								</form>
 								<div class="browse-items">
 									<h3 class="hny-title two mt-md-5 mt-4">Browse all:</h3>
-									<ul class="search-items">
-										<li><a href="genre.php">Action</a></li>
-										<li><a href="genre.php">Drama</a></li>
-										<li><a href="genre.php">Family</a></li>
-										<li><a href="genre.php">Thriller</a></li>
-										<li><a href="genre.php">Commedy</a></li>
-										<li><a href="genre.php">Romantic</a></li>
-										<li><a href="genre.php">Tv-Series</a></li>
-										<li><a href="genre.php">Horror</a></li>
-										<li><a href="genre.php">Action</a></li>
-										<li><a href="genre.php">Drama</a></li>
-										<li><a href="genre.php">Family</a></li>
-										<li><a href="genre.php">Thriller</a></li>
-										<li><a href="genre.php">Commedy</a></li>
-										<li><a href="genre.php">Romantic</a></li>
-										<li><a href="genre.php">Tv-Series</a></li>
-										<li><a href="genre.php">Horror</a></li>
-									</ul>
 								</div>
 							</div>
 							<a class="close" href="#close">×</a>
@@ -325,11 +312,11 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
 									<h6>Locations</h6>
 									<ul>
-										<li><a href="genre.php">Asia</a></li>
-										<li><a href="genre.php">France</a></li>
-										<li><a href="genre.php">Taiwan</a></li>
+										<li><a href="genre.php">Tunisia</a></li>
+										<li><a href="genre.php">Cameroon</a></li>
+										<li><a href="genre.php">Guinea</a></li>
 										<li><a href="genre.php">United States</a></li>
-										<li><a href="genre.php">Korea</a></li>
+										<li><a href="genre.php">Maroc</a></li>
 										<li><a href="genre.php">United Kingdom</a></li>
 									</ul>
 								</div>

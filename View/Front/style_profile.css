@@ -1,6 +1,6 @@
 
 :root {
-  --blue: #5e72e4;
+  --blue: ##ffc107;
   --indigo: #5603ad;
   --purple: #8965e0;
   --pink: #f3a4b5;
@@ -635,15 +635,15 @@ textarea.form-control {
 
 .btn-primary {
   color: #fff;
-  border-color: #5e72e4;
-  background-color: #5e72e4;
+  border-color: #ffc107;
+  background-color: #ffc107;
   box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 }
 
 .btn-primary:hover {
   color: #fff;
-  border-color: #5e72e4;
-  background-color: #5e72e4;
+  border-color: #ffc107;
+  background-color: #ffc107;
 }
 
 .btn-primary:focus {
@@ -652,14 +652,14 @@ textarea.form-control {
 
 .btn-primary:disabled {
   color: #fff;
-  border-color: #5e72e4;
-  background-color: #5e72e4;
+  border-color: #ffc107;
+  background-color: #ffc107;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active {
   color: #fff;
-  border-color: #5e72e4;
-  background-color: #324cdd;
+  border-color: #ffc107;
+  background-color: #ffc107;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus {
@@ -668,15 +668,15 @@ textarea.form-control {
 
 .btn-info {
   color: #fff;
-  border-color: #11cdef;
-  background-color: #11cdef;
+  border-color: #ffc107;
+  background-color: #ffc107;
   box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 }
 
 .btn-info:hover {
   color: #fff;
-  border-color: #11cdef;
-  background-color: #11cdef;
+  border-color: #ffc107;
+  background-color: #ffc107;
 }
 
 .btn-info:focus {
@@ -685,14 +685,14 @@ textarea.form-control {
 
 .btn-info:disabled {
   color: #fff;
-  border-color: #11cdef;
-  background-color: #11cdef;
+  border-color: #ffc107;
+  background-color: #ffc107;
 }
 
 .btn-info:not(:disabled):not(.disabled):active {
   color: #fff;
-  border-color: #11cdef;
-  background-color: #0da5c0;
+  border-color: #ffc107;
+  background-color: #ffc107;
 }
 
 .btn-info:not(:disabled):not(.disabled):active:focus {
@@ -701,15 +701,15 @@ textarea.form-control {
 
 .btn-default {
   color: #fff;
-  border-color: #172b4d;
-  background-color: #172b4d;
+  border-color: #ffc107;
+  background-color: #ffc107;
   box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 }
 
 .btn-default:hover {
   color: #fff;
-  border-color: #172b4d;
-  background-color: #172b4d;
+  border-color: #ffc107;
+  background-color: #ffc107;
 }
 
 .btn-default:focus {
@@ -718,14 +718,14 @@ textarea.form-control {
 
 .btn-default:disabled {
   color: #fff;
-  border-color: #172b4d;
-  background-color: #172b4d;
+  border-color:#ffc107;
+  background-color: #ffc107;
 }
 
 .btn-default:not(:disabled):not(.disabled):active {
   color: #fff;
-  border-color: #172b4d;
-  background-color: #0b1526;
+  border-color: #ffc107;
+  background-color: #ffc107;
 }
 
 .btn-default:not(:disabled):not(.disabled):active:focus {
@@ -1306,16 +1306,16 @@ button.bg-white:focus {
 }
 
 .text-white {
-  color: #fff !important;
+  color: #000000 !important;
 }
 
 .text-white {
-  color: #fff !important;
+  color: #000000 !important;
 }
 
 a.text-white:hover,
 a.text-white:focus {
-  color: #e6e6e6 !important;
+  color: #000000 !important;
 }
 
 .text-muted {
@@ -1387,11 +1387,11 @@ button.bg-white:focus {
 }
 
 .bg-gradient-default {
-  background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
+  background: linear-gradient(87deg, #ffc107 0, #ffc107 100%) !important;
 }
 
 .bg-gradient-default {
-  background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
+  background: linear-gradient(87deg, #fff052 0, #fff052 50%) !important;
 }
 
 @keyframes floating-lg {
@@ -1437,11 +1437,11 @@ button.bg-white:focus {
 }
 
 .opacity-8 {
-  opacity: .8 !important;
+  opacity: .50 !important;
 }
 
 .opacity-8 {
-  opacity: .9 !important;
+  opacity: .50 !important;
 }
 
 .center {
@@ -1477,7 +1477,7 @@ a.text-white:focus {
   height: 48px;
   color: #fff;
   border-radius: 50%;
-  background-color: #adb5bd;
+  background-color: #ffc107;
   align-items: center;
   justify-content: center;
 }
