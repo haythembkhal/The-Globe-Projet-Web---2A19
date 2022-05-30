@@ -3,6 +3,7 @@ include '../../Controller/spectacleControllerF.php';
 session_start();
 
 $spectacle= new SpectaclesC();
+$listespectacle=$spectacle->afficherSpectacle();
 $_SESSION["loggedIn"]=false;
 $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
  $_SESSION["idSpectacle"]="";
@@ -55,13 +56,10 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item active">
-							<a class="nav-link" href="http://localhost/Alliance/View/Front/index.php">Home</a>
+							<a class="nav-link show-title"  href="http://localhost/Alliance/View/Front/index.php">Home</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="about.php">About</a>
-						</li>
-						<li class="nav-item">
-								<a class="nav-link" href="Artistes.php">Artistes</a>
 						</li>
 						<li class="nav-item">
 								<a class="nav-link" href="Boutique.php">Boutique</a>
@@ -129,11 +127,22 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 	<section class="w3l-main-slider position-relative" id="home">
 		<div class="companies20-content">
 			<div class="owl-one owl-carousel owl-theme">
-				<div class="item">
+			    <?php foreach($listespectacle as $spec){ ?>
+				<div class="item" style="background: url(<?php echo $spec["imglandscape"];?>) no-repeat center;background-size: cover;
+  min-height: 500px;
+  position: relative;
+  z-index: 0;
+  display: grid;
+  align-items: center;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -o-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -moz-border-radius: 6px;">
 					<li>
 						<div class="slider-info banner-view bg bg2">
 							<div class="banner-info">
-								<h3>Une Touche Koréene</h3>
+								<h3><?php echo $spec["annonce"];?></h3>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
 									voluptatem tenetur consequatur.</span></p>
 					
@@ -141,6 +150,8 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 						</div>
 					</li>
 				</div>
+				<?php } ?>
+				<!--
 				<div class="item">
 					<li>
 						<div class="slider-info  banner-view banner-top1 bg bg2">
@@ -174,7 +185,7 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 							</div>
 						</div>
 					</li>
-				</div>
+				</div>-->
 			</div>
 		</div>
 	</section>
@@ -282,19 +293,19 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 				<div class="container py-lg-4">
 					<div class="text-txt">
 						<div class="right-side">
-							<div class="row footer-about">
-					
+							
+								
 							<div class="row footer-links">
 
 
 								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
-									<h6>Movies</h6>
+									<h6>Spectacles</h6>
 									<ul>
-										<li><a href="#">Movies</a></li>
-										<li><a href="#">Videos</a></li>
-										<li><a href="#">English Movies</a></li>
-										<li><a href="#">Tailor</a></li>
-										<li><a href="#">Upcoming Movies</a></li>
+										<li><a href="index.php">Spectacles</a></li>
+										<li><a href="index.php">Cinemas</a></li>
+										<li><a href="index.php">Comédies</a></li>
+										<li><a href="index.php">Theatres</a></li>
+										<li><a href="index.php">Festivals</a></li>
 										<li><a href="contact.php">Contact Us</a></li>
 									</ul>
 								</div>
@@ -302,22 +313,21 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 									<h6>Information</h6>
 									<ul>
 										<li><a href="index.php">Home</a> </li>
-										<li><a href="about.php">About</a> </li>
-										<li><a href="#">Tv Series</a> </li>
-										<li><a href="#">Blogs</a> </li>
-										<li><a href="#">Login</a></li>
-										<li><a href="contact.php">Contact</a></li>
+										<li><a href="about.php">About</a> </li>		
+										<li><a href="Boutique.php">Boutique</a> </li>
+										<li><a href="sign_in.php">Sign In</a></li>
+										<li><a href="login.php">Sign Up</a></li>
 									</ul>
 								</div>
 								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
 									<h6>Locations</h6>
 									<ul>
-										<li><a href="genre.php">Tunisia</a></li>
-										<li><a href="genre.php">Cameroon</a></li>
-										<li><a href="genre.php">Guinea</a></li>
-										<li><a href="genre.php">United States</a></li>
-										<li><a href="genre.php">Maroc</a></li>
-										<li><a href="genre.php">United Kingdom</a></li>
+										<li>Tunisia</li>
+										<li>Cameroon</li>
+										<li>Guinea</li>
+										<li>United States</li>
+										<li>Morocco</li>
+										<li>Algeria</li>
 									</ul>
 								</div>
 								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
@@ -339,18 +349,17 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 				<div class="container">
 					<div class="copyright-footer">
 						<div class="columns text-lg-left">
-							<p>&copy; 2021 Alliance. All rights reserved | Designed by <a
-									href="https://w3layouts.com">W3layouts</a></p>
+							<p>&copy; 2020 The Globe. All rights reserved | Designed by Alliance</p>
 						</div>
 
 						<ul class="social text-lg-right">
-							<li><a href="#facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+							<li><a href="https://www.facebook.com"><span class="fa fa-facebook" aria-hidden="true"></span></a>
 							</li>
 							<li><a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
 							</li>
 							<li><a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
 							</li>
-							<li><a href="#google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+							<li><a href="https://www.Google.com"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
 							</li>
 
 						</ul>

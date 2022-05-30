@@ -5,10 +5,78 @@ Author URL: http://w3layouts.com
 -->
 
 <?php
-include '../../Controller/temoignageC.php';
+include_once '../../Controller/temoignageC.php';
+include_once "../../Controller/ArtisteC.php";
 $customer = new ClientC();
 $temoignage=new temoignageC();
 $listeTemoignage=$temoignage->afficherTemoignage();
+
+//la partie artiste de mendes
+
+$control= new ArtisteC();
+
+
+ 
+ function getNameCategorie($num){
+    $db = config::getconnexion();
+
+    try {
+        $query = $db->query(
+            "SELECT nom FROM categories where ID=$num"
+        );
+        return $query->fetch();
+
+    } catch (PDOException $e) {
+        $e->getMessage();
+        }
+}
+
+function getArtistes(){
+    $db = config::getconnexion();
+
+    try {
+        $query = $db->query(
+            "SELECT * FROM artistes"
+        );
+        return $query;
+
+    } catch (PDOException $e) {
+        $e->getMessage();
+        }
+}
+
+function countArtist(){
+
+    $db = config::getConnexion();
+    
+    $Query = "SELECT count(*) AS nb FROM artistes ";
+    
+    try {
+        $res = $db->query($Query);
+        $data = $res->fetch();
+        $nb = $data['nb'];
+        return $nb;
+            
+    } catch (PDOException $e) {
+            $e->getMessage();
+    }
+    
+}
+
+
+
+$LitesArtistes=getArtistes();
+//$art=$LitesArtistes->getArtistes();
+
+
+if(isset($_GET['search'])) {
+      if(!empty($_GET['search'])){
+      //$search = htmlspecialchars($_GET['search']);
+      $search = $_GET['search'];
+	  $LitesArtistes= $control->rechercherartist($search);
+      //$art=$LitesArtistes->rechercherartist($search);
+  }
+}
 
 
 $count=1000;
@@ -20,8 +88,7 @@ $count=1000;
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>ProShowz a Entertainment Category Bootstrap Responsive Website Template | About
-	:: W3layouts</title>
+	<title>The Globe| About</title>
 	<!-- Template CSS -->
 	<link rel="stylesheet" href="assets/css/style-starter.css">
 	<!-- Template CSS -->
@@ -36,8 +103,10 @@ $count=1000;
 			<!--/nav-->
 			<nav class="navbar navbar-expand-lg navbar-light fill px-lg-0 py-0 px-3">
 				<div class="container">
-					<h1><a class="navbar-brand" href="index.php"><span class="fa fa-play icon-log" aria-hidden="true"></span>
-						ProShowz </a></h1>
+					<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index.php">
+					<img src="assets\images\petit logo.png " alt="Your logo" title="Your logo" style="height:50px;" style="right:10%;" />
+					<!-- <span class="fa fa-play icon-log" aria-hidden="true"></span> -->
+					The Globe</a></h1>
 					<!-- if logo is image enable this   
 							<a class="navbar-brand" href="#index.php">
 								<img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
@@ -56,10 +125,7 @@ $count=1000;
 								<a class="nav-link" href="index.php">Home</a>
 							</li>
 							<li class="nav-item active">
-								<a class="nav-link" href="about.php">About</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="Artistes.php">Artistes</a>
+								<a class="nav-link show-title" href="about.php">About</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="Boutique.php">Boutique</a>
@@ -91,27 +157,7 @@ $count=1000;
 										<button type="submit" class="btn"><span class="fa fa-search"
 												aria-hidden="true"></span></button>
 									</form>
-									<div class="browse-items">
-										<h3 class="hny-title two mt-md-5 mt-4">Browse all:</h3>
-										<ul class="search-items">
-											<li><a href="genre.php">Action</a></li>
-											<li><a href="genre.php">Drama</a></li>
-											<li><a href="genre.php">Family</a></li>
-											<li><a href="genre.php">Thriller</a></li>
-											<li><a href="genre.php">Commedy</a></li>
-											<li><a href="genre.php">Romantic</a></li>
-											<li><a href="genre.php">Tv-Series</a></li>
-											<li><a href="genre.php">Horror</a></li>
-											<li><a href="genre.php">Action</a></li>
-											<li><a href="genre.php">Drama</a></li>
-											<li><a href="genre.php">Family</a></li>
-											<li><a href="genre.php">Thriller</a></li>
-											<li><a href="genre.php">Commedy</a></li>
-											<li><a href="genre.php">Romantic</a></li>
-											<li><a href="genre.php">Tv-Series</a></li>
-											<li><a href="genre.php">Horror</a></li>
-										</ul>
-									</div>
+									
 								</div>
 								<a class="close" href="#close">×</a>
 							</div>
@@ -142,12 +188,12 @@ $count=1000;
 		</header>
 		<!-- //header -->
 	<!--/breadcrumbs -->
-	<div class="w3l-breadcrumbs">
-		<nav id="breadcrumbs" class="breadcrumbs">
+	<<div class="w3l-breadcrumbs">
+		<!--<nav id="breadcrumbs" class="breadcrumbs">
 			<div class="container page-wrapper">
 			<a href="index.php">Home</a> » <span class="breadcrumb_last" aria-current="page">About</span>
 			</div>
-		</nav>
+		</nav>-->
 	</div>
  <!--//breadcrumbs -->
 	<!-- /about-->
@@ -155,13 +201,11 @@ $count=1000;
 		<div class="container py-lg-4">
 			<div class="row ab-grids-sec align-items-center">
 				<div class="col-lg-6 ab-right">
-					<img class="img-fluid" src="assets/images/banner1.jpg">
+					<img class="img-fluid" src="assets/images/2.jpg">
 				</div>
 				<div class="col-lg-6 ab-left pl-lg-4 mt-lg-0 mt-5">
 					<h3 class="hny-title">Great Entertainment</h3>
-					<p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam id quisquam ipsam
-						molestiae ad eius accusantium? Nulla dolorem perferendis inventore! posuere cubilia Curae;
-						Nunc non risus in justo convallis feugiat.</p>
+					<p class="mt-3">Entertainment is a great way to cut short the incessant torment of the brain. It stimulates the mind and allows everyone to always remain energetic and efficient at work.</p>
 					<div class="ready-more mt-4">
 						<a href="#" class="btn read-button">Read More <span class="fa fa-angle-double-right ml-2" aria-hidden="true"></span></a>
 					</div>
@@ -181,8 +225,8 @@ $count=1000;
 				<div class="stats_left">
 					<div class="counter_grid">
 						<div class="icon_info">
-							<p class="counter">165</p>
-							<h4>Shows</h4>
+							<p class="counter"><?php $nb=countArtist(); echo $nb; ?></p>
+							<h4>Artists</h4>
 
 						</div>
 					</div>
@@ -199,7 +243,7 @@ $count=1000;
 				<div class="stats_left">
 					<div class="counter_grid">
 						<div class="icon_info">
-							<p class="counter">5063</p>
+							<p class="counter">2022</p>
 							<h4>Year of Use</h4>
 
 						</div>
@@ -215,16 +259,22 @@ $count=1000;
 			<div class="grids-main py-5">
 				<div class="container py-lg-4">
 					<div class="headerhny-title">
-						<h3 class="hny-title">Our Actors</h3>
+						<h3 class="hny-title" id="artiste">Our Artists</h3>
 					</div>
 					<div class="owl-team owl-carousel owl-theme">
+					<?php  
+										foreach($LitesArtistes as $Artis){
+
+
+										?>
 						<div class="item vhny-grid">
 							<div class="d-grid team-info">
 								<div class="column position-relative">
-									<a href="#url"><img src="assets/images/a1.jpg" alt="" class="img-fluid rounded team-image" /></a>
+									<a href="#url"><img src="assets/images/<?php echo $Artis['image']; ?>" alt="" class="img-fluid rounded team-image" /></a>
 								</div>
 								<div class="column text-center">
-									<h3 class="name-pos"><a href="#url">Dwayne johnson</a></h3>
+									<h3 class="name-pos"><a href="#url"><?php echo $Artis['nom']; ?></a></h3>
+									<p><?php $test=getNameCategorie($Artis['categories']); echo $test['nom']; ?></p>
 									
 									<div class="social">
 										<a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
@@ -232,103 +282,13 @@ $count=1000;
 										<a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
 									</div>
 								</div>
+								<a href="../../Controller/likes.php?id=<?php echo $Artis['id']; ?>"><span class="post fa fa-heart text-right"> <?php echo $Artis['likess']; ?></span></a>
 							</div>
+							
 	
 						</div>
-						<div class="item vhny-grid">
-							<div class="box16">
-								<div class="d-grid team-info">
-									<div class="column position-relative">
-										<a href="#url"><img src="assets/images/a2.jpg" alt="" class="img-fluid rounded team-image" /></a>
-									</div>
-									<div class="column text-center">
-										<h3 class="name-pos"><a href="#url">Karen Gillan</a></h3>
-										
-										<div class="social">
-											<a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-											<a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-											<a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-										</div>
-									</div>
-								</div>
-							</div>
-	
-						</div>
-						<div class="item vhny-grid">
-							<div class="box16">
-								<div class="d-grid team-info">
-									<div class="column position-relative">
-										<a href="#url"><img src="assets/images/a3.jpg" alt="" class="img-fluid rounded team-image" /></a>
-									</div>
-									<div class="column text-center">
-										<h3 class="name-pos"><a href="#url">Chris Hemsworth</a></h3>
-										
-										<div class="social">
-											<a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-											<a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-											<a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-										</div>
-									</div>
-								</div>
-							</div>
-	
-						</div>
-						<div class="item vhny-grid">
-							<div class="box16">
-								<div class="d-grid team-info">
-									<div class="column position-relative">
-										<a href="#url"><img src="assets/images/a4.jpg" alt="" class="img-fluid rounded team-image" /></a>
-									</div>
-									<div class="column text-center">
-										<h3 class="name-pos"><a href="#url">Elton John</a></h3>
-									
-										<div class="social">
-											<a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-											<a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-											<a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-										</div>
-									</div>
-								</div>
-							</div>
-	
-						</div>
-						<div class="item vhny-grid">
-							<div class="box16">
-								<div class="d-grid team-info">
-									<div class="column position-relative">
-										<a href="#url"><img src="assets/images/a5.jpg" alt="" class="img-fluid rounded team-image" /></a>
-									</div>
-									<div class="column text-center">
-										<h3 class="name-pos"><a href="#url">Liu Yifei</a></h3>
-										<div class="social">
-											<a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-											<a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-											<a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-										</div>
-									</div>
-								</div>
-							</div>
-	
-						</div>
-						<div class="item vhny-grid">
-							<div class="box16">
-								<div class="d-grid team-info">
-									<div class="column position-relative">
-										<a href="#url"><img src="assets/images/a3.jpg" alt="" class="img-fluid rounded team-image" /></a>
-									</div>
-									<div class="column text-center">
-										<h3 class="name-pos"><a href="#url">Chris Hemsworth</a></h3>
-										
-										<div class="social">
-											<a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-											<a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-											<a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-										</div>
-									</div>
-								</div>
-							</div>
-	
-						</div>
+						<?php }  ?>
+					
 					</div>
 				</div>
 	
@@ -357,11 +317,11 @@ $count=1000;
                                     <q><?php echo $temoignage["message"];?></q>
                                 </blockquote>
                                 <div class="testi-des">
-                                    <div class="test-img"><img src="assets/images/team1.jpg" class="img-fluid" alt="/">
+                                    <div class="test-img"><img src="<?php echo $c["photo"];?>"class="img-fluid" alt="/">
                                     </div>
                                     <div class="peopl align-self">
                                         <h3><?php $client=$customer->rechercherClient($temoignage["client"]);foreach($client as $c){echo $c["firstname"]." ".$c["lastname"];}?></h3>
-                                        <p class="indentity">TUNIS</p>
+                                        <p class="indentity"><?php echo $c["ville"];?></p>
                                     </div>
                                 </div>
                             </div>
@@ -401,7 +361,7 @@ $count=1000;
 							<div class="box16">
 								<a href="genre.php">
 									<figure>
-										<img class="img-fluid" src="assets/images/m12.jpg" alt="">
+										<img class="img-fluid" src="assets/images/will2.jpg" alt="">
 									</figure>
 									<div class="box-content">
 										<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
@@ -417,7 +377,7 @@ $count=1000;
 							<h3> <a class="title-gd" href="genre.php">The Hustle</a></h3>
 							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
 							<div class="button-center text-center mt-4">
-								<a href="genre.php" class="btn watch-button">Watch now</a>
+								<a href="https://www.youtube.com/embed/myjEoDypUD8" class="btn watch-button">Watch now</a>
 							</div>
 	
 						</div>
@@ -425,7 +385,7 @@ $count=1000;
 							<div class="box16">
 								<a href="genre.php">
 									<figure>
-										<img class="img-fluid" src="assets/images/m11.jpg" alt="">
+										<img class="img-fluid" src="assets/images/pnltournee.jpg" alt="">
 									</figure>
 									<div class="box-content">
 	
@@ -449,7 +409,7 @@ $count=1000;
 							<div class="box16">
 								<a href="genre.php">
 									<figure>
-										<img class="img-fluid" src="assets/images/m9.jpg" alt="">
+										<img class="img-fluid" src="assets/images/bts.jpg" alt="">
 									</figure>
 									<div class="box-content">
 	
@@ -548,42 +508,26 @@ $count=1000;
 			</div>
 		</section>
 		<!--grids-sec2-->
-	<!-- footer-66 -->
+		<!-- footer-66 -->
 	<footer class="w3l-footer">
 		<section class="footer-inner-main">
 			<div class="footer-hny-grids py-5">
 				<div class="container py-lg-4">
 					<div class="text-txt">
 						<div class="right-side">
-							<div class="row footer-about">
-								<div class="col-md-3 col-6 footer-img mb-lg-0 mb-4">
-									<a href="genre.php"><img class="img-fluid" src="assets/images/banner1.jpg"
-											alt=""></a>
-								</div>
-								<div class="col-md-3 col-6 footer-img mb-lg-0 mb-4">
-									<a href="genre.php"><img class="img-fluid" src="assets/images/banner2.jpg"
-											alt=""></a>
-								</div>
-								<div class="col-md-3 col-6 footer-img mb-lg-0 mb-4">
-									<a href="genre.php"><img class="img-fluid" src="assets/images/banner3.jpg"
-											alt=""></a>
-								</div>
-								<div class="col-md-3 col-6 footer-img mb-lg-0 mb-4">
-									<a href="genre.php"><img class="img-fluid" src="assets/images/banner4.jpg"
-											alt=""></a>
-								</div>
-							</div>
+							
+								
 							<div class="row footer-links">
 
 
 								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
-									<h6>Movies</h6>
+									<h6>Spectacles</h6>
 									<ul>
-										<li><a href="#">Movies</a></li>
-										<li><a href="#">Videos</a></li>
-										<li><a href="#">English Movies</a></li>
-										<li><a href="#">Tailor</a></li>
-										<li><a href="#">Upcoming Movies</a></li>
+										<li><a href="index.php">Spectacles</a></li>
+										<li><a href="index.php">Cinemas</a></li>
+										<li><a href="index.php">Comédies</a></li>
+										<li><a href="index.php">Theatres</a></li>
+										<li><a href="index.php">Festivals</a></li>
 										<li><a href="contact.php">Contact Us</a></li>
 									</ul>
 								</div>
@@ -591,22 +535,21 @@ $count=1000;
 									<h6>Information</h6>
 									<ul>
 										<li><a href="index.php">Home</a> </li>
-										<li><a href="about.php">About</a> </li>
-										<li><a href="#">Tv Series</a> </li>
-										<li><a href="#">Blogs</a> </li>
-										<li><a href="#">Login</a></li>
-										<li><a href="contact.php">Contact</a></li>
+										<li><a href="about.php">About</a> </li>		
+										<li><a href="Boutique.php">Boutique</a> </li>
+										<li><a href="sign_in.php">Sign In</a></li>
+										<li><a href="login.php">Sign Up</a></li>
 									</ul>
 								</div>
 								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
 									<h6>Locations</h6>
 									<ul>
-										<li><a href="genre.php">Asia</a></li>
-										<li><a href="genre.php">France</a></li>
-										<li><a href="genre.php">Taiwan</a></li>
-										<li><a href="genre.php">United States</a></li>
-										<li><a href="genre.php">Korea</a></li>
-										<li><a href="genre.php">United Kingdom</a></li>
+										<li>Tunisia</li>
+										<li>Cameroon</li>
+										<li>Guinea</li>
+										<li>United States</li>
+										<li>Morocco</li>
+										<li>Algeria</li>
 									</ul>
 								</div>
 								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
@@ -628,18 +571,17 @@ $count=1000;
 				<div class="container">
 					<div class="copyright-footer">
 						<div class="columns text-lg-left">
-							<p>&copy; 2022 	THE GLOBE. All rights reserved | Designed by ALLIANCE <a
-									href="https://w3layouts.com">W3layouts</a></p>
+							<p>&copy; 2022 The Globe. All rights reserved | Designed by Alliance</p>
 						</div>
 
 						<ul class="social text-lg-right">
-							<li><a href="#facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+							<li><a href="https://www.facebook.com"><span class="fa fa-facebook" aria-hidden="true"></span></a>
 							</li>
 							<li><a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
 							</li>
 							<li><a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
 							</li>
-							<li><a href="#google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+							<li><a href="https://www.Google.com"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
 							</li>
 
 						</ul>

@@ -23,7 +23,7 @@ $email=$_SESSION["email"];*/
                 $_POST['lastname'],
                 $_POST['ville'],
                 $_POST['email'],
-                $_SESSION['password']
+                $_SESSION['password'],$_POST["photo"]
             );
             $success = 1;
 			
@@ -50,6 +50,7 @@ $email=$_SESSION["email"];*/
 			$_SESSION['lastname']=$_POST['lastname'];
 			$_SESSION['ville']=$_POST['ville'];
 			$_SESSION['email']=$_POST['email'];
+			$_SESSION["picture"]=$_POST["photo"];
 			
 			
 		//	header('location:.php');
@@ -147,7 +148,7 @@ var test=0;
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="profil.jpg">
+                  <img alt="Image placeholder" src="<?php echo $_SESSION["picture"];?>">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
                   <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION['lastname']." ".$_SESSION['firstname']?></span>
@@ -184,7 +185,7 @@ var test=0;
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                   <img src="profil.jpg" class="rounded-circle">
+                   <img src="<?php echo $_SESSION["picture"];?>" class="rounded-circle">
 					
                   </a>
                 </div>
@@ -193,7 +194,7 @@ var test=0;
             <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
               <div class="d-flex justify-content-between">
                 <a href="../../Controller/logoutController.php" class="btn btn-sm btn-info mr-4">LogOut</a>
-                <a href="#" class="btn btn-sm btn-default float-right">Photo</a>
+                <a href="panier.php" class="btn btn-sm btn-default float-right">Panier</a>
               </div>
             </div>
             <div class="card-body pt-0 pt-md-4">
@@ -276,6 +277,12 @@ var test=0;
                         <input type="text" id="input-last-name" name="lastname" class="form-control form-control-alternative" placeholder="Last name" value=<?php echo $_SESSION['lastname']?>>
                       </div>
                     </div>
+					<div class="col-lg-6">
+					 <div class="form-group focused">
+					 <label class="form-control-label" for="input-photo">Photo Profil</label>
+					<input class="form-control form-control-alternative"type="file" id="input-photo"   name="photo" accept="image/*">
+					</div>
+					</div>
                   </div>
 				  <input type="submit" class="btn btn-info" value="Confirm">
 				  </form>

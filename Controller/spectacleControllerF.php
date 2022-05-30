@@ -4,6 +4,23 @@ config::getConnexion();
 // session_start();
 class SpectaclesC{
 
+function afficherSpectacle(){
+        $db = config::getconnexion();
+
+        try {
+            $query = $db->prepare(
+			
+            'SELECT * FROM spectacles'
+            );
+			$query->execute();
+			$result=$query->fetchALL();
+			return $result;
+           
+
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
 public function afficher() 
 {			
 		$result=1;
@@ -64,9 +81,12 @@ public function afficher()
 								</figure>
 								<div class="box-content">
 									<h3 class="title"><?php echo $spectacle['titre'];?></h3>
-									<h4> <span class="post"><span class="fa fa-clock-o"> </span> <?php echo $spectacle['duration'];?>
-
+									<h4> <span class="post"><span class="fa fa-clock-o"> </span> <?php echo $spectacle['duration'];?> 
+									<br>
+									<ion-icon name="calendar-number-outline"><?php echo $spectacle['dateSpec'];?>
 										</span>
+										
+
 										<?php
 						foreach($plusPop as $pop)
 						{ 
@@ -89,14 +109,7 @@ public function afficher()
 				?>
 						<div class="box16 mt-4">	
 						<a href="http://localhost/Alliance/View/Front/spectacleChoix.php?specId=<?php
-						 echo $spectacle['spectacleId'];?>&description=<?php echo $spectacle['description'];?>
-						 &hotel=<?php echo $spectacle['hotel'];?>&resto=<?php echo $spectacle['resto'];?>&gare=
-						 <?php echo $spectacle['gare'] ?>&imgportrait=<?php echo $spectacle['imgportrait'];?>
-						 &realisateurs=<?php echo $spectacle['realisateurs'];?>&video=<?php echo $spectacle['video'];?>
-						 &carte=<?php echo $spectacle['carte'];?>&imglandscape=<?php echo $spectacle['imglandscape'];?>
-						 &plan=<?php echo $spectacle['plan'];?>&titre=<?php echo $spectacle['titre']; ?>
-						 &dateSpec=<?php echo $spectacle['dateSpec'];?>&duration=<?php echo $spectacle['duration'];?>
-						 &adresse=<?php echo $spectacle ['adresse'];?>">
+						 echo $spectacle['spectacleId'];?>">
 
 								<figure>
 									<img class="img-fluid" src=" <?php echo $spectacle['imglandscape'];?>" alt="">
@@ -104,7 +117,9 @@ public function afficher()
 								<div class="box-content">
 									<h3 class="title"><?php echo $spectacle['titre'];?></h3>
 									<h4> <span class="post"><span class="fa fa-clock-o"> </span> <?php echo $spectacle['duration'];?>
-										</span>
+										<br>
+									<ion-icon name="calendar-number-outline"><?php echo $spectacle['dateSpec'];?>
+									</span>
 										<?php
 						foreach($plusPop as $pop)
 						{ 

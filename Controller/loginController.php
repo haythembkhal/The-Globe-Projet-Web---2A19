@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$_SESSION["email"] = $user["email"];
 		$_SESSION["password"] = $user["password"];
 		$_SESSION["id_client"] = $user["id_client"];
+		$_SESSION["picture"]=$user["photo"];
 		$_SESSION["loggedIn"] =true;
 		$_SESSION["type"]="CUSTOMER PROFILE";
 		$_SESSION['temoignage']="";

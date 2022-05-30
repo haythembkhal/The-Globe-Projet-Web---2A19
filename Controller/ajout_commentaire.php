@@ -2,34 +2,26 @@
 include_once 'C:/xampp/htdocs/Alliance/config.php';
 
 session_start();
-$_SESSION['status']="";
+$_SESSION['stat']="";
 $test="test";
 //config::getConnexion();
 $db = config::getConnexion();
-function ajouterComment(/*$user,*/$commentaire,$specId) 
-    {//il faut rajouter la date
-    
-        try
-        {
-        $query= config::$pdo->prepare("INSERT INTO comments (commentaire,spectacleId,dateCommentaire,username,userid) VALUES (:commentaire,:specId,now(),:username,:userid)");
-            $query->bindParam(':commentaire', $commentaire);
-            $query->bindParam(':specId', $specId);
-			 $query->bindParam(':username', $_SESSION["firstname"]);
-            $query->bindParam(':userid', $_SESSION["id_client"]);
-            $query->execute();
-            $_SESSION['status']="Ajout Avec Succes !";
 
-    }
-        catch(PDOException $e){
-        echo $e->getMessage();
-        }
+function ajoutComment($idSpec,$Comment)
+{
+        $query= config::$pdo->prepare(" INSERT INTO comments (commentaire,spectacleId,dateCommentaire,username,userid)VALUES (:commentaire,:specId,now(),:username,:userid)");
+		$query->bindParam(':commentaire',$Comment);
+		$query->bindParam(':specId', $idSpec);
+		$query->bindParam(':username', $_SESSION["firstname"]);
+		$query->bindParam(':userid', $_SESSION["id_client"]);
+		$query->execute();
 }
+
 
     if(isset($_POST["S"]) && isset($_POST["C"]))
     {
-    ajouterComment($_POST["C"],$_POST["S"]);
-	
-	$_SESSION['status']="Ajout Avec Succes !";
+    ajoutComment($_POST["S"],$_POST["C"]); //LE PROBLEME EST AU NIVEAU DE CETTE FONCTION, ON ARRIVE A 
+	$_SESSION['stat']="Ajout Avec Succes !";
 	header("location:http://localhost/Alliance/View/Front/spectacleChoix.php?specId=".$_SESSION["idSpectacle"]);
 					
     }

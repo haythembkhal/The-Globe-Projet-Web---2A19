@@ -1,7 +1,7 @@
 <?php
 include_once '../../config.php';
 include_once '../../Model/Achat.php';
-
+include_once 'notificationC.php';
 class AchatC {
     function afficherAchat()
     {

@@ -1,5 +1,16 @@
 
-
+<?php 
+    include_once '../../Controller/messageC.php';
+session_start();
+$message=new MessageC();
+if (isset($_POST['message'])) {
+		if (!empty($_POST['message']))
+		{
+			$msg=new message($_POST["message"],1,$_SESSION["id_client"]);
+			$message->ajouterMessage($msg);
+		}
+}
+?>
 <!--
 Author: W3layouts
 Author URL: http://w3layouts.com
@@ -26,7 +37,7 @@ Author URL: http://w3layouts.com
 			<!--/nav-->
 			<nav class="navbar navbar-expand-lg navbar-light fill px-lg-0 py-0 px-3">
 				<div class="container">
-					<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index.php">
+					<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index_with_profil.php">
 					<img src="assets\images\petit logo.png " alt="Your logo" title="Your logo" style="height:50px;" style="right:10%;" />
 					<!-- <span class="fa fa-play icon-log" aria-hidden="true"></span> -->
 					The Globe</a></h1>
@@ -45,27 +56,25 @@ Author URL: http://w3layouts.com
 	
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav ml-auto">
-							<li class="nav-item">
-							<a class="nav-link" href="index.php">Home</a>
+						<li class="nav-item">
+							<a class="nav-link" href="index_with_profil.php">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link " href="about.php">About</a>
+							<a class="nav-link" href="about_profile.php">About</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="Boutique.php">Boutique</a>
+						
+						<li class="nav-item ">
+							<a class="nav-link show-title" href="Boutique_profil.php">Boutique</a>
 						</li>
-						<li class="nav-item  active">
-							<a class="nav-link show-title" href="contact.php">Contact</a>
+						<li class="nav-item active">
+							<a class="nav-link" href="contact_profil.php">Contact</a>
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link" href="login.php">Sign up</a> <!--add by me for add login-->
+							<a class="nav-link" href="my_profile.php">My profile</a> <!--add by me for add login-->
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="sign_in.php">Sign in</a> <!--add by me for add login-->
-						</li>
+						
 						</ul>
-	
 						<!--/search-right-->
 						<!--/search-right-->
 						<div class="search-right">
@@ -130,29 +139,29 @@ Author URL: http://w3layouts.com
 			</div>
 			<div class="contact-view mt-lg-5 mt-4">
 			  <div class="conhny-form-section">
-				<form action="https://sendmail.w3layouts.com/submitForm" method="post" class="formhny-sec">
+				<form action="contact_profil.php" method="post" class="formhny-sec">
 						<div class="form-grids">
 							<div class="form-input">
-								<input type="text" name="w3lName" id="w3lName" placeholder="Enter your name *" required="" />
+								<input type="text" name="w3lName" id="w3lName" placeholder="<?php echo $_SESSION["lastname"];?>"  readonly />
 							</div>
 							<div class="form-input">
-								<input type="text" name="w3lSubject" id="w3lSubject" placeholder="Enter subject " required />
+								<input type="text" name="w3lSubject" id="w3lSubject" placeholder="<?php echo $_SESSION["firstname"];?> "  readonly />
 							</div>
 							<div class="form-input">
-								<input type="email" name="w3lSender" id="w3lSender" placeholder="Enter your email *"
-									required />
+								<input type="email" name="w3lSender" id="w3lSender" placeholder="<?php echo $_SESSION["email"];?>"
+									  readonly />
 							</div>
 							<div class="form-input">
-								<input type="text" name="w3lPhone" id="w3lPhone" placeholder="Enter your Phone Number *"
-									required />
+								<input type="text" name="w3lPhone" id="w3lPhone" placeholder="Enter your subject *"
+									 />
 							</div>
 						</div>
 						<div class="form-input mt-4">
-							<textarea name="w3lMessage" id="w3lMessage" placeholder="Type your query here"
+							<textarea name="message" id="w3lMessage" placeholder="Type your query here"
 								required=""></textarea>
 						</div>
 						<div class="submithny text-right mt-4">
-							<button class="btn read-button">Submit Message</button>
+							<button type ="submit" class="btn read-button">Submit Message</button>
 						</div>
 					</form>
 			  </div>
@@ -213,20 +222,20 @@ Author URL: http://w3layouts.com
 								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
 									<h6>Spectacles</h6>
 									<ul>
-										<li><a href="index.php">Spectacles</a></li>
-										<li><a href="index.php">Cinemas</a></li>
-										<li><a href="index.php">Comédies</a></li>
-										<li><a href="index.php">Theatres</a></li>
-										<li><a href="index.php">Festivals</a></li>
-										<li><a href="contact.php">Contact Us</a></li>
+										<li><a href="index_with_profil.php">Spectacles</a></li>
+										<li><a href="index_with_profil.php">Cinemas</a></li>
+										<li><a href="index_with_profil.php">Comédies</a></li>
+										<li><a href="index_with_profil.php">Theatres</a></li>
+										<li><a href="index_with_profil.php">Festivals</a></li>
+										<li><a href="contact_profil.php">Contact Us</a></li>
 									</ul>
 								</div>
 								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
 									<h6>Information</h6>
 									<ul>
-										<li><a href="index.php">Home</a> </li>
-										<li><a href="about.php">About</a> </li>		
-										<li><a href="Boutique.php">Boutique</a> </li>
+										<li><a href="index_with_profil.php">Home</a> </li>
+										<li><a href="about_profile.php">About</a> </li>		
+										<li><a href="Boutique_profil.php">Boutique</a> </li>
 										<li><a href="sign_in.php">Sign In</a></li>
 										<li><a href="login.php">Sign Up</a></li>
 									</ul>

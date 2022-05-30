@@ -1,7 +1,8 @@
 <?php
 
 include_once 'C:/xampp/htdocs/Alliance/config.php';
-include '../../Model/user.php';
+include_once '../../Model/user.php';
+
 
 
 /*function notifyAdministrator($type,$ville,$userId,$userType){
@@ -56,6 +57,23 @@ function afficherClient(){
             $e->getMessage();
         }
     }
+	function nombreClient(){
+		$db = config::getconnexion();
+
+        try {
+            $query = $db->prepare(
+			
+            'SELECT * from client '
+            );
+			$query->execute();
+			$result=$query->rowCount();
+			return $result;
+           
+
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+	}
 function rechercherClient($userID){
 	 $db = config::getconnexion();
 
@@ -63,6 +81,24 @@ function rechercherClient($userID){
             $query = $db->prepare(
 			
             'SELECT * FROM client where id_client= :userID'
+            );
+			$query->execute(['userID'=>$userID]);
+			$result=$query->fetchALL();
+			return $result;
+           
+
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+}
+
+function rechercherNomClient($userID){
+	 $db = config::getconnexion();
+
+        try {
+            $query = $db->prepare(
+			
+            'SELECT firstname FROM client where id_client= :userID'
             );
 			$query->execute(['userID'=>$userID]);
 			$result=$query->fetchALL();
@@ -91,21 +127,22 @@ function rechercherEmail($email){
             $e->getMessage();
         }
 }
-    function ajouterClient($newClient){
+     function ajouterClient($newClient){
         $db = config::getConnexion();
 
         try {
             
             $query = $db->prepare(
-                'INSERT INTO client (firstname,lastname,ville,email,password) 
-                    VALUES (:firstname,:lastname,:ville,:email,:password)'
+                'INSERT INTO client (firstname,lastname,ville,email,password,photo) 
+                    VALUES (:firstname,:lastname,:ville,:email,:password,:photo)'
             );
             $query->execute([
                 'email' => $newClient->getEmail(),
                 'ville' => $newClient->getville(),
                 'password' => $newClient->getPassword(),
                 'firstname' => $newClient->getFirstname(),
-				'lastname' => $newClient->getLastname()
+				'lastname' => $newClient->getLastname(),
+				'photo' => $newClient->getPhoto()
             ]);
         } catch (PDOException $e) {
             $e->getMessage();
@@ -185,7 +222,7 @@ function rechercherEmail($email){
         $db = config::getConnexion();
         try{
             $query = $db->prepare(
-                'UPDATE client SET firstname= :firstname, lastname = :lastname,  ville= :ville, email = :email, password= :password where id_client = :userId'
+                'UPDATE client SET firstname= :firstname, lastname = :lastname,  ville= :ville, email = :email, password= :password, photo= :photo where id_client = :userId'
             );
             $query = $query->execute([
 				'firstname'=> $user->getFirstname(),
@@ -193,6 +230,7 @@ function rechercherEmail($email){
                 'ville' => $user->getville(),
 				'email'=> $user->getEmail(),
 				'password' => $user->getPassword(),
+				'photo' => $user->getPhoto(),
                 'userId' => $userId
             ]);
            // $_SESSION['ville'] = $newville;
@@ -323,7 +361,6 @@ function afficherEmploye(){
             $e->getMessage();
         }
     }
-
 function ajouterEmploye($newEmploye){
         $db = config::getConnexion();
 

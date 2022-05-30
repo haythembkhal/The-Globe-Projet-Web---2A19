@@ -29,12 +29,12 @@ function afficherCommentaire($spec)
 
                         <form method="POST">                            
                         <button type="button" onclick="openForm(this.value)" class="modifier"style="background-color:blue; color:white; height:30px;" >Modifier</button> 
-
-                            <button class="del" value="<?php echo $comment['idEval'];?>" onclick="allowDelete(this.value)"style="background-color:red; color:white; height:30px;" name='deleteP'type="submit"> Supprimer</button>  </div>
                 <br>          </form>
                 <form method="POST"style="display:none;"class="comments"> <textarea style="width:250px;"name="comment" placeholder="Ecrire juste ici...."><?php echo $comment['commentaire'];?></textarea> 
     <br><button type="button"onclick="closeForm(this.value)" class="annuler">Annuler</button> <button type="submit" name="idEval" value="<?php echo $comment['idEval'];?>">
-            Confirmer</button></form>             
+            Confirmer</button>
+	<button class="del" value="<?php echo $comment['idEval'];?>" name='deleteP'type="submit"> Supprimer</button>  </div>
+</form>			
                 </div>
                 </div>
                     <?php

@@ -14,7 +14,7 @@
             <!-- zone de connexion -->
            
             <form action="http://localhost/Alliance/Controller/loginController.php" method="POST">
-                <h1>Connexion</h1>
+               <center> <div><h1>Connexion</h1></div></center>
                 
                 <label><b>Email</b></label>
                 <input type="text" placeholder="Entrer votre email" name="email" required>

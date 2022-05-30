@@ -74,7 +74,7 @@ updateNumberOfLikes($_GET['id'],"increment");
 
 }
 
-header('Location:../View/Front/Artistes.php');
+header('Location:../View/Front/About.php#artiste');
 
 
  ?>

@@ -92,14 +92,16 @@ class User{
     private string $password;
     private string $firstname;
 	private string $lastname;
+	private string $photo;
     
 
-    public function __construct(string $firstname, string $lastname, string $ville, string $email,string $password){
+    public function __construct(string $firstname, string $lastname, string $ville, string $email,string $password,string $photo){
         $this->ville = $ville;
         $this->email = $email;
         $this->password = $password;
         $this->firstname = $firstname;
         $this->lastname= $lastname; //generateUserId($userType);
+		$this->photo=$photo;
     }
 //
 /*
@@ -143,6 +145,10 @@ function ajouterEmploye($newEmploye){
 	public function getlastname():string{
         return $this->lastname;
     }
+	public function getPhoto():string{
+        return $this->photo;
+    }
+
 
     //setters
     public function setville(string $ville):void{

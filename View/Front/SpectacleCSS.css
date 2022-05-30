@@ -17,7 +17,7 @@
 
 }
 #respond {
-    margin-top: 40px;
+    /*margin-top: 40px;*/
   }
   
 
@@ -63,16 +63,16 @@
   
   #rightAllignement 
   {
-    position: absolute;
+    position: relative;
     left:7%;
-    top: 30%; 
+    top: 1%; 
   }
 
   #spectacleImage
   {          
-    
+    top=5%;
   width:300px;
-  height:375px;
+  height:400px;
   /* border-style: outset; */
   }
 
@@ -106,50 +106,53 @@ width:520px;
 
 #paragraphStructure2
 {
+	position: relative;
 width:700px;
+height:100px;
+
 /* height:00px; */
 }
 
 #spectacleTheatre
 {
-  top: 10.5%;
+  top: 9.5%;
   text-decoration: underline;
   color: #808080;
 }
 #spectacleDate
 {
   /* position: absolute; */
-  top: 7.5%;
+  top: 6.5%;
   
 }
 
 #spectacleTime
 {
   /* position: absolute; */
- top: 6%; 
+ top: 5%; 
 }
 #spectacleLocation
 {
   /* position: absolute; */
-  top: 9%;
+  top: 8%;
   color: #808080;
   text-decoration: underline;}
 #spectacleVideo
 {
   /* position: absolute; */
-  top: 12%;
+  top: 11%;
   color: #808080;
   text-decoration: underline;
 }
 #spectacleComment
 {
   /* position: absolute; */
-  top: 13.5%;
+  top: 12.5%;
   color: #808080;
   text-decoration: underline;}
 #spectacleReservation
 {
-  top: 16%;
+  top: 14%;
   background-color: yellow; /* red*/
   /* border: none; */
   color: #808080;
@@ -159,14 +162,6 @@ width:700px;
   display: inline-block;
   font-size: 16px;
   border-radius: 12px;
-}
-#foot
-{
-  top: 350%;
- width:1200;
- height:200;
- position: absolute;
-  background-color: black;
 }
 
 .paragraph
@@ -218,13 +213,13 @@ width:700px;
 #videoPopup
 {
   position: absolute;
-  top:20.6%;
-  right:1%;
+  top:23%;
+  right:10%;
   /* border-style: double; */
 }
 .locationDetails
 {
-font-size: 16px;
+/*font-size: 25px;*/
 }
 
 /* POPUP FOR COMMENTS */
@@ -242,9 +237,7 @@ background-color: rgba(0, 0, 0, 0.3);
 
 
 
-body{
-  margin: 40px;
-}
+
 
 button{
   cursor: pointer;

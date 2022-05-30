@@ -135,6 +135,7 @@ Cordially,<br>
 					<img src="assets\images\petit logo.png " alt="Your logo" title="Your logo" style="height:50px;" style="right:10%;" />
 					<!-- <span class="fa fa-play icon-log" aria-hidden="true"></span> -->
 					</a></h1>
+		
         <div id="container">
             <!-- zone de connexion -->
             
@@ -316,6 +317,8 @@ var test=0;
 */
     </script>
         </div>
+		
+		
     </body>
 </html>
 

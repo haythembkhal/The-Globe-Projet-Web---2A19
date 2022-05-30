@@ -78,7 +78,7 @@ else{
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>The Globe</title>
+	<title>The Globe| Boutique</title>
 	<link rel="stylesheet" href="assets/css/style-starter.css">
 	<link href="//fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,600&display=swap"
 		rel="stylesheet">
@@ -88,7 +88,7 @@ else{
 	<header id="site-header" class="w3l-header fixed-top">
 		<nav class="navbar navbar-expand-lg navbar-light fill px-lg-0 py-0 px-3">
 			<div class="container">
-				<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index.php">
+				<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index_with_profil.php">
 					<img src="assets\images\petit logo.png " alt="Your logo" title="Your logo" style="height:50px;" style="right:10%;" />
 					<!-- <span class="fa fa-play icon-log" aria-hidden="true"></span> -->
 					The Globe</a></h1>
@@ -108,14 +108,12 @@ else{
 						<li class="nav-item">
 							<a class="nav-link" href="about_profile.php">About</a>
 						</li>
-						<li class="nav-item">
-								<a class="nav-link" href="Artistes.php">Artistes</a>
-						</li>
+						
 						<li class="nav-item active">
-							<a class="nav-link show-title" href="Boutique.php">Boutique</a>
+							<a class="nav-link show-title" href="Boutique_profil.php">Boutique</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="contact.php">Contact</a>
+							<a class="nav-link" href="contact_profil.php">Contact</a>
 						</li>
 						
 						<li class="nav-item">
@@ -123,6 +121,26 @@ else{
 						</li>
 						
 					</ul>
+					<!--/search-right-->
+						<div class="search-right">
+							<a href="#search" class="btn search-hny mr-lg-3 mt-lg-0 mt-4" title="search">Search <span
+									class="fa fa-search ml-3" aria-hidden="true"></span></a>
+							<!-- search popup -->
+							<div id="search" class="pop-overlay">
+								<div class="popup">
+									<form action="#" method="post" class="search-box">
+										<input type="search" placeholder="Search your Keyword" name="search"
+											required="required" autofocus="">
+										<button type="submit" class="btn"><span class="fa fa-search"
+												aria-hidden="true"></span></button>
+									</form>
+									
+								</div>
+								<a class="close" href="#close">×</a>
+							</div>
+							<!-- /search popup -->
+							<!--/search-right-->
+						</div>
 				</div>
 
 
@@ -160,7 +178,7 @@ else{
 							<div  class="box-content">
 								<h4>
 									<span> </span>
-									<span class="post text-right"><span class="fa"></span><?php echo $produit['prix_produit']; ?> DT</span>
+									<h6 class="post text-right"><span class="fa"></span><?php echo $produit['prix_produit']; ?> DT</h6>
 								</h4>
 							</div>
 						</div>
@@ -174,7 +192,7 @@ else{
 				<div class="headerhny-title">
 					<div class="w3l-title-grids">
 						<div class="button-center  text-center mt-3" style="position:relative; left:795px; top:4px;">
-							<a href="#projects2" class="btn-center view-button"> Voir tout <span aria-hidden="true" ></span></a>
+							<a href="#projects2" class="btn-center view-button"> Show all <span aria-hidden="true" ></span></a>
 						</div>
 					</div>
 				</div>
@@ -182,10 +200,10 @@ else{
 		</div>
 	</section>
 
-	<section class="w3l-albums py-5">
+	
 		<div class="container py-lg-4">
 			<div class="headerhny-title">
-				<center><h1 class="hny-title">Nos Produits<h1><center>
+				<center><h1 class="hny-title">Our Products<h1><center>
 			</div>
 			<br>
 			<form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
@@ -197,117 +215,210 @@ else{
 						<option>Prix décroissant</option>
 				</select>
 			</form>    
-			<div id="projects2">
-				<div class="resp-tabs-container hor_1">
-					<div class="albums-content">
-						<div class="row">
-							<div class="col-lg-10 new-relise-gd">
-								<div class="slider-info">
+		
+							
+							<section class="w3l-grids" id="projects2">
+							<div class="grids-main py-5">
+							<div class="container py-lg-4">
+								<div class="w3l-populohny-grids">
+									
+									
 									<?php foreach($listeproduit1 as $produit): ?>
-										<div class="message">
-											
-										<hr>
-										<img src="<?php echo $produit['image_produit'];?>" class="img-fluid" alt="author image">
-											
-										<br>
-										<br>
-										
-										<center>
+									
+									<div class="item vhny-grid">
+									<div class="box16 mb-0">
+									<a href="#">
+									<figure>
+									<img class="img-fluid" src="<?php echo $produit['image_produit'];?>" alt="">
+									<center>
 										<a class="author-book-title">
-											<?php echo $produit['nom_cat']; echo " "; echo $produit['nom_produit']; ?>
+											
+											
 										</a>
 										</center>	
-
-										<center>
-										<h6>
-											<?php echo $produit['prix_produit']; ?> DT
-										</h6>
-										</center>
-
-										</div>
+									</figure>
+									
+									
+										</a>
+									</div>
+									<strong><?php echo $produit['nom_cat']; echo " "; echo $produit['nom_produit']; ?></h6></strong>
+									<h6 class="post text-right"><span class="fa"></span><?php echo $produit['prix_produit']; ?> DT</h6>
+									</div>
+									<form action="panier.php" method="post">
+									<div class="ready-more mt-4">
+									<button type="submit" class="btn read-button">Ajouter au panier <span class="fa fa-angle-double-right ml-2" aria-hidden="true"></span></button>
+									</div>
+									<input type="hidden" name="pannier" value="<?php echo $produit["id_produit"];?>">
+									</form>
 									<?php endforeach; ?>
+								</div>
+							</div>
+						</div>
+					</section>
+				
+			
+		</div>
+
+
+	<!-- footer-66 -->
+	<footer class="w3l-footer">
+		<section class="footer-inner-main">
+			<div class="footer-hny-grids py-5">
+				<div class="container py-lg-4">
+					<div class="text-txt">
+						<div class="right-side">
+							
+								
+							<div class="row footer-links">
+
+
+								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
+									<h6>Spectacles</h6>
+									<ul>
+										<li><a href="index_with_profil.php">Spectacles</a></li>
+										<li><a href="index_with_profil.php">Cinemas</a></li>
+										<li><a href="index_with_profil.php">Comédies</a></li>
+										<li><a href="index_with_profil.php">Theatres</a></li>
+										<li><a href="index_with_profil.php">Festivals</a></li>
+										<li><a href="contact_profil.php">Contact Us</a></li>
+									</ul>
+								</div>
+								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
+									<h6>Information</h6>
+									<ul>
+										<li><a href="index_with_profil.php">Home</a> </li>
+										<li><a href="about_profile.php">About</a> </li>		
+										<li><a href="Boutique_profil.php">Boutique</a> </li>
+										<li><a href="sign_in.php">Sign In</a></li>
+										<li><a href="login.php">Sign Up</a></li>
+									</ul>
+								</div>
+								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
+									<h6>Locations</h6>
+									<ul>
+										<li>Tunisia</li>
+										<li>Cameroon</li>
+										<li>Guinea</li>
+										<li>United States</li>
+										<li>Morocco</li>
+										<li>Algeria</li>
+									</ul>
+								</div>
+								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
+									<h6>Newsletter</h6>
+									<form action="#" class="subscribe mb-3" method="post">
+										<input type="email" name="email" placeholder="Your Email Address" required="">
+										<button><span class="fa fa-envelope-o"></span></button>
+									</form>
+									<p>Enter your email and receive the latest news, updates and special offers from us.
+									</p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			
-		</div>
-	</section>
+			</div>
+			<div class="below-section">
+				<div class="container">
+					<div class="copyright-footer">
+						<div class="columns text-lg-left">
+							<p>&copy; 2022 The Globe. All rights reserved | Designed by Alliance</p>
+						</div>
 
-	<div class="below-section">
-		<div class="container">
-			<div class="copyright-footer">
-				<div class="columns text-lg-left">
-					<p>&copy; 2022 the globe All rights reserved </p>
-					<p>  </p>
+						<ul class="social text-lg-right">
+							<li><a href="https://www.facebook.com"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+							</li>
+							<li><a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+							</li>
+							<li><a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+							</li>
+							<li><a href="https://www.Google.com"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+							</li>
+
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+			<!-- copyright -->
+			<!-- move top -->
+			<button onclick="topFunction()" id="movetop" title="Go to top">
+				<span class="fa fa-arrow-up" aria-hidden="true"></span>
+			</button>
+			<script>
+				// When the user scrolls down 20px from the top of the document, show the button
+				window.onscroll = function () {
+					scrollFunction()
+				};
 
-<!-- responsive tabs -->
-<script src="assets/js/jquery-1.9.1.min.js"></script>
-<script src="assets/js/easyResponsiveTabs.js"></script>
-<script type="text/javascript">
-	$(document).ready(function () {
-		//Horizontal Tab
-		$('#parentHorizontalTab').easyResponsiveTabs({
-			type: 'default', //Types: default, vertical, accordion
-			width: 'auto', //auto or any width like 600px
-			fit: true, // 100% fit in a container
-			tabidentify: 'hor_1', // The tab groups identifier
-			activate: function (event) { // Callback function if tab is switched
-				var $tab = $(this);
-				var $info = $('#nested-tabInfo');
-				var $name = $('span', $info);
-				$name.text($tab.text());
-				$info.show();
-			}
-		});
-	});
+				function scrollFunction() {
+					if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+						document.getElementById("movetop").style.display = "block";
+					} else {
+						document.getElementById("movetop").style.display = "none";
+					}
+				}
+
+				// When the user clicks on the button, scroll to the top of the document
+				function topFunction() {
+					document.body.scrollTop = 0;
+					document.documentElement.scrollTop = 0;
+				}
+			</script>
+			<!-- /move top -->
+
+		</section>
+	</footer>
+
+
+</body>
+
+</html>
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+<!-- stats -->
+<script src="assets/js/jquery.waypoints.min.js"></script>
+<script src="assets/js/jquery.countup.js"></script>
+<script>
+	$('.counter').countUp();
 </script>
-<!-- //responsive tabs -->
+<!-- //stats -->
+<!--/theme-change-->
+<script src="assets/js/theme-change.js"></script>
+<!-- //theme-change-->
 <script src="assets/js/owl.carousel.js"></script>
 <!-- script for banner slider-->
 <script>
 	$(document).ready(function () {
-		$('.owl-one').owlCarousel({
-			stagePadding: 280,
+		$('.owl-team').owlCarousel({
 			loop: true,
 			margin: 20,
-			nav: true,
+			nav: false,
 			responsiveClass: true,
-			autoplay: true,
+			autoplay: false,
 			autoplayTimeout: 5000,
 			autoplaySpeed: 1000,
 			autoplayHoverPause: false,
 			responsive: {
 				0: {
-					items: 1,
-					stagePadding: 40,
+					items:2,
 					nav: false
 				},
 				480: {
-					items: 1,
-					stagePadding: 60,
+					items: 2,
 					nav: true
 				},
 				667: {
-					items: 1,
-					stagePadding: 80,
+					items: 3,
 					nav: true
 				},
 				1000: {
-					items: 1,
+					items:4,
 					nav: true
 				}
 			}
 		})
 	})
 </script>
-<!-- //script -->
 <script>
 	$(document).ready(function () {
 		$('.owl-three').owlCarousel({
@@ -315,7 +426,7 @@ else{
 			margin: 20,
 			nav: false,
 			responsiveClass: true,
-			autoplay: true,
+			autoplay:true,
 			autoplayTimeout: 5000,
 			autoplaySpeed: 1000,
 			autoplayHoverPause: false,
@@ -333,7 +444,7 @@ else{
 					nav: true
 				},
 				1000: {
-					items: 5,
+					items: 6,
 					nav: true
 				}
 			}
@@ -341,80 +452,33 @@ else{
 	})
 </script>
 <!-- //script -->
-<!-- /mid-script -->
+<!-- for tesimonials carousel slider -->
 <script>
 	$(document).ready(function () {
-		$('.owl-mid').owlCarousel({
+		$(".owl-clients").owlCarousel({
 			loop: true,
-			margin: 0,
-			nav: false,
+			margin:40,
 			responsiveClass: true,
-			autoplay: true,
-			autoplayTimeout: 5000,
-			autoplaySpeed: 1000,
-			autoplayHoverPause: false,
 			responsive: {
 				0: {
-					items: 1,
-					nav: false
-				},
-				480: {
-					items: 1,
-					nav: false
-				},
-				667: {
-					items: 1,
+					items:1,
 					nav: true
+				},
+				736: {
+					items: 2,
+					nav: false
 				},
 				1000: {
-					items: 1,
-					nav: true
+					items:3,
+					nav: true,
+					loop: false
 				}
 			}
 		})
 	})
 </script>
-<!-- //mid-script -->
-
+<!-- //script -->
 <!-- script for owlcarousel -->
-<!-- Template JavaScript -->
-<script src="assets/js/jquery.magnific-popup.min.js"></script>
-<script>
-	$(document).ready(function () {
-		$('.popup-with-zoom-anim').magnificPopup({
-			type: 'inline',
-
-			fixedContentPos: false,
-			fixedBgPos: true,
-
-			overflowY: 'auto',
-
-			closeBtnInside: true,
-			preloader: false,
-
-			midClick: true,
-			removalDelay: 300,
-			mainClass: 'my-mfp-zoom-in'
-		});
-
-		$('.popup-with-move-anim').magnificPopup({
-			type: 'inline',
-
-			fixedContentPos: false,
-			fixedBgPos: true,
-
-			overflowY: 'auto',
-
-			closeBtnInside: true,
-			preloader: false,
-
-			midClick: true,
-			removalDelay: 300,
-			mainClass: 'my-mfp-slide-bottom'
-		});
-	});
-</script>
-<!--//-->
 <!-- disable body scroll which navbar is in active -->
 <script>
 	$(function () {
@@ -424,7 +488,6 @@ else{
 	});
 </script>
 <!-- disable body scroll which navbar is in active -->
-
 
 <!--/MENU-JS-->
 <script>
@@ -455,7 +518,3 @@ else{
 </script>
 <!--//MENU-JS-->
 <script src="assets/js/bootstrap.min.js"></script>
-
-</body>
-
-</html>

@@ -1,9 +1,71 @@
 
 
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
--->
+
+
+<?php
+include_once '../../Controller/panierC.php';
+session_start();
+$pannier = new PanierC();
+$prix_produit="";
+$nom_produit="";
+$image_produit="";
+$listeProdut="";
+$total=0;
+    if (isset($_POST['pannier'])) {
+        if (!empty($_POST['pannier'])) 
+		{
+			
+			
+			$id_produit=$_POST["pannier"];
+			$produit=$pannier->rechercherProduit($id_produit);
+			foreach ($produit as $prod)
+			{
+				$prix_produit=$prod["prix_produit"];
+				$nom_produit=$prod["nom_produit"];
+				$image_produit=$prod["image_produit"];
+				
+			}
+			$Newpanier=new Panier($nom_produit,$image_produit,$prix_produit,$_SESSION["id_client"]);
+			
+			
+			$pannier->ajouterPannier($Newpanier);
+			
+	
+									
+		}
+		else
+		{
+			
+		}
+					
+	}
+	else
+	{
+					
+	}
+
+
+		
+			
+
+	if (isset($_POST['commander'])) {
+        
+			$pannier->supprimerPannier($_SESSION["id_client"]);
+		
+
+	}		
+		
+			
+	$listeProduit=$pannier->afficherPannier($_SESSION["id_client"]);	
+
+foreach ($listeProduit as $pro)
+{
+$total+=$pro["prix"];
+}	
+       
+    
+
+?>
 <!doctype html>
 <html lang="zxx">
 
@@ -11,7 +73,7 @@ Author URL: http://w3layouts.com
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>The Globe| Contact</title>
+	<title>The Globe| About</title>
 	<!-- Template CSS -->
 	<link rel="stylesheet" href="assets/css/style-starter.css">
 	<!-- Template CSS -->
@@ -26,11 +88,10 @@ Author URL: http://w3layouts.com
 			<!--/nav-->
 			<nav class="navbar navbar-expand-lg navbar-light fill px-lg-0 py-0 px-3">
 				<div class="container">
-					<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index.php">
+					<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index_with_profil.php">
 					<img src="assets\images\petit logo.png " alt="Your logo" title="Your logo" style="height:50px;" style="right:10%;" />
 					<!-- <span class="fa fa-play icon-log" aria-hidden="true"></span> -->
 					The Globe</a></h1>
-
 					<!-- if logo is image enable this   
 							<a class="navbar-brand" href="#index.php">
 								<img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
@@ -46,23 +107,22 @@ Author URL: http://w3layouts.com
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav ml-auto">
 							<li class="nav-item">
-							<a class="nav-link" href="index.php">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link " href="about.php">About</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="Boutique.php">Boutique</a>
-						</li>
-						<li class="nav-item  active">
-							<a class="nav-link show-title" href="contact.php">Contact</a>
-						</li>
-						
-						<li class="nav-item">
-							<a class="nav-link" href="login.php">Sign up</a> <!--add by me for add login-->
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="sign_in.php">Sign in</a> <!--add by me for add login-->
+								<a class="nav-link" href="index_with_profil.php">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="about_profile.php">About</a>
+							</li>
+		
+							
+							<li class="nav-item active show-title">
+								<a class="nav-link" href="Boutique_profil.php">Boutique</a>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="contact_profil.php">Contact</a>
+							</li>
+							<li class="nav-item">
+							<a class="nav-link" href="my_profile.php">My profile</a> <!--add by me for add login-->
 						</li>
 						</ul>
 	
@@ -80,7 +140,27 @@ Author URL: http://w3layouts.com
 										<button type="submit" class="btn"><span class="fa fa-search"
 												aria-hidden="true"></span></button>
 									</form>
-									
+									<div class="browse-items">
+										<h3 class="hny-title two mt-md-5 mt-4">Browse all:</h3>
+										<ul class="search-items">
+											<li><a href="genre.php">Action</a></li>
+											<li><a href="genre.php">Drama</a></li>
+											<li><a href="genre.php">Family</a></li>
+											<li><a href="genre.php">Thriller</a></li>
+											<li><a href="genre.php">Commedy</a></li>
+											<li><a href="genre.php">Romantic</a></li>
+											<li><a href="genre.php">Tv-Series</a></li>
+											<li><a href="genre.php">Horror</a></li>
+											<li><a href="genre.php">Action</a></li>
+											<li><a href="genre.php">Drama</a></li>
+											<li><a href="genre.php">Family</a></li>
+											<li><a href="genre.php">Thriller</a></li>
+											<li><a href="genre.php">Commedy</a></li>
+											<li><a href="genre.php">Romantic</a></li>
+											<li><a href="genre.php">Tv-Series</a></li>
+											<li><a href="genre.php">Horror</a></li>
+										</ul>
+									</div>
 								</div>
 								<a class="close" href="#close">×</a>
 							</div>
@@ -110,95 +190,78 @@ Author URL: http://w3layouts.com
 			<!--//nav-->
 		</header>
 		<!-- //header -->
-		<!--/breadcrumbs -->
+	<!--/breadcrumbs -->
 	<div class="w3l-breadcrumbs">
 		<nav id="breadcrumbs" class="breadcrumbs">
 			<div class="container page-wrapper">
-			<a href="index.php">Home</a> » <span class="breadcrumb_last" aria-current="page">Contact</span>
+				<a href="http://localhost/Alliance/View/Front/Boutique_profil.php#popSection">Boutique</a>>>Panier</span>
 			</div>
 		</nav>
 	</div>
  <!--//breadcrumbs -->
-	  <!-- contact1 -->
-	  <section class="w3l-contact-1">
-		<div class="contacts-9 py-5">
-		  <div class="container py-lg-4">
-			<div class="headerhny-title text-center">
-				<h4 class="sub-title text-center">Contact us</h4>
-				<h3 class="hny-title mb-0">Leave a Message</h3>
-				<p class="hny-title mb-lg-5 mb-4">If you have a question regarding our services, feel free to contact us using the form below.</p>
-			</div>
-			<div class="contact-view mt-lg-5 mt-4">
-			  <div class="conhny-form-section">
-				<form action="https://sendmail.w3layouts.com/submitForm" method="post" class="formhny-sec">
-						<div class="form-grids">
-							<div class="form-input">
-								<input type="text" name="w3lName" id="w3lName" placeholder="Enter your name *" required="" />
-							</div>
-							<div class="form-input">
-								<input type="text" name="w3lSubject" id="w3lSubject" placeholder="Enter subject " required />
-							</div>
-							<div class="form-input">
-								<input type="email" name="w3lSender" id="w3lSender" placeholder="Enter your email *"
-									required />
-							</div>
-							<div class="form-input">
-								<input type="text" name="w3lPhone" id="w3lPhone" placeholder="Enter your Phone Number *"
-									required />
-							</div>
-						</div>
-						<div class="form-input mt-4">
-							<textarea name="w3lMessage" id="w3lMessage" placeholder="Type your query here"
-								required=""></textarea>
-						</div>
-						<div class="submithny text-right mt-4">
-							<button class="btn read-button">Submit Message</button>
-						</div>
-					</form>
-			  </div>
-
-			  <div class="d-grid contact-addres-inf mt-5 pt-lg-4">
-				<div class="contact-info-left d-grid">
-					<div class="contact-info">
-						<div class="icon">
-							<span class="fa fa-location-arrow" aria-hidden="true"></span>
-						</div>
-						<div class="contact-details">
-							<h4>Address:</h4>
-							<p>1,2 Rue André Ampère</p>
-						</div>
+	<!-- /about-->
+	
+		<!--grids-sec1-->
+		<section class="w3l-team" id="team">
+			<div class="grids-main py-5">
+				<div class="container py-lg-4">
+					<div class="headerhny-title">
+						<h3 class="hny-title" id="artiste">My Products</h3>
 					</div>
-					<div class="contact-info">
-						<div class="icon">
-							<span class="fa fa-phone" aria-hidden="true"></span>
+					<section class="w3l-grids" id="projects2">
+							<div class="grids-main py-5">
+							<div class="container py-lg-4">
+								<div class="w3l-populohny-grids">
+									
+									
+									<?php foreach($listeProduit as $produit) { ?>
+									
+									<div class="item vhny-grid">
+									<div class="box16 mb-0">
+									<a href="#">
+									<figure>
+									<img class="img-fluid" src="<?php echo $produit['image'];?>" alt="">
+									<center>
+										<a class="author-book-title">
+											
+											
+										</a>
+										</center>	
+									</figure>
+									
+									
+										</a>
+									</div>
+									<strong><?php echo $produit['nom']; ?></h6></strong>
+									<h6 class="post text-right"><span class="fa"></span><?php echo $produit['prix']; ?> DT</h6>
+									</div>
+									<?php } ?>
+								</div>
+							</div>
 						</div>
-						<div class="contact-details">
-							<h4>Phone:</h4>
-							<p><a href="tel:+598-658-456">+216 598-658-346</a></p>
-							<p><a href="tel:+598-658-457">+216 598-658-436</a></p>
-						</div>
-					</div>
-					<div class="contact-info">
-						<div class="icon">
-							<span class="fa fa-envelope-open-o" aria-hidden="true"></span>
-						</div>
-						<div class="contact-details">
-							<h4>Mail:</h4>
-							<p><a href="mailto:mail@example.com" class="email">theglobe.alliance2022@gmail.com</a></p>
-							<p><a href="mailto:mail@example.com" class="email">theglobe.alliance2022@gmail.com</a></p>
-						</div>
-					</div>
+					</section>
 				</div>
+				
+				<h3 style="color:yellow;">TOTAL: <strong ><?php echo $total;?> DT</strong></h3>
+	
+		            <div class="ready-more mt-4">
+					<form action="" method="POST">
+					<input type="hidden" name="commander">
+						<center><button type="submit" class="btn read-button">Commander<span class="fa fa-angle-double-right ml-2" aria-hidden="true"></span></button></center><br>
+						</form>
+						<center><a href="Boutique_profil.php" class="btn read-button">Continuer mes Achats<span class="fa fa-angle-double-right ml-2" aria-hidden="true"></span></a></center>
+					</div>
+	
 			</div>
-			</div>
-		  </div>
-		</div>
-		<div class="contact-map">
-			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.305935303!2d-74.25986548248684!3d40.69714941932609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sin!4v1563262564932!5m2!1sen!2sin" style="border:0" allowfullscreen=""></iframe>
-		</div>
-	  </section>
-	  <!-- /contact1 -->
-	<!-- footer-66 -->
+		</section>
+		<!--//grids-sec1-->
+		<!--/testimonials-->
+
+<!--//testimonials-->
+		<!--grids-sec2-->
+		
+		<!--grids-sec2-->
+		<!-- footer-66 -->
 	<footer class="w3l-footer">
 		<section class="footer-inner-main">
 			<div class="footer-hny-grids py-5">
@@ -213,20 +276,20 @@ Author URL: http://w3layouts.com
 								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
 									<h6>Spectacles</h6>
 									<ul>
-										<li><a href="index.php">Spectacles</a></li>
-										<li><a href="index.php">Cinemas</a></li>
-										<li><a href="index.php">Comédies</a></li>
-										<li><a href="index.php">Theatres</a></li>
-										<li><a href="index.php">Festivals</a></li>
-										<li><a href="contact.php">Contact Us</a></li>
+										<li><a href="index_with_profil.php">Spectacles</a></li>
+										<li><a href="index_with_profil.php">Cinemas</a></li>
+										<li><a href="index_with_profil.php">Comédies</a></li>
+										<li><a href="index_with_profil.php">Theatres</a></li>
+										<li><a href="index_with_profil.php">Festivals</a></li>
+										<li><a href="contact_profil.php">Contact Us</a></li>
 									</ul>
 								</div>
 								<div class="col-md-3 col-sm-6 sub-two-right mt-5">
 									<h6>Information</h6>
 									<ul>
-										<li><a href="index.php">Home</a> </li>
-										<li><a href="about.php">About</a> </li>		
-										<li><a href="Boutique.php">Boutique</a> </li>
+										<li><a href="index_with_profil.php">Home</a> </li>
+										<li><a href="about_profile.php">About</a> </li>		
+										<li><a href="Boutique_profil.php">Boutique</a> </li>
 										<li><a href="sign_in.php">Sign In</a></li>
 										<li><a href="login.php">Sign Up</a></li>
 									</ul>
@@ -312,10 +375,110 @@ Author URL: http://w3layouts.com
 
 </html>
 <script src="assets/js/jquery-3.3.1.min.js"></script>
-<!-- Template JavaScript -->
+<!-- stats -->
+<script src="assets/js/jquery.waypoints.min.js"></script>
+<script src="assets/js/jquery.countup.js"></script>
+<script>
+	$('.counter').countUp();
+</script>
+<!-- //stats -->
 <!--/theme-change-->
 <script src="assets/js/theme-change.js"></script>
 <!-- //theme-change-->
+<script src="assets/js/owl.carousel.js"></script>
+<!-- script for banner slider-->
+<script>
+	$(document).ready(function () {
+		$('.owl-team').owlCarousel({
+			loop: true,
+			margin: 20,
+			nav: false,
+			responsiveClass: true,
+			autoplay: false,
+			autoplayTimeout: 5000,
+			autoplaySpeed: 1000,
+			autoplayHoverPause: false,
+			responsive: {
+				0: {
+					items:2,
+					nav: false
+				},
+				480: {
+					items: 2,
+					nav: true
+				},
+				667: {
+					items: 3,
+					nav: true
+				},
+				1000: {
+					items:4,
+					nav: true
+				}
+			}
+		})
+	})
+</script>
+<script>
+	$(document).ready(function () {
+		$('.owl-three').owlCarousel({
+			loop: true,
+			margin: 20,
+			nav: false,
+			responsiveClass: true,
+			autoplay:true,
+			autoplayTimeout: 5000,
+			autoplaySpeed: 1000,
+			autoplayHoverPause: false,
+			responsive: {
+				0: {
+					items: 2,
+					nav: false
+				},
+				480: {
+					items: 2,
+					nav: true
+				},
+				667: {
+					items: 3,
+					nav: true
+				},
+				1000: {
+					items: 6,
+					nav: true
+				}
+			}
+		})
+	})
+</script>
+<!-- //script -->
+<!-- for tesimonials carousel slider -->
+<script>
+	$(document).ready(function () {
+		$(".owl-clients").owlCarousel({
+			loop: true,
+			margin:40,
+			responsiveClass: true,
+			responsive: {
+				0: {
+					items:1,
+					nav: true
+				},
+				736: {
+					items: 2,
+					nav: false
+				},
+				1000: {
+					items:3,
+					nav: true,
+					loop: false
+				}
+			}
+		})
+	})
+</script>
+<!-- //script -->
+<!-- script for owlcarousel -->
 <!-- disable body scroll which navbar is in active -->
 <script>
 	$(function () {
@@ -325,6 +488,7 @@ Author URL: http://w3layouts.com
 	});
 </script>
 <!-- disable body scroll which navbar is in active -->
+
 <!--/MENU-JS-->
 <script>
 	$(window).on("scroll", function () {

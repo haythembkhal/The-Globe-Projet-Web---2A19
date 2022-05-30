@@ -67,7 +67,7 @@ else{
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Edmin</title>
+	 <title>The Globe| Admin</title>
 	<link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link type="text/css" href="css/theme.css" rel="stylesheet">
@@ -75,72 +75,37 @@ else{
 	<link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
 </head>
 <body>
-
-	<div class="navbar navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
-					<i class="icon-reorder shaded"></i>
-				</a>
-
-			  	<a class="brand" href="index.php">
-			  		Edmin
-			  	</a>
-
-				<div class="nav-collapse collapse navbar-inverse-collapse">
-					<ul class="nav nav-icons">
-						<li class="active"><a href="#">
-							<i class="icon-envelope"></i>
-						</a></li>
-						<li><a href="#">
-							<i class="icon-eye-open"></i>
-						</a></li>
-						<li><a href="#">
-							<i class="icon-bar-chart"></i>
-						</a></li>
-					</ul>
-
-					<form class="navbar-search pull-left input-append" action="#">
-						<input type="text" class="span3">
-						<button class="btn" type="button">
-							<i class="icon-search"></i>
-						</button>
-					</form>
-				
-					<ul class="nav pull-right">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Item No. 1</a></li>
-								
-								<li><a href="#">Don't Click</a></li>
-								<li class="divider"></li>
-								<li class="nav-header">Example Header</li>
-								<li><a href="#">A Separated link</a></li>
-															</ul>
-						</li>
-						
-						<li><a href="#">
-							Support
-						</a></li>
-						<li class="nav-user dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<img src="images/user.png" class="nav-avatar" />
-								<b class="caret"></b>
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Your Profile</a></li>
-								<li><a href="#">Edit Profile</a></li>
-								<li><a href="#">Account Settings</a></li>
-								<li class="divider"></li>
-								<li><a href="../../Controller/logoutController.php">Logout</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div><!-- /.nav-collapse -->
-			</div>
-		</div><!-- /navbar-inner -->
-	</div><!-- /navbar -->
+<div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+                        <i class="icon-reorder shaded"></i></a><a class="brand" href="index.php">The Globe</a>
+                    <div class="nav-collapse collapse navbar-inverse-collapse">
+                        <ul class="nav nav-icons">
+                            <li class="active"><a href="#"><i class="icon-envelope"></i></a></li>
+                    
+                            <li><a href="charts.php"><i class="icon-bar-chart"></i></a></li>
+                        </ul>
+                        
+                        <ul class="nav pull-right">
+                            
+                            <li class="nav-user dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="images/user.png" class="nav-avatar" />
+                                <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Your Profile</a></li>
+                                    
+                                    <li class="divider"></li>
+                                    <li><a href="../../Controller/logoutController.php">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.nav-collapse -->
+                </div>
+            </div>
+            <!-- /navbar-inner -->
+        </div>
 
 <script>
         function verif(){
@@ -290,42 +255,22 @@ if(ville.value.length==0)
 	<div class="wrapper">
 		<div class="container">
 			<div class="row">
-				<div class="span3">
-					<div class="sidebar">
-
-						<ul class="widget widget-menu unstyled">
-							<li class="active">
-								<a href="index.php">
-									<i class="menu-icon icon-dashboard"></i>
-									Dashboard
-								</a>
-							</li>
-							<li>
-								<a href="activity.php">
-									<i class="menu-icon icon-bullhorn"></i>
-									News Feed
-								</a>
-							</li>
-							<li>
-								<a href="message.php">
-									<i class="menu-icon icon-inbox"></i>
-									Inbox
-									<b class="label green pull-right">11</b>
-								</a>
-							</li>
-							
-							<li>
-								<a href="task.php">
-									<i class="menu-icon icon-tasks"></i>
-									Notifications
-									<b class="label orange pull-right"><?php echo $count;?></b>
-								</a>
-							</li>
-						</ul><!--/.widget-nav-->
-
-						<ul class="widget widget-menu unstyled">
-                                <li><a href="ui-button-icon.php"><i class="menu-icon icon-bold"></i> Buttons </a></li>
-                                <li><a href="ui-typography.php"><i class="menu-icon icon-book"></i>Typography </a></li>
+			<div class="span3">
+                        <div class="sidebar">
+                            <ul class="widget widget-menu unstyled">
+                                <li class="active"><a href="index.php"><i class="menu-icon icon-dashboard"></i>Dashboard
+                                </a></li>
+                                
+                                <li><a href="message.php"><i class="menu-icon icon-envelope"></i>Inbox <b class="label green pull-right">
+                                    11</b> </a></li>
+                                <li><a href="task.php"><i class="menu-icon icon-bullhorn"></i>Notifications <b class="label orange pull-right">
+                                    <?php echo $count;?></b> </a></li>
+                            </ul>
+                            <!--/.widget-nav-->
+                            
+                            
+                            <ul class="widget widget-menu unstyled">
+                               
                                 <li><a href="form.php"><i class="menu-icon icon-paste"></i>Forms </a></li>
                                 <li><a class="collapsed" data-toggle="collapse" href="#toggletables">
 									<i class="menu-icon icon-table"></i>
@@ -369,46 +314,24 @@ if(ville.value.length==0)
 										</a>
 									</li>
 								</ul></li>
-								
-
                                 <li><a href="charts.php"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
-                            </ul><!--/.widget-nav-->
-
-						<ul class="widget widget-menu unstyled">
-							<li>
-								
-								<ul id="togglePages" class="collapse unstyled">
-									<li>
-										<a href="other-login.php">
-											<i class="icon-inbox"></i>
-											Login
-										</a>
-									</li>
-									<li>
-										<a href="other-user-profile.php">
-											<i class="icon-inbox"></i>
-											Profile
-										</a>
-									</li>
-									<li>
-										<a href="other-user-listing.php">
-											<i class="icon-inbox"></i>
-											All Users
-										</a>
-									</li>
-								</ul>
-							</li>
-							
-							<li>
-								<a href="../../Controller/logoutController.php">
-									<i class="menu-icon icon-signout"></i>
-									Logout
-								</a>
-							</li>
-						</ul>
-
-					</div><!--/.sidebar-->
-				</div><!--/.span3-->
+                            </ul>
+                            <!--/.widget-nav-->
+                            <ul class="widget widget-menu unstyled">
+                                <li><a class="collapsed" data-toggle="collapse" href="#togglePages"><i class="menu-icon icon-cog">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
+                                </i>More Pages </a>
+                                    <ul id="togglePages" class="collapse unstyled">
+                                        <li><a href="other-login.php"><i class="icon-inbox"></i>Login </a></li>
+                                        <li><a href="other-user-profile.php"><i class="icon-inbox"></i>Profile </a></li>
+                                        <li><a href="other-user-listing.php"><i class="icon-inbox"></i>All Users </a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="../../Controller/logoutController.php"><i class="menu-icon icon-signout"></i>Logout </a></li>
+                            </ul>
+                        </div>
+                        <!--/.sidebar-->
+                    </div>
 
 
 				<div class="span9">
@@ -416,11 +339,13 @@ if(ville.value.length==0)
 
 						<div class="module">
 							<div class="module-head">
-								<h3>Tables utilisateurs</h3>
+								<center><h3>Tables utilisateurs</h3></center>
 							</div>
 							<div class="module-body">
 								<p>
-									<strong>Liste des Clients</strong>
+								<div class="module-head" >
+									<center><strong >LISTE DES CLIENTS</strong></center>
+									</div>
 									<div class="pull-left">
 									Trier : &nbsp;
 									<div class="btn-group">
@@ -459,9 +384,10 @@ if(ville.value.length==0)
 								</p>
 								
 								<form action="supprimerClient.php" method="POST">
-								<table  class="table table-bordered">
+								<div >
+								<table  class="table table-bordered" >
 								  <thead>
-									<tr>								  
+									<tr style="background-color: #f6f6f6;">								  
 									  <th>First Name</th>
 									  <th>Last Name</th>
 									  <th>ville</th>
@@ -490,6 +416,7 @@ if(ville.value.length==0)
 								  <?php } ?>
 								  </tbody>
 								</table>
+								</div>
 								</form>
 
 								<br />
@@ -497,8 +424,14 @@ if(ville.value.length==0)
 								<br />
 
 								<p>
-									<strong id="employe">Liste des Employes</strong>
-									<a href="form.php"><input type="button" class="btn-success btn-lg" value="ADD"></a>
+								<div class="module-head" >
+									<center><strong id="employe" >LISTE DES EMPLOYES</strong></center>
+									</div>
+									
+									<a href="form.php"><input type="button" style="background-color: #f6f6f6; padding: 10px 16px;
+	font-size: 18px;
+	line-height: 1.33;
+	border-radius: 6px" value="ADD NEW"></a>
 									<span><?php echo $taille2." ".$message2; ?></span>
 									<!--<input type="submit"  value='Add' onclick="document.location.href=modifyURL(table_artistes.php)"-->
 																		
@@ -514,9 +447,10 @@ if(ville.value.length==0)
                         </form>
 								</p>
 								<form action="formUpdateEmploye.php" method="POST">
+								
 								<table  class="table table-bordered">
 								  <thead>
-									<tr>
+									<tr style="background-color: #f6f6f6;">
 									 
 									  <th>First Name</th>
 									  <th>Last Name</th>
@@ -550,7 +484,9 @@ if(ville.value.length==0)
 								<br />
 
 								<p>
-									<strong>Liste des Temoignages</strong>
+									<div class="module-head" >
+									<center><strong >LISTE DES TEMOIGNAGES</strong></center>
+									</div>
 									
 									
 									
@@ -566,10 +502,12 @@ if(ville.value.length==0)
 								<form action ="supprimerTemoignage.php" method="POST">
 								<table class="table table-bordered">
 								  <thead>
-									<tr>
+									<tr style="background-color: #f6f6f6;">
+									
 									  <th>Message</th>
 									  <th>Publier par</th>
 									  <th>Operation</th>
+									  
 									</tr>
 								  </thead>
 								  <tbody>
@@ -580,7 +518,7 @@ if(ville.value.length==0)
 									  <td><?php Echo $temoignage['message'];?></td>
 									  <td><?php $client=$customer->rechercherClient($temoignage["client"]);foreach($client as $c){echo $c["firstname"]." ".$c["lastname"];}?></td>
 									  <input type="hidden" name="id" value=<?php echo $temoignage['id_temoignage']?> >
-									<td><button type="submit" name="delete" class="btn-danger">delete</button></td>
+									<td><button type="submit" class="btn-danger" name="delete" >delete</button></td>
 									</tr>
 								  <?php } ?>
 								  </tbody>

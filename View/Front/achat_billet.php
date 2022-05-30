@@ -27,7 +27,7 @@ $prix=100;
         {
             //position at 1.5cm from bottom
             $this->SetY(-15);
-            $this->SetFont('Helvetica', 'I', 8);
+            $this->SetFont('Helvetica', 'I', 16);
             //page number
             $this->Cell(0, 10, 'Page '.$this->PageNo().'/{nb}', 0, 0, 'C');
 
@@ -74,12 +74,23 @@ $prix=100;
 			$pdf->Cell(0, 10, '', 0, 1);
 			$pdf->Cell(0, 10, '', 0, 1);
 			$pdf->Cell(0, 10, '', 0, 1);
+			$pdf->Cell(0, 10, 'Cette Facture est adressee au client'.' '.$_SESSION["firstname"].' '.$_SESSION["lastname"].' '.'pour avoir fait une reservation sur THE GLOBE.', 0, 1);
+			$pdf->Cell(0, 10, '', 0, 1);
 			$pdf->Cell(0, 10, 'Identifiant Spectacle : '. $Achat->get_idSpectacle() , 0, 1);
+			$pdf->Cell(0, 10, '', 0, 1);
 			$pdf->Cell(0, 10, 'Identifiant Client : '.$Achat->get_idClient(), 0, 1);
+			$pdf->Cell(0, 10, '', 0, 1);
 			$pdf->Cell(0, 10, 'Prix Total : '. $Achat->get_prixTotal() , 0, 1);
+			$pdf->Cell(0, 10, '', 0, 1);
 			$pdf->Cell(0, 10, 'Date Achat : '.$Achat->get_dateAchat(), 0, 1);
+			$pdf->Cell(0, 10, '', 0, 1);
 			$pdf->Cell(0, 10, 'Adresse Email : '.$Achat->get_adresseEmail(), 0, 1);
+			$pdf->Cell(0, 10, '', 0, 1);
 			$pdf->Cell(0, 10, 'Nombre de Places : '.$Achat->get_nbrePlaces(), 0, 1);
+			$pdf->Cell(0, 10, '', 0, 1);
+			$pdf->Cell(0, 10, 'Cette Facture lui est adressee pour servir et valoir ce que de droit.', 0, 1);
+			$pdf->Cell(0, 10, '', 0, 1);
+			$pdf->Cell(0, 10, 'Administrateur', 0, 1);
 			$pdf->output("facture.pdf","D");
 
 			/********************************** MAIL ********************************/
@@ -99,7 +110,7 @@ $prix=100;
 			$headers .= 'Delivered-to: '.$destinataire."\n"; // Destinataire
 			$headers .= 'Cc: '.$copie."\n"; // Copie Cc
 			$headers .= 'Bcc: '.$copie_cachee."\n\n"; // Copie cachée Bcc      */  
-			$message = "Achat avec succès! ";
+			$message = "<html>Bonjour ".$_SESSION['lastname'].", <br>Vous avez effectuez votre achat avec succès! </html>";
 			/*
 			$test=mail($destinataire, $objet, $message, $headers);
 
@@ -152,9 +163,18 @@ input{
 	border-radius: 4px;
   
 }
+button{
+	width: 100%;
+	padding: 12px 20px;
+	color:black;
+	border: none;
+	border-bottom: 2px solid #ffc107;
+	border-radius: 4px;
+  
+}
 
 input[type=submit] {
-  	padding: 10px 35px;
+  	padding: 10px 300px;
     background-color: #4CAF50;
     border: 1px solid white;
     color: white;
@@ -169,8 +189,8 @@ input[type=submit]:hover {
 	cursor: pointer;
 }
 
-input[type=reset] {
-  	padding: 10px 35px;
+button[type=reset] {
+  	padding: 10px 300px;
     background-color: #EF0107;
     border: 1px solid white;
     color: white;
@@ -179,7 +199,7 @@ input[type=reset] {
 
 }
 
-input[type=reset]:hover {
+button[type=reset]:hover {
 	background-color: #E62020;
 	color: black;
 	cursor: pointer;
@@ -206,7 +226,7 @@ label {
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>The GLOBE</title>
+	<title>The GLOBE| Billets</title>
 	<!-- Template CSS -->
 	<link rel="stylesheet" href="assets/css/style-starter.css">
 	<!-- Template CSS -->
@@ -223,7 +243,7 @@ label {
 	<!-- main-slider -->
 	<section id="infoPerso">
 		<div class="module-head">
-            <center><h1>ACHTEZ VOS PLACES ! </h1></center>
+            <center><h1>ACHETEZ VOS PLACES ! </h1></center>
         </div> 
 		<!--<div>
 		<table>
@@ -286,21 +306,25 @@ label {
             
 
             <br>
-            <div class="control-group">
-                <div class="controls">
-                    <input type="submit" class="btn" id="btnAcheter" value="Acheter">
-                    <input type="reset" class="btn" id="btnAnnuler" value="Annuler">
+			<center>
+            
+				
+                    <input type="submit" class="btn" id="btnAcheter" value="Acheter" align="center">
+					
+                  
+					<a href="index_with_profil.php" style="clor=red;" ><button type="reset">Annuler</button></a>
+					
+					
                     <!--<form method="POST" action="Modifier_AchatsReservations.php">
                            <input type="submit" class="btn" id="btnM" value="Modifier"></button>
                         </form>-->
 						<!--<a href="Reservation.php"><button class="btn">Réserver</button></a>-->
-						<form method="POST" action="Reservation.php">
-                                                        <input type="submit" class="btn" name="Réserver" value="Réserver">
+						<!--<form method="POST" action="Reservation.php">
+                         <input type="submit" class="btn" name="Réserver" value="Réserver">
                                                         
-                        </form>
-					</div>
-
-            </div>
+                        </form>-->
+					
+			</center>
         </form>
         <script>
            	function validateForm()
