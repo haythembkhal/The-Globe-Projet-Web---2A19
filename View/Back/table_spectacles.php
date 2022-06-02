@@ -3,7 +3,11 @@
 include_once '..\..\Controller\spectacleControllerB.php';
 include_once '..\..\Controller\commentaireControllerB.php';
 
+include_once '../../Controller/messageC.php';
+$message=new MessageC();
+$count=0;
 
+$count_message=$message->nombreNouveauMessage();
 $notification=new notificationC();
 $count=$notification->nouvelleNotification();//recupérer les nouvelles notifications
 ?> 
@@ -176,7 +180,7 @@ if(isNaN(prix))
                                 </a></li>
                                 
                                 <li><a href="message.php"><i class="menu-icon icon-envelope"></i>Inbox <b class="label green pull-right">
-                                    11</b> </a></li>
+                                     <?php echo $count_message;?></b> </a></li>
                                 <li><a href="task.php"><i class="menu-icon icon-bullhorn"></i>Notifications <b class="label orange pull-right">
                                     <?php echo $count;?></b> </a></li>
                             </ul>
@@ -412,36 +416,7 @@ if(isNaN(prix))
 		<br>
 <hr>
 			<h3>Table Commentaires</h3>
-			<form method="POST" onsubmit="return  ctrlComment();">
-					  <div style="position: relative;">	
-					
-						<label for="titre"> Nom Du Spectacle:</label>	
-						<input type="text" id="spec" name="spec" value="<?php echo $_SESSION['titreSpec']?>" readonly>
-						
-						<label for="titre"> Nom De L'Utilisateur:</label>	
-						<input type="text" id="user" name="user" value="<?php echo $_SESSION['idUser']?>" readonly>
-
-						<label for="titre"> Date Postée:</label>	
-						<input type="date" id="dateCommentaire" name="dateCommentaire" value="<?php echo $_SESSION['dateComment']?>" readonly>
-
-						<label for="comment"> Commentaire:</label>	
-						<textarea type="textbox" id="comment" name="comment"> <?php echo $_SESSION['commentaire']?> </textarea>
-						<p id="inputComment"></p>
-						<br>
-						<!-- <input type="radio" id="liked" name="avis" value="liked" required><ion-icon name="thumbs-up-outline"></ion-icon> -->
-  					  <!-- <input type="radio" id="disliked" name="avis" value="disliked" required> <ion-icon name="thumbs-down-outline"></ion-icon> -->
-						<!-- au lieu de radio je vais utiliser un hidden pour le moment, va falloir lenlever apres -->
-  					  <input type="hidden" id="temp" name="avis" value="disliked" required> 
-<!-- ill need to get rid ofthis -->
-
-
-						<input type="hidden" id="idEval" name="idEval" value="<?php echo $_SESSION['idEval'];?>"> 
-						
-						<br> <br> 
-						<input name="button" type="submit"value="Modifier" style="position:absolute;"  style="right: 970%;" class="regButton">
-					</div>
-					</form>
-	<br> <br> 	<br> <br> 
+			
 	
 			<p style="color:red;" > 
 		<?php 

@@ -56,7 +56,7 @@ if ($resp->isSuccess()) {
                 $_POST['lastname'],
                 $_POST['ville'],
                 $_POST['email'],
-                MD5($_POST['password']),
+                MD5($_POST['password']),"profil.jpg"
             );
             $success = 1;
 			
@@ -127,20 +127,25 @@ Cordially,<br>
        <meta charset="utf-8">
         <!-- importer le fichier de style -->
         <link rel="stylesheet" href="style.css" media="screen" type="text/css" />
-		
+		<link rel="stylesheet" href="assets/css/style-starter.css">
+	<!-- Template CSS -->
+	<!-- <link href="//fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,600&display=swap"
+		rel="stylesheet"> -->
+	<!-- Template CSS -->
+	
 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    </head>
+		
+   </head>
     <body>
 	<h1 ><a style=" font-family: cursive;" class="navbar-brand" href="http://localhost/Alliance/View/Front/index.php">
 					<img src="assets\images\petit logo.png " alt="Your logo" title="Your logo" style="height:50px;" style="right:10%;" />
 					<!-- <span class="fa fa-play icon-log" aria-hidden="true"></span> -->
-					</a></h1>
-		
+					The Globe</a></h1>
         <div id="container">
             <!-- zone de connexion -->
             
             <form action="" method="POST" onsubmit="return verif()">
-                <h1>Sign Up</h1>
+                <h1 align="center">SIGN UP</h1>
 
                 <div>
 				<span id="error" style="color: red; font-size: 0.75em;"><?php if($error==1){ echo"An account is already using this email. Use another.";$error=0;}else{echo"";}?></span><br>
@@ -179,9 +184,9 @@ Cordially,<br>
 				<span id="error" style="color: red; font-size: 0.75em;"><?php if($captcha==1){ echo"Authentification captcha failed...";$captcha=0;}else{echo"";}?></span><br>
 				
 			
-                <input type="submit" id='submitButton' value='SUBMIT' >
-				<input type="button" onclick="window.location = '<?php echo $loginURL ?>';" value="Log In With Google" class="btn btn-danger" style="width:400px; height:50px"><br>
-				<a id="sign_in" href="sign_in.php">I have an Account/Sign_In</a>
+                <input type="submit" id='submitButton' value='SUBMIT' class="btn btn-warning" >
+				<input type="button" onclick="window.location = '<?php echo $loginURL ?>';" value="Log In With Google" class="btn btn-danger" ><br>
+				<center><a id="sign_in" href="sign_in.php">I have an Account/Sign_In</a></center>
              
 			
             </form>
@@ -221,7 +226,7 @@ var test=0;
 				
 			if(firstname.value.length==0)
 			{
-				errorMessageFirstname.innerHTML="Oups!This field cannot empty!";
+				errorMessageFirstname.innerHTML="Oups!This field cannot be empty!";
 			}
 			else
 			{
@@ -240,7 +245,7 @@ var test=0;
 			}			
 			if(lastname.value.length==0)
 			{
-				errorMessageLastname.innerHTML="Oups!This field cannot empty!";;
+				errorMessageLastname.innerHTML="Oups!This field cannot be empty!";;
 			}
 			else
 			{
@@ -250,7 +255,7 @@ var test=0;
 			
 			if(password.value.length==0)
 			{
-				errorMessagePassword.innerHTML = 'Oups!This field cannot empty!';
+				errorMessagePassword.innerHTML = 'Oups!This field cannot be empty!';
 			}
 			else
 			{

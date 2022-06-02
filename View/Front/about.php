@@ -7,12 +7,30 @@ Author URL: http://w3layouts.com
 <?php
 include_once '../../Controller/temoignageC.php';
 include_once "../../Controller/ArtisteC.php";
+include '../../Controller/spectacleControllerF.php';
+include_once '../../Controller/ProduitCRUD.php';
+
+$ProduitCRUD = new ProduitCRUD();
+$nombreProduit=$ProduitCRUD->nombreProduit();
+$customer=new ClientC();
+$nombreClient=$customer->nombreClient();
+
+
+
+$spectacle= new SpectaclesC();
+$listespectacle=$spectacle->afficherSpectacle();
+$nombreSpectacle=$spectacle->nombreSpectacle();
+
 $customer = new ClientC();
 $temoignage=new temoignageC();
 $listeTemoignage=$temoignage->afficherTemoignage();
 
 //la partie artiste de mendes
 
+foreach($listespectacle as $spectacles)
+{
+	$dernierSpectacle=$spectacles;
+}
 $control= new ArtisteC();
 
 
@@ -201,10 +219,10 @@ $count=1000;
 		<div class="container py-lg-4">
 			<div class="row ab-grids-sec align-items-center">
 				<div class="col-lg-6 ab-right">
-					<img class="img-fluid" src="assets/images/2.jpg">
+					<img class="img-fluid" src="<?php echo $dernierSpectacle["imglandscape"];?>">
 				</div>
 				<div class="col-lg-6 ab-left pl-lg-4 mt-lg-0 mt-5">
-					<h3 class="hny-title">Great Entertainment</h3>
+					<h3 class="hny-title"><?php echo $dernierSpectacle["annonce"];?></h3>
 					<p class="mt-3">Entertainment is a great way to cut short the incessant torment of the brain. It stimulates the mind and allows everyone to always remain energetic and efficient at work.</p>
 					<div class="ready-more mt-4">
 						<a href="#" class="btn read-button">Read More <span class="fa fa-angle-double-right ml-2" aria-hidden="true"></span></a>
@@ -216,8 +234,8 @@ $count=1000;
 				<div class="stats_left">
 					<div class="counter_grid">
 						<div class="icon_info">
-							<p class="counter"><?php echo $count;?></p>
-							<h4>Movies</h4>
+							<p class="counter"><?php echo $nombreSpectacle;?></p>
+							<h4>Spectacles</h4>
 
 						</div>
 					</div>
@@ -234,8 +252,8 @@ $count=1000;
 				<div class="stats_left">
 					<div class="counter_grid">
 						<div class="icon_info">
-							<p class="counter">463</p>
-							<h4>Members</h4>
+							<p class="counter"><?php echo $nombreClient;?></p>
+							<h4>Customers</h4>
 
 						</div>
 					</div>
@@ -243,8 +261,8 @@ $count=1000;
 				<div class="stats_left">
 					<div class="counter_grid">
 						<div class="icon_info">
-							<p class="counter">2022</p>
-							<h4>Year of Use</h4>
+							<p class="counter"><?php echo $nombreProduit;?></p>
+							<h4>Products</h4>
 
 						</div>
 					</div>
@@ -317,7 +335,7 @@ $count=1000;
                                     <q><?php echo $temoignage["message"];?></q>
                                 </blockquote>
                                 <div class="testi-des">
-                                    <div class="test-img"><img src="<?php echo $c["photo"];?>"class="img-fluid" alt="/">
+                                    <div class="test-img"><img src="<?php $client=$customer->rechercherClient($temoignage["client"]);foreach($client as $c){echo $c["photo"];}?>"class="img-fluid" alt="/">
                                     </div>
                                     <div class="peopl align-self">
                                         <h3><?php $client=$customer->rechercherClient($temoignage["client"]);foreach($client as $c){echo $c["firstname"]." ".$c["lastname"];}?></h3>
@@ -349,22 +367,23 @@ $count=1000;
 					<div class="headerhny-title">
 						<div class="w3l-title-grids">
 							<div class="headerhny-left">
-								<h3 class="hny-title">New Releases</h3>
+								<h3 class="hny-title">New Spectacles</h3>
 							</div>
 							<div class="headerhny-right text-lg-right">
-								<h4><a class="show-title" href="genre.php">Show all</a></h4>
+								<h4><a class="show-title" href="">Show all</a></h4>
 							</div>
 						</div>
 					</div>
 					<div class="owl-three owl-carousel owl-theme">
+					 <?php foreach($listespectacle as $spec){ ?>
 						<div class="item vhny-grid">
 							<div class="box16">
 								<a href="genre.php">
 									<figure>
-										<img class="img-fluid" src="assets/images/will2.jpg" alt="">
+										<img class="img-fluid" src="<?php echo $spec["imglandscape"];?>" alt="">
 									</figure>
 									<div class="box-content">
-										<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
+										<h4> <span class="post"><span class="fa fa-clock-o"> </span><?php echo $spec["duration"];?>
 	
 											</span>
 	
@@ -374,134 +393,17 @@ $count=1000;
 									<span class="fa fa-play video-icon" aria-hidden="true"></span>
 								</a>
 							</div>
-							<h3> <a class="title-gd" href="genre.php">The Hustle</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
+							<h3> <a class="title-gd" href="genre.php"><?php echo $spec["titre"];?></a></h3>
+							<p>The Globe</p>
 							<div class="button-center text-center mt-4">
-								<a href="https://www.youtube.com/embed/myjEoDypUD8" class="btn watch-button">Watch now</a>
+								<a href="<?php echo $spec["video"];?>" class="btn watch-button">Watch now</a>
 							</div>
 	
 						</div>
-						<div class="item vhny-grid">
-							<div class="box16">
-								<a href="genre.php">
-									<figure>
-										<img class="img-fluid" src="assets/images/pnltournee.jpg" alt="">
-									</figure>
-									<div class="box-content">
-	
-										<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-	
-											</span>
-	
-											<span class="post fa fa-heart text-right"></span>
-										</h4>
-									</div>
-									<span class="fa fa-play video-icon" aria-hidden="true"></span>
-								</a>
-							</div>
-							<h3> <a class="title-gd" href="genre.php">The Lego</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-							<div class="button-center text-center mt-4">
-								<a href="genre.php" class="btn watch-button">Watch now</a>
-							</div>
-						</div>
-						<div class="item vhny-grid">
-							<div class="box16">
-								<a href="genre.php">
-									<figure>
-										<img class="img-fluid" src="assets/images/bts.jpg" alt="">
-									</figure>
-									<div class="box-content">
-	
-										<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-	
-											</span>
-	
-											<span class="post fa fa-heart text-right"></span>
-										</h4>
-									</div>
-									<span class="fa fa-play video-icon" aria-hidden="true"></span>
-								</a>
-							</div>
-							<h3> <a class="title-gd" href="genre.php">Joker </a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-							<div class="button-center text-center mt-4">
-								<a href="genre.php" class="btn watch-button">Watch now</a>
-							</div>
-						</div>
-						<div class="item vhny-grid">
-							<div class="box16">
-								<a href="genre.php">
-									<figure>
-										<img class="img-fluid" src="assets/images/m8.jpg" alt="">
-									</figure>
-									<div class="box-content">
-	
-										<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-	
-											</span>
-	
-											<span class="post fa fa-heart text-right"></span>
-										</h4>
-									</div>
-									<span class="fa fa-play video-icon" aria-hidden="true"></span>
-								</a>
-							</div>
-							<h3> <a class="title-gd" href="genre.php">Toy story 4</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-							<div class="button-center text-center mt-4">
-								<a href="genre.php" class="btn watch-button">Watch now</a>
-							</div>
-	
-						</div>
-						<div class="item vhny-grid">
-							<div class="box16">
-								<a href="genre.php">
-									<figure>
-										<img class="img-fluid" src="assets/images/m1.jpg" alt="">
-									</figure>
-									<div class="box-content">
-	
-										<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-	
-											</span>
-	
-											<span class="post fa fa-heart text-right"></span>
-										</h4>
-									</div>
-									<span class="fa fa-play video-icon" aria-hidden="true"></span>
-								</a>
-							</div>
-							<h3> <a class="title-gd" href="genre.php">Rocketman</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-							<div class="button-center text-center mt-4">
-								<a href="genre.php" class="btn watch-button">Watch now</a>
-							</div>
-						</div>
-						<div class="item vhny-grid">
-							<div class="box16">
-								<a href="genre.php">
-									<figure>
-										<img class="img-fluid" src="assets/images/m2.jpg" alt="">
-									</figure>
-									<div class="box-content">
-	
-										<h4> <span class="post"><span class="fa fa-clock-o"> </span> 2 Hr 4min
-	
-											</span>
-	
-											<span class="post fa fa-heart text-right"></span>
-										</h4>
-									</div>
-									<span class="fa fa-play video-icon" aria-hidden="true"></span>
-								</a>
-							</div>
-							<h3> <a class="title-gd" href="genre.php">Doctor Sleep</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-							<div class="button-center text-center mt-4">
-								<a href="genre.php" class="btn watch-button">Watch now</a>
-							</div>
-						</div>
+					 <?php } ?>
+						
+						
+					
 					</div>
 				</div>
 	

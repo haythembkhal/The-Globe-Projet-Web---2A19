@@ -19,6 +19,23 @@
 				die('Erreur:'. $e->getMessage());
 			}
 		}
+		function nombreProduit(){
+        $db = config::getconnexion();
+
+        try {
+            $query = $db->prepare(
+			
+            'SELECT * FROM produits'
+            );
+			$query->execute();
+			$result=$query->rowCount();
+			return $result;
+           
+
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
 
 		function AjouterProduit($produit)
 		{

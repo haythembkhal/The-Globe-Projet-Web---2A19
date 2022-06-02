@@ -21,6 +21,23 @@ function afficherSpectacle(){
             $e->getMessage();
         }
     }
+	function nombreSpectacle(){
+        $db = config::getconnexion();
+
+        try {
+            $query = $db->prepare(
+			
+            'SELECT * FROM spectacles'
+            );
+			$query->execute();
+			$result=$query->rowCount();
+			return $result;
+           
+
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
 public function afficher() 
 {			
 		$result=1;

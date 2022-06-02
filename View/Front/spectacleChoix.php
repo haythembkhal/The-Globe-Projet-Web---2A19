@@ -152,8 +152,8 @@ if(comment=="")
 						<li class="nav-item active">
 							<a class="nav-link" href="http://localhost/Alliance/View/Front/index_with_profil.php">Home</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="about_profil.php">About</a>
+						<li class="nav-item" >
+							<a class="nav-link" href="about_profile.php">About</a>
 						</li>
 						
 							
@@ -162,7 +162,7 @@ if(comment=="")
 							</li>
 
 						<li class="nav-item">
-							<a class="nav-link" href="contact.php">Contact</a>
+							<a class="nav-link" href="contact_profil.php">Contact</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="my_profile.php">My Profile</a> <!--add by me for add login-->

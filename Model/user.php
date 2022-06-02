@@ -103,6 +103,7 @@ class User{
         $this->lastname= $lastname; //generateUserId($userType);
 		$this->photo=$photo;
     }
+	
 //
 /*
 function ajouterEmploye($newEmploye){

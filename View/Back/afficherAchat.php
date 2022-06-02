@@ -4,6 +4,11 @@
 	
 	//pour lister les nom des Spectacles
 	include_once '../../Controller/SpectacleC.php' ;
+	include_once '../../Controller/messageC.php';
+$message=new MessageC();
+$count=0;
+
+$count_message=$message->nombreNouveauMessage();
 $notification=new notificationC();
 $count=$notification->nouvelleNotification();//recupérer les nouvelles notifications
 	$spectacleC = new SpectacleC();
@@ -136,7 +141,7 @@ $count=$notification->nouvelleNotification();//recupérer les nouvelles notifica
                                 </a></li>
                                 
                                 <li><a href="message.php"><i class="menu-icon icon-envelope"></i>Inbox <b class="label green pull-right">
-                                    11</b> </a></li>
+                                    <?php echo $count_message;?></b> </a></li>
                                 <li><a href="task.php"><i class="menu-icon icon-bullhorn"></i>Notifications <b class="label orange pull-right">
                                     <?php echo $count;?></b> </a></li>
                             </ul>

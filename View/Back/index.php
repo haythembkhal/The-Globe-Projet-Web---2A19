@@ -1,9 +1,10 @@
 ﻿<?php
 
-include_once '../../Controller/messageC.php';
+
 include_once '../../Controller/crud_func.php';
 include '../../Controller/AchatC.php';
 
+include_once '../../Controller/messageC.php';
 $message=new MessageC();
 $count=0;
 
@@ -77,7 +78,7 @@ $CongeC = new CongesC;
                         <ul class="nav pull-right">
                             
                             <li class="nav-user dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="images/user.png" class="nav-avatar" />
+                                <img src="ballamoussa.jpg" class="nav-avatar" />
                                 <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Your Profile</a></li>
@@ -179,7 +180,7 @@ $CongeC = new CongesC;
                         <div class="content">
                             <div class="btn-controls">
                                 <div class="btn-box-row row-fluid">
-                                    <a href="#" class="btn-box big span4"><i class=" icon-envelope"></i><b><?php echo $count_message;?></b>
+                                    <a href="message.php" class="btn-box big span4"><i class=" icon-envelope"></i><b><?php echo $count_message;?></b>
                                         <p class="text-muted">
                                             Messages</p>
                                     </a><a href="table_utilisateurs.php" class="btn-box big span4"><i class="icon-user"></i><b><?php echo $nombreClient;?></b>
@@ -353,38 +354,7 @@ $CongeC = new CongesC;
 
 												</script>			
 						</div>
-						<div class="module">
 						
-						
-
-
-                        <script>
-                                window.onload = function() {
-                                var today = new Date();
-                                var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
-                                
-                                var chart = new CanvasJS.Chart("chartContainer", {
-                                    animationEnabled: true,
-                                    title: {
-                                        text: "Nombres de Places Achetés"
-                                    },
-                                    subtitles: [{
-                                        text: date
-                                    }],
-                                    data: [{
-                                        type: "pie",
-                                        yValueFormatString: "#,##0",
-                                        indexLabel: "{nbre} Places",
-                                        dataPoints: <?php echo json_encode($tab, JSON_NUMERIC_CHECK); ?>
-                                    }]
-                                });
-                                chart.render();
-                                
-                                }
-                            </script>
-                            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-                            </div>
 
 						<div class="module">
                             <div class="module-body">

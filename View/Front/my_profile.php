@@ -1,21 +1,19 @@
 <?php
-include '../../Controller/userC.php';
+include_once'../../Controller/userC.php';
+include_once '../../Controller/spectacleControllerF.php';
 session_start();
 if(!isset($_SESSION['loggedIn']) )
     header('location:sign_in.php');
 else if($_SESSION['loggedIn'] != true)
     header('location:sign_in.php');
-/*$ville=$_SESSION["ville"];
-$firstname=$_SESSION["firstname"];
-$lastname=$_SESSION["lastname"];
-$email=$_SESSION["email"];*/
-//var_dump($ville);
-//die;
-//$userID=$_SESSION["id_client"];
-//$ville=$_POST['ville'];
-//var_dump($_SESSION["picture"]);
-//die;
-	
+
+$spectacle= new SpectaclesC();
+$listespectacle=$spectacle->afficherSpectacle();
+foreach($listespectacle as $spectacles)
+{
+	$dernierSpectacle=$spectacles;
+
+}
  if (isset($_POST['firstname'])&& isset($_POST['lastname']) && isset($_POST['ville']) && isset($_POST['email'])) {
         if (!empty($_POST['firstname'])&& !empty($_POST['lastname']) && !empty($_POST['ville']) && !empty($_POST['email'])) {
             $customer = new User(
@@ -65,8 +63,12 @@ $email=$_SESSION["email"];*/
     }
 	
 ?>
-
+<html>
+<head>
 <link href="style_profile.css" rel="stylesheet">
+<title>The Globe| Profil</title>
+
+</head>
 
 <body>
 			<script>
@@ -162,7 +164,7 @@ var test=0;
     </nav>
 	
     <!-- Header -->
-    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(spectacle.jpg); background-size: cover; background-position: center top; background-color=#ffc107;">
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(assets/images/africa.jpg); background-size: cover; background-position: center top; background-color=#ffc107;">
       <!-- Mask -->
       <span class="mask bg-gradient-default opacity-8"></span>
       <!-- Header container -->
@@ -218,10 +220,10 @@ var test=0;
               </div>
               <div class="text-center">
                 <h3>
-                  <?php echo $_SESSION['lastname']." ".$_SESSION['firstname']?><span class="font-weight-light">20</span>
+                  <?php echo $_SESSION['lastname']." ".$_SESSION['firstname'];?><span class="font-weight-light"></span>
                 </h3>
                 <div class="h5 font-weight-300">
-                  <i class="ni location_pin mr-2"></i>Ariana, Tunisia
+                  <i class="ni location_pin mr-2"></i><?php echo $_SESSION["ville"];?>
                 </div>
       
                 
@@ -310,7 +312,7 @@ var test=0;
                     <div class="col-md-12">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-address">Address</label>
-                        <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="1,2 Rue André Ampère" type="text">
+                        <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="1,2 Rue AndrÃ© AmpÃ¨re, Pole Technologique El Ghazela" type="text" readonly>
                       </div>
                     </div>
                   </div>
@@ -318,19 +320,19 @@ var test=0;
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-city">City</label>
-                        <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="Arina">
+                        <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="Ariana" readonly>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">Country</label>
-                        <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Country" value="Tunisia">
+                        <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Country" value="Tunisia" readonly>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-country">Postal code</label>
-                        <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code">
+                        <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code" readonly>
                       </div>
                     </div>
                   </div>
@@ -354,3 +356,4 @@ var test=0;
     </div>
   </footer>
 </body>
+</html>

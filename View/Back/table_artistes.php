@@ -5,7 +5,11 @@
 include_once "../../Controller/ArtisteC.php";
 include_once '../../Controller/notificationC.php';
 
+include_once '../../Controller/messageC.php';
+$message=new MessageC();
+$count=0;
 
+$count_message=$message->nombreNouveauMessage();
 $notification=new notificationC();
 $count=$notification->nouvelleNotification();//recupérer les nouvelles notifications
 
@@ -198,7 +202,7 @@ function countArtist(){
                                 </a></li>
                                 
                                 <li><a href="message.php"><i class="menu-icon icon-envelope"></i>Inbox <b class="label green pull-right">
-                                    11</b> </a></li>
+                                    <?php echo $count_message;?></b> </a></li>
                                 <li><a href="task.php"><i class="menu-icon icon-bullhorn"></i>Notifications <b class="label orange pull-right">
                                     <?php echo $count;?></b> </a></li>
                             </ul>
@@ -289,6 +293,7 @@ function countArtist(){
 						<input class="dropbtn" type="submit"  name="triage" value="Trier" />
 						
 					</div>
+					  </form>
 					<div class="dropdown" style="float:right;">
 					
 					  
@@ -297,7 +302,7 @@ function countArtist(){
 					</div>
 					
 				  </div>	
-				  </form>
+				
 				  
 				
 								  

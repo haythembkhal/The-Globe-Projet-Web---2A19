@@ -33,7 +33,7 @@ function afficherCommentaire($spec)
                 <form method="POST"style="display:none;"class="comments"> <textarea style="width:250px;"name="comment" placeholder="Ecrire juste ici...."><?php echo $comment['commentaire'];?></textarea> 
     <br><button type="button"onclick="closeForm(this.value)" class="annuler">Annuler</button> <button type="submit" name="idEval" value="<?php echo $comment['idEval'];?>">
             Confirmer</button>
-	<button class="del" value="<?php echo $comment['idEval'];?>" name='deleteP'type="submit"> Supprimer</button>  </div>
+	<button class="del"  value="<?php echo $comment['idEval'];?>" name='deleteP'type="submit"> Supprimer</button>  </div>
 </form>			
                 </div>
                 </div>

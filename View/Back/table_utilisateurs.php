@@ -3,6 +3,12 @@
 //include '../../Controller/userC.php';
 //include '../../Controller/temoignageC.php';
 include '../../Controller/notificationC.php';
+include_once '../../Controller/messageC.php';
+$message=new MessageC();
+$count=0;
+
+$count_message=$message->nombreNouveauMessage();
+
 $customer = new ClientC();
 
 $employe = new EmployeC();
@@ -262,7 +268,7 @@ if(ville.value.length==0)
                                 </a></li>
                                 
                                 <li><a href="message.php"><i class="menu-icon icon-envelope"></i>Inbox <b class="label green pull-right">
-                                    11</b> </a></li>
+                                     <?php echo $count_message;?></b> </a></li>
                                 <li><a href="task.php"><i class="menu-icon icon-bullhorn"></i>Notifications <b class="label orange pull-right">
                                     <?php echo $count;?></b> </a></li>
                             </ul>

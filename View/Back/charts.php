@@ -2,6 +2,11 @@
 
 //include '../../Controller/notificationC.php';
 include '../../Controller/crud_func.php';
+include_once '../../Controller/messageC.php';
+$message=new MessageC();
+$count=0;
+
+$count_message=$message->nombreNouveauMessage();
 
 $notification=new notificationC();
 $count=$notification->nouvelleNotification();//recupérer les nouvelles notifications
@@ -86,7 +91,7 @@ $CongeC = new CongesC;
                                 </a></li>
                                 
                                 <li><a href="message.php"><i class="menu-icon icon-envelope"></i>Inbox <b class="label green pull-right">
-                                    11</b> </a></li>
+                                    <?php echo $count_message;?></b> </a></li>
                                 <li><a href="task.php"><i class="menu-icon icon-bullhorn"></i>Notifications <b class="label orange pull-right">
                                     <?php echo $count;?></b> </a></li>
                             </ul>
@@ -160,7 +165,9 @@ $CongeC = new CongesC;
                 <div class="span9">
                     <div class="content">
                         <div class="module">
-						
+						<div class="module-head">
+						<center><h2>Repartition des Clients par ville</h2></center>
+						</div>
                             <div id="container" style="height: 400%" ></div>
 		
 								<input type="hidden" id="tunis" value=<?php echo $tunis;?>>

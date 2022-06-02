@@ -92,7 +92,7 @@ function afficher (): void {  //Implementation de recherche a linteurieur
                 <td>  <form method="POST">
                 <input type="hidden" id="delete" name="delete" value="<?php 
                 echo $spectacle['spectacleId'];?>"> 
-                <button type="submit" value="Supprimer"><ion-icon name="trash-outline"></ion-icon>Supprimer</button></form></td>  
+                <button type="submit" class="btn-danger" value="Supprimer"><ion-icon name="trash-outline"></ion-icon>Supprimer</button></form></td>  
                 <td> <form method="POST">            <input type="hidden" id="idSpec" name="idSpec" value="<?php 
                 echo $spectacle['spectacleId'];?>"> 
                 <input type="hidden" id="titre" name="titre" value="<?php 
@@ -136,7 +136,7 @@ function afficher (): void {  //Implementation de recherche a linteurieur
                 <input type="hidden" id="imgLand" name="imgLand" value="<?php 
                     echo $spectacle['imglandscape'];?>"> 
 
-                    <button type="submit" value="1" ><ion-icon name="finger-print-outline"></ion-icon>Selectionner</button>
+                    <button type="submit" value="1" class="btn-success" ><ion-icon name="finger-print-outline"></ion-icon>Selectionner</button>
                     </form></td>
             </tr>
             <?php 

@@ -143,8 +143,7 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 						<div class="slider-info banner-view bg bg2">
 							<div class="banner-info">
 								<h3><?php echo $spec["annonce"];?></h3>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="over-para"> Consequuntur hic odio
-									voluptatem tenetur consequatur.</span></p>
+								<p><?php echo $spec["duration"];?><span class="over-para"> The Globe</span></p>
 					
 							</div>
 						</div>
@@ -239,13 +238,21 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 	<section id="popSection" class="w3l-mid-slider position-relative">
 		<div class="companies20-content">
 			<div class="owl-mid owl-carousel owl-theme">
-				<div class="item">
+			 <?php foreach($listespectacle as $spec){ ?>
+				<div class="item" style="background: url(<?php echo $spec["imglandscape"];?>) no-repeat center;
+  background-size: cover;
+  min-height: 400px;
+  position: relative;
+  z-index: 100;
+  display: grid;
+  align-items: center;">
+				
 					<li>
 						<div class="slider-info mid-view bg bg2">
 							<div class="container">
 								<div class="mid-info">
 									<span class="sub-text">Musique</span>
-									<h3>PNL Tournée Deux Frères</h3>
+									<h3><?php echo $spec["annonce"];?></h3>
 									<p>2022 ‧ Musique ‧ 2h 30m</p>
 							
 								</div>
@@ -253,34 +260,9 @@ $_SESSION['status']=""; //POUR LES COMMENTAIRES DE HAYTHEM
 						</div>
 					</li>
 				</div>
-				<div class="item">
-					<li>
-						<div class="slider-info mid-view mid-top1 bg bg2">
-							<div class="container">
-								<div class="mid-info">
-									<span class="sub-text">Comedy</span>
-									<h3>Will Smith</h3>
-									<p>2022 ‧ Comedy ‧ 1h 30m</p>
-						
-								</div>
-							</div>
-						</div>
-					</li>
-				</div>
-				<div class="item">
-					<li>
-						<div class="slider-info mid-view mid-top2 bg bg2">
-							<div class="container">
-								<div class="mid-info">
-									<span class="sub-text">Family</span>
-									<h3>Disney On Ice</h3>
-									<p>2022 ‧ Comedy/Family ‧ 3h </p>
-							
-								</div>
-							</div>
-						</div>
-					</li>
-				</div>
+			 <?php } ?>
+				
+				
 			</div>
 		</div>
 	</section>

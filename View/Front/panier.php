@@ -1,7 +1,3 @@
-
-
-
-
 <?php
 include_once '../../Controller/panierC.php';
 session_start();
